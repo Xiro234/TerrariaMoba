@@ -1,0 +1,3 @@
+displayName = Terraria Moba
+author = Xiro
+version = 0.1
