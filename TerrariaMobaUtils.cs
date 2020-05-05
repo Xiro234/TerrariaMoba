@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel.Design.Serialization;
 using TerrariaMoba;
+using TerrariaMoba.Players;
 using TerrariaMoba.Characters;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
@@ -10,7 +12,9 @@ using Terraria.GameInput;
 
 
 namespace TerrariaMoba {
-    public class TerrariaMobaUtils {
+    public static class TerrariaMobaUtils {
+        public const int xpPerKill = 100;
+        
         public static String GetTeamString(int team) {
             switch (team) {
                 case 0:
@@ -46,6 +50,29 @@ namespace TerrariaMoba {
                     return Color.Pink;
                 default:
                     return Color.Brown;
+            }
+        }
+        
+        public static void MobaKill(int killWhoAmI) {
+            //Credit to https://github.com/hamstar0/tml-playerstatistics-mod for modifications on his work
+            if (killWhoAmI >= 0 && killWhoAmI < Main.player.Length) {
+                var otherPlayer = Main.player[killWhoAmI].GetModPlayer<TerrariaMobaPlayer_Gameplay>();
+
+                if (otherPlayer != null) {
+                    for (int i = 0; i < Main.maxPlayers; i++) {
+                        Player plr = Main.player[i];
+                        
+                        if (plr.active && plr.team == Main.player[killWhoAmI].team) {
+                            Packets.SyncExperiencePacket.Write(xpPerKill, i, killWhoAmI);
+                        }
+                    }
+                }
+                else {
+                    Main.NewText("Invalid ModPlayer for " + Main.player[killWhoAmI].name, Color.Red);
+                }
+            }
+            else {
+                Main.NewText("Invalid player whoAmI: " + killWhoAmI, Color.Red);
             }
         }
     }

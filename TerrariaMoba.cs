@@ -7,6 +7,9 @@ namespace TerrariaMoba {
 	public class TerrariaMoba : Mod {
 		public static ModHotKey AbilityOneHotKey;
 		public static ModHotKey AbilityTwoHotKey;
+		public static ModHotKey LevelTalentOneHotKey;
+		public static ModHotKey LevelTalentTwoHotKey;
+		public static ModHotKey LevelTalentThreeHotKey;
 		public static TerrariaMoba Instance { get; private set; }
 		
 		public const float nonKillXpRatio = 0.75f;
@@ -18,6 +21,9 @@ namespace TerrariaMoba {
 		public override void Load() {
 			AbilityOneHotKey = RegisterHotKey("Ability One", "Q");
 			AbilityTwoHotKey = RegisterHotKey("Ability Two", "F");
+			LevelTalentOneHotKey = RegisterHotKey("Level Talent One", "Z");
+			LevelTalentTwoHotKey = RegisterHotKey("Level Talent Two", "X");
+			LevelTalentThreeHotKey = RegisterHotKey("Level Talent Three", "C");
 		}
 		
 		public override void Unload() {

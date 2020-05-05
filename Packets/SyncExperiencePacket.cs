@@ -3,6 +3,7 @@ using System.Xml.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Players;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Packets {
@@ -15,7 +16,7 @@ namespace TerrariaMoba.Packets {
                 Write(xp, target);
             }
             else if (Main.netMode == NetmodeID.MultiplayerClient) {
-                TerrariaMobaPlayer plr = Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer>();
+                var plr = Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>();
                 int xp = (int)reader.ReadSingle();
                 plr.stats.GainExperience(xp);
             }
