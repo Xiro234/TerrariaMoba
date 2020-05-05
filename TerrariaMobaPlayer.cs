@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.GameInput;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using Terraria.ID;
 using TerrariaMoba.Characters;
 using TerrariaMoba.Stats;
 
@@ -16,7 +17,7 @@ namespace TerrariaMoba {
         private bool AbilityTwoUsed = false;
         private bool UltimateUsed = false;
         private int xpPerKill = 100;
-        private TerrariaMobaStats stats;
+        public TerrariaMobaStats stats;
 
         public override void Initialize() {
             this.stats = new TerrariaMobaStats();
@@ -28,9 +29,12 @@ namespace TerrariaMoba {
                 AbilityOneUsed = true;
             }
             if (TerrariaMoba.AbilityTwoHotKey.JustPressed) {
-                stats.MyCharacter.AbilityTwo(player);
-                AbilityTwoUsed = true;
+                Main.NewText("Level: " + stats.MyCharacter.level + " XP: " + stats.experience);
             }
+        }
+
+        public override void PreUpdate() {
+
         }
 
         public override void PostUpdate() {
@@ -43,7 +47,7 @@ namespace TerrariaMoba {
                     AbilityOneUsed = false;
                 }
             }
-
+            
             if (AbilityTwoUsed == true) {
                 
             }
@@ -54,12 +58,14 @@ namespace TerrariaMoba {
                 return;
             }
 
-            if (Main.netMode == 1 && pvp) {
+            if (Main.netMode == NetmodeID.MultiplayerClient && pvp) {
                 MobaKill(damageSource.SourcePlayerIndex);
+                
             }
         }
         
         public void MobaKill(int killWhoAmI) {
+            //Credit to https://github.com/hamstar0/tml-playerstatistics-mod for modifications on his work
             if (killWhoAmI >= 0 && killWhoAmI < Main.player.Length) {
                 var otherPlayer = Main.player[killWhoAmI].GetModPlayer<TerrariaMobaPlayer>();
 
@@ -68,7 +74,7 @@ namespace TerrariaMoba {
                         Player plr = Main.player[i];
                         
                         if (plr.active && plr.team == Main.player[killWhoAmI].team) {
-                            plr.GetModPlayer<TerrariaMobaPlayer>().stats.GainExperience(xpPerKill, plr.team);
+                            Packets.SyncExperiencePacket.Write(xpPerKill, i, killWhoAmI);
                         }
                     }
                 }

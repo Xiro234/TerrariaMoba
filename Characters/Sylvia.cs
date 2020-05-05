@@ -37,7 +37,7 @@ namespace TerrariaMoba.Characters {
         }
 
         public override void LevelUp() {
-            Main.NewText("I leveled up!!!");
+            level += 1;
         }
     }
 }

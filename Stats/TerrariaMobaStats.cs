@@ -12,13 +12,13 @@ namespace TerrariaMoba.Stats {
         public Character MyCharacter = new Sylvia();
         private int xpPerLevel = 100;
         public int experience = 0;
-        public int level = 1;
-
-        public void GainExperience(int xp, int team) {
+        
+        public void GainExperience(int xp) {
             experience += xp;
 
-            if (experience / level >= xpPerLevel) { //Checks if it needs to level up
-                level += 1;
+            while (experience >= xpPerLevel) {
+                MyCharacter.LevelUp();
+                experience -= xpPerLevel;
             }
         }
     }
