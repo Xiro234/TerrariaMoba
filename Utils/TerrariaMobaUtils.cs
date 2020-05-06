@@ -1,7 +1,5 @@
 ﻿using System;
-using System.ComponentModel.Design.Serialization;
 using TerrariaMoba;
-using TerrariaMoba.Players;
 using TerrariaMoba.Characters;
 using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
@@ -9,9 +7,10 @@ using Terraria.ModLoader.IO;
 using System.IO;
 using Terraria;
 using Terraria.GameInput;
+using TerrariaMoba.Players;
 
 
-namespace TerrariaMoba {
+namespace TerrariaMoba.Utils {
     public static class TerrariaMobaUtils {
         public const int xpPerKill = 100;
         

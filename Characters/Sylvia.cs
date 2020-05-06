@@ -1,4 +1,5 @@
 ﻿using TerrariaMoba;
+using TerrariaMoba.Buffs;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using TerrariaMoba.Players;
@@ -6,22 +7,38 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.GameInput;
+using static Terraria.ModLoader.ModContent;
 using System;
+using TerrariaMoba.Utils;
 
 namespace TerrariaMoba.Characters {
     public class Sylvia : Character {
+        private int VerdantFuryTime;
+
+        public Sylvia() {
+            Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().IsSylvia = true;
+            
+            AbilityOneName = "Enrapturing Vines";
+            AbilityOneCooldown = SylviaUtils.GetAbilityOneBaseCd();
+
+            AbilityTwoName = "Verdant Fury";
+            AbilityTwoCooldown = SylviaUtils.GetAbilityTwoBaseCd();
+
+            VerdantFuryTime = SylviaUtils.GetVerdantFuryBaseTime();
+        }
+
         public override void AbilityOne() {
             Player player = Main.LocalPlayer;
             Vector2 velocity = Main.MouseWorld - player.Center;
             Vector2 position = player.Center;
             velocity.Normalize();
             velocity *= 10f;
-            
+
             if (talentArray[0, 0]) {
                 int numberProjectiles = 3;
                 float rotation = MathHelper.ToRadians(45);
                 position += Vector2.Normalize(velocity) * 45f;
-                
+
                 for (int i = 0; i < numberProjectiles; i++) {
                     Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * .2f;
                     Projectile.NewProjectile(position, perturbedSpeed, 1, 10, 2, Main.myPlayer);
@@ -36,7 +53,6 @@ namespace TerrariaMoba.Characters {
             else {
                 Projectile.NewProjectile(position, velocity, 1, 10, 2, Main.myPlayer);
             }
-            
         }
 
         public override void AbilityOneAnimation(ref int animCounter) {
@@ -56,7 +72,8 @@ namespace TerrariaMoba.Characters {
         }
 
         public override void AbilityTwo() {
-            
+            Main.LocalPlayer.AddBuff(BuffType<Buffs.VerdantFury>(), VerdantFuryTime);
+            AbilityTwoCooldownTimer = AbilityTwoCooldown;
         }
 
         public override void LevelUp() {
@@ -86,7 +103,5 @@ namespace TerrariaMoba.Characters {
                     break;
             }
         }
-
-        
     }
 }

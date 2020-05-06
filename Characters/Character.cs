@@ -1,4 +1,5 @@
-﻿using Steamworks;
+﻿using System;
+using Steamworks;
 using Terraria;
 
 namespace TerrariaMoba.Characters {
@@ -6,7 +7,15 @@ namespace TerrariaMoba.Characters {
         public int level = 1;
         public bool canSelectTalent = false;
         public bool[,] talentArray = new bool[7, 4];
-        
+
+        public String AbilityOneName;
+        public int AbilityOneCooldown;
+        public int AbilityOneCooldownTimer = 0;
+
+        public String AbilityTwoName = "";
+        public int AbilityTwoCooldown = 0;
+        public int AbilityTwoCooldownTimer = 0;
+
         public abstract void AbilityOne();
         public abstract void AbilityOneAnimation(ref int animCounter);
         public abstract void AbilityTwo();

@@ -10,8 +10,9 @@ namespace TerrariaMoba {
 		public static ModHotKey LevelTalentOneHotKey;
 		public static ModHotKey LevelTalentTwoHotKey;
 		public static ModHotKey LevelTalentThreeHotKey;
+		public static ModHotKey BecomeSylvia;
 		public static TerrariaMoba Instance { get; private set; }
-		
+
 		public const float nonKillXpRatio = 0.75f;
 
 		public TerrariaMoba() {
@@ -24,6 +25,7 @@ namespace TerrariaMoba {
 			LevelTalentOneHotKey = RegisterHotKey("Level Talent One", "Z");
 			LevelTalentTwoHotKey = RegisterHotKey("Level Talent Two", "X");
 			LevelTalentThreeHotKey = RegisterHotKey("Level Talent Three", "C");
+			BecomeSylvia = RegisterHotKey("Become Sylvia", "V");
 		}
 		
 		public override void Unload() {
@@ -35,6 +37,9 @@ namespace TerrariaMoba {
 			switch (msg) {
 				case(Message.SyncExperience):
 					Packets.SyncExperiencePacket.Read(reader);
+					break;
+				case(Message.SyncJunglesWrath):
+					Packets.SyncJunglesWrathPacket.Read(reader);
 					break;
 			}
 		}

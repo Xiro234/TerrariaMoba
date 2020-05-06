@@ -1,15 +1,14 @@
 ﻿using System;
 using Terraria;
 using Terraria.ModLoader;
-using TerrariaMoba;
-using TerrariaMoba.Characters;
-using TerrariaMoba;
+using TerrariaMoba.Enums;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
+using TerrariaMoba.Characters;
 
 namespace TerrariaMoba.Stats {
     public class TerrariaMobaStats {
-        public Character MyCharacter = new Sylvia();
+        public Character MyCharacter;
         private int xpPerLevel = 100;
         public int experience = 0;
         

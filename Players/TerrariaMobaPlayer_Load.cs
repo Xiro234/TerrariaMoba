@@ -5,6 +5,6 @@ using Terraria;
 
 namespace TerrariaMoba.Players {
     partial class TerrariaMobaPlayer_Load : ModPlayer {
-
+        
     }
 }

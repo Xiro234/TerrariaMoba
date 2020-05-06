@@ -3,41 +3,44 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Buffs;
 using TerrariaMoba.Players;
-
+using TerrariaMoba.Utils;
+using static Terraria.ModLoader.ModContent;
+    
 namespace TerrariaMoba.Packets {
-    public class SyncExperiencePacket {
-
+    public class SyncJunglesWrathPacket {
+    
         public static void Read(BinaryReader reader) {
             if (Main.netMode == NetmodeID.Server) {
                 int target = reader.ReadInt32();
-                float xp = reader.ReadSingle();
-                Write(xp, target);
+                bool add = reader.ReadBoolean();
+                Write(target, add);
             }
             else if (Main.netMode == NetmodeID.MultiplayerClient) {
                 var plr = Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>();
-                int xp = (int)reader.ReadSingle();
-                plr.stats.GainExperience(xp);
+                bool add = reader.ReadBoolean();
+                if (add) {
+                    plr.JunglesWrathCount++;
+                }
+
+                int index = Main.LocalPlayer.FindBuffIndex(BuffType<Buffs.JunglesWrath>());
+                Main.LocalPlayer.buffTime[index] = SylviaUtils.GetJunglesWrathTime();
             }
         }
-
-        public static void Write(float xp, int target, int killer = -1) {
+    
+        public static void Write(int target, bool add) {
             if (Main.netMode == NetmodeID.MultiplayerClient) {
                 ModPacket packet = TerrariaMoba.Instance.GetPacket();
-                packet.Write((byte) Message.SyncExperience);
+                packet.Write((byte) Message.SyncJunglesWrath);
                 packet.Write(target);
-                if (target != killer) {
-                    packet.Write(xp * TerrariaMoba.nonKillXpRatio);
-                }
-                else {
-                    packet.Write(xp);
-                }
+                packet.Write(add);
                 packet.Send();
             }
             else if (Main.netMode == NetmodeID.Server) {
                 ModPacket packet = TerrariaMoba.Instance.GetPacket();
-                packet.Write((byte)Message.SyncExperience);
-                packet.Write(xp);
+                packet.Write((byte)Message.SyncJunglesWrath);
+                packet.Write(add);
                 packet.Send(target);
             }
         }
