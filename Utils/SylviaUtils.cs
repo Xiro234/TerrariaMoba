@@ -1,5 +1,5 @@
 ﻿using Terraria;
-using TerrariaMoba.Enums;
+using TerrariaMoba;
 using Terraria.ModLoader;
 using TerrariaMoba.Characters;
 using TerrariaMoba.Players;

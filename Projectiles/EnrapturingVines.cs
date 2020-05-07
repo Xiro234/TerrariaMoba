@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Utils;
 using Microsoft.Xna.Framework;
+using static Terraria.ModLoader.ModContent;
 
 namespace TerrariaMoba.Projectiles {
     public class EnrapturingVines : ModProjectile {
@@ -42,8 +43,8 @@ namespace TerrariaMoba.Projectiles {
             }
         }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit) {
-            
+        public override void OnHitPvp(Player target, int damage, bool crit) {
+            target.AddBuff(BuffType<Buffs.EnrapturingVines>(), 240, false);
         }
     }
 }

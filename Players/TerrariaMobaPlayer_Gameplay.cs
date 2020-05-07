@@ -27,6 +27,7 @@ namespace TerrariaMoba.Players {
         public bool IsSylvia = false;
         public bool VerdantFury = false;
         public bool JunglesWrath = false;
+        public bool EnrapturingVines = false;
         public int JunglesWrathCount = 1;
 
         public override void Initialize() {
@@ -36,6 +37,7 @@ namespace TerrariaMoba.Players {
         public override void ResetEffects() {
             VerdantFury = false;
             JunglesWrath = false;
+            EnrapturingVines = false;
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet) {
@@ -126,6 +128,10 @@ namespace TerrariaMoba.Players {
             }
         }
 
+        public override void PreUpdateBuffs() {
+            base.PreUpdateBuffs();
+        }
+
         public override void PostUpdateBuffs() {
             if (!JunglesWrath) {
                 JunglesWrathCount = 1;
@@ -197,6 +203,23 @@ namespace TerrariaMoba.Players {
 
                 target.immune = true;
                 target.immuneTime = 8;
+            }
+        }
+
+        public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) {
+            if (JunglesWrath) {
+                r *= (0.7f - (JunglesWrathCount * 0.1f));
+                g *= (0.7f -(JunglesWrathCount * 0.1f));
+            }
+        }
+
+        public override void SetControls() {
+            if (EnrapturingVines) {
+                player.controlRight = false;
+                player.controlLeft = false;
+                player.controlJump = false;
+                player.controlUp = false;
+                player.controlDown = false;
             }
         }
     }

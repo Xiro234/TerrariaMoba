@@ -1,5 +1,4 @@
-﻿using System;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using Microsoft.Xna.Framework;
