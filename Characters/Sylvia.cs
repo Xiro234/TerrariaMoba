@@ -6,7 +6,8 @@ using TerrariaMoba.Players;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.GameInput;
+using Terraria.ID;
+using Microsoft.Xna.Framework;
 using static Terraria.ModLoader.ModContent;
 using System;
 using TerrariaMoba.Utils;
@@ -28,31 +29,14 @@ namespace TerrariaMoba.Characters {
         }
 
         public override void AbilityOne() {
-            Player player = Main.LocalPlayer;
-            Vector2 velocity = Main.MouseWorld - player.Center;
-            Vector2 position = player.Center;
-            velocity.Normalize();
-            velocity *= 10f;
+            Vector2 position = Main.LocalPlayer.Center;
+            Vector2 playerToMouse = Main.MouseWorld - Main.LocalPlayer.Center;
+            
+            int direction = Math.Sign((int)playerToMouse.X);
 
-            if (talentArray[0, 0]) {
-                int numberProjectiles = 3;
-                float rotation = MathHelper.ToRadians(45);
-                position += Vector2.Normalize(velocity) * 45f;
+            Vector2 velocity = new Vector2(direction * 6, 0);
 
-                for (int i = 0; i < numberProjectiles; i++) {
-                    Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (numberProjectiles - 1))) * .2f;
-                    Projectile.NewProjectile(position, perturbedSpeed, 1, 10, 2, Main.myPlayer);
-                }
-            }
-            else if (talentArray[0, 1]) {
-                Projectile.NewProjectile(position, velocity * 2f, 1, 10, 2, Main.myPlayer);
-            }
-            else if (talentArray[0, 2]) {
-                Projectile.NewProjectile(position, velocity, 2, 10, 2, Main.myPlayer);
-            }
-            else {
-                Projectile.NewProjectile(position, velocity, 1, 10, 2, Main.myPlayer);
-            }
+            Projectile.NewProjectile(position, velocity, TerrariaMoba.Instance.ProjectileType("EnrapturingVinesSpawner"), 30, 0, Main.LocalPlayer.whoAmI);
         }
 
         public override void AbilityOneAnimation(ref int animCounter) {

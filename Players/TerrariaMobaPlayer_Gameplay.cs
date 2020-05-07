@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Terraria.ID;
 using TerrariaMoba.Characters;
+using TerrariaMoba.Packets;
 using TerrariaMoba.Stats;
 using TerrariaMoba.Utils;
 using static Terraria.ModLoader.ModContent;
@@ -76,6 +77,14 @@ namespace TerrariaMoba.Players {
             }
         }
 
+        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage,
+            ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
+            if (pvp) {
+                return false;
+            }
+            return true;
+        }
+
         public override void PreUpdate() {
             if (CharacterPicked) {
                 if (stats.MyCharacter.AbilityOneCooldownTimer > 0) {
@@ -134,9 +143,17 @@ namespace TerrariaMoba.Players {
         }
 
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            if (IsSylvia) {
+            if (IsSylvia && proj.ranged) {
                 target.AddBuff(BuffType<Buffs.JunglesWrath>(), 240, false);
             }
+
+            target.GetModPlayer<TerrariaMobaPlayer_Gameplay>().DamageOverride(damage, target, player.whoAmI);
+            SyncPvpHitPacket.Write(target.whoAmI, damage, player.whoAmI);
+        }
+
+        public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit) {
+            target.GetModPlayer<TerrariaMobaPlayer_Gameplay>().DamageOverride(damage, target, player.whoAmI);
+            SyncPvpHitPacket.Write(target.whoAmI, damage, player.whoAmI);
         }
 
         public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type,
@@ -158,6 +175,29 @@ namespace TerrariaMoba.Players {
                 }
             }
             return 1f;
+        }
+
+        public void DamageOverride(int sourceDamage, Player target, int killer) {
+            if (!target.immune) {
+                int damage = sourceDamage;
+
+                damage -= (int) (target.statDefense * 0.5);
+
+                if (damage <= 0) {
+                    damage = 1;
+                }
+
+                target.statLife -= damage;
+                Main.PlaySound(1);
+                CombatText.NewText(player.Hitbox, Color.OrangeRed, damage);
+
+                if (Main.LocalPlayer.statLife <= 0) {
+                    target.KillMe(PlayerDeathReason.ByPlayer(killer), damage, 1, true);
+                }
+
+                target.immune = true;
+                target.immuneTime = 8;
+            }
         }
     }
 }

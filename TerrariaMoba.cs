@@ -41,6 +41,9 @@ namespace TerrariaMoba {
 				case(Message.SyncJunglesWrath):
 					Packets.SyncJunglesWrathPacket.Read(reader);
 					break;
+				case(Message.SyncPvpHit):
+					Packets.SyncPvpHitPacket.Read(reader);
+					break;
 			}
 		}
 	}

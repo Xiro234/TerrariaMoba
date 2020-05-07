@@ -11,8 +11,8 @@ namespace TerrariaMoba.Utils {
         public const float VerdantFuryIncrease = 0.05f;
         public const int VerdantFuryBaseTime = 3;
         public static int JunglesWrathTime = 3;
-        public const int AbilityOneBaseCooldown = 32;
-        public const int AbilityTwoBaseCooldown = 36;
+        public const int AbilityOneBaseCooldown = 2; //32
+        public const int AbilityTwoBaseCooldown = 2; //36
         
         
         public static float GetVerdantFuryIncrease() {

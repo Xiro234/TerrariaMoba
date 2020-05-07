@@ -17,7 +17,9 @@ namespace TerrariaMoba.Packets {
             else if (Main.netMode == NetmodeID.MultiplayerClient) {
                 var plr = Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>();
                 int xp = (int)reader.ReadSingle();
-                plr.stats.GainExperience(xp);
+                if (plr.CharacterPicked) {
+                    plr.stats.GainExperience(xp);
+                }
             }
         }
 
