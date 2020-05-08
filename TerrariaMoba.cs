@@ -46,6 +46,9 @@ namespace TerrariaMoba {
 				case(Message.SyncPvpHit):
 					Packets.SyncPvpHitPacket.Read(reader);
 					break;
+				case(Message.SyncSylviaUlt1):
+					Packets.SyncSylviaUlt1Packet.Read(reader);
+					break;
 			}
 		}
 	}

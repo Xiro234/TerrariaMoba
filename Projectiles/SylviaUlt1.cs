@@ -21,9 +21,11 @@ namespace TerrariaMoba.Projectiles {
 
         public override void AI() {
             if (projectile.ai[0] == 0) {
+                Player player = Main.player[projectile.owner];
+                player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().IsPhasing = true;
                 Main.PlaySound(6, projectile.position);
                 for (int i = 0; i < 20; i++) {
-                    Dust.NewDust(Main.player[projectile.owner].position, projectile.width, projectile.height, 57, 0,
+                    Dust.NewDust(projectile.position, projectile.width, projectile.height, 57, 0,
                         0, 150, Color.LightGreen, 0.7f);
                 }
             }
@@ -38,22 +40,17 @@ namespace TerrariaMoba.Projectiles {
         public override void Kill(int timeLeft) {
             Player player = Main.player[projectile.owner];
             
-            //if(Main.netMode != NetmodeID.MultiplayerClient) {
-                player.Teleport(projectile.position, -1);
-           // }
-           // if (Main.netMode == NetmodeID.Server) {
-              //  NetMessage.SendData(65, -1, -1, null, 0, (float)player.whoAmI, projectile.position.X, projectile.position.Y, -1, 0, 0);
-           // }
-            
+            player.Teleport(projectile.position, -1);
+
             Main.PlaySound(6, projectile.position);
             for (int i = 0; i < 20; i++) {
                 Dust.NewDust(projectile.position, projectile.width, projectile.height, 57, 0,
                     0, 150, Color.LightGreen, 0.7f);
             }
-
             player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().IsPhasing = false;
             player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().SylviaUlt1 = true;
             player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().NumberJavelins = 3;
+            player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().SylviaUlt1Timer = 300;
         }
     }
 }

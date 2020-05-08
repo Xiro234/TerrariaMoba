@@ -17,7 +17,7 @@ namespace TerrariaMoba.Characters {
         private int VerdantFuryTime;
 
         public Sylvia() {
-            Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().IsSylvia = true;
+            Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().CharacterName = "sylvia";
             Item vanityHelm = new Item();
             vanityHelm.SetDefaults(208);
             Item vanityChest = new Item();
