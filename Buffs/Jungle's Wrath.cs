@@ -22,13 +22,14 @@ namespace TerrariaMoba.Buffs {
         }
         
         public override bool ReApply(Player player, int time, int buffIndex) {
+            var plr = player.GetModPlayer<TerrariaMobaPlayer_Gameplay>();
             bool add = false;
-            if (player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().JunglesWrathCount <= 4) {
+            if (plr.JunglesWrathCount <= 4) {
                 add = true;
-                player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().JunglesWrathCount++;
+                plr.JunglesWrathCount++;
             }
 
-            player.buffTime[buffIndex] = SylviaStats.GetJunglesBaseWrathTime();
+            player.buffTime[buffIndex] = plr.MySylviaStats.GetJunglesWrathTime();
             SyncJunglesWrathPacket.Write(player.whoAmI, add);
             return false;
         }

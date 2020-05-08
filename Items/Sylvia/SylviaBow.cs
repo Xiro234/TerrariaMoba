@@ -4,7 +4,7 @@ using TerrariaMoba;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 
-namespace TerrariaMoba.Items {
+namespace TerrariaMoba.Items.Sylvia {
     public class SylviaBow : ModItem {
         public override void SetStaticDefaults() {
             Tooltip.SetDefault("Sylvia's main weapon.");

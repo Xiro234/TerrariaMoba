@@ -1,6 +1,6 @@
 ﻿using System;
-using Steamworks;
 using Terraria;
+using TerrariaMoba.Packets;
 
 namespace TerrariaMoba.Characters {
     public abstract class Character {
@@ -9,6 +9,7 @@ namespace TerrariaMoba.Characters {
         public bool[,] talentArray = new bool[7, 4];
         private int xpPerLevel = 100;
         public int experience = 0;
+        public String CharacterName = "";
         
         public virtual void GainExperience(int xp) {
             experience += xp;
@@ -37,74 +38,129 @@ namespace TerrariaMoba.Characters {
         public abstract void Ultimate();
         public abstract void TalentSelect();
         public abstract void LevelUp();
-        
+
         public virtual void LevelTalentOne() {
             if (canSelectTalent) {
                 switch (level) {
-                    case 2:
+                    case 1:
                         talentArray[0, 0] = true;
                         break;
                     case 4:
+                        talentArray[1, 0] = true;
                         break;
                     case 7:
+                        talentArray[2, 0] = true;
                         break;
                     case 10:
+                        talentArray[3, 0] = true;
                         break;
                     case 13:
+                        talentArray[4, 0] = true;
                         break;
                     case 16:
+                        talentArray[5, 0] = true;
                         break;
                     case 20:
+                        talentArray[6, 0] = true;
                         break;
                 }
                 canSelectTalent = false;
+                SyncCharacter();
             }
         }
         
         public virtual void LevelTalentTwo() {
             if (canSelectTalent) {
                 switch (level) {
-                    case 2:
+                    case 1:
                         talentArray[0, 1] = true;
                         break;
                     case 4:
+                        talentArray[1, 1] = true;
                         break;
                     case 7:
+                        talentArray[2, 1] = true;
                         break;
                     case 10:
+                        talentArray[3, 1] = true;
                         break;
                     case 13:
+                        talentArray[4, 1] = true;
                         break;
                     case 16:
+                        talentArray[5, 1] = true;
                         break;
                     case 20:
+                        talentArray[6, 1] = true;
                         break;
                 }
                 canSelectTalent = false;
+                SyncCharacter();
             }
         }
         
         public virtual void LevelTalentThree() {
             if (canSelectTalent) {
                 switch (level) {
-                    case 2:
+                    case 1:
                         talentArray[0, 2] = true;
                         break;
                     case 4:
+                        talentArray[1, 2] = true;
                         break;
                     case 7:
+                        talentArray[2, 2] = true;
                         break;
                     case 10:
+                        talentArray[3, 2] = true;
                         break;
                     case 13:
+                        talentArray[4, 2] = true;
                         break;
                     case 16:
+                        talentArray[5, 2] = true;
                         break;
                     case 20:
+                        talentArray[6, 2] = true;
                         break;
                 }
                 canSelectTalent = false;
+                SyncCharacter();
             }
+        }
+
+        public virtual void LevelTalentFour() {
+            if (canSelectTalent) {
+                switch (level) {
+                    case 1:
+                        talentArray[0, 3] = true;
+                        break;
+                    case 4:
+                        talentArray[1, 3] = true;
+                        break;
+                    case 7:
+                        talentArray[2, 3] = true;
+                        break;
+                    case 10:
+                        talentArray[3, 3] = true;
+                        break;
+                    case 13:
+                        talentArray[4, 3] = true;
+                        break;
+                    case 16:
+                        talentArray[5, 3] = true;
+                        break;
+                    case 20:
+                        talentArray[6, 3] = true;
+                        break;
+                }
+                canSelectTalent = false;
+                SyncCharacter();
+            }
+        }
+
+        public virtual void SyncCharacter() {
+            SyncCharacterPacket.Write(Main.LocalPlayer.whoAmI, CharacterName, talentArray);
         }
     }
 }

@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using TerrariaMoba.Stats;
 using Microsoft.Xna.Framework;
 
-namespace TerrariaMoba.Projectiles {
+namespace TerrariaMoba.Projectiles.Sylvia {
     public class EnrapturingVinesSpawner : ModProjectile {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("EnrapturingVines");

@@ -18,7 +18,6 @@ namespace TerrariaMoba.Players {
     partial class TerrariaMobaPlayer_Gameplay : ModPlayer {
         //General
         public Character MyCharacter;
-        public String CharacterName = "";
         public bool AbilityOneUsed = false;
         public bool AbilityTwoUsed = false;
         public bool UltimateUsed = false;
@@ -26,6 +25,7 @@ namespace TerrariaMoba.Players {
         public int PlayerLastHurt = -1;
 
         //Sylvia
+        public SylviaStats MySylviaStats = new SylviaStats();
         public bool VerdantFury = false;
         public bool JunglesWrath = false;
         public bool EnrapturingVines = false;
@@ -102,7 +102,7 @@ namespace TerrariaMoba.Players {
                         Main.NewText(MyCharacter.AbilityTwoName + " is off of cooldown!");
                     }
                 }
-                if (CharacterName == "sylvia") {
+                if (MyCharacter.CharacterName == "sylvia") {
                     //Flourish
                     if (SylviaUlt1Timer > 0) {
                         SylviaUlt1Timer--;
@@ -157,7 +157,7 @@ namespace TerrariaMoba.Players {
 
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
             if (CharacterPicked) {
-                if (CharacterName == "sylvia") {
+                if (MyCharacter.CharacterName == "sylvia") {
                     //JunglesWrath
                     if (proj.ranged) {
                         target.AddBuff(BuffType<Buffs.JunglesWrath>(), 240, false);
@@ -180,11 +180,11 @@ namespace TerrariaMoba.Players {
         public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type,
             ref int damage, ref float knockBack) {
             if (CharacterPicked) {
-                if (CharacterName == "sylvia") {
+                if (MyCharacter.CharacterName == "sylvia") {
                     //VerdantFury
                     if (VerdantFury && item.type == mod.ItemType("SylviaBow")) {
-                        speedX *= SylviaStats.GetVerdantFuryIncrease();
-                        speedY *= SylviaStats.GetVerdantFuryIncrease();
+                        speedX *= MySylviaStats.GetVerdantFuryIncrease();
+                        speedY *= MySylviaStats.GetVerdantFuryIncrease();
                     }
                     //Flourish
                     if (NumberJavelins > 0) {
@@ -213,10 +213,10 @@ namespace TerrariaMoba.Players {
 
         public override float UseTimeMultiplier(Item item) {
             if (CharacterPicked) {
-                if (CharacterName == "sylvia") {
+                if (MyCharacter.CharacterName == "sylvia") {
                     //VerdantFury
                     if (VerdantFury && item.type == mod.ItemType("SylviaBow")) {
-                        return SylviaStats.GetVerdantFuryIncrease();
+                        return MySylviaStats.GetVerdantFuryIncrease();
                     }
                 }
                 else {
@@ -268,7 +268,7 @@ namespace TerrariaMoba.Players {
 
         public override void PreUpdateMovement() {
             if (CharacterPicked) {
-                if (CharacterName == "sylvia") {
+                if (MyCharacter.CharacterName == "sylvia") {
                     //Flourish
                     if (SylviaUlt1) {
                         if (player.velocity.Y != 0f) { //Ripped from webbed

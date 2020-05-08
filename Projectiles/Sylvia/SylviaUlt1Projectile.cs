@@ -5,7 +5,7 @@ using TerrariaMoba.Stats;
 using Microsoft.Xna.Framework;
 using TerrariaMoba.Players;
 
-namespace TerrariaMoba.Projectiles {
+namespace TerrariaMoba.Projectiles.Sylvia {
     public class SylviaUlt1Projectile : ModProjectile {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("SylviaUlt1");

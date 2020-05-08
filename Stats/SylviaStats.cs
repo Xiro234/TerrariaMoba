@@ -6,31 +6,31 @@ using TerrariaMoba.Players;
 using TerrariaMoba.Stats;
 
 namespace TerrariaMoba.Stats {
-    public static class SylviaStats {
-        public static float VerdantFuryBuff = 1.25f;
-        public static float VerdantFuryIncrease = 0.05f;
-        public static int VerdantFuryBaseTime = 3;
-        public static int JunglesWrathBaseTime = 3;
-        public static int AbilityOneBaseCooldown = 32; //32
-        public static int AbilityTwoBaseCooldown = 36; //36
-        
-        public static float GetVerdantFuryIncrease() {
+    public class SylviaStats {
+        public float VerdantFuryBuff = 1.25f;
+        public float VerdantFuryIncrease = 0.05f;
+        public int VerdantFuryBaseTime = 3;
+        public int JunglesWrathBaseTime = 3;
+        public int AbilityOneBaseCooldown = 32; //32
+        public int AbilityTwoBaseCooldown = 36; //36
+
+        public float GetVerdantFuryIncrease() {
             return VerdantFuryBuff + (VerdantFuryIncrease * (Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().MyCharacter.level - 1));
         }
 
-        public static int GetAbilityOneBaseCd() {
+        public int GetAbilityOneCd() {
             return AbilityOneBaseCooldown * 60;
         }
         
-        public static int GetAbilityTwoBaseCd() {
+        public int GetAbilityTwoCd() {
             return AbilityTwoBaseCooldown * 60;
         }
         
-        public static int GetVerdantFuryBaseTime() {
+        public int GetVerdantFuryTime() {
             return VerdantFuryBaseTime * 60;
         }
 
-        public static int GetJunglesBaseWrathTime() {
+        public int GetJunglesWrathTime() {
             return JunglesWrathBaseTime * 60;
         }
     }

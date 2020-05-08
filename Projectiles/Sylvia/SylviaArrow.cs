@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace TerrariaMoba.Projectiles {
+namespace TerrariaMoba.Projectiles.Sylvia {
     public class SylviaArrow  : ModProjectile {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("SylviaArrow");

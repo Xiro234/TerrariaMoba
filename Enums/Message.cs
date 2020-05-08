@@ -5,6 +5,7 @@ namespace TerrariaMoba.Enums {
         SyncExperience = 1,
         SyncJunglesWrath,
         SyncPvpHit,
-        SyncSylviaUlt1
+        SyncSylviaUlt1,
+        SyncCharacter
     }
 }

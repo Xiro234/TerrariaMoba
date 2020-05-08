@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using static Terraria.ModLoader.ModContent;
 
-namespace TerrariaMoba.Projectiles {
+namespace TerrariaMoba.Projectiles.Sylvia {
     public class EnrapturingVines : ModProjectile {
 
         public override void SetStaticDefaults() {
