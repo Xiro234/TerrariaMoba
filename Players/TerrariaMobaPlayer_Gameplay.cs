@@ -12,13 +12,12 @@ using Terraria.ID;
 using TerrariaMoba.Characters;
 using TerrariaMoba.Packets;
 using TerrariaMoba.Stats;
-using TerrariaMoba.Utils;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerrariaMoba.Players {
     partial class TerrariaMobaPlayer_Gameplay : ModPlayer {
         //General
-        public TerrariaMobaStats stats;
+        public Character MyCharacter;
         public String CharacterName = "";
         public bool AbilityOneUsed = false;
         public bool AbilityTwoUsed = false;
@@ -37,7 +36,7 @@ namespace TerrariaMoba.Players {
         public int NumberJavelins = 0;
 
         public override void Initialize() {
-            stats = new TerrariaMobaStats();
+            
         }
 
         public override void ResetEffects() {
@@ -48,38 +47,38 @@ namespace TerrariaMoba.Players {
 
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TerrariaMoba.AbilityOneHotKey.JustPressed) {
-                if (stats.MyCharacter.AbilityOneCooldownTimer == 0) {
-                    stats.MyCharacter.AbilityOne();
-                    stats.MyCharacter.AbilityOneCooldownTimer = stats.MyCharacter.AbilityOneCooldown;
+                if (MyCharacter.AbilityOneCooldownTimer == 0) {
+                    MyCharacter.AbilityOne();
+                    MyCharacter.AbilityOneCooldownTimer = MyCharacter.AbilityOneCooldown;
                 }
                 else {
-                    Main.NewText(stats.MyCharacter.AbilityOneName + " is on cooldown!");
+                    Main.NewText(MyCharacter.AbilityOneName + " is on cooldown!");
                 }
             }
             if (TerrariaMoba.AbilityTwoHotKey.JustPressed) {
-                if (stats.MyCharacter.AbilityTwoCooldownTimer == 0) {
-                    stats.MyCharacter.AbilityTwo();
-                    stats.MyCharacter.AbilityTwoCooldownTimer = stats.MyCharacter.AbilityTwoCooldown;
+                if (MyCharacter.AbilityTwoCooldownTimer == 0) {
+                    MyCharacter.AbilityTwo();
+                    MyCharacter.AbilityTwoCooldownTimer = MyCharacter.AbilityTwoCooldown;
                 }
                 else {
-                    Main.NewText(stats.MyCharacter.AbilityTwoName + " is on cooldown!");
+                    Main.NewText(MyCharacter.AbilityTwoName + " is on cooldown!");
                 }
             }
             if (TerrariaMoba.LevelTalentOneHotKey.JustPressed) {
-                stats.MyCharacter.LevelTalentOne();
+                MyCharacter.LevelTalentOne();
             }
             if (TerrariaMoba.LevelTalentTwoHotKey.JustPressed) {
-                stats.MyCharacter.LevelTalentTwo();
+                MyCharacter.LevelTalentTwo();
             }
             if (TerrariaMoba.LevelTalentThreeHotKey.JustPressed) {
-                stats.MyCharacter.LevelTalentThree();
+                MyCharacter.LevelTalentThree();
             }
             if (TerrariaMoba.BecomeSylvia.JustPressed) {
-                stats.MyCharacter = new Sylvia();
+                MyCharacter = new Sylvia();
                 CharacterPicked = true;
             }
             if (TerrariaMoba.UltimateHotkey.JustPressed) {
-                stats.MyCharacter.Ultimate();
+                MyCharacter.Ultimate();
             }
         }
 
@@ -93,14 +92,14 @@ namespace TerrariaMoba.Players {
 
         public override void PreUpdate() {
             if (CharacterPicked) {
-                if (stats.MyCharacter.AbilityOneCooldownTimer > 0) {
-                    if (--stats.MyCharacter.AbilityOneCooldownTimer == 0) {
-                        Main.NewText(stats.MyCharacter.AbilityOneName + " is off of cooldown!");
+                if (MyCharacter.AbilityOneCooldownTimer > 0) {
+                    if (--MyCharacter.AbilityOneCooldownTimer == 0) {
+                        Main.NewText(MyCharacter.AbilityOneName + " is off of cooldown!");
                     }
                 }
-                if (stats.MyCharacter.AbilityTwoCooldownTimer > 0) {
-                    if (--stats.MyCharacter.AbilityTwoCooldownTimer == 0) {
-                        Main.NewText(stats.MyCharacter.AbilityTwoName + " is off of cooldown!");
+                if (MyCharacter.AbilityTwoCooldownTimer > 0) {
+                    if (--MyCharacter.AbilityTwoCooldownTimer == 0) {
+                        Main.NewText(MyCharacter.AbilityTwoName + " is off of cooldown!");
                     }
                 }
                 if (CharacterName == "sylvia") {
@@ -135,6 +134,11 @@ namespace TerrariaMoba.Players {
             //JunglesWrath
             if (!JunglesWrath) {
                 JunglesWrathCount = 1;
+            }
+            //IsPhasing
+            if (IsPhasing) {
+                player.immune = true;
+                player.immuneTime = 1;
             }
         }
 
@@ -179,8 +183,8 @@ namespace TerrariaMoba.Players {
                 if (CharacterName == "sylvia") {
                     //VerdantFury
                     if (VerdantFury && item.type == mod.ItemType("SylviaBow")) {
-                        speedX *= SylviaUtils.GetVerdantFuryIncrease();
-                        speedY *= SylviaUtils.GetVerdantFuryIncrease();
+                        speedX *= SylviaStats.GetVerdantFuryIncrease();
+                        speedY *= SylviaStats.GetVerdantFuryIncrease();
                     }
                     //Flourish
                     if (NumberJavelins > 0) {
@@ -212,7 +216,7 @@ namespace TerrariaMoba.Players {
                 if (CharacterName == "sylvia") {
                     //VerdantFury
                     if (VerdantFury && item.type == mod.ItemType("SylviaBow")) {
-                        return SylviaUtils.GetVerdantFuryIncrease();
+                        return SylviaStats.GetVerdantFuryIncrease();
                     }
                 }
                 else {
@@ -227,9 +231,7 @@ namespace TerrariaMoba.Players {
                 PlayerLastHurt = killer;
                 
                 int damage = sourceDamage;
-                
                 damage -= (int) (target.statDefense * 0.5);
-
                 if (damage <= 0) {
                     damage = 1;
                 }

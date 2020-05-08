@@ -10,7 +10,7 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using static Terraria.ModLoader.ModContent;
 using System;
-using TerrariaMoba.Utils;
+using TerrariaMoba.Stats;
 
 namespace TerrariaMoba.Characters {
     public class Sylvia : Character {
@@ -34,14 +34,12 @@ namespace TerrariaMoba.Characters {
             Main.LocalPlayer.inventory[0] = primary;
 
             AbilityOneName = "Enrapturing Vines";
-            AbilityOneCooldown = SylviaUtils.GetAbilityOneBaseCd();
+            AbilityOneCooldown = SylviaStats.GetAbilityOneBaseCd();
 
             AbilityTwoName = "Verdant Fury";
-            AbilityTwoCooldown = SylviaUtils.GetAbilityTwoBaseCd();
+            AbilityTwoCooldown = SylviaStats.GetAbilityTwoBaseCd();
 
-            VerdantFuryTime = SylviaUtils.GetVerdantFuryBaseTime();
-            
-            
+            VerdantFuryTime = SylviaStats.GetVerdantFuryBaseTime();
         }
 
         public override void AbilityOne() {
@@ -77,7 +75,7 @@ namespace TerrariaMoba.Characters {
             Vector2 velocity = new Vector2(direction * 0.5f ,-0.866f); //Unit vector in specific direction
             velocity *= 12;
 
-            Projectile.NewProjectile(position, velocity, TerrariaMoba.Instance.ProjectileType("SylviaUlt1"), 0, 0, Main.LocalPlayer.whoAmI);
+            Projectile.NewProjectile(position, velocity, TerrariaMoba.Instance.ProjectileType("SylviaUlt1Teleport"), 0, 0, Main.LocalPlayer.whoAmI);
 
             Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().IsPhasing = true;
         }

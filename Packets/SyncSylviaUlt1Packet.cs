@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Buffs;
 using TerrariaMoba.Players;
-using TerrariaMoba.Utils;
+using TerrariaMoba.Stats;
 using static Terraria.ModLoader.ModContent;
     
 namespace TerrariaMoba.Packets {

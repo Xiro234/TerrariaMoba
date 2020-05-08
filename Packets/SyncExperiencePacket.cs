@@ -18,7 +18,7 @@ namespace TerrariaMoba.Packets {
                 var plr = Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>();
                 int xp = (int)reader.ReadSingle();
                 if (plr.CharacterPicked) {
-                    plr.stats.GainExperience(xp);
+                    plr.MyCharacter.GainExperience(xp);
                 }
             }
         }

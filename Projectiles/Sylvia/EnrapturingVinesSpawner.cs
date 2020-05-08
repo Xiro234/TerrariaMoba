@@ -1,7 +1,7 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using TerrariaMoba.Utils;
+using TerrariaMoba.Stats;
 using Microsoft.Xna.Framework;
 
 namespace TerrariaMoba.Projectiles {

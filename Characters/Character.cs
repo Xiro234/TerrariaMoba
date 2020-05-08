@@ -7,6 +7,17 @@ namespace TerrariaMoba.Characters {
         public int level = 1;
         public bool canSelectTalent = false;
         public bool[,] talentArray = new bool[7, 4];
+        private int xpPerLevel = 100;
+        public int experience = 0;
+        
+        public virtual void GainExperience(int xp) {
+            experience += xp;
+
+            while (experience >= xpPerLevel) {
+                LevelUp();
+                experience -= xpPerLevel;
+            }
+        }
 
         public String AbilityOneName;
         public int AbilityOneCooldown;
@@ -27,7 +38,7 @@ namespace TerrariaMoba.Characters {
         public abstract void TalentSelect();
         public abstract void LevelUp();
         
-        public void LevelTalentOne() {
+        public virtual void LevelTalentOne() {
             if (canSelectTalent) {
                 switch (level) {
                     case 2:
@@ -50,7 +61,7 @@ namespace TerrariaMoba.Characters {
             }
         }
         
-        public void LevelTalentTwo() {
+        public virtual void LevelTalentTwo() {
             if (canSelectTalent) {
                 switch (level) {
                     case 2:
@@ -73,7 +84,7 @@ namespace TerrariaMoba.Characters {
             }
         }
         
-        public void LevelTalentThree() {
+        public virtual void LevelTalentThree() {
             if (canSelectTalent) {
                 switch (level) {
                     case 2:

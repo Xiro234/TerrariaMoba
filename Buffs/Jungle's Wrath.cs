@@ -5,7 +5,7 @@ using TerrariaMoba;
 using TerrariaMoba.Characters;
 using TerrariaMoba.Packets;
 using TerrariaMoba.Players;
-using TerrariaMoba.Utils;
+using TerrariaMoba.Stats;
 
 namespace TerrariaMoba.Buffs {
     public class JunglesWrath : ModBuff {
@@ -28,7 +28,7 @@ namespace TerrariaMoba.Buffs {
                 player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().JunglesWrathCount++;
             }
 
-            player.buffTime[buffIndex] = SylviaUtils.GetJunglesWrathTime();
+            player.buffTime[buffIndex] = SylviaStats.GetJunglesBaseWrathTime();
             SyncJunglesWrathPacket.Write(player.whoAmI, add);
             return false;
         }

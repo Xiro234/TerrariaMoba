@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Buffs;
 using TerrariaMoba.Players;
-using TerrariaMoba.Utils;
+using TerrariaMoba.Stats;
 using static Terraria.ModLoader.ModContent;
     
 namespace TerrariaMoba.Packets {
@@ -25,7 +25,7 @@ namespace TerrariaMoba.Packets {
                 }
 
                 int index = Main.LocalPlayer.FindBuffIndex(BuffType<Buffs.JunglesWrath>());
-                Main.LocalPlayer.buffTime[index] = SylviaUtils.GetJunglesWrathTime();
+                Main.LocalPlayer.buffTime[index] = SylviaStats.GetJunglesBaseWrathTime();
             }
         }
     

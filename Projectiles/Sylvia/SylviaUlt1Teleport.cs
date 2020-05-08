@@ -1,14 +1,14 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using TerrariaMoba.Utils;
+using TerrariaMoba.Stats;
 using Microsoft.Xna.Framework;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Projectiles {
-    public class SylviaUlt1 : ModProjectile {
+    public class SylviaUlt1Teleport : ModProjectile {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("SylviaUlt1");
+            DisplayName.SetDefault("SylviaUlt1Teleport");
         }
         
         public override void SetDefaults() {
