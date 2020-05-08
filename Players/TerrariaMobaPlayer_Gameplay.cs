@@ -1,4 +1,5 @@
-﻿using TerrariaMoba;
+﻿using System.Collections.Generic;
+using TerrariaMoba;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using System.IO;
@@ -21,14 +22,16 @@ namespace TerrariaMoba.Players {
         public bool AbilityTwoUsed = false;
         public bool UltimateUsed = false;
         public bool CharacterPicked = false;
-        public int animCounter = -1;
 
         //Sylvia
         public bool IsSylvia = false;
         public bool VerdantFury = false;
         public bool JunglesWrath = false;
         public bool EnrapturingVines = false;
+        public bool IsPhasing = false;
+        public bool SylviaUlt1 = false;
         public int JunglesWrathCount = 1;
+        public int NumberJavelins = 0;
 
         public override void Initialize() {
             stats = new TerrariaMobaStats();
@@ -60,22 +63,22 @@ namespace TerrariaMoba.Players {
                     Main.NewText(stats.MyCharacter.AbilityTwoName + " is on cooldown!");
                 }
             }
-
             if (TerrariaMoba.LevelTalentOneHotKey.JustPressed) {
                 stats.MyCharacter.LevelTalentOne();
             }
-
             if (TerrariaMoba.LevelTalentTwoHotKey.JustPressed) {
                 stats.MyCharacter.LevelTalentTwo();
             }
-
             if (TerrariaMoba.LevelTalentThreeHotKey.JustPressed) {
                 stats.MyCharacter.LevelTalentThree();
             }
-
             if (TerrariaMoba.BecomeSylvia.JustPressed) {
                 stats.MyCharacter = new Sylvia();
                 CharacterPicked = true;
+            }
+
+            if (TerrariaMoba.UltimateHotkey.JustPressed) {
+                stats.MyCharacter.Ultimate();
             }
         }
 
@@ -102,21 +105,6 @@ namespace TerrariaMoba.Players {
                 }
             }
         }
-
-        public override void PostUpdate() {
-            if (AbilityOneUsed == true) {
-                if (animCounter != 0) {
-                    stats.MyCharacter.AbilityOneAnimation(ref animCounter);
-                }
-                else {
-                    animCounter = -1;
-                    AbilityOneUsed = false;
-                }
-            }
-
-            if (AbilityTwoUsed == true) { }
-        }
-
         public override void UpdateBadLifeRegen() {
             if (JunglesWrath) {
                 if (player.lifeRegen > 0) {
@@ -126,10 +114,6 @@ namespace TerrariaMoba.Players {
                 player.lifeRegenTime = 0;
                 player.lifeRegen -= 4 * JunglesWrathCount;
             }
-        }
-
-        public override void PreUpdateBuffs() {
-            base.PreUpdateBuffs();
         }
 
         public override void PostUpdateBuffs() {
@@ -165,9 +149,19 @@ namespace TerrariaMoba.Players {
         public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type,
             ref int damage, ref float knockBack) {
             if (CharacterPicked) {
-                if (VerdantFury && item.useAmmo == AmmoID.Arrow) {
+                if (VerdantFury && item.type == mod.ItemType("SylviaBow")) {
                     speedX *= SylviaUtils.GetVerdantFuryIncrease();
                     speedY *= SylviaUtils.GetVerdantFuryIncrease();
+                }
+
+                if (NumberJavelins > 0) {
+                    Projectile.NewProjectile(position.X, position.Y, speedX, speedY, 5, damage, knockBack, player.whoAmI);
+                    NumberJavelins--;
+                    if (NumberJavelins == 0) {
+                        SylviaUlt1 = false;
+                    }
+
+                    return false;
                 }
             }
 
@@ -176,7 +170,7 @@ namespace TerrariaMoba.Players {
 
         public override float UseTimeMultiplier(Item item) {
             if (CharacterPicked) {
-                if (VerdantFury && item.useAmmo == AmmoID.Arrow) {
+                if (VerdantFury && item.type == mod.ItemType("SylviaBow")) {
                     return SylviaUtils.GetVerdantFuryIncrease();
                 }
             }
@@ -213,6 +207,27 @@ namespace TerrariaMoba.Players {
             }
         }
 
+        public override void ModifyDrawLayers(List<PlayerLayer> layers) {
+            if (IsPhasing) {
+                foreach (PlayerLayer layer in layers) {
+                    layer.visible = false;
+                }
+            }
+        }
+
+        public override void PreUpdateMovement() {
+            if (SylviaUlt1) {
+                if (player.velocity.Y != 0f) { //Ripped from webbed
+                    player.velocity = new Vector2(0f, 1E-06f);
+                }
+                else {
+                    player.velocity = Vector2.Zero;
+                }
+                player.gravity = 0f;
+                player.moveSpeed = 0f;
+            }
+        }
+
         public override void SetControls() {
             if (EnrapturingVines) {
                 player.controlRight = false;
@@ -222,5 +237,6 @@ namespace TerrariaMoba.Players {
                 player.controlDown = false;
             }
         }
+
     }
 }

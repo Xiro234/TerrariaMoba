@@ -21,7 +21,7 @@ namespace TerrariaMoba.Projectiles {
 
         public override void AI() {
             if (projectile.ai[0] == 0) {
-                Main.PlaySound(6);
+                Main.PlaySound(6, projectile.position);
                 for (int i = 0; i < 20; i++) {
                     Dust.NewDust(projectile.position, projectile.width, projectile.height, 57, 0,
                         0, 150, Color.LightGreen, 0.7f);
@@ -36,7 +36,7 @@ namespace TerrariaMoba.Projectiles {
         }
 
         public override void Kill(int timeLeft) {
-            Main.PlaySound(6);
+            Main.PlaySound(6, projectile.position);
             for (int i = 0; i < 20; i++) {
                 Dust.NewDust(projectile.position, projectile.width, projectile.height, 57, 0,
                     0, 150, Color.LightGreen, 0.7f);

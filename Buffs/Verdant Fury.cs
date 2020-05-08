@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba;
@@ -15,6 +16,8 @@ namespace TerrariaMoba.Buffs {
 
         public override void Update(Player player, ref int buffIndex) {
             player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().VerdantFury = true;
+            Dust.NewDust(player.position, player.width, player.height, 57, 0,
+                0, 150, Color.LightGreen, 0.7f);
         }
     }
 }

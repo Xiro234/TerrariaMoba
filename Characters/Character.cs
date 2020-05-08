@@ -16,9 +16,14 @@ namespace TerrariaMoba.Characters {
         public int AbilityTwoCooldown = 0;
         public int AbilityTwoCooldownTimer = 0;
 
+        public String UltimateName = "";
+        public int UltimateCooldown = 0;
+        public int UltimateCooldownTimer = 0;
+
         public abstract void AbilityOne();
-        public abstract void AbilityOneAnimation(ref int animCounter);
         public abstract void AbilityTwo();
+
+        public abstract void Ultimate();
         public abstract void TalentSelect();
         public abstract void LevelUp();
         

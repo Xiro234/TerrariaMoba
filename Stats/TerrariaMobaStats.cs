@@ -1,6 +1,6 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
-using TerrariaMoba.Enums;
+using TerrariaMoba;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
 using TerrariaMoba.Characters;

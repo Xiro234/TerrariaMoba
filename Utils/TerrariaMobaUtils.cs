@@ -77,7 +77,7 @@ namespace TerrariaMoba.Utils {
         
         public static bool TileIsSolidOrPlatform(int x, int y){
             Tile tile = Main.tile[x, y];
-            return tile != null && (tile.nactive() && (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type] && tile.frameY == 0) || tile.liquid > 64);
+            return tile != null && (tile.nactive() && (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type] && tile.frameY == 0));
         }
     }
 }

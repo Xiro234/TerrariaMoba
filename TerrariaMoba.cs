@@ -10,6 +10,7 @@ namespace TerrariaMoba {
 		public static ModHotKey LevelTalentOneHotKey;
 		public static ModHotKey LevelTalentTwoHotKey;
 		public static ModHotKey LevelTalentThreeHotKey;
+		public static ModHotKey UltimateHotkey;
 		public static ModHotKey BecomeSylvia;
 		public static TerrariaMoba Instance { get; private set; }
 
@@ -22,6 +23,7 @@ namespace TerrariaMoba {
 		public override void Load() {
 			AbilityOneHotKey = RegisterHotKey("Ability One", "Q");
 			AbilityTwoHotKey = RegisterHotKey("Ability Two", "F");
+			UltimateHotkey = RegisterHotKey("Ultimate", "R");
 			LevelTalentOneHotKey = RegisterHotKey("Level Talent One", "Z");
 			LevelTalentTwoHotKey = RegisterHotKey("Level Talent Two", "X");
 			LevelTalentThreeHotKey = RegisterHotKey("Level Talent Three", "C");

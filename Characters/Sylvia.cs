@@ -18,7 +18,21 @@ namespace TerrariaMoba.Characters {
 
         public Sylvia() {
             Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().IsSylvia = true;
-            
+            Item vanityHelm = new Item();
+            vanityHelm.SetDefaults(208);
+            Item vanityChest = new Item();
+            vanityChest.SetDefaults(1853);
+            Item vanityLeg = new Item();
+            vanityLeg.SetDefaults(1854);
+            Item primary = new Item();
+            primary.SetDefaults(TerrariaMoba.Instance.ItemType("SylviaBow"));
+
+            Main.LocalPlayer.armor[10] = vanityHelm;
+            Main.LocalPlayer.armor[11] = vanityChest;
+            Main.LocalPlayer.armor[12] = vanityLeg;
+
+            Main.LocalPlayer.inventory[0] = primary;
+
             AbilityOneName = "Enrapturing Vines";
             AbilityOneCooldown = SylviaUtils.GetAbilityOneBaseCd();
 
@@ -26,6 +40,8 @@ namespace TerrariaMoba.Characters {
             AbilityTwoCooldown = SylviaUtils.GetAbilityTwoBaseCd();
 
             VerdantFuryTime = SylviaUtils.GetVerdantFuryBaseTime();
+            
+            
         }
 
         public override void AbilityOne() {
@@ -33,31 +49,37 @@ namespace TerrariaMoba.Characters {
             Vector2 playerToMouse = Main.MouseWorld - Main.LocalPlayer.Center;
             
             int direction = Math.Sign((int)playerToMouse.X);
-
             Vector2 velocity = new Vector2(direction * 6, 0);
 
             Projectile.NewProjectile(position, velocity, TerrariaMoba.Instance.ProjectileType("EnrapturingVinesSpawner"), 30, 0, Main.LocalPlayer.whoAmI);
         }
 
-        public override void AbilityOneAnimation(ref int animCounter) {
-            Player player = Main.LocalPlayer;
-            
-            if (animCounter == -1) {
-                animCounter = 10;
-            }
-            
-            if (animCounter >= 5) {
-                player.bodyFrame.Y = 1 * 56;
-            }
-            else if(animCounter > 0) {
-                player.bodyFrame.Y = 2 * 56;
-            }
-            animCounter--;
-        }
-
         public override void AbilityTwo() {
             Main.LocalPlayer.AddBuff(BuffType<Buffs.VerdantFury>(), VerdantFuryTime);
             AbilityTwoCooldownTimer = AbilityTwoCooldown;
+        }
+
+        public override void Ultimate() {
+            /*
+            Vector2 position = Main.LocalPlayer.Center;
+            Vector2 playerToMouse = Main.MouseWorld - Main.LocalPlayer.Center;
+            playerToMouse.Normalize();
+
+            Vector2 velocity = playerToMouse *= 10;
+            
+            Projectile.NewProjectile(position, velocity, TerrariaMoba.Instance.ProjectileType("SylviaUlt2"), 30, 0, Main.LocalPlayer.whoAmI);
+            */
+
+            Vector2 position = Main.LocalPlayer.Top;
+            Vector2 playerToMouse = Main.MouseWorld - Main.LocalPlayer.Center;
+            int direction = -Math.Sign((int)playerToMouse.X);
+
+            Vector2 velocity = new Vector2(direction * 0.5f ,-0.866f); //Unit vector in specific direction
+            velocity *= 12;
+
+            Projectile.NewProjectile(position, velocity, TerrariaMoba.Instance.ProjectileType("SylviaUlt1"), 0, 0, Main.LocalPlayer.whoAmI);
+
+            Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().IsPhasing = true;
         }
 
         public override void LevelUp() {
