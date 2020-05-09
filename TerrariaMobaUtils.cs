@@ -88,4 +88,22 @@ public static class TerrariaMobaUtils {
                 break;
         }
     }
+    
+    
+    public static Player GetPlayerAssociatedWithCharacter(Player otherPlayer, String name) {
+        for (int i = 0; i < Main.maxPlayers; i++) {
+            Player player = Main.player[i];
+            if (player.active) {
+                var modPlayer = player.GetModPlayer<TerrariaMobaPlayer_Gameplay>();
+
+                if (modPlayer.CharacterPicked) {
+                    if (modPlayer.MyCharacter.CharacterName == name && otherPlayer.team != player.team) {
+                        return otherPlayer;
+                    }
+                }
+            }
+        }
+        Main.NewText("No player on enemy team with character: " + name);
+        return null;
+    }
 }

@@ -24,7 +24,8 @@ namespace TerrariaMoba.Players {
         public bool UltimateUsed = false;
         public bool CharacterPicked = false;
         public int PlayerLastHurt = -1;
-        
+        public bool Silenced = false;
+                                                                    //Finish siphoning shrubbery
         //Custom Stats
         public float PercentThorns = 0f;
 
@@ -189,6 +190,17 @@ namespace TerrariaMoba.Players {
                 else {
                     Main.NewText("Invalid Character Name: ModifyHitPvpWithProj");
                 }
+                if (CharacterPicked) {
+                    Player otherPlayer = TerrariaMobaUtils.GetPlayerAssociatedWithCharacter(Main.LocalPlayer, "sylvia");
+                    if (otherPlayer != null) {
+                        //Siphoning Shrubbery
+                        if (EnrapturingVines) {
+                            Main.NewText("Damage Pre: " + damage);
+                            damage -= (int)(damage * 0.12f);
+                            Main.NewText("New Damage: " + damage);
+                        }
+                    }
+                }
             }
 
             target.GetModPlayer<TerrariaMobaPlayer_Gameplay>().DamageOverride(damage, target, player.whoAmI, true);
@@ -196,6 +208,17 @@ namespace TerrariaMoba.Players {
         }
 
         public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit) {
+            if (CharacterPicked) {
+                Player otherPlayer = TerrariaMobaUtils.GetPlayerAssociatedWithCharacter(Main.LocalPlayer, "sylvia");
+                if (otherPlayer != null) {
+                    var otherModPlayer = otherPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>();
+                    //Siphoning Shrubbery
+                    if (EnrapturingVines && otherModPlayer.MyCharacter.talentArray[1, 1]) {
+                        damage -= (int)(damage * 0.12f);
+                    }
+                }
+            }
+            
             target.GetModPlayer<TerrariaMobaPlayer_Gameplay>().DamageOverride(damage, target, player.whoAmI, true);
             SyncPvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
         }
@@ -272,7 +295,8 @@ namespace TerrariaMoba.Players {
                 }
                 
                 CombatText.NewText(target.Hitbox, Color.OrangeRed, damage);
-                if (!sendThorns) {
+                
+                if (sendThorns) {
                     Main.PlaySound(1, target.position);
                     target.immune = true;
                     target.immuneTime = 8;
@@ -339,13 +363,21 @@ namespace TerrariaMoba.Players {
 
         public override void PostUpdateRunSpeeds() {
             if (CharacterPicked) {
+                float moveSpeedAdd = 1f;
                 if (MyCharacter.CharacterName == "sylvia") {
+                    //Nature's Calling
                     if (MyCharacter.talentArray[0, 0]) {
-                        player.moveSpeed *= 1.36f;
-                        player.accRunSpeed *= 1.36f;
-                        player.maxRunSpeed *= 1.36f;
+                        moveSpeedAdd += 0.36f;
+                    }
+                    //Swift Thistle
+                    if (MyCharacter.talentArray[1, 0] && VerdantFury) {
+                        moveSpeedAdd += MySylviaStats.GetVerdantFuryIncrease() - 1f;
                     }
                 }
+
+                player.moveSpeed *= moveSpeedAdd;
+                player.maxRunSpeed *= moveSpeedAdd;
+                player.accRunSpeed *= moveSpeedAdd;
             }
         }
 

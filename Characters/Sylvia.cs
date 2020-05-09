@@ -99,6 +99,10 @@ namespace TerrariaMoba.Characters {
                     canSelectTalent = true;
                     break;
                 case 4:
+                    Main.NewText("Move speed!");
+                    Main.NewText("Leap!");
+                    Main.NewText("Defense!");
+                    canSelectTalent = true;
                     break;
                 case 7:
                     break;
@@ -111,33 +115,6 @@ namespace TerrariaMoba.Characters {
                 case 20:
                     break;
             }
-        }
-        
-        public static float VerdantFuryBuff = 1.25f;
-        public static float VerdantFuryIncrease = 0.05f;
-        public static int VerdantFuryBaseTime = 3;
-        public static int JunglesWrathBaseTime = 3;
-        public static int AbilityOneBaseCooldown = 32; //32
-        public static int AbilityTwoBaseCooldown = 36; //36
-        
-        public static float GetVerdantFuryIncrease() {
-            return VerdantFuryBuff + (VerdantFuryIncrease * (Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().MyCharacter.level - 1));
-        }
-
-        public static int GetAbilityOneBaseCd() {
-            return AbilityOneBaseCooldown * 60;
-        }
-        
-        public static int GetAbilityTwoBaseCd() {
-            return AbilityTwoBaseCooldown * 60;
-        }
-        
-        public static int GetVerdantFuryBaseTime() {
-            return VerdantFuryBaseTime * 60;
-        }
-
-        public static int GetJunglesBaseWrathTime() {
-            return JunglesWrathBaseTime * 60;
         }
     }
 }
