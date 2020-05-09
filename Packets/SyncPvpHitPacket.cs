@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Xml.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,22 +17,25 @@ namespace TerrariaMoba.Packets {
                 int target = reader.ReadInt32();
                 int damage = reader.ReadInt32();
                 int killer = reader.ReadInt32();
-                Write(target, damage, killer);
+                bool sendThorns = reader.ReadBoolean();
+                Write(target, damage, killer, sendThorns);
             }
             else if (Main.netMode == NetmodeID.MultiplayerClient) {
                 int damage = reader.ReadInt32();
                 int killer = reader.ReadInt32();
-                Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().DamageOverride(damage, Main.LocalPlayer, killer);
+                bool sendThorns = reader.ReadBoolean();
+                Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().DamageOverride(damage, Main.LocalPlayer, killer, sendThorns);
             }
         }
     
-        public static void Write(int target, int damage, int killer) {
+        public static void Write(int target, int damage, int killer, bool sendThorns) {
             if (Main.netMode == NetmodeID.MultiplayerClient) {
                 ModPacket packet = TerrariaMoba.Instance.GetPacket();
                 packet.Write((byte) Message.SyncPvpHit);
                 packet.Write(target);
                 packet.Write(damage);
                 packet.Write(killer);
+                packet.Write(sendThorns);
                 packet.Send();
             }
             else if (Main.netMode == NetmodeID.Server) {
@@ -39,6 +43,7 @@ namespace TerrariaMoba.Packets {
                 packet.Write((byte)Message.SyncPvpHit);
                 packet.Write(damage);
                 packet.Write(killer);
+                packet.Write(sendThorns);
                 packet.Send(target);
             }
         }

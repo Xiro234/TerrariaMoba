@@ -12,7 +12,6 @@ using TerrariaMoba.Players;
 
 public static class TerrariaMobaUtils {
     public const int xpPerKill = 100;
-        
     public static String GetTeamString(int team) {
         switch (team) {
             case 0:
@@ -77,5 +76,16 @@ public static class TerrariaMobaUtils {
     public static bool TileIsSolidOrPlatform(int x, int y){
         Tile tile = Main.tile[x, y];
         return tile != null && (tile.nactive() && (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type] && tile.frameY == 0));
+    }
+
+    public static void AssignCharacter(ref Character MyCharacter, String name) {
+        switch (name) {
+            case "sylvia":
+                MyCharacter = new Sylvia(true);
+                break;
+            default:
+                Main.NewText("Invalid Character Name: AssignCharacter");
+                break;
+        }
     }
 }

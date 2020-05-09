@@ -3,6 +3,7 @@ using Terraria.ModLoader;
 using TerrariaMoba;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Items.Sylvia {
     public class SylviaBow : ModItem {
@@ -12,7 +13,7 @@ namespace TerrariaMoba.Items.Sylvia {
         }
 
         public override void SetDefaults() {
-            item.damage = 10;
+            item.damage = 20;
             item.ranged = true;
             item.shoot = mod.ProjectileType("SylviaArrow");
             item.width = 20;
@@ -30,6 +31,20 @@ namespace TerrariaMoba.Items.Sylvia {
         
         public override Vector2? HoldoutOffset() {
             return new Vector2(-5, 0);
+        }
+
+        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat) {
+            var plr = player.GetModPlayer<TerrariaMobaPlayer_Gameplay>();
+            if (plr.CharacterPicked) {
+                if (plr.MyCharacter.CharacterName == "sylvia") {
+                    //Graceful Leap
+                    if (plr.MyCharacter.talentArray[0, 1]) {
+                        if (player.velocity.Y != 0) {
+                            add += 0.08f;
+                        }
+                    }
+                }
+            }
         }
     }
 }

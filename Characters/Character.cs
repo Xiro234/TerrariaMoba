@@ -10,7 +10,7 @@ namespace TerrariaMoba.Characters {
         private int xpPerLevel = 100;
         public int experience = 0;
         public String CharacterName = "";
-        
+
         public virtual void GainExperience(int xp) {
             experience += xp;
 
@@ -40,9 +40,12 @@ namespace TerrariaMoba.Characters {
         public abstract void LevelUp();
 
         public virtual void LevelTalentOne() {
+            Main.NewText(canSelectTalent);
+            Main.NewText(level);
             if (canSelectTalent) {
                 switch (level) {
                     case 1:
+                        Main.NewText("Level up one!");
                         talentArray[0, 0] = true;
                         break;
                     case 4:
@@ -73,6 +76,7 @@ namespace TerrariaMoba.Characters {
             if (canSelectTalent) {
                 switch (level) {
                     case 1:
+                        Main.NewText("Level up two!");
                         talentArray[0, 1] = true;
                         break;
                     case 4:
@@ -103,6 +107,7 @@ namespace TerrariaMoba.Characters {
             if (canSelectTalent) {
                 switch (level) {
                     case 1:
+                        Main.NewText("Level up three!");
                         talentArray[0, 2] = true;
                         break;
                     case 4:

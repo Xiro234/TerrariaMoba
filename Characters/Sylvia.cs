@@ -16,31 +16,35 @@ namespace TerrariaMoba.Characters {
     public class Sylvia : Character {
         private int VerdantFuryTime;
 
-        public Sylvia() {
-            var plr = Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>();
+        public Sylvia(bool syncing = false) {
             CharacterName = "sylvia";
-            Item vanityHelm = new Item();
-            vanityHelm.SetDefaults(208);
-            Item vanityChest = new Item();
-            vanityChest.SetDefaults(1853);
-            Item vanityLeg = new Item();
-            vanityLeg.SetDefaults(1854);
-            Item primary = new Item();
-            primary.SetDefaults(TerrariaMoba.Instance.ItemType("SylviaBow"));
+            if (!syncing) {
+                var plr = Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>();
+                Item vanityHelm = new Item();
+                vanityHelm.SetDefaults(208);
+                Item vanityChest = new Item();
+                vanityChest.SetDefaults(1853);
+                Item vanityLeg = new Item();
+                vanityLeg.SetDefaults(1854);
+                Item primary = new Item();
+                primary.SetDefaults(TerrariaMoba.Instance.ItemType("SylviaBow"));
 
-            Main.LocalPlayer.armor[10] = vanityHelm;
-            Main.LocalPlayer.armor[11] = vanityChest;
-            Main.LocalPlayer.armor[12] = vanityLeg;
+                Main.LocalPlayer.armor[10] = vanityHelm;
+                Main.LocalPlayer.armor[11] = vanityChest;
+                Main.LocalPlayer.armor[12] = vanityLeg;
+                Main.LocalPlayer.inventory[0] = primary;
 
-            Main.LocalPlayer.inventory[0] = primary;
+                AbilityOneName = "Enrapturing Vines";
+                AbilityOneCooldown = 40 * 60;
 
-            AbilityOneName = "Enrapturing Vines";
-            AbilityOneCooldown = plr.MySylviaStats.GetAbilityOneCd();
+                AbilityTwoName = "Verdant Fury";
+                AbilityTwoCooldown = 39 * 60;
 
-            AbilityTwoName = "Verdant Fury";
-            AbilityTwoCooldown = plr.MySylviaStats.GetAbilityTwoCd();
+                VerdantFuryTime = plr.MySylviaStats.GetVerdantFuryTime();
+                TalentSelect();
 
-            VerdantFuryTime = plr.MySylviaStats.GetVerdantFuryTime();
+                SyncCharacter();
+            }
         }
 
         public override void AbilityOne() {
@@ -89,12 +93,12 @@ namespace TerrariaMoba.Characters {
         public override void TalentSelect() {
             switch (level) {
                 case 1:
+                    Main.NewText("Move speed!");
+                    Main.NewText("Leap!");
+                    Main.NewText("Defense!");
+                    canSelectTalent = true;
                     break;
                 case 4:
-                    Main.NewText("Shoot 3 Arrows!");
-                    Main.NewText("Shoot faster arrows!");
-                    Main.NewText("Shoot Flaming Arrows!");
-                    canSelectTalent = true;
                     break;
                 case 7:
                     break;

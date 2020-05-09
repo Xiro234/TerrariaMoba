@@ -7,6 +7,7 @@ using TerrariaMoba.Enums;
 using TerrariaMoba.Players;
 using TerrariaMoba.Stats;
 using static Terraria.ModLoader.ModContent;
+using static TerrariaMobaUtils;
     
 namespace TerrariaMoba.Packets {
     public class SyncCharacterPacket {
@@ -33,8 +34,10 @@ namespace TerrariaMoba.Packets {
                     }
                 }
 
-                plr.MyCharacter.CharacterName = name;
-                plr.CharacterPicked = true;
+                if (plr.CharacterPicked != true) {
+                    AssignCharacter(ref plr.MyCharacter, name);
+                    plr.CharacterPicked = true;
+                }
                 plr.MyCharacter.talentArray = talents;
             }
         }

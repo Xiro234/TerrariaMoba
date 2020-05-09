@@ -47,10 +47,15 @@ namespace TerrariaMoba.Projectiles.Sylvia {
                 Dust.NewDust(projectile.position, projectile.width, projectile.height, 57, 0,
                     0, 150, Color.LightGreen, 0.7f);
             }
+            
             player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().IsPhasing = false;
             player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().SylviaUlt1 = true;
             player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().NumberJavelins = 3;
             player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().SylviaUlt1Timer = 300;
+        }
+
+        public override bool? CanCutTiles() {
+            return false;
         }
     }
 }
