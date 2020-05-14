@@ -35,7 +35,7 @@ namespace TerrariaMoba.Packets {
                 }
 
                 if (plr.CharacterPicked != true) {
-                    AssignCharacter(ref plr.MyCharacter, name);
+                    AssignCharacter(ref plr.MyCharacter, name, plr.player);
                     plr.CharacterPicked = true;
                 }
                 plr.MyCharacter.talentArray = talents;

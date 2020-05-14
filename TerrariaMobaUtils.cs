@@ -8,6 +8,7 @@ using System.IO;
 using Terraria;
 using TerrariaMoba.Packets;
 using Terraria.GameInput;
+using Terraria.ID;
 using TerrariaMoba.Players;
 
 public static class TerrariaMobaUtils {
@@ -78,32 +79,31 @@ public static class TerrariaMobaUtils {
         return tile != null && (tile.nactive() && (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type] && tile.frameY == 0));
     }
 
-    public static void AssignCharacter(ref Character MyCharacter, String name) {
+    public static void AssignCharacter(ref Character MyCharacter, String name, Player player) {
         switch (name) {
             case "sylvia":
-                MyCharacter = new Sylvia(true);
+                if (Main.netMode == NetmodeID.Server || Main.netMode == NetmodeID.MultiplayerClient) {
+                    if (player.team == Main.LocalPlayer.team) {
+                        Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().AllySylvia = player.whoAmI;
+                    }
+                    else {
+                        Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().EnemySylvia = player.whoAmI;
+                    }
+                }
+                else {
+                    Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().AllySylvia = player.whoAmI;
+                }
+
+                if (Main.LocalPlayer == player) {
+                    MyCharacter = new Sylvia();
+                }
+                else {
+                    MyCharacter = new Sylvia(true);
+                }
                 break;
             default:
                 Main.NewText("Invalid Character Name: AssignCharacter");
                 break;
         }
-    }
-    
-    
-    public static Player GetPlayerAssociatedWithCharacter(Player otherPlayer, String name) {
-        for (int i = 0; i < Main.maxPlayers; i++) {
-            Player player = Main.player[i];
-            if (player.active) {
-                var modPlayer = player.GetModPlayer<TerrariaMobaPlayer_Gameplay>();
-
-                if (modPlayer.CharacterPicked) {
-                    if (modPlayer.MyCharacter.CharacterName == name && otherPlayer.team != player.team) {
-                        return otherPlayer;
-                    }
-                }
-            }
-        }
-        Main.NewText("No player on enemy team with character: " + name);
-        return null;
     }
 }

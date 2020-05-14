@@ -6,6 +6,7 @@ namespace TerrariaMoba.Enums {
         SyncJunglesWrath,
         SyncPvpHit,
         SyncSylviaUlt1,
-        SyncCharacter
+        SyncCharacter,
+        SyncWeakened
     }
 }

@@ -20,6 +20,7 @@ namespace TerrariaMoba.Characters {
             CharacterName = "sylvia";
             if (!syncing) {
                 var plr = Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>();
+                plr.CharacterPicked = true;
                 Item vanityHelm = new Item();
                 vanityHelm.SetDefaults(208);
                 Item vanityChest = new Item();
@@ -54,7 +55,7 @@ namespace TerrariaMoba.Characters {
             int direction = Math.Sign((int)playerToMouse.X);
             Vector2 velocity = new Vector2(direction * 6, 0);
 
-            Projectile.NewProjectile(position, velocity, TerrariaMoba.Instance.ProjectileType("EnrapturingVinesSpawner"), 30, 0, Main.LocalPlayer.whoAmI);
+            Projectile.NewProjectile(position, velocity, TerrariaMoba.Instance.ProjectileType("EnsnaringVinesSpawner"), 30, 0, Main.LocalPlayer.whoAmI);
         }
 
         public override void AbilityTwo() {

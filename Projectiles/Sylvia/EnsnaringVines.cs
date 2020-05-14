@@ -1,14 +1,16 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Players;
 using Microsoft.Xna.Framework;
+using TerrariaMoba.Packets;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerrariaMoba.Projectiles.Sylvia {
-    public class EnrapturingVines : ModProjectile {
+    public class EnsnaringVines : ModProjectile {
 
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("EnrapturingVines");
+            DisplayName.SetDefault("EnsnaringVines");
         }
 
         public override void SetDefaults() {
@@ -26,12 +28,21 @@ namespace TerrariaMoba.Projectiles.Sylvia {
                         0, 150, Color.LightGreen, 0.7f);
                 }
             }
-                
             projectile.ai[0] += 1f;
-
-            if (projectile.ai[0] >= 300) {
-                projectile.Kill();
+            
+            /*
+            var player = Main.player[projectile.owner].GetModPlayer<TerrariaMobaPlayer_Gameplay>();
+            //Venus Flytrap
+            if (player.MyCharacter.talentArray[2, 2]) {
+                if (projectile.ai[0] >= 540) {
+                    projectile.Kill();
+                }
             }
+            else {
+            */
+                if (projectile.ai[0] >= 330) {
+                    projectile.Kill();
+                }
         }
 
         public override void Kill(int timeLeft) {
@@ -43,7 +54,18 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         }
 
         public override void OnHitPvp(Player target, int damage, bool crit) {
-            target.AddBuff(BuffType<Buffs.EnrapturingVines>(), 240, false);
+            var player = Main.player[projectile.owner].GetModPlayer<TerrariaMobaPlayer_Gameplay>();
+
+            target.AddBuff(BuffType<Buffs.EnsnaringVines>(), 90, false);
+
+            //Quashing Shrubbery
+            if (player.MyCharacter.talentArray[1, 2]) {
+                target.AddBuff(BuffType<Buffs.Silenced>(), 90, false);
+            }
+
+            if (player.MyCharacter.talentArray[1, 1]) {
+                SyncWeakenedPacket.Write(target.whoAmI, 90, 0.12f, "Ensnaring Vines");
+            }
         }
     }
 }

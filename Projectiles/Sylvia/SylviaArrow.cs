@@ -12,11 +12,12 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         public override void SetDefaults() {
             projectile.friendly = true;
             projectile.arrow = true;
-            projectile.width = 34;
-            projectile.height = 18;
+            projectile.width = 8;
+            projectile.height = 8;
             projectile.tileCollide = true;
             projectile.ranged = true;
             projectile.aiStyle = 1;
+            drawOffsetX = -6;
             aiType = ProjectileID.WoodenArrowFriendly;
         }
 

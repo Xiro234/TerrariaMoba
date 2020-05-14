@@ -52,6 +52,9 @@ namespace TerrariaMoba {
 				case(Message.SyncCharacter):
 					Packets.SyncCharacterPacket.Read(reader);
 					break;
+				case(Message.SyncWeakened):
+					Packets.SyncWeakenedPacket.Read(reader);
+					break;
 			}
 		}
 	}

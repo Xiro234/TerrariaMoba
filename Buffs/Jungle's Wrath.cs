@@ -29,7 +29,6 @@ namespace TerrariaMoba.Buffs {
                 plr.JunglesWrathCount++;
             }
 
-            player.buffTime[buffIndex] = plr.MySylviaStats.GetJunglesWrathTime();
             SyncJunglesWrathPacket.Write(player.whoAmI, add);
             return false;
         }
