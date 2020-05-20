@@ -29,7 +29,7 @@ namespace TerrariaMoba.Items {
         public override string Texture => "Terraria/Item_" + ItemID.Ebonkoi;
         
         public override bool UseItem(Player player) {
-            player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().MyCharacter.LevelUp();
+            player.GetModPlayer<MobaPlayer>().MyCharacter.LevelUp();
             return true;
         }
     }

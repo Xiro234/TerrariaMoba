@@ -26,14 +26,14 @@ namespace TerrariaMoba.Packets {
                 String name = reader.ReadString();
 
                 bool add = true;
-                foreach (var item in Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().ReducedDamageList) {
+                foreach (var item in Main.LocalPlayer.GetModPlayer<MobaPlayer>().ReducedDamageList) {
                     if (item.Item1 == name) {
                         add = false;
                     }
                 }
 
                 if (add) {
-                    Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().ReducedDamageList
+                    Main.LocalPlayer.GetModPlayer<MobaPlayer>().ReducedDamageList
                         .Add(Tuple.Create(name, percentAdd, duration));
                 }
 

@@ -16,11 +16,11 @@ namespace TerrariaMoba.Buffs {
         }
 
         public override void Update(Player player, ref int buffIndex) {
-            player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().Weakened = true;
+            player.GetModPlayer<MobaPlayer>().Weakened = true;
         }
 
         public override void ModifyBuffTip(ref string tip, ref int rare) {
-            var player = Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>();
+            var player = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
             
             float damage = 0f;
             foreach (var item in player.ReducedDamageList) {

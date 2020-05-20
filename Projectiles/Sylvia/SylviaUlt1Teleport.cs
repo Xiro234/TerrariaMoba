@@ -22,7 +22,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         public override void AI() {
             if (projectile.ai[0] == 0) {
                 Player player = Main.player[projectile.owner];
-                player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().IsPhasing = true;
+                player.GetModPlayer<SylviaPlayer>().IsPhasing = true;
                 Main.PlaySound(6, projectile.position);
                 for (int i = 0; i < 20; i++) {
                     Dust.NewDust(projectile.position, projectile.width, projectile.height, 57, 0,
@@ -48,10 +48,10 @@ namespace TerrariaMoba.Projectiles.Sylvia {
                     0, 150, Color.LightGreen, 0.7f);
             }
             
-            player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().IsPhasing = false;
-            player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().SylviaUlt1 = true;
-            player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().NumberJavelins = 3;
-            player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().SylviaUlt1Timer = 300;
+            player.GetModPlayer<SylviaPlayer>().IsPhasing = false;
+            player.GetModPlayer<SylviaPlayer>().SylviaUlt1 = true;
+            player.GetModPlayer<SylviaPlayer>().NumberJavelins = 3;
+            player.GetModPlayer<SylviaPlayer>().SylviaUlt1Timer = 300;
         }
 
         public override bool? CanCutTiles() {

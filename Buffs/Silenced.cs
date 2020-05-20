@@ -18,7 +18,7 @@ namespace TerrariaMoba.Buffs {
         }
 
         public override void Update(Player player, ref int buffIndex) {
-            player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().Silenced = true;
+            player.GetModPlayer<MobaPlayer>().Silenced = true;
         }
     }
 }

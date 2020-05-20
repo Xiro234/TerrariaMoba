@@ -27,7 +27,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
                 Projectile.NewProjectile(newPos, Vector2.Zero, mod.ProjectileType("EnsnaringVines"), projectile.damage, projectile.knockBack, projectile.owner);
             }
             
-            //var player = Main.player[projectile.owner].GetModPlayer<TerrariaMobaPlayer_Gameplay>();
+            //var player = Main.player[projectile.owner].GetModPlayer<MobaPlayer>();
 
             /*
             if (player.MyCharacter.talentArray[2, 2]) {

@@ -18,11 +18,11 @@ namespace TerrariaMoba.Buffs {
         }
 
         public override void Update(Player player, ref int buffIndex) {
-            player.GetModPlayer<TerrariaMobaPlayer_Gameplay>().JunglesWrath = true;
+            player.GetModPlayer<SylviaPlayer>().JunglesWrath = true;
         }
         
         public override bool ReApply(Player player, int time, int buffIndex) {
-            var plr = player.GetModPlayer<TerrariaMobaPlayer_Gameplay>();
+            var plr = player.GetModPlayer<SylviaPlayer>();
             bool add = false;
             if (plr.JunglesWrathCount < 4) {
                 add = true;
@@ -34,7 +34,7 @@ namespace TerrariaMoba.Buffs {
         }
 
         public override void ModifyBuffTip(ref string tip, ref int rare) {
-            tip += " Stacks: " + Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().JunglesWrathCount;
+            tip += " Stacks: " + Main.LocalPlayer.GetModPlayer<SylviaPlayer>().JunglesWrathCount;
         }
     }
 }

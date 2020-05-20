@@ -24,7 +24,7 @@ namespace TerrariaMoba.Packets {
                 int damage = reader.ReadInt32();
                 int killer = reader.ReadInt32();
                 bool sendThorns = reader.ReadBoolean();
-                Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().DamageOverride(damage, Main.LocalPlayer, killer, sendThorns);
+                Main.LocalPlayer.GetModPlayer<MobaPlayer>().DamageOverride(damage, Main.LocalPlayer, killer, sendThorns);
             }
         }
     

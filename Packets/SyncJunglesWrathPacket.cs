@@ -18,7 +18,7 @@ namespace TerrariaMoba.Packets {
                 Write(target, add);
             }
             else if (Main.netMode == NetmodeID.MultiplayerClient) {
-                var plr = Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>();
+                var plr = Main.LocalPlayer.GetModPlayer<SylviaPlayer>();
                 bool add = reader.ReadBoolean();
                 if (add) {
                     plr.JunglesWrathCount++;

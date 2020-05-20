@@ -13,7 +13,7 @@ namespace TerrariaMoba.Stats {
         public int JunglesWrathTime = 3;
 
         public float GetVerdantFuryIncrease() {
-            return VerdantFuryBuff + (VerdantFuryIncrease * (Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().MyCharacter.level - 1));
+            return VerdantFuryBuff + (VerdantFuryIncrease * (Main.LocalPlayer.GetModPlayer<MobaPlayer>().MyCharacter.level - 1));
         }
 
         public int GetVerdantFuryTime() {

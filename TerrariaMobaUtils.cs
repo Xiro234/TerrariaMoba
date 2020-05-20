@@ -54,7 +54,7 @@ public static class TerrariaMobaUtils {
     public static void MobaKill(int killWhoAmI) {
         //Credit to https://github.com/hamstar0/tml-playerstatistics-mod for modifications on his work
         if (killWhoAmI >= 0 && killWhoAmI < Main.player.Length) {
-            var otherPlayer = Main.player[killWhoAmI].GetModPlayer<TerrariaMobaPlayer_Gameplay>();
+            var otherPlayer = Main.player[killWhoAmI].GetModPlayer<MobaPlayer>();
 
             if (otherPlayer != null) {
                 for (int i = 0; i < Main.maxPlayers; i++) {
@@ -84,14 +84,14 @@ public static class TerrariaMobaUtils {
             case "sylvia":
                 if (Main.netMode == NetmodeID.Server || Main.netMode == NetmodeID.MultiplayerClient) {
                     if (player.team == Main.LocalPlayer.team) {
-                        Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().AllySylvia = player.whoAmI;
+                        Main.LocalPlayer.GetModPlayer<MobaPlayer>().AllySylvia = player.whoAmI;
                     }
                     else {
-                        Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().EnemySylvia = player.whoAmI;
+                        Main.LocalPlayer.GetModPlayer<MobaPlayer>().EnemySylvia = player.whoAmI;
                     }
                 }
                 else {
-                    Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().AllySylvia = player.whoAmI;
+                    Main.LocalPlayer.GetModPlayer<MobaPlayer>().AllySylvia = player.whoAmI;
                 }
 
                 if (Main.LocalPlayer == player) {

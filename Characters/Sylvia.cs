@@ -19,7 +19,8 @@ namespace TerrariaMoba.Characters {
         public Sylvia(bool syncing = false) {
             CharacterName = "sylvia";
             if (!syncing) {
-                var plr = Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>();
+                var plr = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
+                var sylviaPlayer = Main.LocalPlayer.GetModPlayer<SylviaPlayer>();
                 plr.CharacterPicked = true;
                 Item vanityHelm = new Item();
                 vanityHelm.SetDefaults(208);
@@ -41,7 +42,7 @@ namespace TerrariaMoba.Characters {
                 AbilityTwoName = "Verdant Fury";
                 AbilityTwoCooldown = 39 * 60;
 
-                VerdantFuryTime = plr.MySylviaStats.GetVerdantFuryTime();
+                VerdantFuryTime = sylviaPlayer.MySylviaStats.GetVerdantFuryTime();
                 TalentSelect();
 
                 SyncCharacter();
@@ -83,7 +84,7 @@ namespace TerrariaMoba.Characters {
 
             Projectile.NewProjectile(position, velocity, TerrariaMoba.Instance.ProjectileType("SylviaUlt1Teleport"), 0, 0, Main.LocalPlayer.whoAmI);
 
-            Main.LocalPlayer.GetModPlayer<TerrariaMobaPlayer_Gameplay>().IsPhasing = true;
+            Main.LocalPlayer.GetModPlayer<SylviaPlayer>().IsPhasing = true;
         }
 
         public override void LevelUp() {

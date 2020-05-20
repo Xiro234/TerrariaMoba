@@ -25,7 +25,7 @@ namespace TerrariaMoba.Packets {
                 Write(target, name, talents);
             }
             else if (Main.netMode == NetmodeID.MultiplayerClient) {
-                var plr = Main.player[reader.ReadInt32()].GetModPlayer<TerrariaMobaPlayer_Gameplay>();
+                var plr = Main.player[reader.ReadInt32()].GetModPlayer<MobaPlayer>();
                 String name = reader.ReadString();
                 bool[,] talents = new bool[7, 4];
                 for (int i = 0; i < talents.GetLength(0); i++) {

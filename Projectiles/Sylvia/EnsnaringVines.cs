@@ -31,7 +31,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
             projectile.ai[0] += 1f;
             
             /*
-            var player = Main.player[projectile.owner].GetModPlayer<TerrariaMobaPlayer_Gameplay>();
+            var player = Main.player[projectile.owner].GetModPlayer<MobaPlayer>();
             //Venus Flytrap
             if (player.MyCharacter.talentArray[2, 2]) {
                 if (projectile.ai[0] >= 540) {
@@ -54,7 +54,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         }
 
         public override void OnHitPvp(Player target, int damage, bool crit) {
-            var player = Main.player[projectile.owner].GetModPlayer<TerrariaMobaPlayer_Gameplay>();
+            var player = Main.player[projectile.owner].GetModPlayer<MobaPlayer>();
 
             target.AddBuff(BuffType<Buffs.EnsnaringVines>(), 90, false);
 
