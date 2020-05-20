@@ -82,24 +82,14 @@ public static class TerrariaMobaUtils {
     public static void AssignCharacter(ref Character MyCharacter, String name, Player player) {
         switch (name) {
             case "sylvia":
-                if (Main.netMode == NetmodeID.Server || Main.netMode == NetmodeID.MultiplayerClient) {
-                    if (player.team == Main.LocalPlayer.team) {
-                        Main.LocalPlayer.GetModPlayer<MobaPlayer>().AllySylvia = player.whoAmI;
-                    }
-                    else {
-                        Main.LocalPlayer.GetModPlayer<MobaPlayer>().EnemySylvia = player.whoAmI;
-                    }
-                }
-                else {
-                    Main.LocalPlayer.GetModPlayer<MobaPlayer>().AllySylvia = player.whoAmI;
-                }
-
                 if (Main.LocalPlayer == player) {
                     MyCharacter = new Sylvia();
                 }
                 else {
                     MyCharacter = new Sylvia(true);
                 }
+
+                player.GetModPlayer<SylviaPlayer>().IsSylvia = true;
                 break;
             default:
                 Main.NewText("Invalid Character Name: AssignCharacter");

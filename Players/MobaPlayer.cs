@@ -30,12 +30,8 @@ namespace TerrariaMoba.Players {
 
         //Custom Stats
         public float PercentThorns = 0f;
-        public List<Tuple<String, float, int>> BonusDamageList;
+        public List<Tuple<String, float, int>> BonusDamageList; //I need to rewrite this so it's cleaner
         public List<Tuple<String, float, int>>  ReducedDamageList;
-
-        //Players
-        public int AllySylvia = -1;
-        public int EnemySylvia = -1;
 
         public override void Initialize() {
             BonusDamageList = new List<Tuple<String, float, int>>();
@@ -107,22 +103,6 @@ namespace TerrariaMoba.Players {
             }
         }
 
-        public override void PostUpdateEquips() {
-            if (CharacterPicked) {
-                if (AllySylvia == player.whoAmI) {
-                    //Sylvia Talent [0,1]: Graceful Leap
-                    if (MyCharacter.talentArray[0, 1]) {
-                        player.doubleJumpCloud = true; //doesn't work, needs to sync somewhere idk
-                    }
-                    //Sylvia Talent [0,2]: Thorns Embrace
-                    if (MyCharacter.talentArray[0, 2]) {
-                        player.statDefense += 6;
-                        PercentThorns += 0.15f;
-                    }
-                }
-            }
-        }
-
         public override void PostUpdateBuffs() {
             //Weakened
             if (ReducedDamageList.Count > 0) {
@@ -162,24 +142,12 @@ namespace TerrariaMoba.Players {
         }
 
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            if (CharacterPicked) {
-                if (AllySylvia == player.whoAmI) {
-                    //Jungles Wrath
-                    if (proj.ranged) {
-                        target.AddBuff(BuffType<Buffs.JunglesWrath>(), 240, false);
-                    }
-                }
-            }
-            
             EditDamage(ref damage);
             target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
             SyncPvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
         }
 
         public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit) {
-            if (CharacterPicked) {
-            }
-
             EditDamage(ref damage);
             target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
             SyncPvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
