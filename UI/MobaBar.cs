@@ -37,7 +37,7 @@ namespace TerrariaMoba.UI {
             ability1Cooldown.VAlign = 0.5f;
             ability1Cooldown.HAlign = 0.5f;
             ability1Panel.Append(ability1Cooldown);
-            
+
             ability2Panel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Blank"), "");
             ability2Panel.VAlign = 0.5f;
             ability2Panel.HAlign = 0.18f;
@@ -47,7 +47,7 @@ namespace TerrariaMoba.UI {
             ability2Cooldown.HAlign = 0.5f;
             ability2Panel.Append(ability2Cooldown);
             
-            ultimatePanel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Blank"), "");
+            /*ultimatePanel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Blank"), "");
             ultimatePanel.VAlign = 0.5f;
             ultimatePanel.HAlign = 0.33f;
             
@@ -63,12 +63,12 @@ namespace TerrariaMoba.UI {
             traitCooldown = new UIText("");
             traitCooldown.VAlign = 0.5f;
             traitCooldown.HAlign = 0.5f;
-            traitPanel.Append(traitCooldown);
+            traitPanel.Append(traitCooldown);*/
             
             bar.Append(ability1Panel);
             bar.Append(ability2Panel);
-            bar.Append(ultimatePanel);
-            bar.Append(traitPanel);
+            //bar.Append(ultimatePanel);
+            //bar.Append(traitPanel);
         }
 
         public void SetIcons() {
@@ -82,7 +82,15 @@ namespace TerrariaMoba.UI {
             var mobaPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
             if (mobaPlayer.CharacterPicked) {
                 if(mobaPlayer.MyCharacter.AbilityOneCooldownTimer > 0) {
-                    ability1Cooldown.SetText((mobaPlayer.MyCharacter.AbilityOneCooldownTimer / 60).ToString());
+                    if (mobaPlayer.MyCharacter.AbilityOneCooldownTimer >= 50) { //Do this in DrawSelf when I get the chance
+                        ability1Cooldown.SetText(Math.Ceiling(mobaPlayer.MyCharacter.AbilityOneCooldownTimer / 60f)
+                            .ToString());
+                    }
+                    else {
+                        ability1Cooldown.SetText(((mobaPlayer.MyCharacter.AbilityOneCooldownTimer / 60f) - ((mobaPlayer.MyCharacter.AbilityOneCooldownTimer / 60f) % 0.1f))
+                            .ToString());
+                    }
+
                     ability1Panel.isOnCooldown = true;
                     ability1Panel.cooldown = mobaPlayer.MyCharacter.AbilityOneCooldown;
                     ability1Panel.cooldownTimer = mobaPlayer.MyCharacter.AbilityOneCooldownTimer;

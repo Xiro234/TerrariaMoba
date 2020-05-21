@@ -38,7 +38,6 @@ namespace TerrariaMoba {
 
 			if (!Main.dedServ) {
 				MobaBar = new MobaBar();
-				MobaBar.Activate();
 				MobaInterface = new UserInterface();
 				MobaInterface.SetState(null);
 			}

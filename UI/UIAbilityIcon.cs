@@ -27,7 +27,7 @@ namespace TerrariaMoba.UI {
             if (IsMouseHovering) {
                 Main.hoverItemName = hoverText;
             }
-            
+
             //Cooldown Effect
             if (isOnCooldown) {
                 Rectangle hitbox = GetDimensions().ToRectangle();

@@ -14,6 +14,7 @@ using TerrariaMoba.Characters;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Packets;
 using TerrariaMoba.Stats;
+using TerrariaMoba.UI;
 using static TerrariaMobaUtils;
 using static Terraria.ModLoader.ModContent;
 
@@ -40,7 +41,8 @@ namespace TerrariaMoba.Players {
         }
 
         public override void OnEnterWorld(Player player) {
-            TerrariaMoba.Instance.MobaBar.Initialize();
+            TerrariaMoba.Instance.MobaBar = null;
+            TerrariaMoba.Instance.MobaBar = new MobaBar();
             TerrariaMoba.Instance.HideBar();
         }
 
@@ -80,8 +82,8 @@ namespace TerrariaMoba.Players {
             }
             if (TerrariaMoba.BecomeSylvia.JustPressed) {
                 AssignCharacter(ref MyCharacter, CharacterEnum.Sylvia, player);
-                TerrariaMoba.Instance.MobaBar.SetIcons();
                 TerrariaMoba.Instance.ShowBar();
+                TerrariaMoba.Instance.MobaBar.SetIcons();
             }
             if (TerrariaMoba.UltimateHotkey.JustPressed) {
                 MyCharacter.Ultimate();

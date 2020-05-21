@@ -38,7 +38,7 @@ namespace TerrariaMoba.Characters {
                 Main.LocalPlayer.inventory[0] = primary;
 
                 AbilityOneName = "Enrapturing Vines";
-                AbilityOneCooldown = 10 * 60;
+                AbilityOneCooldown = 5 * 60;
                 AbilityOneIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaAbilityOne");
 
                 AbilityTwoName = "Verdant Fury";
