@@ -130,7 +130,7 @@ namespace TerrariaMoba.Players {
             SylviaPlayer modPlayer = drawPlayer.GetModPlayer<SylviaPlayer>();
 
             if (modPlayer.EnsnaringVines) {
-                Texture2D texture = mod.GetTexture("Textures/EnsnaringVines");
+                Texture2D texture = mod.GetTexture("Textures/Sylvia/EnsnaringVines");
                 
                 int drawX = (int)(drawInfo.position.X + drawPlayer.width / 2f - Main.screenPosition.X);
                 int drawY = (int)(drawInfo.position.Y + (drawPlayer.height - 2f) - Main.screenPosition.Y);

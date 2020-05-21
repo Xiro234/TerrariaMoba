@@ -10,6 +10,7 @@ using TerrariaMoba.Packets;
 using Terraria.GameInput;
 using Terraria.ID;
 using TerrariaMoba.Players;
+using TerrariaMoba.Enums;
 
 public static class TerrariaMobaUtils {
     public const int xpPerKill = 100;
@@ -79,9 +80,9 @@ public static class TerrariaMobaUtils {
         return tile != null && (tile.nactive() && (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type] && tile.frameY == 0));
     }
 
-    public static void AssignCharacter(ref Character MyCharacter, String name, Player player) {
-        switch (name) {
-            case "sylvia":
+    public static void AssignCharacter(ref Character MyCharacter, CharacterEnum character, Player player) {
+        switch (character) {
+            case CharacterEnum.Sylvia:
                 if (Main.LocalPlayer == player) {
                     MyCharacter = new Sylvia();
                 }

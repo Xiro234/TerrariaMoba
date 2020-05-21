@@ -18,8 +18,8 @@ namespace TerrariaMoba {
 		public static ModHotKey BecomeSylvia;
 		public static TerrariaMoba Instance { get; private set; }
 
-		internal TestCooldown TestCooldown;
-		private UserInterface _cooldownBar;
+		internal MobaBar MobaBar;
+		internal UserInterface MobaInterface;
 
 		public const float nonKillXpRatio = 0.75f;
 
@@ -35,15 +35,17 @@ namespace TerrariaMoba {
 			LevelTalentTwoHotKey = RegisterHotKey("Level Talent Two", "X");
 			LevelTalentThreeHotKey = RegisterHotKey("Level Talent Three", "C");
 			BecomeSylvia = RegisterHotKey("Become Sylvia", "V");
-			
-			TestCooldown = new TestCooldown();
-			TestCooldown.Activate();
-			_cooldownBar = new UserInterface();
-			_cooldownBar.SetState(TestCooldown);
+
+			if (!Main.dedServ) {
+				MobaBar = new MobaBar();
+				MobaBar.Activate();
+				MobaInterface = new UserInterface();
+				MobaInterface.SetState(null);
+			}
 		}
 
 		public override void UpdateUI(GameTime gameTime) {
-			_cooldownBar?.Update(gameTime);
+			MobaInterface?.Update(gameTime);
 		}
 		
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
@@ -55,7 +57,7 @@ namespace TerrariaMoba {
 					"TerrariaMoba: A Description",
 					delegate
 					{
-						_cooldownBar.Draw(Main.spriteBatch, new GameTime());
+						MobaInterface.Draw(Main.spriteBatch, new GameTime());
 						return true;
 					},
 					InterfaceScaleType.UI)
@@ -65,8 +67,16 @@ namespace TerrariaMoba {
 
 		public override void Unload() {
 			AbilityOneHotKey = null;
+			AbilityTwoHotKey = null;
+			UltimateHotkey = null;
+			LevelTalentOneHotKey = null;
+			LevelTalentTwoHotKey = null;
+			LevelTalentThreeHotKey = null;
+			BecomeSylvia = null;
+
+			MobaBar.UnLoad();
 		}
-		
+
 		public override void HandlePacket(BinaryReader reader, int whoAmI) {
 			Message msg = (Message) reader.ReadByte();
 			switch (msg) {
@@ -89,6 +99,14 @@ namespace TerrariaMoba {
 					Packets.SyncWeakenedPacket.Read(reader);
 					break;
 			}
+		}
+
+		internal void ShowBar() {
+			MobaInterface?.SetState(MobaBar);
+		}
+
+		internal void HideBar() {
+			MobaInterface?.SetState(null);
 		}
 	}
 }

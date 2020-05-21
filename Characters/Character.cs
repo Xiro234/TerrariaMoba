@@ -1,6 +1,8 @@
 ﻿using System;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using TerrariaMoba.Packets;
+using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Characters {
     public abstract class Character {
@@ -9,7 +11,7 @@ namespace TerrariaMoba.Characters {
         public bool[,] talentArray = new bool[7, 4];
         private int xpPerLevel = 100;
         public int experience = 0;
-        public String CharacterName = "";
+        public CharacterEnum CharacterEnum;
 
         public virtual void GainExperience(int xp) {
             experience += xp;
@@ -20,14 +22,17 @@ namespace TerrariaMoba.Characters {
             }
         }
 
+        public Texture2D AbilityOneIcon;
         public String AbilityOneName;
         public int AbilityOneCooldown;
         public int AbilityOneCooldownTimer = 0;
 
+        public Texture2D AbilityTwoIcon;
         public String AbilityTwoName = "";
         public int AbilityTwoCooldown = 0;
         public int AbilityTwoCooldownTimer = 0;
 
+        public Texture2D UltimateIcon;
         public String UltimateName = "";
         public int UltimateCooldown = 0;
         public int UltimateCooldownTimer = 0;
@@ -165,7 +170,7 @@ namespace TerrariaMoba.Characters {
         }
 
         public virtual void SyncCharacter() {
-            SyncCharacterPacket.Write(Main.LocalPlayer.whoAmI, CharacterName, talentArray);
+            SyncCharacterPacket.Write(Main.LocalPlayer.whoAmI, CharacterEnum, talentArray);
         }
     }
 }

@@ -10,6 +10,7 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using static Terraria.ModLoader.ModContent;
 using System;
+using TerrariaMoba.Enums;
 using TerrariaMoba.Stats;
 
 namespace TerrariaMoba.Characters {
@@ -17,7 +18,7 @@ namespace TerrariaMoba.Characters {
         private int VerdantFuryTime;
 
         public Sylvia(bool syncing = false) {
-            CharacterName = "sylvia";
+            CharacterEnum = CharacterEnum.Sylvia;
             if (!syncing) {
                 var plr = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
                 var sylviaPlayer = Main.LocalPlayer.GetModPlayer<SylviaPlayer>();
@@ -37,10 +38,12 @@ namespace TerrariaMoba.Characters {
                 Main.LocalPlayer.inventory[0] = primary;
 
                 AbilityOneName = "Enrapturing Vines";
-                AbilityOneCooldown = 40 * 60;
+                AbilityOneCooldown = 10 * 60;
+                AbilityOneIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaAbilityOne");
 
                 AbilityTwoName = "Verdant Fury";
-                AbilityTwoCooldown = 39 * 60;
+                AbilityTwoCooldown = 10 * 60;
+                AbilityTwoIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaAbilityTwo");
 
                 VerdantFuryTime = sylviaPlayer.MySylviaStats.GetVerdantFuryTime();
                 TalentSelect();

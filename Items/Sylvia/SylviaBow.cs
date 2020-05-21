@@ -4,6 +4,7 @@ using TerrariaMoba;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using TerrariaMoba.Players;
+using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Items.Sylvia {
     public class SylviaBow : ModItem {
@@ -36,7 +37,7 @@ namespace TerrariaMoba.Items.Sylvia {
         public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat) {
             var plr = player.GetModPlayer<MobaPlayer>();
             if (plr.CharacterPicked) {
-                if (plr.MyCharacter.CharacterName == "sylvia") {
+                if (plr.MyCharacter.CharacterEnum == CharacterEnum.Sylvia) {
                     //Graceful Leap
                     if (plr.MyCharacter.talentArray[0, 1]) {
                         if (player.velocity.Y != 0) {

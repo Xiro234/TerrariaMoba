@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using Terraria.ID;
 using TerrariaMoba.Characters;
+using TerrariaMoba.Enums;
 using TerrariaMoba.Packets;
 using TerrariaMoba.Stats;
 using static TerrariaMobaUtils;
@@ -36,6 +37,11 @@ namespace TerrariaMoba.Players {
         public override void Initialize() {
             BonusDamageList = new List<Tuple<String, float, int>>();
             ReducedDamageList = new List<Tuple<String, float, int>>();
+        }
+
+        public override void OnEnterWorld(Player player) {
+            TerrariaMoba.Instance.MobaBar.Initialize();
+            TerrariaMoba.Instance.HideBar();
         }
 
         public override void ResetEffects() {
@@ -73,7 +79,9 @@ namespace TerrariaMoba.Players {
                 MyCharacter.LevelTalentThree();
             }
             if (TerrariaMoba.BecomeSylvia.JustPressed) {
-                AssignCharacter(ref MyCharacter, "sylvia", player);
+                AssignCharacter(ref MyCharacter, CharacterEnum.Sylvia, player);
+                TerrariaMoba.Instance.MobaBar.SetIcons();
+                TerrariaMoba.Instance.ShowBar();
             }
             if (TerrariaMoba.UltimateHotkey.JustPressed) {
                 MyCharacter.Ultimate();
