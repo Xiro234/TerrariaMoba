@@ -141,6 +141,7 @@ namespace TerrariaMoba.Players {
         
         public override void ModifyDrawLayers(List<PlayerLayer> layers) {
             MiscEffects.visible = true;
+            
             layers.Add(MiscEffects);
             
             //IsPhasing

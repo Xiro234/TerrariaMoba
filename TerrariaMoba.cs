@@ -46,9 +46,13 @@ namespace TerrariaMoba {
 		public override void UpdateUI(GameTime gameTime) {
 			MobaInterface?.Update(gameTime);
 		}
-		
+
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
 		{
+			int LayerIndex;
+			LayerIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
+			layers.RemoveAt(LayerIndex);
+			
 			int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
 			if (mouseTextIndex != -1)
 			{

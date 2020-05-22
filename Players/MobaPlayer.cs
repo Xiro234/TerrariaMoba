@@ -59,7 +59,7 @@ namespace TerrariaMoba.Players {
                     MyCharacter.AbilityOneCooldownTimer = MyCharacter.AbilityOneCooldown;
                 }
                 else {
-                    Main.NewText(MyCharacter.AbilityOneName + " is on cooldown!");
+                    Main.PlaySound(25);
                 }
             }
             if (TerrariaMoba.AbilityTwoHotKey.JustPressed) {
@@ -68,7 +68,16 @@ namespace TerrariaMoba.Players {
                     MyCharacter.AbilityTwoCooldownTimer = MyCharacter.AbilityTwoCooldown;
                 }
                 else {
-                    Main.NewText(MyCharacter.AbilityTwoName + " is on cooldown!");
+                    Main.PlaySound(25);
+                }
+            }
+            if (TerrariaMoba.UltimateHotkey.JustPressed) {
+                if (MyCharacter.UltimateCooldownTimer == 0) {
+                    MyCharacter.Ultimate();
+                    MyCharacter.UltimateCooldownTimer = MyCharacter.UltimateCooldown;
+                }
+                else {
+                    Main.PlaySound(25);
                 }
             }
             if (TerrariaMoba.LevelTalentOneHotKey.JustPressed) {
@@ -85,9 +94,6 @@ namespace TerrariaMoba.Players {
                 TerrariaMoba.Instance.ShowBar();
                 TerrariaMoba.Instance.MobaBar.SetIcons();
             }
-            if (TerrariaMoba.UltimateHotkey.JustPressed) {
-                MyCharacter.Ultimate();
-            }
         }
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage,
@@ -101,14 +107,13 @@ namespace TerrariaMoba.Players {
         public override void PreUpdate() {
             if (CharacterPicked) {
                 if (MyCharacter.AbilityOneCooldownTimer > 0) {
-                    if (--MyCharacter.AbilityOneCooldownTimer == 0) {
-                        Main.NewText(MyCharacter.AbilityOneName + " is off of cooldown!");
-                    }
+                    MyCharacter.AbilityOneCooldownTimer--;
                 }
                 if (MyCharacter.AbilityTwoCooldownTimer > 0) {
-                    if (--MyCharacter.AbilityTwoCooldownTimer == 0) {
-                        Main.NewText(MyCharacter.AbilityTwoName + " is off of cooldown!");
-                    }
+                    MyCharacter.AbilityTwoCooldownTimer--;
+                }
+                if (MyCharacter.UltimateCooldownTimer > 0) {
+                    MyCharacter.UltimateCooldownTimer--;
                 }
             }
         }

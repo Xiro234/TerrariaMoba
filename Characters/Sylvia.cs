@@ -37,13 +37,21 @@ namespace TerrariaMoba.Characters {
                 Main.LocalPlayer.armor[12] = vanityLeg;
                 Main.LocalPlayer.inventory[0] = primary;
 
-                AbilityOneName = "Enrapturing Vines";
-                AbilityOneCooldown = 5 * 60;
+                AbilityOneName = "Ensnaring Vines";
+                AbilityOneCooldown = 30 * 60;
                 AbilityOneIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaAbilityOne");
 
                 AbilityTwoName = "Verdant Fury";
                 AbilityTwoCooldown = 10 * 60;
                 AbilityTwoIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaAbilityTwo");
+
+                UltimateName = "Flourish";
+                UltimateCooldown = 60 * 60;
+                UltimateIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaUltimateOne");
+                
+                TraitName = "Jungle's Wrath";
+                TraitCooldown = 0;
+                TraitIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaTrait");
 
                 VerdantFuryTime = sylviaPlayer.MySylviaStats.GetVerdantFuryTime();
                 TalentSelect();

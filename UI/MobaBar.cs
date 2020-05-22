@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
 using Terraria.UI;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
@@ -15,23 +17,26 @@ namespace TerrariaMoba.UI {
         private UIText ability2Cooldown;
         private UIText ultimateCooldown;
         private UIText traitCooldown;
-        private UIPanel bar;
+        private UIImage bar;
         private UIAbilityIcon ability1Panel;
         private UIAbilityIcon ability2Panel;
         private UIAbilityIcon ultimatePanel;
         private UIAbilityIcon traitPanel;
+        private ResourceBar lifeBar;
+        private ResourceBar manaBar;
+        private UIText lifeText;
+        private UIText manaText;
+        private static readonly MethodInfo DrawBuffIcon = typeof(Main).GetMethod("DrawBuffIcon", BindingFlags.NonPublic | BindingFlags.Static);
         
         public override void OnInitialize() {
-            bar = new UIPanel();
-            bar.Width.Set(500, 0);
-            bar.Height.Set(75, 0);
+            bar = new UIImage(TerrariaMoba.Instance.GetTexture("Textures/MobaBarBackground"));
             bar.VAlign = 0.95f;
             bar.HAlign = 0.5f;
             Append(bar);
 
             ability1Panel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Blank"), "");
-            ability1Panel.VAlign = 0.5f;
-            ability1Panel.HAlign = 0.03f;
+            ability1Panel.Top.Set(72, 0);
+            ability1Panel.Left.Set(268, 0);
             
             ability1Cooldown = new UIText("");
             ability1Cooldown.VAlign = 0.5f;
@@ -39,17 +44,17 @@ namespace TerrariaMoba.UI {
             ability1Panel.Append(ability1Cooldown);
 
             ability2Panel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Blank"), "");
-            ability2Panel.VAlign = 0.5f;
-            ability2Panel.HAlign = 0.18f;
+            ability2Panel.Top.Set(72, 0);
+            ability2Panel.Left.Set(338, 0);
             
             ability2Cooldown = new UIText("");
             ability2Cooldown.VAlign = 0.5f;
             ability2Cooldown.HAlign = 0.5f;
             ability2Panel.Append(ability2Cooldown);
             
-            /*ultimatePanel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Blank"), "");
-            ultimatePanel.VAlign = 0.5f;
-            ultimatePanel.HAlign = 0.33f;
+            ultimatePanel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Blank"), "");
+            ultimatePanel.Top.Set(72, 0);
+            ultimatePanel.Left.Set(408, 0);
             
             ultimateCooldown = new UIText("");
             ultimateCooldown.VAlign = 0.5f;
@@ -57,18 +62,42 @@ namespace TerrariaMoba.UI {
             ultimatePanel.Append(ultimateCooldown);
             
             traitPanel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Blank"), "");
-            traitPanel.VAlign = 0.5f;
-            traitPanel.HAlign = 0.48f;
+            traitPanel.Top.Set(72, 0);
+            traitPanel.Left.Set(478, 0);
             
             traitCooldown = new UIText("");
             traitCooldown.VAlign = 0.5f;
             traitCooldown.HAlign = 0.5f;
-            traitPanel.Append(traitCooldown);*/
+            traitPanel.Append(traitCooldown);
             
+            lifeBar = new ResourceBar(Color.DarkGreen, Color.Green, 0);
+            lifeBar.Left.Set(54, 0);
+            lifeBar.Top.Set(5, 0);
+            lifeBar.Width.Set(432, 0);
+            lifeBar.Height.Set(14, 0);
+
+            lifeText = new UIText("");
+            lifeText.VAlign = 0.5f;
+            lifeText.HAlign = 0.5f;
+            lifeBar.Append(lifeText);
+            
+            manaBar = new ResourceBar(Color.DarkBlue, Color.DarkCyan, 1);
+            manaBar.Left.Set(54, 0);
+            manaBar.Top.Set(22, 0);
+            manaBar.Width.Set(432, 0);
+            manaBar.Height.Set(14, 0);
+
+            manaText = new UIText("");
+            manaText.VAlign = 0.5f;
+            manaText.HAlign = 0.5f;
+            manaBar.Append(manaText);
+
+            bar.Append(lifeBar);
+            bar.Append(manaBar);
             bar.Append(ability1Panel);
             bar.Append(ability2Panel);
-            //bar.Append(ultimatePanel);
-            //bar.Append(traitPanel);
+            bar.Append(ultimatePanel);
+            bar.Append(traitPanel);
         }
 
         public void SetIcons() {
@@ -76,40 +105,41 @@ namespace TerrariaMoba.UI {
             
             ability1Panel.SetIcon(player.MyCharacter.AbilityOneIcon, player.MyCharacter.AbilityOneName);
             ability2Panel.SetIcon(player.MyCharacter.AbilityTwoIcon, player.MyCharacter.AbilityTwoName);
+            ultimatePanel.SetIcon(player.MyCharacter.UltimateIcon, player.MyCharacter.UltimateName);
+            traitPanel.SetIcon(player.MyCharacter.TraitIcon, player.MyCharacter.TraitName);
         }
 
         public override void Update(GameTime gameTime) {
             var mobaPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
             if (mobaPlayer.CharacterPicked) {
-                if(mobaPlayer.MyCharacter.AbilityOneCooldownTimer > 0) {
-                    if (mobaPlayer.MyCharacter.AbilityOneCooldownTimer >= 50) { //Do this in DrawSelf when I get the chance
-                        ability1Cooldown.SetText(Math.Ceiling(mobaPlayer.MyCharacter.AbilityOneCooldownTimer / 60f)
-                            .ToString());
-                    }
-                    else {
-                        ability1Cooldown.SetText(((mobaPlayer.MyCharacter.AbilityOneCooldownTimer / 60f) - ((mobaPlayer.MyCharacter.AbilityOneCooldownTimer / 60f) % 0.1f))
-                            .ToString());
-                    }
+                DrawIcon(ref ability1Cooldown, ref ability1Panel, mobaPlayer.MyCharacter.AbilityOneCooldown, mobaPlayer.MyCharacter.AbilityOneCooldownTimer);
+                DrawIcon(ref ability2Cooldown, ref ability2Panel, mobaPlayer.MyCharacter.AbilityTwoCooldown, mobaPlayer.MyCharacter.AbilityTwoCooldownTimer);
+                DrawIcon(ref ultimateCooldown, ref ultimatePanel, mobaPlayer.MyCharacter.UltimateCooldown, mobaPlayer.MyCharacter.UltimateCooldownTimer);
+                DrawIcon(ref traitCooldown, ref traitPanel, mobaPlayer.MyCharacter.TraitCooldown, mobaPlayer.MyCharacter.TraitCooldownTimer);
+            }
 
-                    ability1Panel.isOnCooldown = true;
-                    ability1Panel.cooldown = mobaPlayer.MyCharacter.AbilityOneCooldown;
-                    ability1Panel.cooldownTimer = mobaPlayer.MyCharacter.AbilityOneCooldownTimer;
+            lifeText.SetText(Main.LocalPlayer.statLife + "/" + Main.LocalPlayer.statLifeMax);
+            manaText.SetText(Main.LocalPlayer.statMana + "/" + Main.LocalPlayer.statManaMax);
+        }
+
+        public void DrawIcon(ref UIText text,ref UIAbilityIcon icon, int cooldown, int timer) {
+            if(timer > 0) {
+                if (timer >= 40) {
+                    text.SetText(Math.Ceiling(timer / 60f)
+                        .ToString());
                 }
                 else {
-                    ability1Cooldown.SetText("");
-                    ability1Panel.isOnCooldown = false;
+                    text.SetText((Math.Ceiling((timer / 60f) * 10) / 10f)
+                        .ToString());
                 }
                 
-                if(mobaPlayer.MyCharacter.AbilityTwoCooldownTimer > 0) {
-                    ability2Cooldown.SetText((mobaPlayer.MyCharacter.AbilityTwoCooldownTimer / 60).ToString());
-                    ability2Panel.isOnCooldown = true;
-                    ability2Panel.cooldown = mobaPlayer.MyCharacter.AbilityTwoCooldown;
-                    ability2Panel.cooldownTimer = mobaPlayer.MyCharacter.AbilityTwoCooldownTimer;
-                }
-                else {
-                    ability2Cooldown.SetText("");
-                    ability2Panel.isOnCooldown = false;
-                }
+                icon.isOnCooldown = true;
+                icon.cooldown = cooldown;
+                icon.cooldownTimer = timer;
+            }
+            else {
+                text.SetText("");
+                icon.isOnCooldown = false;
             }
         }
 

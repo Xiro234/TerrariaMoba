@@ -37,6 +37,11 @@ namespace TerrariaMoba.Characters {
         public int UltimateCooldown = 0;
         public int UltimateCooldownTimer = 0;
 
+        public Texture2D TraitIcon;
+        public String TraitName = "";
+        public int TraitCooldown = 0;
+        public int TraitCooldownTimer = 0;
+
         public abstract void AbilityOne();
         public abstract void AbilityTwo();
 
