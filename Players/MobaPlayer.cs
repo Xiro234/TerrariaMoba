@@ -29,6 +29,8 @@ namespace TerrariaMoba.Players {
         public int PlayerLastHurt = -1;
         public bool Silenced = false;
         public bool Weakened = false;
+        public bool InProgress = false;
+        public int GameTime = 0;
 
         //Custom Stats
         public float PercentThorns = 0f;
@@ -44,6 +46,10 @@ namespace TerrariaMoba.Players {
             TerrariaMoba.Instance.MobaBar = null;
             TerrariaMoba.Instance.MobaBar = new MobaBar();
             TerrariaMoba.Instance.HideBar();
+        }
+
+        public override void OnRespawn(Player player) {
+            player.statLife = player.statLifeMax;
         }
 
         public override void ResetEffects() {
@@ -91,8 +97,6 @@ namespace TerrariaMoba.Players {
             }
             if (TerrariaMoba.BecomeSylvia.JustPressed) {
                 AssignCharacter(ref MyCharacter, CharacterEnum.Sylvia, player);
-                TerrariaMoba.Instance.ShowBar();
-                TerrariaMoba.Instance.MobaBar.SetIcons();
             }
         }
 
@@ -103,7 +107,7 @@ namespace TerrariaMoba.Players {
             }
             return true;
         }
-
+        
         public override void PreUpdate() {
             if (CharacterPicked) {
                 if (MyCharacter.AbilityOneCooldownTimer > 0) {
@@ -115,6 +119,10 @@ namespace TerrariaMoba.Players {
                 if (MyCharacter.UltimateCooldownTimer > 0) {
                     MyCharacter.UltimateCooldownTimer--;
                 }
+            }
+
+            if (InProgress) {
+                GameTime++;
             }
         }
 
@@ -212,6 +220,13 @@ namespace TerrariaMoba.Players {
                     target.immuneTime = 8;
                 }
             }
+        }
+        
+        public void StartGame() {
+                MyCharacter.ChooseCharacter();
+                InProgress = true;
+                TerrariaMoba.Instance.ShowBar();
+                TerrariaMoba.Instance.MobaBar.SetIcons();
         }
     }
 }

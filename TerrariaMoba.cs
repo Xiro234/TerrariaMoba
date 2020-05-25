@@ -35,7 +35,7 @@ namespace TerrariaMoba {
 			LevelTalentTwoHotKey = RegisterHotKey("Level Talent Two", "X");
 			LevelTalentThreeHotKey = RegisterHotKey("Level Talent Three", "C");
 			BecomeSylvia = RegisterHotKey("Become Sylvia", "V");
-
+			
 			if (!Main.dedServ) {
 				MobaBar = new MobaBar();
 				MobaInterface = new UserInterface();
@@ -52,14 +52,14 @@ namespace TerrariaMoba {
 			int LayerIndex;
 			LayerIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
 			layers.RemoveAt(LayerIndex);
+			LayerIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Death Text"));
+			layers.RemoveAt(LayerIndex);
 			
 			int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
-			if (mouseTextIndex != -1)
-			{
+			if (mouseTextIndex != -1) {
 				layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer(
 					"TerrariaMoba: A Description",
-					delegate
-					{
+					delegate {
 						MobaInterface.Draw(Main.spriteBatch, new GameTime());
 						return true;
 					},

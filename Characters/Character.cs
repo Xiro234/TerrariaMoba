@@ -9,7 +9,7 @@ namespace TerrariaMoba.Characters {
         public int level = 1;
         public bool canSelectTalent = false;
         public bool[,] talentArray = new bool[7, 4];
-        private int xpPerLevel = 100;
+        public int xpPerLevel = 100;
         public int experience = 0;
         public CharacterEnum CharacterEnum;
 
@@ -21,6 +21,8 @@ namespace TerrariaMoba.Characters {
                 experience -= xpPerLevel;
             }
         }
+
+        public Texture2D CharacterIcon;
 
         public Texture2D AbilityOneIcon;
         public String AbilityOneName;
@@ -48,6 +50,8 @@ namespace TerrariaMoba.Characters {
         public abstract void Ultimate();
         public abstract void TalentSelect();
         public abstract void LevelUp();
+        
+        public abstract void ChooseCharacter();
 
         public virtual void LevelTalentOne() {
             Main.NewText(canSelectTalent);

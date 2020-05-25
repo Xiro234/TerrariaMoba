@@ -17,12 +17,16 @@ namespace TerrariaMoba.Characters {
     public class Sylvia : Character {
         private int VerdantFuryTime;
 
-        public Sylvia(bool syncing = false) {
+        public Sylvia() {
+            var plr = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
             CharacterEnum = CharacterEnum.Sylvia;
-            if (!syncing) {
+            plr.CharacterPicked = true;
+            SyncCharacter();
+        }
+
+        public override void ChooseCharacter() {
                 var plr = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
                 var sylviaPlayer = Main.LocalPlayer.GetModPlayer<SylviaPlayer>();
-                plr.CharacterPicked = true;
                 Item vanityHelm = new Item();
                 vanityHelm.SetDefaults(208);
                 Item vanityChest = new Item();
@@ -36,7 +40,11 @@ namespace TerrariaMoba.Characters {
                 Main.LocalPlayer.armor[11] = vanityChest;
                 Main.LocalPlayer.armor[12] = vanityLeg;
                 Main.LocalPlayer.inventory[0] = primary;
-
+                Main.LocalPlayer.Male = false;
+                Main.LocalPlayer.hair = 55;
+                Main.LocalPlayer.hairColor = new Color(52, 133, 34);
+                Main.LocalPlayer.skinColor = new Color(198,134,66);
+                Main.LocalPlayer.eyeColor = new Color(84,42,14);
                 AbilityOneName = "Ensnaring Vines";
                 AbilityOneCooldown = 30 * 60;
                 AbilityOneIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaAbilityOne");
@@ -52,12 +60,11 @@ namespace TerrariaMoba.Characters {
                 TraitName = "Jungle's Wrath";
                 TraitCooldown = 0;
                 TraitIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaTrait");
+                
+                CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaIcon");
 
                 VerdantFuryTime = sylviaPlayer.MySylviaStats.GetVerdantFuryTime();
                 TalentSelect();
-
-                SyncCharacter();
-            }
         }
 
         public override void AbilityOne() {

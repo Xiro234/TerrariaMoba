@@ -6,10 +6,10 @@ using Microsoft.Xna.Framework;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Items {
-    public class DebugLevelUp : ModItem {
+    public class DebugGainXp : ModItem {
         public override void SetStaticDefaults() {
-            Tooltip.SetDefault("Levels up your character");
-            DisplayName.SetDefault("DebugLevelUp");
+            Tooltip.SetDefault("Gains 10 Xp");
+            DisplayName.SetDefault("DebugGainXp");
         }
 
         public override void SetDefaults() {
@@ -23,13 +23,13 @@ namespace TerrariaMoba.Items {
             item.maxStack = 30;
             item.consumable = false;
             item.rare = 3;
-            item.color = Color.Yellow;
+            item.color = Color.MediumVioletRed;
         }
         
-        public override string Texture => "Terraria/Item_" + ItemID.Ebonkoi;
+        public override string Texture => "Terraria/Item_" + ItemID.CrimsonKey;
         
         public override bool UseItem(Player player) {
-            player.GetModPlayer<MobaPlayer>().MyCharacter.LevelUp();
+            player.GetModPlayer<MobaPlayer>().MyCharacter.GainExperience(10);
             return true;
         }
     }

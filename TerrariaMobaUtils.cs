@@ -83,17 +83,11 @@ public static class TerrariaMobaUtils {
     public static void AssignCharacter(ref Character MyCharacter, CharacterEnum character, Player player) {
         switch (character) {
             case CharacterEnum.Sylvia:
-                if (Main.LocalPlayer == player) {
-                    MyCharacter = new Sylvia();
-                }
-                else {
-                    MyCharacter = new Sylvia(true);
-                }
-
+                MyCharacter = new Sylvia();
                 player.GetModPlayer<SylviaPlayer>().IsSylvia = true;
                 break;
             default:
-                Main.NewText("Invalid Character Name: AssignCharacter");
+                Main.NewText("Invalid Character: AssignCharacter");
                 break;
         }
     }
