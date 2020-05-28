@@ -45,6 +45,9 @@ namespace TerrariaMoba.Characters {
                 Main.LocalPlayer.hairColor = new Color(52, 133, 34);
                 Main.LocalPlayer.skinColor = new Color(198,134,66);
                 Main.LocalPlayer.eyeColor = new Color(84,42,14);
+                plr.healthMax = 2000;
+                Main.LocalPlayer.statLifeMax2 = 2000;
+                Main.LocalPlayer.statLife = 2000;
                 AbilityOneName = "Ensnaring Vines";
                 AbilityOneCooldown = 30 * 60;
                 AbilityOneIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaAbilityOne");

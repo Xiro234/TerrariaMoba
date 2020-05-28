@@ -36,6 +36,7 @@ namespace TerrariaMoba.Players {
         public float PercentThorns = 0f;
         public List<Tuple<String, float, int>> BonusDamageList; //I need to rewrite this so it's cleaner
         public List<Tuple<String, float, int>>  ReducedDamageList;
+        public int healthMax = 0;
 
         public override void Initialize() {
             BonusDamageList = new List<Tuple<String, float, int>>();
@@ -56,6 +57,9 @@ namespace TerrariaMoba.Players {
             PercentThorns = 0f;
             Silenced = false;
             Weakened = false;
+            if (InProgress && CharacterPicked) {
+                player.statLifeMax2 = healthMax;
+            }
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet) {
@@ -97,6 +101,15 @@ namespace TerrariaMoba.Players {
             }
             if (TerrariaMoba.BecomeSylvia.JustPressed) {
                 AssignCharacter(ref MyCharacter, CharacterEnum.Sylvia, player);
+            }
+
+            if (TerrariaMoba.OpenCharacterSelect.JustPressed) {
+                if (TerrariaMoba.Instance.SelectInterface.CurrentState == null) {
+                    TerrariaMoba.Instance.ShowSelect();
+                }
+                else {
+                    TerrariaMoba.Instance.HideSelect();
+                }
             }
         }
 
@@ -208,11 +221,11 @@ namespace TerrariaMoba.Players {
 
                 target.statLife -= damage;
 
+                CombatText.NewText(target.Hitbox, Color.OrangeRed, damage);
+                
                 if (target.statLife <= 0) {
                     target.KillMe(PlayerDeathReason.ByPlayer(PlayerLastHurt), damage, 1, true);
                 }
-                
-                CombatText.NewText(target.Hitbox, Color.OrangeRed, damage);
                 
                 if (sendThorns) {
                     Main.PlaySound(1, target.position);
@@ -223,10 +236,10 @@ namespace TerrariaMoba.Players {
         }
         
         public void StartGame() {
-                MyCharacter.ChooseCharacter();
-                InProgress = true;
-                TerrariaMoba.Instance.ShowBar();
-                TerrariaMoba.Instance.MobaBar.SetIcons();
+            MyCharacter.ChooseCharacter();
+            InProgress = true;
+            TerrariaMoba.Instance.ShowBar();
+            TerrariaMoba.Instance.MobaBar.SetIcons();
         }
     }
 }

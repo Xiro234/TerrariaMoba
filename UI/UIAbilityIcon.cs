@@ -4,6 +4,8 @@ using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 using System;
+using Microsoft.Xna.Framework.Input;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.UI {
     public class UIAbilityIcon : UIImage {
@@ -54,6 +56,18 @@ namespace TerrariaMoba.UI {
                         
                         spriteBatch.Draw(Main.magicPixel, new Rectangle(right - i, top + j, 1, 1), color); //Top + j makes it go clockwise
                     }
+                }
+            }
+        }
+
+        public override void Click(UIMouseEvent evt) {
+            if (Main.keyState.IsKeyDown(Keys.LeftAlt)) {
+                var modPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
+                if (isOnCooldown) {
+                    Main.NewText(Main.LocalPlayer.name + " is ready to use " + hoverText + " in " + Math.Ceiling(cooldownTimer / 60f)  + " seconds!");
+                }
+                else {
+                    Main.NewText(Main.LocalPlayer.name + " is ready to use " + hoverText + "!");
                 }
             }
         }

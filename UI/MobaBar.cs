@@ -174,10 +174,10 @@ namespace TerrariaMoba.UI {
             }
             
             if (player.lifeRegen >= 0) {
-                lifeText.SetText(player.statLife + "/" + player.statLifeMax + " (+" + player.lifeRegen + ")", 0.75f, false);
+                lifeText.SetText(player.statLife + "/" + player.statLifeMax2 + " (+" + player.lifeRegen + ")", 0.75f, false);
             }
             else {
-                lifeText.SetText(player.statLife + "/" + player.statLifeMax + " (" + player.lifeRegen + ")", 0.75f, false);
+                lifeText.SetText(player.statLife + "/" + player.statLifeMax2 + " (" + player.lifeRegen + ")", 0.75f, false);
             }
 
             if (player.manaRegen >= 0) {
@@ -222,9 +222,25 @@ namespace TerrariaMoba.UI {
         public void UnLoad() {
             ability1Cooldown = null;
             ability2Cooldown = null;
+            ultimateCooldown = null;
+            traitCooldown = null;
+            lifeText = null;
+            manaText = null;
+            defenseText = null;
+            moveSpeedText = null;
+            deathTimer = null;
+            levelText = null;
+            bar = null;
+            characterIcon = null;
+            moveSpeedIcon = null;
+            defenseIcon = null;
             ability1Panel = null;
             ability2Panel = null;
-            bar = null;
+            ultimatePanel = null;
+            traitPanel = null;
+            lifeBar = null;
+            manaBar = null;
+            experienceBar = null;
         }
     }
 }

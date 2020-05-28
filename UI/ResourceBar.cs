@@ -25,7 +25,7 @@ namespace TerrariaMoba.UI {
             float quotient;
             var player = Main.LocalPlayer;
             if (resource == 0) {
-                quotient = (float) player.statLife / player.statLifeMax;
+                quotient = (float) player.statLife / player.statLifeMax2;
             }
             else if(resource == 1) {
                 quotient = (float) player.statMana / player.statManaMax;
@@ -53,7 +53,7 @@ namespace TerrariaMoba.UI {
                 if (resource == 0) {
                     if (previousLife > player.statLife) {
                         int prevLifeSteps =
-                            (int) ((right - left) * ((float) (previousLife - player.statLife) / player.statLifeMax) +
+                            (int) ((right - left) * ((float) (previousLife - player.statLife) / player.statLifeMax2) +
                                    i);
                         for (int j = i; j < prevLifeSteps; j++) {
                             spriteBatch.Draw(Main.magicPixel, new Rectangle(left + j, hitbox.Y, 1, hitbox.Height),

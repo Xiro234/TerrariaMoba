@@ -2,6 +2,7 @@
 
 namespace TerrariaMoba.Enums {
     public enum CharacterEnum : int {
-        Sylvia = 1
+        Null = 1,
+        Sylvia
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using System.IO;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using TerrariaMoba.Packets;
 using Terraria.GameInput;
@@ -90,5 +91,9 @@ public static class TerrariaMobaUtils {
                 Main.NewText("Invalid Character: AssignCharacter");
                 break;
         }
+    }
+
+    public static string GetHoverText(Texture2D texture) {
+        return "";
     }
 }

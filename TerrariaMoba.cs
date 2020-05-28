@@ -16,10 +16,13 @@ namespace TerrariaMoba {
 		public static ModHotKey LevelTalentThreeHotKey;
 		public static ModHotKey UltimateHotkey;
 		public static ModHotKey BecomeSylvia;
+		public static ModHotKey OpenCharacterSelect;
 		public static TerrariaMoba Instance { get; private set; }
 
 		internal MobaBar MobaBar;
-		internal UserInterface MobaInterface;
+		internal CharacterSelect CharacterSelect;
+		internal UserInterface BarInterface;
+		internal UserInterface SelectInterface;
 
 		public const float nonKillXpRatio = 0.75f;
 
@@ -35,16 +38,22 @@ namespace TerrariaMoba {
 			LevelTalentTwoHotKey = RegisterHotKey("Level Talent Two", "X");
 			LevelTalentThreeHotKey = RegisterHotKey("Level Talent Three", "C");
 			BecomeSylvia = RegisterHotKey("Become Sylvia", "V");
-			
+			OpenCharacterSelect = RegisterHotKey("Open Character Select", "P");
+
 			if (!Main.dedServ) {
 				MobaBar = new MobaBar();
-				MobaInterface = new UserInterface();
-				MobaInterface.SetState(null);
+				BarInterface = new UserInterface();
+				BarInterface.SetState(null);
+				
+				CharacterSelect = new CharacterSelect();
+				SelectInterface = new UserInterface();
+				SelectInterface.SetState(null);
 			}
 		}
 
 		public override void UpdateUI(GameTime gameTime) {
-			MobaInterface?.Update(gameTime);
+			BarInterface?.Update(gameTime);
+			SelectInterface?.Update(gameTime);
 		}
 
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
@@ -60,7 +69,8 @@ namespace TerrariaMoba {
 				layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer(
 					"TerrariaMoba: A Description",
 					delegate {
-						MobaInterface.Draw(Main.spriteBatch, new GameTime());
+						BarInterface.Draw(Main.spriteBatch, new GameTime());
+						SelectInterface.Draw(Main.spriteBatch, new GameTime());
 						return true;
 					},
 					InterfaceScaleType.UI)
@@ -105,11 +115,19 @@ namespace TerrariaMoba {
 		}
 
 		internal void ShowBar() {
-			MobaInterface?.SetState(MobaBar);
+			BarInterface?.SetState(MobaBar);
 		}
 
 		internal void HideBar() {
-			MobaInterface?.SetState(null);
+			BarInterface?.SetState(null);
+		}
+
+		internal void ShowSelect() {
+			SelectInterface?.SetState(CharacterSelect);
+		}
+
+		internal void HideSelect() {
+			SelectInterface?.SetState(null);
 		}
 	}
 }
