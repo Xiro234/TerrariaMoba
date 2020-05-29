@@ -59,8 +59,7 @@ namespace TerrariaMoba.UI {
                             spriteBatch.Draw(Main.magicPixel, new Rectangle(left + j, hitbox.Y, 1, hitbox.Height),
                                 Color.Red);
                         }
-
-                        //Main.NewText(prevLifeSteps + " " + i + " " + previousLife);
+                        
                         previousLife -= 2;
                     }
                     else if (previousLife <= player.statLife) {

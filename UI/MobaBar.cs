@@ -163,6 +163,11 @@ namespace TerrariaMoba.UI {
         }
 
         public override void Update(GameTime gameTime) {
+            base.Update(gameTime);
+            if (ContainsPoint(Main.MouseScreen)) {
+                Main.LocalPlayer.mouseInterface = true;
+            }
+            
             var player = Main.LocalPlayer;
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
             if (mobaPlayer.CharacterPicked) {

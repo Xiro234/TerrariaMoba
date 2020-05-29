@@ -21,6 +21,7 @@ using static Terraria.ModLoader.ModContent;
 namespace TerrariaMoba.Players {
     public class MobaPlayer : ModPlayer {
         //General
+        public CharacterEnum CharacterSelected;
         public Character MyCharacter;
         public bool AbilityOneUsed = false;
         public bool AbilityTwoUsed = false;
@@ -41,6 +42,7 @@ namespace TerrariaMoba.Players {
         public override void Initialize() {
             BonusDamageList = new List<Tuple<String, float, int>>();
             ReducedDamageList = new List<Tuple<String, float, int>>();
+            CharacterSelected = CharacterEnum.Null;
         }
 
         public override void OnEnterWorld(Player player) {
@@ -104,7 +106,7 @@ namespace TerrariaMoba.Players {
             }
 
             if (TerrariaMoba.OpenCharacterSelect.JustPressed) {
-                if (TerrariaMoba.Instance.SelectInterface.CurrentState == null) {
+                if (TerrariaMoba.Instance.SelectInterface.CurrentState == null && !CharacterPicked) {
                     TerrariaMoba.Instance.ShowSelect();
                 }
                 else {
