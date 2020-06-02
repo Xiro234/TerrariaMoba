@@ -67,8 +67,8 @@ namespace TerrariaMoba.Players {
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TerrariaMoba.AbilityOneHotKey.JustPressed) {
                 if (MyCharacter.AbilityOneCooldownTimer == 0) {
-                    MyCharacter.AbilityOne();
-                    MyCharacter.AbilityOneCooldownTimer = MyCharacter.AbilityOneCooldown;
+                    MyCharacter.AbilityOneOnCast(Main.LocalPlayer);
+                    SyncAbilitiesPacket.Write(0, player.whoAmI);
                 }
                 else {
                     Main.PlaySound(25);
@@ -76,8 +76,8 @@ namespace TerrariaMoba.Players {
             }
             if (TerrariaMoba.AbilityTwoHotKey.JustPressed) {
                 if (MyCharacter.AbilityTwoCooldownTimer == 0) {
-                    MyCharacter.AbilityTwo();
-                    MyCharacter.AbilityTwoCooldownTimer = MyCharacter.AbilityTwoCooldown;
+                    MyCharacter.AbilityTwoOnCast(Main.LocalPlayer);
+                    SyncAbilitiesPacket.Write(1, player.whoAmI);
                 }
                 else {
                     Main.PlaySound(25);
@@ -85,8 +85,8 @@ namespace TerrariaMoba.Players {
             }
             if (TerrariaMoba.UltimateHotkey.JustPressed) {
                 if (MyCharacter.UltimateCooldownTimer == 0) {
-                    MyCharacter.Ultimate();
-                    MyCharacter.UltimateCooldownTimer = MyCharacter.UltimateCooldown;
+                    MyCharacter.UltimateOnCast(Main.LocalPlayer);
+                    SyncAbilitiesPacket.Write(2, player.whoAmI);
                 }
                 else {
                     Main.PlaySound(25);
@@ -124,7 +124,7 @@ namespace TerrariaMoba.Players {
         }
         
         public override void PreUpdate() {
-            if (CharacterPicked) {
+            if (CharacterPicked && InProgress) {
                 if (MyCharacter.AbilityOneCooldownTimer > 0) {
                     MyCharacter.AbilityOneCooldownTimer--;
                 }
@@ -134,9 +134,6 @@ namespace TerrariaMoba.Players {
                 if (MyCharacter.UltimateCooldownTimer > 0) {
                     MyCharacter.UltimateCooldownTimer--;
                 }
-            }
-
-            if (InProgress) {
                 GameTime++;
             }
         }

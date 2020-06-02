@@ -84,7 +84,7 @@ public static class TerrariaMobaUtils {
     public static void AssignCharacter(ref Character MyCharacter, CharacterEnum character, Player player) {
         switch (character) {
             case CharacterEnum.Sylvia:
-                MyCharacter = new Sylvia();
+                MyCharacter = new Sylvia(player);
                 player.GetModPlayer<SylviaPlayer>().IsSylvia = true;
                 break;
             default:

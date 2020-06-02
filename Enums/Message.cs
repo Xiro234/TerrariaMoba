@@ -8,6 +8,7 @@ namespace TerrariaMoba.Enums {
         SyncSylviaUlt1,
         SyncCharacter,
         SyncWeakened,
-        SyncGameStart
+        SyncGameStart,
+        SyncAbilities
     }
 }

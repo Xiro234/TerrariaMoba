@@ -7,7 +7,6 @@ using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Packets {
     public class SyncGameStartPacket {
-
         public static void Read(BinaryReader reader) {
             if (Main.netMode == NetmodeID.Server) {
                 Write();

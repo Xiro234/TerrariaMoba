@@ -43,7 +43,7 @@ namespace TerrariaMoba.Players {
                     if (SylviaUlt1Timer == 0) {
                         SylviaUlt1 = false;
                         NumberJavelins = 0;
-                        SyncSylviaUlt1Packet.Write(player.whoAmI, SylviaUlt1);
+                        //SyncSylviaUlt1Packet.Write(player.whoAmI, SylviaUlt1);
                     }
                 }
             }
@@ -97,7 +97,7 @@ namespace TerrariaMoba.Players {
                     NumberJavelins--;
                     if (NumberJavelins == 0) {
                         SylviaUlt1 = false;
-                        SyncSylviaUlt1Packet.Write(player.whoAmI, SylviaUlt1);
+                        //SyncSylviaUlt1Packet.Write(player.whoAmI, SylviaUlt1);
                     }
 
                     return false;

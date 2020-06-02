@@ -154,12 +154,16 @@ namespace TerrariaMoba.UI {
 
         public void SetIcons() {
             var player = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
-            
-            ability1Panel.SetIcon(player.MyCharacter.AbilityOneIcon, player.MyCharacter.AbilityOneName);
-            ability2Panel.SetIcon(player.MyCharacter.AbilityTwoIcon, player.MyCharacter.AbilityTwoName);
-            ultimatePanel.SetIcon(player.MyCharacter.UltimateIcon, player.MyCharacter.UltimateName);
-            traitPanel.SetIcon(player.MyCharacter.TraitIcon, player.MyCharacter.TraitName);
-            characterIcon.SetImage(player.MyCharacter.CharacterIcon);
+            try {
+                ability1Panel.SetIcon(player.MyCharacter.AbilityOneIcon, player.MyCharacter.AbilityOneName);
+                ability2Panel.SetIcon(player.MyCharacter.AbilityTwoIcon, player.MyCharacter.AbilityTwoName);
+                ultimatePanel.SetIcon(player.MyCharacter.UltimateIcon, player.MyCharacter.UltimateName);
+                traitPanel.SetIcon(player.MyCharacter.TraitIcon, player.MyCharacter.TraitName);
+                characterIcon.SetImage(player.MyCharacter.CharacterIcon);
+            }
+            catch (NullReferenceException exception) {
+                Main.NewText(exception.Message);
+            }
         }
 
         public override void Update(GameTime gameTime) {
