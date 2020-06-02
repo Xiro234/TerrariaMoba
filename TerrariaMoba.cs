@@ -114,6 +114,9 @@ namespace TerrariaMoba {
 				case(Message.SyncAbilities):
 					Packets.SyncAbilitiesPacket.Read(reader);
 					break;
+				case(Message.SyncGameStart):
+					Packets.SyncGameStartPacket.Read(reader);
+					break;
 			}
 		}
 

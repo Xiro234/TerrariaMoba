@@ -29,26 +29,30 @@ namespace TerrariaMoba.Items {
         public override string Texture => "Terraria/Item_" + ItemID.Abeemination;
         
         public override bool UseItem(Player player) {
-            bool canStart = true;
-            for (int i = 0; i < Main.maxPlayers; i++) {
-                if (Main.player[i] != null && Main.player[i].active) {
-                    if (!Main.player[i].GetModPlayer<MobaPlayer>().CharacterPicked) {
-                        canStart = false;
+            if (player.whoAmI == Main.myPlayer) {
+                bool canStart = true;
+                for (int i = 0; i < Main.maxPlayers; i++) {
+                    if (Main.player[i] != null && Main.player[i].active) {
+                        if (!Main.player[i].GetModPlayer<MobaPlayer>().CharacterPicked) {
+                            canStart = false;
+                        }
                     }
+                }
+
+                if (canStart) {
+                    player.GetModPlayer<MobaPlayer>().MyCharacter.ChooseCharacter();
+                    player.GetModPlayer<MobaPlayer>().StartGame();
+                    if (Main.netMode == NetmodeID.MultiplayerClient) {
+                        Packets.SyncGameStartPacket.Write();
+                    }
+
+                    Main.NewText("Game Started!");
+                }
+                else {
+                    Main.NewText("Not everyone has chosen a character!");
                 }
             }
 
-            if (canStart) {
-                player.GetModPlayer<MobaPlayer>().MyCharacter.ChooseCharacter();
-                player.GetModPlayer<MobaPlayer>().StartGame();
-                if (Main.netMode == NetmodeID.MultiplayerClient) {
-                    Packets.SyncGameStartPacket.Write();
-                }
-                Main.NewText("Game Started!");
-            }
-            else {
-                Main.NewText("Not everyone has chosen a character!");
-            }
             return true;
         }
     }

@@ -20,7 +20,7 @@ namespace TerrariaMoba.Packets {
         public static void Write() {
             if (Main.netMode == NetmodeID.MultiplayerClient) {
                 ModPacket packet = TerrariaMoba.Instance.GetPacket();
-                packet.Write((byte) Message.SyncGameStart);
+                packet.Write((byte)Message.SyncGameStart);
                 packet.Send();
             }
             else if (Main.netMode == NetmodeID.Server) {

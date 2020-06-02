@@ -65,7 +65,6 @@ namespace TerrariaMoba.Characters {
                 CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaIcon");
 
                 VerdantFuryTime = sylviaPlayer.MySylviaStats.GetVerdantFuryTime();
-                characterName = "sylvia";
                 //TalentSelect();
         }
 

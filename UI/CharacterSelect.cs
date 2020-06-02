@@ -86,7 +86,6 @@ namespace TerrariaMoba.UI {
                 switch (mobaPlayer.CharacterSelected) {
                     case (CharacterEnum.Sylvia):
                         mobaPlayer.MyCharacter = new Sylvia(Main.LocalPlayer);
-                        Main.NewText("Sylvia!");
                         mobaPlayer.MyCharacter.SyncCharacter();
                         break;
                 }
