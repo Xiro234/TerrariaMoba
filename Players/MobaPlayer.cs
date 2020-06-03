@@ -34,15 +34,34 @@ namespace TerrariaMoba.Players {
         public int GameTime = 0;
 
         //Custom Stats
-        public float PercentThorns = 0f;
         public List<Tuple<String, float, int>> BonusDamageList; //I need to rewrite this so it's cleaner
         public List<Tuple<String, float, int>>  ReducedDamageList;
-        public int healthMax = 0;
+        public CustomStats customStats;
 
         public override void Initialize() {
             BonusDamageList = new List<Tuple<String, float, int>>();
             ReducedDamageList = new List<Tuple<String, float, int>>();
             CharacterSelected = CharacterEnum.Null;
+            customStats = new CustomStats();
+        }
+
+        public override void SyncPlayer(int toWho, int fromWho, bool newPlayer) {
+            ModPacket packet = mod.GetPacket();
+            packet.Write((byte)Message.SyncCustomStats);
+            packet.Write((byte)player.whoAmI);
+            customStats.Send(packet);
+            packet.Send();
+        }
+
+        public override void SendClientChanges(ModPlayer clientPlayer) {
+            MobaPlayer clone = clientPlayer as MobaPlayer;
+            if (!customStats.Equals(clone.customStats)) {
+                ModPacket packet = mod.GetPacket();
+                packet.Write((byte)Message.SyncCustomStats);
+                packet.Write((byte)player.whoAmI);
+                customStats.Send(packet);
+                packet.Send();
+            }
         }
 
         public override void OnEnterWorld(Player player) {
@@ -56,11 +75,11 @@ namespace TerrariaMoba.Players {
         }
 
         public override void ResetEffects() {
-            PercentThorns = 0f;
+            customStats.percentThorns = 0f;
             Silenced = false;
             Weakened = false;
             if (InProgress && CharacterPicked) {
-                player.statLifeMax2 = healthMax;
+                player.statLifeMax2 = customStats.maxHealth;
             }
         }
 
@@ -163,6 +182,10 @@ namespace TerrariaMoba.Players {
             }
         }
 
+        public override void NaturalLifeRegen(ref float regen) {
+            regen *= 0;
+        }
+
         public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
             if (this.player.whoAmI != Main.myPlayer) {
                 return;
@@ -208,16 +231,13 @@ namespace TerrariaMoba.Players {
 
                 int damage = sourceDamage;
                 
-                if (PercentThorns > 0f && sendThorns) {
-                    target.GetModPlayer<MobaPlayer>().DamageOverride((int)(damage * PercentThorns), Main.player[killer], target.whoAmI, false);
-                    SyncPvpHitPacket.Write(killer, (int)(damage * PercentThorns), target.whoAmI, false);
-                }
-                
-                damage -= (int) (target.statDefense * 0.5);
-                if (damage <= 0) {
-                    damage = 1;
+                if (customStats.percentThorns > 0f && sendThorns) {
+                    target.GetModPlayer<MobaPlayer>().DamageOverride((int)(damage * customStats.percentThorns), Main.player[killer], target.whoAmI, false);
+                    SyncPvpHitPacket.Write(killer, (int)(damage * customStats.percentThorns), target.whoAmI, false);
                 }
 
+                int armor = target.GetModPlayer<MobaPlayer>().customStats.armor;
+                damage *= ((100 - armor) / 100);
                 target.statLife -= damage;
 
                 CombatText.NewText(target.Hitbox, Color.OrangeRed, damage);

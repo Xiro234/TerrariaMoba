@@ -2,9 +2,11 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Players;
 using TerrariaMoba.UI;
 
 namespace TerrariaMoba {
@@ -56,12 +58,13 @@ namespace TerrariaMoba {
 			SelectInterface?.Update(gameTime);
 		}
 
-		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)
-		{
+		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
 			int LayerIndex;
 			LayerIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
 			layers.RemoveAt(LayerIndex);
 			LayerIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Death Text"));
+			layers.RemoveAt(LayerIndex);
+			LayerIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Entity Health Bars"));
 			layers.RemoveAt(LayerIndex);
 			
 			int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
@@ -116,6 +119,20 @@ namespace TerrariaMoba {
 					break;
 				case(Message.SyncGameStart):
 					Packets.SyncGameStartPacket.Read(reader);
+					break;
+				case(Message.SyncCustomStats):
+					byte playerIndex = reader.ReadByte();
+					Player player = Main.player[playerIndex];
+					MobaPlayer mobaPlayer = player.GetModPlayer<MobaPlayer>();
+					mobaPlayer.customStats.Recieve(reader);
+
+					if (Main.netMode == NetmodeID.Server) {
+						ModPacket packet = GetPacket();
+						packet.Write((byte)Message.SyncCustomStats);
+						packet.Write(playerIndex);
+						mobaPlayer.customStats.Send(packet);
+						packet.Send(-1, whoAmI);
+					}
 					break;
 			}
 		}

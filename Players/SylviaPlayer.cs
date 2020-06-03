@@ -214,7 +214,7 @@ namespace TerrariaMoba.Players {
                 //Sylvia Talent [0,2]: Thorns Embrace
                 if (mobaPlayer.MyCharacter.talentArray[0, 2]) {
                     player.statDefense += 6;
-                    mobaPlayer.PercentThorns += 0.15f;
+                    mobaPlayer.customStats.percentThorns += 0.15f;
                 }
             }
         }

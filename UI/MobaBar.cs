@@ -18,14 +18,14 @@ namespace TerrariaMoba.UI {
         private UIText traitCooldown;
         private UIText lifeText;
         private UIText manaText;
-        private UIText defenseText;
+        private UIText armorText;
         private UIText moveSpeedText;
         private UIText deathTimer;
         private UIText levelText;
         private UIImage bar;
         private UIImage characterIcon;
         private UIImage moveSpeedIcon;
-        private UIImage defenseIcon;
+        private UIImage armorIcon;
         private UIAbilityIcon ability1Panel;
         private UIAbilityIcon ability2Panel;
         private UIAbilityIcon ultimatePanel;
@@ -129,18 +129,18 @@ namespace TerrariaMoba.UI {
             moveSpeedText.Left.Set(32, 0);
             moveSpeedText.Top.Set(58, 0);
 
-            defenseIcon = new UIImage(TerrariaMoba.Instance.GetTexture("Textures/defenseImage"));
-            defenseIcon.Left.Set(16, 0);
-            defenseIcon.Top.Set(72, 0);
+            armorIcon = new UIImage(TerrariaMoba.Instance.GetTexture("Textures/defenseImage"));
+            armorIcon.Left.Set(16, 0);
+            armorIcon.Top.Set(72, 0);
             
-            defenseText = new UIText("");
-            defenseText.Left.Set(32, 0);
-            defenseText.Top.Set(72, 0);
+            armorText = new UIText("");
+            armorText.Left.Set(32, 0);
+            armorText.Top.Set(72, 0);
             
             bar.Append(lifeBar);
             bar.Append(manaBar);
             bar.Append(experienceBar);
-            bar.Append(defenseText);
+            bar.Append(armorText);
             bar.Append(moveSpeedText);
             bar.Append(ability1Panel);
             bar.Append(ability2Panel);
@@ -149,7 +149,7 @@ namespace TerrariaMoba.UI {
             bar.Append(characterIcon);
             bar.Append(levelText);
             bar.Append(moveSpeedIcon);
-            bar.Append(defenseIcon);
+            bar.Append(armorIcon);
         }
 
         public void SetIcons() {
@@ -196,7 +196,7 @@ namespace TerrariaMoba.UI {
                 manaText.SetText(player.statMana + "/" + player.statManaMax + " (" + player.manaRegen + ")", 0.75f, false);
             }
 
-            defenseText.SetText(player.statDefense.ToString(), 0.6f, false);
+            armorText.SetText(mobaPlayer.customStats.armor.ToString(), 0.6f, false);
             moveSpeedText.SetText(Math.Round(player.velocity.Length()).ToString(), 0.6f, false);
 
             if (player.dead) {
@@ -235,14 +235,14 @@ namespace TerrariaMoba.UI {
             traitCooldown = null;
             lifeText = null;
             manaText = null;
-            defenseText = null;
+            armorText = null;
             moveSpeedText = null;
             deathTimer = null;
             levelText = null;
             bar = null;
             characterIcon = null;
             moveSpeedIcon = null;
-            defenseIcon = null;
+            armorIcon = null;
             ability1Panel = null;
             ability2Panel = null;
             ultimatePanel = null;
