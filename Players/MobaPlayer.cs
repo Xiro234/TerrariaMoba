@@ -86,7 +86,7 @@ namespace TerrariaMoba.Players {
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TerrariaMoba.AbilityOneHotKey.JustPressed) {
                 if (MyCharacter.AbilityOneCooldownTimer == 0) {
-                    MyCharacter.AbilityOneOnCast(Main.LocalPlayer);
+                    MyCharacter.AbilityOneOnCast(player);
                     SyncAbilitiesPacket.Write(0, player.whoAmI);
                 }
                 else {
@@ -95,7 +95,7 @@ namespace TerrariaMoba.Players {
             }
             if (TerrariaMoba.AbilityTwoHotKey.JustPressed) {
                 if (MyCharacter.AbilityTwoCooldownTimer == 0) {
-                    MyCharacter.AbilityTwoOnCast(Main.LocalPlayer);
+                    MyCharacter.AbilityTwoOnCast(player);
                     SyncAbilitiesPacket.Write(1, player.whoAmI);
                 }
                 else {
@@ -104,7 +104,7 @@ namespace TerrariaMoba.Players {
             }
             if (TerrariaMoba.UltimateHotkey.JustPressed) {
                 if (MyCharacter.UltimateCooldownTimer == 0) {
-                    MyCharacter.UltimateOnCast(Main.LocalPlayer);
+                    MyCharacter.UltimateOnCast(player);
                     SyncAbilitiesPacket.Write(2, player.whoAmI);
                 }
                 else {

@@ -83,7 +83,7 @@ namespace TerrariaMoba.Players {
                     speedX *= MySylviaStats.GetVerdantFuryIncrease();
                     speedY *= MySylviaStats.GetVerdantFuryIncrease();
                 }
-
+                
                 //Flourish
                 if (NumberJavelins > 0) {
                     Vector2 velocity = new Vector2();
@@ -99,7 +99,7 @@ namespace TerrariaMoba.Players {
                         SylviaUlt1 = false;
                         //SyncSylviaUlt1Packet.Write(player.whoAmI, SylviaUlt1);
                     }
-
+                    
                     return false;
                 }
             }

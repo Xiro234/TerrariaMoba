@@ -14,25 +14,28 @@ namespace TerrariaMoba.Packets {
                 Write(abilityNumber, whoCast);
             }
             else if (Main.netMode == NetmodeID.MultiplayerClient) {
-                int abilityNumber = reader.ReadByte();
-                int whoCast = reader.ReadByte();
-                var mobaPlayer = Main.player[whoCast].GetModPlayer<MobaPlayer>();
-                switch (abilityNumber) {
-                    case(0) :
-                        mobaPlayer.MyCharacter.AbilityOneOnCast(Main.player[whoCast]);
-                        break;
-                    case(1) :
-                        mobaPlayer.MyCharacter.AbilityTwoOnCast(Main.player[whoCast]);
-                        break;
-                    case(2) :
-                        mobaPlayer.MyCharacter.UltimateOnCast(Main.player[whoCast]);
-                        break;
-                    case(3) :
-                        mobaPlayer.MyCharacter.TraitOnCast(Main.player[whoCast]);
-                        break;
-                    default:
-                        Main.NewText("Invalid \"abilityNumber\" in SyncAbilitiesPacket");
-                        break;
+                int abilityNumber = reader.ReadInt32();
+                int whoCast = reader.ReadInt32();
+                if (Main.myPlayer != whoCast) {
+                    var mobaPlayer = Main.player[whoCast].GetModPlayer<MobaPlayer>();
+                    Main.NewText("Ability: " + abilityNumber + " Who: " + whoCast);
+                    switch (abilityNumber) {
+                        case (0):
+                            mobaPlayer.MyCharacter.AbilityOneOnCast(Main.player[whoCast]);
+                            break;
+                        case (1):
+                            mobaPlayer.MyCharacter.AbilityTwoOnCast(Main.player[whoCast]);
+                            break;
+                        case (2):
+                            mobaPlayer.MyCharacter.UltimateOnCast(Main.player[whoCast]);
+                            break;
+                        case (3):
+                            mobaPlayer.MyCharacter.TraitOnCast(Main.player[whoCast]);
+                            break;
+                        default:
+                            Main.NewText("Invalid \"abilityNumber\" in SyncAbilitiesPacket");
+                            break;
+                    }
                 }
             }
         }
