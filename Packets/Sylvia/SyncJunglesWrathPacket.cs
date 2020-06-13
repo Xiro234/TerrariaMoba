@@ -18,14 +18,14 @@ namespace TerrariaMoba.Packets {
                 Write(target, add);
             }
             else if (Main.netMode == NetmodeID.MultiplayerClient) {
-                var plr = Main.LocalPlayer.GetModPlayer<SylviaPlayer>();
+                //var plr = Main.LocalPlayer.GetModPlayer<SylviaPlayer>();
                 bool add = reader.ReadBoolean();
                 if (add) {
-                    plr.JunglesWrathCount++;
+                    //plr.JunglesWrathCount++;
                 }
 
                 int index = Main.LocalPlayer.FindBuffIndex(BuffType<Buffs.JunglesWrath>());
-                Main.LocalPlayer.buffTime[index] = plr.MySylviaStats.GetJunglesWrathTime();
+                //Main.LocalPlayer.buffTime[index] = plr.MySylviaStats.GetJunglesWrathTime();
             }
         }
     

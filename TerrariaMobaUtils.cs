@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using TerrariaMoba.Packets;
@@ -85,7 +86,6 @@ public static class TerrariaMobaUtils {
         switch (character) {
             case CharacterEnum.Sylvia:
                 MyCharacter = new Sylvia(player);
-                player.GetModPlayer<SylviaPlayer>().IsSylvia = true;
                 break;
             default:
                 Main.NewText("Invalid Character: AssignCharacter");
@@ -95,5 +95,21 @@ public static class TerrariaMobaUtils {
 
     public static string GetHoverText(Texture2D texture) {
         return "";
+    }
+    
+    public static byte[] SerializeToBytes<T>(T item) {
+        var formatter = new BinaryFormatter();
+        using (var stream = new MemoryStream()) {
+            formatter.Serialize(stream, item);
+            stream.Seek(0, SeekOrigin.Begin);
+            return stream.ToArray();
+        }
+    }
+    
+    public static object DeserializeFromBytes(byte[] bytes) {
+        var formatter = new BinaryFormatter();
+        using (var stream = new MemoryStream(bytes)) {
+            return formatter.Deserialize(stream);
+        }
     }
 }

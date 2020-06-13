@@ -18,9 +18,9 @@ namespace TerrariaMoba.Packets {
                 Write(target, IsUlting);
             }
             else if (Main.netMode == NetmodeID.MultiplayerClient) {
-                var plr = Main.player[reader.ReadInt32()].GetModPlayer<SylviaPlayer>();
+                //var plr = Main.player[reader.ReadInt32()].GetModPlayer<SylviaPlayer>();
                 bool IsUlting = reader.ReadBoolean();
-                plr.SylviaUlt1 = IsUlting;
+                //plr.SylviaUlt1 = IsUlting;
             }
         }
     

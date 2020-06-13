@@ -108,8 +108,8 @@ namespace TerrariaMoba {
 				//case(Message.SyncSylviaUlt1):
 					//Packets.SyncSylviaUlt1Packet.Read(reader);
 					//break;
-				case(Message.SyncCharacter):
-					Packets.SyncCharacterPacket.Read(reader);
+				case(Message.SyncTalents):
+					Packets.SyncTalentsPacket.Read(reader);
 					break;
 				case(Message.SyncWeakened):
 					Packets.SyncWeakenedPacket.Read(reader);

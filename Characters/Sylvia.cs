@@ -7,15 +7,25 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Microsoft.Xna.Framework;
 using static Terraria.ModLoader.ModContent;
 using System;
+using System.Collections.Generic;
+using TerrariaMoba.Abilities;
+using TerrariaMoba.Abilities.Sylvia;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Stats;
+using EnsnaringVines = TerrariaMoba.Abilities.Sylvia.EnsnaringVines;
 
 namespace TerrariaMoba.Characters {
     public class Sylvia : Character {
-        private int VerdantFuryTime;
+        private bool IsPhasing = false;
+        private bool SylviaUlt1 = false;
+        private int SylviaUlt1Timer = 0;
+        private int NumberJavelins = 0;
+        public float VerdantFuryBuff = 1.25f;
+        private int VerdantFuryTime = 180;
+        public float VerdantFuryIncrease = 0.05f;
+        public int JunglesWrathTime = 180;
 
         public Sylvia(Player player) : base(player) {
             CharacterEnum = CharacterEnum.Sylvia;
@@ -24,7 +34,6 @@ namespace TerrariaMoba.Characters {
         public override void ChooseCharacter() {
                 Main.NewText("Sylvia");
                 var plr = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
-                var sylviaPlayer = Main.LocalPlayer.GetModPlayer<SylviaPlayer>();
                 Item vanityHelm = new Item();
                 vanityHelm.SetDefaults(208);
                 Item vanityChest = new Item();
@@ -49,6 +58,8 @@ namespace TerrariaMoba.Characters {
                 AbilityOneName = "Ensnaring Vines";
                 AbilityOneCooldown = 30 * 60;
                 AbilityOneIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaAbilityOne");
+                EnsnaringVines abilityOne = new EnsnaringVines(player);
+                abilities[0] = abilityOne;
 
                 AbilityTwoName = "Verdant Fury";
                 AbilityTwoCooldown = 10 * 60;
@@ -64,20 +75,13 @@ namespace TerrariaMoba.Characters {
                 
                 CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaIcon");
 
-                VerdantFuryTime = sylviaPlayer.MySylviaStats.GetVerdantFuryTime();
+                VerdantFuryTime = 20;
                 //TalentSelect();
         }
-
+/*
         public override void AbilityOneOnCast(Player player) {
             if (player == Main.LocalPlayer) {
-                Vector2 position = player.Center;
-                Vector2 playerToMouse = Main.MouseWorld - player.Center;
-
-                int direction = Math.Sign((int) playerToMouse.X);
-                Vector2 velocity = new Vector2(direction * 6, 0);
-
-                Projectile.NewProjectile(position, velocity,
-                    TerrariaMoba.Instance.ProjectileType("EnsnaringVinesSpawner"), 30, 0, player.whoAmI);
+                
             }
 
             AbilityOneCooldownTimer = AbilityOneCooldown;
@@ -103,7 +107,7 @@ namespace TerrariaMoba.Characters {
             Vector2 velocity = playerToMouse *= 10;
             
             Projectile.NewProjectile(position, velocity, TerrariaMoba.Instance.ProjectileType("SylviaUlt2"), 30, 0, Main.LocalPlayer.whoAmI);
-            */
+            
             if (player == Main.LocalPlayer) {
                 Vector2 position = player.Top;
                 Vector2 playerToMouse = Main.MouseWorld - player.Center;
@@ -115,12 +119,108 @@ namespace TerrariaMoba.Characters {
                 Projectile.NewProjectile(position, velocity, TerrariaMoba.Instance.ProjectileType("SylviaUlt1Teleport"),
                     0, 0, player.whoAmI);
             }
-            player.GetModPlayer<SylviaPlayer>().IsPhasing = true;
+            IsPhasing = true;
             UltimateCooldownTimer = UltimateCooldown;
         }
         
         public override void UltimateInUse(Player player) { }
         public override void UltimateOnEnd(Player player) { }
+        */
+        public override void ReadCharacter(BinaryReader reader) {
+            base.ReadCharacter(reader);
+        }
+
+        public override void WriteCharacter(BinaryWriter writer) {
+            base.WriteCharacter(writer);
+        }
+
+        public override void PreUpdate(Player player) {
+            if (SylviaUlt1Timer > 0) {
+                SylviaUlt1Timer--;
+                if (SylviaUlt1Timer == 0) {
+                    SylviaUlt1 = false;
+                    NumberJavelins = 0;
+                    //SyncSylviaUlt1Packet.Write(player.whoAmI, SylviaUlt1);
+                }
+            }
+        }
+
+        public override void PostUpdateBuffs(Player player) {
+            if (IsPhasing) {
+                player.immune = true;
+                player.immuneTime = 1;
+            }
+        }
+
+        public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
+            ref float knockBack, Player player) {
+            if (player.GetModPlayer<MobaPlayer>().VerdantFury && item.type == TerrariaMoba.Instance.ItemType("SylviaBow")) {
+                speedX *= VerdantFuryIncrease;
+                speedY *= VerdantFuryIncrease;
+            }
+                
+            //Flourish
+            if (NumberJavelins > 0) {
+                Vector2 velocity = new Vector2();
+                velocity.X = speedX;
+                velocity.Y = speedY;
+                velocity.Normalize();
+                velocity *= 15;
+
+                Projectile.NewProjectile(position.X, position.Y, velocity.X, velocity.Y,
+                    TerrariaMoba.Instance.ProjectileType("SylviaUlt1Projectile"), 40, knockBack, player.whoAmI);
+                NumberJavelins--;
+                if (NumberJavelins == 0) {
+                    SylviaUlt1 = false;
+                    //SyncSylviaUlt1Packet.Write(player.whoAmI, SylviaUlt1);
+                }
+                    
+                return false;
+            }
+
+            return true;
+        }
+
+        public override float UseTimeMultiplier(Item item, Player player) {
+            if (player.GetModPlayer<MobaPlayer>().VerdantFury && item.type == TerrariaMoba.Instance.ItemType("SylviaBow")) {
+                return VerdantFuryIncrease;
+            }
+
+            return 1f;
+        }
+
+        public override void ModifyDrawLayers(List<PlayerLayer> layers, Player player) {
+            if (IsPhasing) {
+                foreach (PlayerLayer layer in layers) {
+                    layer.visible = false;
+                }
+            }
+        }
+
+        public override void PreUpdateMovement(Player player) {
+            if (SylviaUlt1) {
+                if (player.velocity.Y != 0f) { //Ripped from webbed
+                    player.velocity = new Vector2(0f, 1E-06f);
+                }
+                else {
+                    player.velocity = Vector2.Zero;
+                }
+
+                player.gravity = 0f;
+                player.moveSpeed = 0f;
+            }
+        }
+
+        public override void PostUpdateRunSpeeds(Player player) {
+            MobaPlayer modPlayer = player.GetModPlayer<MobaPlayer>();
+            float moveSpeedAdd = 1f;
+        }
+        
+        public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit, Player player) {
+            if (proj.ranged) {
+                target.AddBuff(BuffType<Buffs.JunglesWrath>(), 240, false);
+            }
+        }
 
         public override void LevelUp() {
             level += 1;

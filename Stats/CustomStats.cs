@@ -25,6 +25,8 @@ namespace TerrariaMoba {
         public int currentResource = 0;
         public int resourceRegen = 0;
         public int armor = 0;
+        public int lifeRegen = 0;
+        public int lifeDegen = 0;
 
         public void Send(BinaryWriter writer) {
             writer.Write(percentThorns);
@@ -34,6 +36,8 @@ namespace TerrariaMoba {
             writer.Write(currentResource);
             writer.Write(resourceRegen);
             writer.Write(armor);
+            writer.Write(lifeRegen);
+            writer.Write(lifeDegen);
         }
 
         public void Recieve(BinaryReader reader) {
@@ -44,6 +48,8 @@ namespace TerrariaMoba {
             currentResource = reader.ReadInt32();
             resourceRegen = reader.ReadInt32();
             armor = reader.ReadInt32();
+            lifeRegen = reader.ReadInt32();
+            lifeDegen = reader.ReadInt32();
         }
     }
 }

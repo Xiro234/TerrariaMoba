@@ -16,8 +16,8 @@ namespace TerrariaMoba.Items {
             item.width = 20;
             item.height = 26;
             item.useStyle = ItemUseStyleID.EatingUsing;
-            item.useAnimation = 15;
-            item.useTime = 15;
+            item.useAnimation = 1;
+            item.useTime = 1;
             item.useTurn = true;
             item.UseSound = SoundID.Item3;
             item.maxStack = 30;

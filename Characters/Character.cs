@@ -1,23 +1,36 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ModLoader;
+using TerrariaMoba.Abilities;
 using TerrariaMoba.Packets;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Characters {
     public class Character {
+        public Player player;
         public int level = 1;
         public bool canSelectTalent = false;
         public string characterName = "none";
-        public bool[,] talentArray = new bool[7, 4];
+        public bool[,] talentArray;
         public int xpPerLevel = 100;
         public int experience = 0;
         public CharacterEnum CharacterEnum;
         public int ultNumber; //WILL CHANGE TO TALENT SELECT
+        public Ability[] abilities;
 
-        public Character(Player player) {
+        public Character(Player myPlayer) {
+            player = myPlayer;
             var plr = player.GetModPlayer<MobaPlayer>();
+            abilities = new Ability[8];
+            for(int i = 0; i < abilities.Length; i++) {
+                abilities[i] = new Ability();
+            }
+            talentArray = new bool[7, 4];
             plr.CharacterPicked = true;
         }
         
@@ -52,22 +65,6 @@ namespace TerrariaMoba.Characters {
         public int TraitCooldown = 0;
         public int TraitCooldownTimer = 0;
 
-        public virtual void AbilityOneOnCast(Player player) { }
-        public virtual void AbilityOneInUse(Player player) { }
-        public virtual void AbilityOneOnEnd(Player player) { }
-        
-        public virtual void AbilityTwoOnCast(Player player) { }
-        public virtual void AbilityTwoInUse(Player player) { }
-        public virtual void AbilityTwoOnEnd(Player player) { }
-
-        public virtual void UltimateOnCast(Player player) { }
-        public virtual void UltimateInUse(Player player) { }
-        public virtual void UltimateOnEnd(Player player) { }
-        
-        public virtual void TraitOnCast(Player player) { }
-        public virtual void TraitInUse(Player player) { }
-        public virtual void TraitOnEnd(Player player) { }
-        
         public virtual void TalentSelect() { }
         public virtual void LevelUp() { }
         
@@ -102,7 +99,7 @@ namespace TerrariaMoba.Characters {
                         break;
                 }
                 canSelectTalent = false;
-                SyncCharacter();
+                SyncTalents();
             }
         }
         
@@ -133,7 +130,7 @@ namespace TerrariaMoba.Characters {
                         break;
                 }
                 canSelectTalent = false;
-                SyncCharacter();
+                SyncTalents();
             }
         }
         
@@ -164,7 +161,7 @@ namespace TerrariaMoba.Characters {
                         break;
                 }
                 canSelectTalent = false;
-                SyncCharacter();
+                SyncTalents();
             }
         }
 
@@ -194,12 +191,36 @@ namespace TerrariaMoba.Characters {
                         break;
                 }
                 canSelectTalent = false;
-                SyncCharacter();
+                SyncTalents();
             }
         }
 
-        public virtual void SyncCharacter() {
-            SyncCharacterPacket.Write(Main.LocalPlayer.whoAmI, CharacterEnum, talentArray);
+        public virtual void SyncTalents() {
+            SyncTalentsPacket.Write(Main.LocalPlayer.whoAmI, CharacterEnum, talentArray);
         }
+
+        public virtual void ReadCharacter(BinaryReader reader) {
+            level = reader.ReadInt32();
+        }
+
+        public virtual void WriteCharacter(BinaryWriter writer) {
+            writer.Write(level);
+        }
+        
+        public virtual void ResetEffects(Player player) {}
+        public virtual void PreUpdate(Player player) {}
+        public virtual void UpdateBadLifeRegen(Player player) {}
+        public virtual void PostUpdateBuffs(Player player) {}
+
+        public virtual bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type,
+            ref int damage, ref float knockBack, Player player) { return true; }
+        public virtual float UseTimeMultiplier(Item item, Player player) { return 1f; }
+        public virtual void ModifyDrawLayers(List<PlayerLayer> layers, Player player) {}
+        public virtual void PreUpdateMovement(Player player) {}
+        public virtual void PostUpdateRunSpeeds(Player player) {}
+        
+        public virtual void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit, Player player) {}
+
+        //Etc.
     }
 }

@@ -4,12 +4,14 @@ using TerrariaMoba;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.GameInput;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using Terraria.ID;
+using TerrariaMoba.Abilities;
 using TerrariaMoba.Characters;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Packets;
@@ -31,7 +33,12 @@ namespace TerrariaMoba.Players {
         public bool Silenced = false;
         public bool Weakened = false;
         public bool InProgress = false;
-        public int GameTime = 0;
+        public int GameTime = 0; 
+        
+        public bool JunglesWrath = false;
+        public int JunglesWrathCount = 1;
+        public bool VerdantFury = false;
+        public bool EnsnaringVines = false;
 
         //Custom Stats
         public List<Tuple<String, float, int>> BonusDamageList; //I need to rewrite this so it's cleaner
@@ -81,22 +88,21 @@ namespace TerrariaMoba.Players {
             if (InProgress && CharacterPicked) {
                 player.statLifeMax2 = customStats.maxHealth;
             }
+            VerdantFury = false;
+            JunglesWrath = false;
+            EnsnaringVines = false;
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TerrariaMoba.AbilityOneHotKey.JustPressed) {
-                if (MyCharacter.AbilityOneCooldownTimer == 0) {
-                    MyCharacter.AbilityOneOnCast(player);
-                    SyncAbilitiesPacket.Write(0, player.whoAmI);
-                }
-                else {
-                    Main.PlaySound(25);
-                }
+                MyCharacter.abilities[0].Start();
+                    //SyncAbilitiesPacket.Write(0, player.whoAmI);
             }
+            /*
             if (TerrariaMoba.AbilityTwoHotKey.JustPressed) {
                 if (MyCharacter.AbilityTwoCooldownTimer == 0) {
                     MyCharacter.AbilityTwoOnCast(player);
-                    SyncAbilitiesPacket.Write(1, player.whoAmI);
+                    //SyncAbilitiesPacket.Write(1, player.whoAmI);
                 }
                 else {
                     Main.PlaySound(25);
@@ -105,12 +111,13 @@ namespace TerrariaMoba.Players {
             if (TerrariaMoba.UltimateHotkey.JustPressed) {
                 if (MyCharacter.UltimateCooldownTimer == 0) {
                     MyCharacter.UltimateOnCast(player);
-                    SyncAbilitiesPacket.Write(2, player.whoAmI);
+                    //SyncAbilitiesPacket.Write(2, player.whoAmI);
                 }
                 else {
                     Main.PlaySound(25);
                 }
             }
+            */
             if (TerrariaMoba.LevelTalentOneHotKey.JustPressed) {
                 MyCharacter.LevelTalentOne();
             }
@@ -142,18 +149,28 @@ namespace TerrariaMoba.Players {
             return true;
         }
         
+        public override void UpdateBadLifeRegen() {
+            //JunglesWrath
+            if (JunglesWrath) {
+                if (player.lifeRegen > 0) {
+                    player.lifeRegen = 0;
+                }
+
+                player.lifeRegenTime = 0;
+                player.lifeRegen -= 4 * JunglesWrathCount;
+            }
+        }
+        
         public override void PreUpdate() {
             if (CharacterPicked && InProgress) {
-                if (MyCharacter.AbilityOneCooldownTimer > 0) {
-                    MyCharacter.AbilityOneCooldownTimer--;
+                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.IsActive)) {
+                    ability.InUse();
                 }
-                if (MyCharacter.AbilityTwoCooldownTimer > 0) {
-                    MyCharacter.AbilityTwoCooldownTimer--;
+                
+                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.Cooldown > 0)) {
+                    ability.Cooldown--;
                 }
-                if (MyCharacter.UltimateCooldownTimer > 0) {
-                    MyCharacter.UltimateCooldownTimer--;
-                }
-                GameTime++;
+                MyCharacter.PreUpdate(Main.player[Main.myPlayer]);
             }
         }
 
@@ -179,6 +196,11 @@ namespace TerrariaMoba.Players {
                         i--;
                     }
                 }
+            }
+            
+            //JunglesWrath
+            if (!JunglesWrath) {
+                JunglesWrathCount = 1;
             }
         }
 
@@ -209,6 +231,45 @@ namespace TerrariaMoba.Players {
             EditDamage(ref damage);
             target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
             SyncPvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
+        }
+        
+        public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) {
+            //JunglesWrath
+            if (JunglesWrath) {
+                r *= (0.7f - (JunglesWrathCount * 0.1f));
+                g *= (0.7f -(JunglesWrathCount * 0.1f));
+            }
+        }
+        
+        public static readonly PlayerLayer MiscEffects = new PlayerLayer("TerrariaMoba", "MiscEffects", PlayerLayer.MiscEffectsFront, delegate(PlayerDrawInfo drawInfo) {
+            Player drawPlayer = drawInfo.drawPlayer;
+            Mod mod = ModLoader.GetMod("TerrariaMoba");
+            MobaPlayer modPlayer = drawPlayer.GetModPlayer<MobaPlayer>();
+
+            if (modPlayer.EnsnaringVines) {
+                Texture2D texture = mod.GetTexture("Textures/Sylvia/EnsnaringVines");
+                
+                int drawX = (int)(drawInfo.position.X + drawPlayer.width / 2f - Main.screenPosition.X);
+                int drawY = (int)(drawInfo.position.Y + (drawPlayer.height - 2f) - Main.screenPosition.Y);
+                DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, 0, texture.Width, texture.Height), Lighting.GetColor((int)((drawInfo.position.X + drawPlayer.width / 2f) / 16f), (int)((drawInfo.position.Y + drawPlayer.height) / 16f)), 0f, new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
+                Main.playerDrawData.Add(data);
+            }
+        });
+        
+        public override void ModifyDrawLayers(List<PlayerLayer> layers) {
+            MiscEffects.visible = true;
+            layers.Add(MiscEffects);
+        }
+        
+        public override void SetControls() {
+            //EnsnaringVines
+            if (EnsnaringVines) {
+                player.controlRight = false;
+                player.controlLeft = false;
+                player.controlJump = false;
+                player.controlUp = false;
+                player.controlDown = false;
+            }
         }
 
         public void EditDamage(ref int damage) {

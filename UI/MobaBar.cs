@@ -154,16 +154,12 @@ namespace TerrariaMoba.UI {
 
         public void SetIcons() {
             var player = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
-            try {
-                ability1Panel.SetIcon(player.MyCharacter.AbilityOneIcon, player.MyCharacter.AbilityOneName);
-                ability2Panel.SetIcon(player.MyCharacter.AbilityTwoIcon, player.MyCharacter.AbilityTwoName);
-                ultimatePanel.SetIcon(player.MyCharacter.UltimateIcon, player.MyCharacter.UltimateName);
-                traitPanel.SetIcon(player.MyCharacter.TraitIcon, player.MyCharacter.TraitName);
-                characterIcon.SetImage(player.MyCharacter.CharacterIcon);
-            }
-            catch (NullReferenceException exception) {
-                Main.NewText(exception.Message);
-            }
+            
+            ability1Panel.SetIcon(player.MyCharacter.abilities[0].Icon,player.MyCharacter.abilities[0].Name);
+            ability2Panel.SetIcon(player.MyCharacter.AbilityTwoIcon, player.MyCharacter.AbilityTwoName);
+            ultimatePanel.SetIcon(player.MyCharacter.UltimateIcon, player.MyCharacter.UltimateName);
+            traitPanel.SetIcon(player.MyCharacter.TraitIcon, player.MyCharacter.TraitName);
+            characterIcon.SetImage(player.MyCharacter.CharacterIcon);
         }
 
         public override void Update(GameTime gameTime) {
@@ -175,7 +171,7 @@ namespace TerrariaMoba.UI {
             var player = Main.LocalPlayer;
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
             if (mobaPlayer.CharacterPicked) {
-                DrawIcon(ref ability1Cooldown, ref ability1Panel, mobaPlayer.MyCharacter.AbilityOneCooldown, mobaPlayer.MyCharacter.AbilityOneCooldownTimer);
+                DrawIcon(ref ability1Cooldown, ref ability1Panel, 40 * 60, mobaPlayer.MyCharacter.abilities[0].Cooldown);
                 DrawIcon(ref ability2Cooldown, ref ability2Panel, mobaPlayer.MyCharacter.AbilityTwoCooldown, mobaPlayer.MyCharacter.AbilityTwoCooldownTimer);
                 DrawIcon(ref ultimateCooldown, ref ultimatePanel, mobaPlayer.MyCharacter.UltimateCooldown, mobaPlayer.MyCharacter.UltimateCooldownTimer);
                 DrawIcon(ref traitCooldown, ref traitPanel, mobaPlayer.MyCharacter.TraitCooldown, mobaPlayer.MyCharacter.TraitCooldownTimer);

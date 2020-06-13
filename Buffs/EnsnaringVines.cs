@@ -15,7 +15,7 @@ namespace TerrariaMoba.Buffs {
         }
 
         public override void Update(Player player, ref int buffIndex) {
-            player.GetModPlayer<SylviaPlayer>().EnsnaringVines = true;
+            //player.GetModPlayer<SylviaPlayer>().EnsnaringVines = true;
         }
     }
 }
