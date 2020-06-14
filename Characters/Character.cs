@@ -45,26 +45,6 @@ namespace TerrariaMoba.Characters {
 
         public Texture2D CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Lock");
 
-        public Texture2D AbilityOneIcon = TerrariaMoba.Instance.GetTexture("Textures/Lock");
-        public String AbilityOneName = "";
-        public int AbilityOneCooldown = 0;
-        public int AbilityOneCooldownTimer = 0;
-
-        public Texture2D AbilityTwoIcon = TerrariaMoba.Instance.GetTexture("Textures/Lock");
-        public String AbilityTwoName = "";
-        public int AbilityTwoCooldown = 0;
-        public int AbilityTwoCooldownTimer = 0;
-
-        public Texture2D UltimateIcon = TerrariaMoba.Instance.GetTexture("Textures/Lock");
-        public String UltimateName = "";
-        public int UltimateCooldown = 0;
-        public int UltimateCooldownTimer = 0;
-
-        public Texture2D TraitIcon = TerrariaMoba.Instance.GetTexture("Textures/Lock");
-        public String TraitName = "";
-        public int TraitCooldown = 0;
-        public int TraitCooldownTimer = 0;
-
         public virtual void TalentSelect() { }
         public virtual void LevelUp() { }
         

@@ -11,7 +11,7 @@ namespace TerrariaMoba.UI {
     public class UIAbilityIcon : UIImage {
         public string hoverText;
         public bool isOnCooldown = false;
-        public int cooldown;
+        public int cooldown = 0;
         public int cooldownTimer;
 
         public UIAbilityIcon(Texture2D texture, string abilityName) : base(texture) {
@@ -32,6 +32,9 @@ namespace TerrariaMoba.UI {
             //Cooldown Effect
             if (isOnCooldown) {
                 Rectangle hitbox = GetDimensions().ToRectangle();
+                if (cooldown == 0) {
+                    cooldown = cooldownTimer;
+                }
 
                 //pixel adjustments so it covers the entirety of the icon
                 int left = hitbox.Left - 1;
@@ -57,6 +60,9 @@ namespace TerrariaMoba.UI {
                         spriteBatch.Draw(Main.magicPixel, new Rectangle(right - i, top + j, 1, 1), color); //Top + j makes it go clockwise
                     }
                 }
+            }
+            else {
+                cooldown = 0;
             }
         }
 

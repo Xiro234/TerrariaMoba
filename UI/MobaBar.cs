@@ -156,25 +156,25 @@ namespace TerrariaMoba.UI {
             var player = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
             
             ability1Panel.SetIcon(player.MyCharacter.abilities[0].Icon,player.MyCharacter.abilities[0].Name);
-            ability2Panel.SetIcon(player.MyCharacter.AbilityTwoIcon, player.MyCharacter.AbilityTwoName);
-            ultimatePanel.SetIcon(player.MyCharacter.UltimateIcon, player.MyCharacter.UltimateName);
-            traitPanel.SetIcon(player.MyCharacter.TraitIcon, player.MyCharacter.TraitName);
+            ability2Panel.SetIcon(player.MyCharacter.abilities[1].Icon,player.MyCharacter.abilities[1].Name);
+            ultimatePanel.SetIcon(player.MyCharacter.abilities[2].Icon,player.MyCharacter.abilities[2].Name);
+            traitPanel.SetIcon(player.MyCharacter.abilities[3].Icon,player.MyCharacter.abilities[3].Name);
             characterIcon.SetImage(player.MyCharacter.CharacterIcon);
         }
 
         public override void Update(GameTime gameTime) {
             base.Update(gameTime);
-            if (ContainsPoint(Main.MouseScreen)) {
+            if (bar.ContainsPoint(Main.MouseScreen)) {
                 Main.LocalPlayer.mouseInterface = true;
             }
             
             var player = Main.LocalPlayer;
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
             if (mobaPlayer.CharacterPicked) {
-                DrawIcon(ref ability1Cooldown, ref ability1Panel, 40 * 60, mobaPlayer.MyCharacter.abilities[0].Cooldown);
-                DrawIcon(ref ability2Cooldown, ref ability2Panel, mobaPlayer.MyCharacter.AbilityTwoCooldown, mobaPlayer.MyCharacter.AbilityTwoCooldownTimer);
-                DrawIcon(ref ultimateCooldown, ref ultimatePanel, mobaPlayer.MyCharacter.UltimateCooldown, mobaPlayer.MyCharacter.UltimateCooldownTimer);
-                DrawIcon(ref traitCooldown, ref traitPanel, mobaPlayer.MyCharacter.TraitCooldown, mobaPlayer.MyCharacter.TraitCooldownTimer);
+                DrawIcon(ref ability1Cooldown, ref ability1Panel, mobaPlayer.MyCharacter.abilities[0].Cooldown);
+                DrawIcon(ref ability2Cooldown, ref ability2Panel, mobaPlayer.MyCharacter.abilities[1].Cooldown);
+                DrawIcon(ref ultimateCooldown, ref ultimatePanel, mobaPlayer.MyCharacter.abilities[2].Cooldown);
+                DrawIcon(ref traitCooldown, ref traitPanel, mobaPlayer.MyCharacter.abilities[3].Cooldown);
                 levelText.SetText(mobaPlayer.MyCharacter.level.ToString(), 0.75f, false);
             }
             
@@ -203,7 +203,7 @@ namespace TerrariaMoba.UI {
             }
         }
 
-        public void DrawIcon(ref UIText text,ref UIAbilityIcon icon, int cooldown, int timer) {
+        public void DrawIcon(ref UIText text,ref UIAbilityIcon icon, int timer) {
             if(timer > 0) {
                 if (timer >= 40) {
                     text.SetText(Math.Ceiling(timer / 60f)
@@ -215,7 +215,6 @@ namespace TerrariaMoba.UI {
                 }
                 
                 icon.isOnCooldown = true;
-                icon.cooldown = cooldown;
                 icon.cooldownTimer = timer;
             }
             else {

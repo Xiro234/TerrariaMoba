@@ -96,28 +96,13 @@ namespace TerrariaMoba.Players {
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TerrariaMoba.AbilityOneHotKey.JustPressed) {
                 MyCharacter.abilities[0].Start();
-                    //SyncAbilitiesPacket.Write(0, player.whoAmI);
             }
-            /*
             if (TerrariaMoba.AbilityTwoHotKey.JustPressed) {
-                if (MyCharacter.AbilityTwoCooldownTimer == 0) {
-                    MyCharacter.AbilityTwoOnCast(player);
-                    //SyncAbilitiesPacket.Write(1, player.whoAmI);
-                }
-                else {
-                    Main.PlaySound(25);
-                }
+                MyCharacter.abilities[1].Start();
             }
             if (TerrariaMoba.UltimateHotkey.JustPressed) {
-                if (MyCharacter.UltimateCooldownTimer == 0) {
-                    MyCharacter.UltimateOnCast(player);
-                    //SyncAbilitiesPacket.Write(2, player.whoAmI);
-                }
-                else {
-                    Main.PlaySound(25);
-                }
+                MyCharacter.abilities[2].Start();
             }
-            */
             if (TerrariaMoba.LevelTalentOneHotKey.JustPressed) {
                 MyCharacter.LevelTalentOne();
             }
@@ -175,29 +160,6 @@ namespace TerrariaMoba.Players {
         }
 
         public override void PostUpdateBuffs() {
-            //Weakened
-            if (ReducedDamageList.Count > 0) {
-                for (int i = 0; i < ReducedDamageList.Count; i++) {
-                    ReducedDamageList[i] = new Tuple<string, float, int>(ReducedDamageList[i].Item1, ReducedDamageList[i].Item2, ReducedDamageList[i].Item3 - 1);
-                    
-                    if (ReducedDamageList[i].Item3 == 0) {
-                        ReducedDamageList.RemoveAt(i);
-                        i--;
-                    }
-                }
-            }
-            
-            if (BonusDamageList.Count > 0) {
-                for (int i = 0; i < BonusDamageList.Count; i++) {
-                    ReducedDamageList[i] = new Tuple<string, float, int>(ReducedDamageList[i].Item1, ReducedDamageList[i].Item2, ReducedDamageList[i].Item3 - 1);
-
-                    if (BonusDamageList[i].Item3 == 0) {
-                        BonusDamageList.RemoveAt(i);
-                        i--;
-                    }
-                }
-            }
-            
             //JunglesWrath
             if (!JunglesWrath) {
                 JunglesWrathCount = 1;

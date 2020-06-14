@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 namespace TerrariaMoba.Abilities.Sylvia {
     public class EnsnaringVines : Ability {
         public EnsnaringVines(Player myPlayer) : base(myPlayer) {
-            Name = "Ensaring Vines";
+            Name = "Ensnaring Vines";
             Icon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaAbilityOne");
         }
 

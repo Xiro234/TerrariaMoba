@@ -42,11 +42,9 @@ namespace TerrariaMoba.Abilities {
 
         public virtual void Start() {
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
-            Main.NewText("start");
             if (Cooldown == 0 && mobaPlayer.customStats.currentResource >= ResourceCost) {
                 mobaPlayer.customStats.currentResource -= ResourceCost;
                 OnCast();
-                Main.NewText("oncast");
                 if (Main.netMode == NetmodeID.MultiplayerClient) {
                     Sync();
                 }

@@ -15,6 +15,7 @@ using TerrariaMoba.Abilities.Sylvia;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Stats;
 using EnsnaringVines = TerrariaMoba.Abilities.Sylvia.EnsnaringVines;
+using VerdantFury = TerrariaMoba.Abilities.Sylvia.VerdantFury;
 
 namespace TerrariaMoba.Characters {
     public class Sylvia : Character {
@@ -55,16 +56,14 @@ namespace TerrariaMoba.Characters {
                 plr.customStats.maxHealth = 2000;
                 Main.LocalPlayer.statLifeMax2 = 2000;
                 Main.LocalPlayer.statLife = 2000;
-                AbilityOneName = "Ensnaring Vines";
-                AbilityOneCooldown = 30 * 60;
-                AbilityOneIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaAbilityOne");
+
                 EnsnaringVines abilityOne = new EnsnaringVines(player);
                 abilities[0] = abilityOne;
-
-                AbilityTwoName = "Verdant Fury";
-                AbilityTwoCooldown = 10 * 60;
-                AbilityTwoIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaAbilityTwo");
-
+                
+                VerdantFury abilityTwo = new VerdantFury(player);
+                abilities[1] = abilityTwo;
+                
+                /*
                 UltimateName = "Flourish";
                 UltimateCooldown = 60 * 60;
                 UltimateIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaUltimateOne");
@@ -72,6 +71,7 @@ namespace TerrariaMoba.Characters {
                 TraitName = "Jungle's Wrath";
                 TraitCooldown = 0;
                 TraitIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaTrait");
+                */
                 
                 CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaIcon");
 
