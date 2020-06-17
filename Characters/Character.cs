@@ -187,19 +187,18 @@ namespace TerrariaMoba.Characters {
             writer.Write(level);
         }
         
-        public virtual void ResetEffects(Player player) {}
-        public virtual void PreUpdate(Player player) {}
-        public virtual void UpdateBadLifeRegen(Player player) {}
-        public virtual void PostUpdateBuffs(Player player) {}
+        public virtual void ResetEffects() {}
+        public virtual void PreUpdate() {}
+        public virtual void UpdateBadLifeRegen() {}
+        public virtual void PostUpdateBuffs() {}
 
         public virtual bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type,
-            ref int damage, ref float knockBack, Player player) { return true; }
-        public virtual float UseTimeMultiplier(Item item, Player player) { return 1f; }
-        public virtual void ModifyDrawLayers(List<PlayerLayer> layers, Player player) {}
-        public virtual void PreUpdateMovement(Player player) {}
-        public virtual void PostUpdateRunSpeeds(Player player) {}
-        
-        public virtual void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit, Player player) {}
+            ref int damage, ref float knockBack) { return true; }
+        public virtual float UseTimeMultiplier(Item item) { return 1f; }
+        public virtual void ModifyDrawLayers(List<PlayerLayer> layers) {}
+        public virtual void PreUpdateMovement() {}
+        public virtual void PostUpdateRunSpeeds() {}
+        public virtual void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {}
 
         //Etc.
     }

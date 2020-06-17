@@ -62,10 +62,6 @@ namespace TerrariaMoba.Projectiles.Sylvia {
             if (player.MyCharacter.talentArray[1, 2]) {
                 target.AddBuff(BuffType<Buffs.Silenced>(), 90, false);
             }
-
-            if (player.MyCharacter.talentArray[1, 1]) {
-                SyncWeakenedPacket.Write(target.whoAmI, 90, 0.12f, "Ensnaring Vines");
-            }
         }
     }
 }

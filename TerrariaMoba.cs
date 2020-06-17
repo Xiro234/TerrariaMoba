@@ -99,20 +99,11 @@ namespace TerrariaMoba {
 				case(Message.SyncExperience):
 					Packets.SyncExperiencePacket.Read(reader);
 					break;
-				//case(Message.SyncJunglesWrath):
-					//Packets.SyncJunglesWrathPacket.Read(reader);
-					//break;
 				case(Message.SyncPvpHit):
 					Packets.SyncPvpHitPacket.Read(reader);
 					break;
-				//case(Message.SyncSylviaUlt1):
-					//Packets.SyncSylviaUlt1Packet.Read(reader);
-					//break;
 				case(Message.SyncTalents):
 					Packets.SyncTalentsPacket.Read(reader);
-					break;
-				case(Message.SyncWeakened):
-					Packets.SyncWeakenedPacket.Read(reader);
 					break;
 				case(Message.SyncAbilities):
 					Packets.SyncAbilitiesPacket.Read(reader);
@@ -133,6 +124,9 @@ namespace TerrariaMoba {
 						mobaPlayer.customStats.Send(packet);
 						packet.Send(-1, whoAmI);
 					}
+					break;
+				case(Message.SyncAbilityValues):
+					Packets.SyncAbilityValues.Read(reader);
 					break;
 			}
 		}

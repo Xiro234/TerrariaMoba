@@ -11,9 +11,13 @@ namespace TerrariaMoba.Packets {
             if (Main.netMode == NetmodeID.Server) {
                 Write();
             }
-            else if (Main.netMode == NetmodeID.MultiplayerClient) {
-                var plr = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
-                plr.StartGame();
+            else if (Main.netMode == NetmodeID.MultiplayerClient) { 
+                for (int i = 0; i < Main.maxPlayers; i++) {
+                    if (Main.player[i] != null && Main.player[i].active) {
+                        var plr = Main.player[i].GetModPlayer<MobaPlayer>();
+                        plr.StartGame();
+                    }
+                }
             }
         }
 

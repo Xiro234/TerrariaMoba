@@ -22,7 +22,6 @@ namespace TerrariaMoba.Characters {
         private bool IsPhasing = false;
         private bool SylviaUlt1 = false;
         private int SylviaUlt1Timer = 0;
-        private int NumberJavelins = 0;
         public float VerdantFuryBuff = 1.25f;
         private int VerdantFuryTime = 180;
         public float VerdantFuryIncrease = 0.05f;
@@ -34,7 +33,7 @@ namespace TerrariaMoba.Characters {
 
         public override void ChooseCharacter() {
                 Main.NewText("Sylvia");
-                var plr = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
+                var mobaPlayer = player.GetModPlayer<MobaPlayer>();
                 Item vanityHelm = new Item();
                 vanityHelm.SetDefaults(208);
                 Item vanityChest = new Item();
@@ -44,18 +43,18 @@ namespace TerrariaMoba.Characters {
                 Item primary = new Item();
                 primary.SetDefaults(TerrariaMoba.Instance.ItemType("SylviaBow"));
 
-                Main.LocalPlayer.armor[10] = vanityHelm;
-                Main.LocalPlayer.armor[11] = vanityChest;
-                Main.LocalPlayer.armor[12] = vanityLeg;
-                Main.LocalPlayer.inventory[0] = primary;
-                Main.LocalPlayer.Male = false;
-                Main.LocalPlayer.hair = 55;
-                Main.LocalPlayer.hairColor = new Color(52, 133, 34);
-                Main.LocalPlayer.skinColor = new Color(198,134,66);
-                Main.LocalPlayer.eyeColor = new Color(84,42,14);
-                plr.customStats.maxHealth = 2000;
-                Main.LocalPlayer.statLifeMax2 = 2000;
-                Main.LocalPlayer.statLife = 2000;
+                player.armor[10] = vanityHelm;
+                player.armor[11] = vanityChest;
+                player.armor[12] = vanityLeg;
+                player.inventory[0] = primary;
+                player.Male = false;
+                player.hair = 55;
+                player.hairColor = new Color(52, 133, 34);
+                player.skinColor = new Color(198,134,66);
+                player.eyeColor = new Color(84,42,14);
+                mobaPlayer.customStats.maxHealth = 2000;
+                player.statLifeMax2 = 2000;
+                player.statLife = 2000;
 
                 EnsnaringVines abilityOne = new EnsnaringVines(player);
                 abilities[0] = abilityOne;
@@ -63,11 +62,10 @@ namespace TerrariaMoba.Characters {
                 VerdantFury abilityTwo = new VerdantFury(player);
                 abilities[1] = abilityTwo;
                 
-                /*
-                UltimateName = "Flourish";
-                UltimateCooldown = 60 * 60;
-                UltimateIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaUltimateOne");
+                Flourish ultimate = new Flourish(player);
+                abilities[2] = ultimate;
                 
+                /*
                 TraitName = "Jungle's Wrath";
                 TraitCooldown = 0;
                 TraitIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaTrait");
@@ -134,54 +132,45 @@ namespace TerrariaMoba.Characters {
             base.WriteCharacter(writer);
         }
 
-        public override void PreUpdate(Player player) {
-            if (SylviaUlt1Timer > 0) {
-                SylviaUlt1Timer--;
-                if (SylviaUlt1Timer == 0) {
-                    SylviaUlt1 = false;
-                    NumberJavelins = 0;
-                    //SyncSylviaUlt1Packet.Write(player.whoAmI, SylviaUlt1);
-                }
-            }
+        public override void PreUpdate() {
         }
 
-        public override void PostUpdateBuffs(Player player) {
-            if (IsPhasing) {
-                player.immune = true;
-                player.immuneTime = 1;
-            }
+        public override void PostUpdateBuffs() {
+
         }
 
         public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
-            ref float knockBack, Player player) {
+            ref float knockBack) {
             if (player.GetModPlayer<MobaPlayer>().VerdantFury && item.type == TerrariaMoba.Instance.ItemType("SylviaBow")) {
                 speedX *= VerdantFuryIncrease;
                 speedY *= VerdantFuryIncrease;
             }
-                
-            //Flourish
-            if (NumberJavelins > 0) {
-                Vector2 velocity = new Vector2();
-                velocity.X = speedX;
-                velocity.Y = speedY;
-                velocity.Normalize();
-                velocity *= 15;
+            
+            foreach (Ability ability in abilities) {
+                var flourish = ability as Flourish;
+                if (flourish != null) {
+                    if (flourish.IsActive && flourish.NumberJavelins > 0) {
+                        if (flourish.NumberJavelins > 0) {
+                            Vector2 velocity = new Vector2();
+                            velocity.X = speedX;
+                            velocity.Y = speedY;
+                            velocity.Normalize();
+                            velocity *= 15;
 
-                Projectile.NewProjectile(position.X, position.Y, velocity.X, velocity.Y,
-                    TerrariaMoba.Instance.ProjectileType("SylviaUlt1Projectile"), 40, knockBack, player.whoAmI);
-                NumberJavelins--;
-                if (NumberJavelins == 0) {
-                    SylviaUlt1 = false;
-                    //SyncSylviaUlt1Packet.Write(player.whoAmI, SylviaUlt1);
+                            Projectile.NewProjectile(position.X, position.Y, velocity.X, velocity.Y,
+                                TerrariaMoba.Instance.ProjectileType("SylviaUlt1Projectile"), 40, knockBack, player.whoAmI);
+                            flourish.NumberJavelins--;
+
+                            return false;
+                        }
+                    }
                 }
-                    
-                return false;
             }
-
+            
             return true;
         }
 
-        public override float UseTimeMultiplier(Item item, Player player) {
+        public override float UseTimeMultiplier(Item item) {
             if (player.GetModPlayer<MobaPlayer>().VerdantFury && item.type == TerrariaMoba.Instance.ItemType("SylviaBow")) {
                 return VerdantFuryIncrease;
             }
@@ -189,34 +178,25 @@ namespace TerrariaMoba.Characters {
             return 1f;
         }
 
-        public override void ModifyDrawLayers(List<PlayerLayer> layers, Player player) {
-            if (IsPhasing) {
-                foreach (PlayerLayer layer in layers) {
-                    layer.visible = false;
+        public override void ModifyDrawLayers(List<PlayerLayer> layers) {
+            foreach (Ability ability in abilities) {
+                var flourish = ability as Flourish;
+                if (flourish != null) {
+                    if (flourish.teleporting) {
+                        foreach (PlayerLayer layer in layers) {
+                            layer.visible = false;
+                        }
+                    }
                 }
             }
         }
-
-        public override void PreUpdateMovement(Player player) {
-            if (SylviaUlt1) {
-                if (player.velocity.Y != 0f) { //Ripped from webbed
-                    player.velocity = new Vector2(0f, 1E-06f);
-                }
-                else {
-                    player.velocity = Vector2.Zero;
-                }
-
-                player.gravity = 0f;
-                player.moveSpeed = 0f;
-            }
-        }
-
-        public override void PostUpdateRunSpeeds(Player player) {
+        
+        public override void PostUpdateRunSpeeds() {
             MobaPlayer modPlayer = player.GetModPlayer<MobaPlayer>();
             float moveSpeedAdd = 1f;
         }
         
-        public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit, Player player) {
+        public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
             if (proj.ranged) {
                 target.AddBuff(BuffType<Buffs.JunglesWrath>(), 240, false);
             }

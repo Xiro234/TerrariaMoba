@@ -33,7 +33,7 @@ namespace TerrariaMoba.Players {
         public bool Silenced = false;
         public bool Weakened = false;
         public bool InProgress = false;
-        public int GameTime = 0; 
+        public int GameTime = 0;
         
         public bool JunglesWrath = false;
         public int JunglesWrathCount = 1;
@@ -41,23 +41,24 @@ namespace TerrariaMoba.Players {
         public bool EnsnaringVines = false;
 
         //Custom Stats
-        public List<Tuple<String, float, int>> BonusDamageList; //I need to rewrite this so it's cleaner
-        public List<Tuple<String, float, int>>  ReducedDamageList;
         public CustomStats customStats;
 
         public override void Initialize() {
-            BonusDamageList = new List<Tuple<String, float, int>>();
-            ReducedDamageList = new List<Tuple<String, float, int>>();
             CharacterSelected = CharacterEnum.Null;
             customStats = new CustomStats();
         }
 
+        public override void clientClone(ModPlayer clientClone) {
+            MobaPlayer clone = clientClone as MobaPlayer;
+        }
+
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer) {
-            ModPacket packet = mod.GetPacket();
-            packet.Write((byte)Message.SyncCustomStats);
-            packet.Write((byte)player.whoAmI);
-            customStats.Send(packet);
-            packet.Send();
+            ModPacket statPacket = mod.GetPacket();
+            statPacket.Write((byte)Message.SyncCustomStats);
+            statPacket.Write((byte)player.whoAmI);
+            customStats.Send(statPacket);
+            statPacket.Send();
+           
         }
 
         public override void SendClientChanges(ModPlayer clientPlayer) {
@@ -96,12 +97,15 @@ namespace TerrariaMoba.Players {
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TerrariaMoba.AbilityOneHotKey.JustPressed) {
                 MyCharacter.abilities[0].Start();
+                Packets.SyncAbilitiesPacket.Write(0, player.whoAmI);
             }
             if (TerrariaMoba.AbilityTwoHotKey.JustPressed) {
                 MyCharacter.abilities[1].Start();
+                Packets.SyncAbilitiesPacket.Write(1, player.whoAmI);
             }
             if (TerrariaMoba.UltimateHotkey.JustPressed) {
                 MyCharacter.abilities[2].Start();
+                Packets.SyncAbilitiesPacket.Write(2, player.whoAmI);
             }
             if (TerrariaMoba.LevelTalentOneHotKey.JustPressed) {
                 MyCharacter.LevelTalentOne();
@@ -150,13 +154,25 @@ namespace TerrariaMoba.Players {
             if (CharacterPicked && InProgress) {
                 foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.IsActive)) {
                     ability.InUse();
+                    if (Main.myPlayer == ability.player.whoAmI && ability.NeedsSyncing) {
+                        int index = Array.IndexOf(MyCharacter.abilities, ability);
+                        int whoAmI = ability.player.whoAmI;
+                        byte[] abilitySpecific = ability.WriteAbility();
+                        int length = abilitySpecific.Length;
+                        
+                        Packets.SyncAbilityValues.Write(index, whoAmI, length, abilitySpecific);
+                    }
                 }
                 
                 foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.Cooldown > 0)) {
                     ability.Cooldown--;
                 }
-                MyCharacter.PreUpdate(Main.player[Main.myPlayer]);
+                MyCharacter.PreUpdate();
             }
+        }
+
+        public override void PostUpdate() {
+            base.PostUpdate();
         }
 
         public override void PostUpdateBuffs() {
@@ -202,7 +218,18 @@ namespace TerrariaMoba.Players {
                 g *= (0.7f -(JunglesWrathCount * 0.1f));
             }
         }
-        
+
+        public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
+            ref float knockBack) {
+            if (CharacterPicked && InProgress) {
+                return MyCharacter.Shoot(item, ref position, ref speedX, ref speedY, ref type, ref damage,
+                    ref knockBack);
+            }
+            else {
+                return true;
+            }
+        }
+
         public static readonly PlayerLayer MiscEffects = new PlayerLayer("TerrariaMoba", "MiscEffects", PlayerLayer.MiscEffectsFront, delegate(PlayerDrawInfo drawInfo) {
             Player drawPlayer = drawInfo.drawPlayer;
             Mod mod = ModLoader.GetMod("TerrariaMoba");
@@ -221,6 +248,10 @@ namespace TerrariaMoba.Players {
         public override void ModifyDrawLayers(List<PlayerLayer> layers) {
             MiscEffects.visible = true;
             layers.Add(MiscEffects);
+
+            if (CharacterPicked && InProgress) {
+                MyCharacter.ModifyDrawLayers(layers);
+            }
         }
         
         public override void SetControls() {
@@ -237,14 +268,6 @@ namespace TerrariaMoba.Players {
         public void EditDamage(ref int damage) {
             float finalDamageChange = 1f;
 
-            foreach (var item in ReducedDamageList) {
-                finalDamageChange *= (1f - item.Item2);
-            }
-            
-            foreach (var item in BonusDamageList) {
-                finalDamageChange *= item.Item2;
-            }
-            
             damage = (int)(finalDamageChange * damage);
         }
 

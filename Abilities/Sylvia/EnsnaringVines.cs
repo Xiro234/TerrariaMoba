@@ -18,8 +18,8 @@ namespace TerrariaMoba.Abilities.Sylvia {
             int direction = Math.Sign((int) playerToMouse.X);
             Vector2 velocity = new Vector2(direction * 6, 0);
 
-            Projectile.NewProjectile(position, velocity,
-                TerrariaMoba.Instance.ProjectileType("EnsnaringVinesSpawner"), 30, 0, player.whoAmI);
+            Projectile proj = Main.projectile[Projectile.NewProjectile(position, velocity,
+                TerrariaMoba.Instance.ProjectileType("EnsnaringVinesSpawner"), 30, 0, player.whoAmI)];
             Cooldown = 40 * 60;
         }
     }

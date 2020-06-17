@@ -12,14 +12,15 @@ using TerrariaMoba.Players;
 using TerrariaMoba.UI;
 
 namespace TerrariaMoba.Abilities {
-    [Serializable]
     public class Ability {
         public string Name = "";
         public int ChannelTime = 0;
         public int Cooldown = 0;
         public int Timer = 0;
+        public int Index = 0;
         public bool IsActive = false;
         public bool CanUse = false;
+        public bool NeedsSyncing = false;
         public int ResourceCost = 0;
         public AbilityType Type = AbilityType.Active;
         public Texture2D Icon = TerrariaMoba.Instance.GetTexture("Textures/Lock");
@@ -45,18 +46,17 @@ namespace TerrariaMoba.Abilities {
             if (Cooldown == 0 && mobaPlayer.customStats.currentResource >= ResourceCost) {
                 mobaPlayer.customStats.currentResource -= ResourceCost;
                 OnCast();
-                if (Main.netMode == NetmodeID.MultiplayerClient) {
-                    Sync();
-                }
             }
         }
         
         public virtual void OnCast() { }
-        public virtual void InUse() { }
+        public virtual void InUse() { CheckSync(); }
         public virtual void OnEnd() { }
+        public virtual void CheckSync() { }
+        public virtual void ReadAbility(MemoryStream stream) { }
 
-        public virtual void Sync(int fromWho = -1, int toWho = -1) {
-            Packets.SyncAbilitiesPacket.Write(this);
+        public virtual byte[] WriteAbility() {
+            return null;
         }
     }
 }
