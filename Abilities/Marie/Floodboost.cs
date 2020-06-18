@@ -1,7 +1,5 @@
-﻿namespace TerrariaMoba.Abilities.Marie
-{
-    public class Floodboost
-    {
+﻿namespace TerrariaMoba.Abilities.Marie {
+    public class Floodboost : Ability {
         
     }
 }
