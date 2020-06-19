@@ -76,54 +76,7 @@ namespace TerrariaMoba.Characters {
                 VerdantFuryTime = 20;
                 //TalentSelect();
         }
-/*
-        public override void AbilityOneOnCast(Player player) {
-            if (player == Main.LocalPlayer) {
-                
-            }
 
-            AbilityOneCooldownTimer = AbilityOneCooldown;
-        }
-
-        public override void AbilityOneInUse(Player player) { }
-        public override void AbilityOneOnEnd(Player player) { }
-
-        public override void AbilityTwoOnCast(Player player) {
-            player.AddBuff(BuffType<Buffs.VerdantFury>(), VerdantFuryTime);
-            AbilityTwoCooldownTimer = AbilityTwoCooldown;
-        }
-        
-        public override void AbilityTwoInUse(Player player) { }
-        public override void AbilityTwoOnEnd(Player player) { }
-
-        public override void UltimateOnCast(Player player) {
-            /*
-            Vector2 position = Main.LocalPlayer.Center;
-            Vector2 playerToMouse = Main.MouseWorld - Main.LocalPlayer.Center;
-            playerToMouse.Normalize();
-
-            Vector2 velocity = playerToMouse *= 10;
-            
-            Projectile.NewProjectile(position, velocity, TerrariaMoba.Instance.ProjectileType("SylviaUlt2"), 30, 0, Main.LocalPlayer.whoAmI);
-            
-            if (player == Main.LocalPlayer) {
-                Vector2 position = player.Top;
-                Vector2 playerToMouse = Main.MouseWorld - player.Center;
-                int direction = -Math.Sign((int) playerToMouse.X);
-
-                Vector2 velocity = new Vector2(direction * 0.5f, -0.866f); //Unit vector in specific direction
-                velocity *= 12;
-
-                Projectile.NewProjectile(position, velocity, TerrariaMoba.Instance.ProjectileType("SylviaUlt1Teleport"),
-                    0, 0, player.whoAmI);
-            }
-            IsPhasing = true;
-            UltimateCooldownTimer = UltimateCooldown;
-        }
-        
-        public override void UltimateInUse(Player player) { }
-        public override void UltimateOnEnd(Player player) { }
-        */
         public override void ReadCharacter(BinaryReader reader) {
             base.ReadCharacter(reader);
         }

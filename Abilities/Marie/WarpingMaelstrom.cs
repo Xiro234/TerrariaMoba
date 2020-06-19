@@ -22,6 +22,7 @@ namespace TerrariaMoba.Abilities.Marie {
             Projectile proj = Main.projectile[Projectile.NewProjectile(position, velocity, 
                 TerrariaMoba.Instance.ProjectileType("Maelstrom"), 100, 1, player.whoAmI)];
             Main.PlaySound(SoundID.Item66, player.Center);
+            Cooldown = 10 * 60;
         }
     }
 }

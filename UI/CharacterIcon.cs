@@ -20,6 +20,9 @@ namespace TerrariaMoba.UI {
                 case(CharacterEnum.Sylvia):
                     hoverText = "Sylvia Verda";
                     break;
+                case(CharacterEnum.Marie):
+                    hoverText = "Marie Tidewrath";
+                    break;
                 default:
                     hoverText = "";
                     break;

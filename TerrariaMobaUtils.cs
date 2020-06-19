@@ -87,6 +87,9 @@ public static class TerrariaMobaUtils {
             case CharacterEnum.Sylvia:
                 MyCharacter = new Sylvia(player);
                 break;
+            case CharacterEnum.Marie:
+                MyCharacter = new Marie(player);
+                break;
             default:
                 Main.NewText("Invalid Character: AssignCharacter");
                 break;
@@ -95,6 +98,10 @@ public static class TerrariaMobaUtils {
 
     public static string GetHoverText(Texture2D texture) {
         return "";
+    }
+    
+    public static double Conv2Rad(double angle) {
+        return (Math.PI / 180) * angle;
     }
     
     public static byte[] ReadAllBytes(Stream stream) {

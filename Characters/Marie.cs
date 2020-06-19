@@ -48,8 +48,13 @@ namespace TerrariaMoba.Characters {
             
             TomeOfLacusia abilityTwo = new TomeOfLacusia(player);
             abilities[1] = abilityTwo;
-                
+            
+            /*
             FountainOfTheGoddess ultimate = new FountainOfTheGoddess(player);
+            abilities[2] = ultimate;
+            */
+            
+            TidalImprisonment ultimate = new TidalImprisonment(player);
             abilities[2] = ultimate;
             
             CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieIcon");

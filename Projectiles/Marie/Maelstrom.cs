@@ -13,7 +13,7 @@ namespace TerrariaMoba.Projectiles.Marie {
             projectile.Name = "Maelstrom";
             projectile.width = 100; 
             projectile.height = 100; 
-            projectile.timeLeft = 270;
+            projectile.timeLeft = 280;
             projectile.alpha = 255;
             projectile.friendly = true; 
             projectile.hostile = false; 
@@ -38,12 +38,13 @@ namespace TerrariaMoba.Projectiles.Marie {
                 projectile.velocity = new Vector2(0, 0);
             }
 
-            if ((int) projectile.ai[0] % 45 == 0 && projectile.owner == Main.myPlayer)
-            {
-                Projectile proj = Main.projectile[Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 
-                    MathHelper.Lerp(-1f, 1f, (float)Main.rand.NextDouble()), 2f, 
-                    TerrariaMoba.Instance.ProjectileType("MaelstromBeam"), 30, 0f, projectile.owner)];
-                Main.PlaySound(SoundID.Item122, projectile.Center);
+            if ((int) projectile.ai[0] >= 90) {
+                if ((int) projectile.ai[0] % 45 == 0 && projectile.owner == Main.myPlayer) {
+                    Projectile proj = Main.projectile[Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y,
+                        MathHelper.Lerp(-1f, 1f, (float) Main.rand.NextDouble()), 3f,
+                        TerrariaMoba.Instance.ProjectileType("MaelstromBeam"), 30, 0f, projectile.owner)];
+                    Main.PlaySound(SoundID.Item122, projectile.Center);
+                }
             }
         }
 
