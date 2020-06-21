@@ -25,8 +25,8 @@ namespace TerrariaMoba.UI {
             
             iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaIcon"),
                 CharacterEnum.Sylvia));
-            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"),
-                CharacterEnum.Null));
+            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieIcon"),
+                CharacterEnum.Marie));
             iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"),
                 CharacterEnum.Null));
             iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"),
@@ -86,6 +86,10 @@ namespace TerrariaMoba.UI {
                 switch (mobaPlayer.CharacterSelected) {
                     case (CharacterEnum.Sylvia):
                         mobaPlayer.MyCharacter = new Sylvia(Main.LocalPlayer);
+                        mobaPlayer.MyCharacter.SyncTalents();
+                        break;
+                    case (CharacterEnum.Marie):
+                        mobaPlayer.MyCharacter = new Marie(Main.LocalPlayer);
                         mobaPlayer.MyCharacter.SyncTalents();
                         break;
                 }

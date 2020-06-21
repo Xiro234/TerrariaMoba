@@ -32,6 +32,7 @@ namespace TerrariaMoba.Players {
         public int PlayerLastHurt = -1;
         public bool Silenced = false;
         public bool Weakened = false;
+        public bool IsChanneling = false;
         public bool InProgress = false;
         public int GameTime = 0;
         
@@ -39,6 +40,8 @@ namespace TerrariaMoba.Players {
         public int JunglesWrathCount = 1;
         public bool VerdantFury = false;
         public bool EnsnaringVines = false;
+
+        public bool LacusianBlessing = false;
 
         //Custom Stats
         public CustomStats customStats;
@@ -86,12 +89,16 @@ namespace TerrariaMoba.Players {
             customStats.percentThorns = 0f;
             Silenced = false;
             Weakened = false;
+            IsChanneling = false;
             if (InProgress && CharacterPicked) {
                 player.statLifeMax2 = customStats.maxHealth;
             }
+            
             VerdantFury = false;
             JunglesWrath = false;
             EnsnaringVines = false;
+
+            LacusianBlessing = false;
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet) {
@@ -174,10 +181,25 @@ namespace TerrariaMoba.Players {
         }
 
         public override void PostUpdateBuffs() {
-            //JunglesWrath
             if (!JunglesWrath) {
                 JunglesWrathCount = 1;
             }
+            if (LacusianBlessing) {
+                player.statDefense += 60; //12
+                player.lifeRegen += 20; //8
+                player.allDamageMult += (float)0.52; //0.16
+            }
+        }
+
+        public override void PreUpdateBuffs() {
+            base.PreUpdateBuffs();
+            /*
+            if (LacusianBlessing) {
+                player.statDefense += 12;
+                player.lifeRegen += 8;
+                player.allDamageMult += (float)0.16;
+            }
+            */
         }
 
         public override void NaturalLifeRegen(ref float regen) {
@@ -254,7 +276,7 @@ namespace TerrariaMoba.Players {
         
         public override void SetControls() {
             //EnsnaringVines
-            if (EnsnaringVines) {
+            if (IsChanneling) {
                 player.controlRight = false;
                 player.controlLeft = false;
                 player.controlJump = false;
