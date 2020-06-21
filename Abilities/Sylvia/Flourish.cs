@@ -24,7 +24,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
         public override void OnCast() {
             Timer = 6 * 60;
             NumberJavelins = 3;
-            IsActive = true;
+            Active = true;
             teleporting = true;
             
             Vector2 position = player.Top;
@@ -67,14 +67,13 @@ namespace TerrariaMoba.Abilities.Sylvia {
             if (Timer == 0 || NumberJavelins == 0) {
                 OnEnd();
             }
-            Main.NewText(NumberJavelins + " : " + PreviousJavelins);
             PreviousJavelins = NumberJavelins;
         }
 
         public override void OnEnd() {
             Timer = 0;
             NumberJavelins = 0;
-            IsActive = false;
+            Active = false;
             teleporting = false;
             Cooldown = 30 * 60;
         }

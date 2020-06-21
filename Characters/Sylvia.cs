@@ -149,7 +149,7 @@ namespace TerrariaMoba.Characters {
             foreach (Ability ability in abilities) {
                 var flourish = ability as Flourish;
                 if (flourish != null) {
-                    if (flourish.IsActive && flourish.NumberJavelins > 0) {
+                    if (flourish.Active && flourish.NumberJavelins > 0) {
                         if (flourish.NumberJavelins > 0) {
                             Vector2 velocity = new Vector2();
                             velocity.X = speedX;
@@ -199,6 +199,21 @@ namespace TerrariaMoba.Characters {
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
             if (proj.ranged) {
                 target.AddBuff(BuffType<Buffs.JunglesWrath>(), 240, false);
+            }
+        }
+
+        public override void SetControls() {
+            foreach (Ability ability in abilities) {
+                var flourish = ability as Flourish;
+                if (flourish != null) {
+                    if (flourish.Active) {
+                        player.controlRight = false;
+                        player.controlLeft = false;
+                        player.controlJump = false;
+                        player.controlUp = false;
+                        player.controlDown = false;
+                    }
+                }
             }
         }
 

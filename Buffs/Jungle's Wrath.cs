@@ -28,8 +28,7 @@ namespace TerrariaMoba.Buffs {
                 add = true;
                 plr.JunglesWrathCount++;
             }
-
-            SyncJunglesWrathPacket.Write(player.whoAmI, add);
+            
             return false;
         }
 

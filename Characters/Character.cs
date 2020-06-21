@@ -20,7 +20,6 @@ namespace TerrariaMoba.Characters {
         public int xpPerLevel = 100;
         public int experience = 0;
         public CharacterEnum CharacterEnum;
-        public int ultNumber; //WILL CHANGE TO TALENT SELECT
         public Ability[] abilities;
 
         public Character(Player myPlayer) {
@@ -199,6 +198,8 @@ namespace TerrariaMoba.Characters {
         public virtual void PreUpdateMovement() {}
         public virtual void PostUpdateRunSpeeds() {}
         public virtual void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {}
+
+        public virtual void SetControls() {}
 
         //Etc.
     }
