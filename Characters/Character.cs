@@ -201,6 +201,16 @@ namespace TerrariaMoba.Characters {
 
         public virtual void SetControls() {}
 
+        public virtual void HandleAbility(int index) {
+            Ability ability = abilities[index];
+            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
+            if (ability.Cooldown == 0 && mobaPlayer.customStats.currentResource >= ability.ResourceCost) {
+                mobaPlayer.customStats.currentResource -= ability.ResourceCost;
+                Packets.SyncAbilitiesPacket.Write(index, player.whoAmI);
+                ability.Cast();
+            }
+        }
+
         //Etc.
     }
 }

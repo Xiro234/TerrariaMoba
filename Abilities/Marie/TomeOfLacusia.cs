@@ -10,20 +10,20 @@ namespace TerrariaMoba.Abilities.Marie {
             Icon = TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieAbilityTwo");
         }
 
-        public override void OnCast() {
+        public override void Cast() {
             Timer = (int) 2.5 * 60;
             IsActive = true;
             player.AddBuff(BuffType<Buffs.Channeling>(), Timer);
         }
 
-        public override void InUse() {
+        public override void Using() {
             Timer--;
             if (Timer == 0) {
-                OnEnd();
+                End();
             }
         }
 
-        public override void OnEnd()
+        public override void End()
         {
             Timer = 0;
             IsActive = false;

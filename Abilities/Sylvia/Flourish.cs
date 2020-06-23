@@ -21,10 +21,10 @@ namespace TerrariaMoba.Abilities.Sylvia {
             Icon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaUltimateOne");
         }
 
-        public override void OnCast() {
+        public override void Cast() {
             Timer = 6 * 60;
             NumberJavelins = 3;
-            Active = true;
+            IsActive = true;
             teleporting = true;
             
             Vector2 position = player.Top;
@@ -38,8 +38,8 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 0, 0, player.whoAmI)];
         }
 
-        public override void InUse() {
-            base.InUse();
+        public override void Using() {
+            base.Using();
             Timer--;
 
             if (Timer > 345) {
@@ -65,15 +65,15 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 player.moveSpeed = 0f;
             }
             if (Timer == 0 || NumberJavelins == 0) {
-                OnEnd();
+                End();
             }
             PreviousJavelins = NumberJavelins;
         }
 
-        public override void OnEnd() {
+        public override void End() {
             Timer = 0;
             NumberJavelins = 0;
-            Active = false;
+            IsActive = false;
             teleporting = false;
             Cooldown = 30 * 60;
         }

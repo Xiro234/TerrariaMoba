@@ -103,14 +103,14 @@ namespace TerrariaMoba.Players {
 
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TerrariaMoba.AbilityOneHotKey.JustPressed) {
-                MyCharacter.abilities[0].Start(0);
+                MyCharacter.HandleAbility(0);
                 
             }
             if (TerrariaMoba.AbilityTwoHotKey.JustPressed) {
-                MyCharacter.abilities[1].Start(1);
+                MyCharacter.HandleAbility(1);
             }
             if (TerrariaMoba.UltimateHotkey.JustPressed) {
-                MyCharacter.abilities[2].Start(2);
+                MyCharacter.HandleAbility(2);
             }
             if (TerrariaMoba.LevelTalentOneHotKey.JustPressed) {
                 MyCharacter.LevelTalentOne();
@@ -157,8 +157,8 @@ namespace TerrariaMoba.Players {
         
         public override void PreUpdate() {
             if (CharacterPicked && InProgress) {
-                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.Active)) {
-                    ability.InUse();
+                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.IsActive)) {
+                    ability.Using();
                     if (Main.myPlayer == ability.player.whoAmI && ability.NeedsSyncing) {
                         int index = Array.IndexOf(MyCharacter.abilities, ability);
                         int whoAmI = ability.player.whoAmI;

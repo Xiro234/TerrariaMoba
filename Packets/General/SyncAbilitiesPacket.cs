@@ -20,7 +20,7 @@ namespace TerrariaMoba.Packets {
                 int fromWho = reader.ReadInt32();
                 var player = Main.player[fromWho].GetModPlayer<MobaPlayer>();
 
-                player.MyCharacter.abilities[index].OnCast();
+                player.MyCharacter.abilities[index].Cast();
             }
         }
 

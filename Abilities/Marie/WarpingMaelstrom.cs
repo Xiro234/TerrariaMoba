@@ -10,7 +10,7 @@ namespace TerrariaMoba.Abilities.Marie {
             Icon = TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieAbilityOne");
         }
 
-        public override void OnCast() {
+        public override void Cast() {
             Vector2 position = player.Center;
             Vector2 playerToMouse = Main.MouseWorld - player.Center;
 

@@ -11,7 +11,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
             Icon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaAbilityTwo");
         }
 
-        public override void OnCast() {
+        public override void Cast() {
             player.AddBuff(BuffType<Buffs.VerdantFury>(), 60 * 3);
             Cooldown = 60 * 10;
         }

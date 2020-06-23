@@ -15,6 +15,7 @@ using TerrariaMoba.Abilities.Sylvia;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Stats;
 using EnsnaringVines = TerrariaMoba.Abilities.Sylvia.EnsnaringVines;
+using JunglesWrath = TerrariaMoba.Buffs.JunglesWrath;
 using VerdantFury = TerrariaMoba.Abilities.Sylvia.VerdantFury;
 
 namespace TerrariaMoba.Characters {
@@ -102,7 +103,7 @@ namespace TerrariaMoba.Characters {
             foreach (Ability ability in abilities) {
                 var flourish = ability as Flourish;
                 if (flourish != null) {
-                    if (flourish.Active && flourish.NumberJavelins > 0) {
+                    if (flourish.IsActive && flourish.NumberJavelins > 0) {
                         if (flourish.NumberJavelins > 0) {
                             Vector2 velocity = new Vector2();
                             velocity.X = speedX;
@@ -159,7 +160,7 @@ namespace TerrariaMoba.Characters {
             foreach (Ability ability in abilities) {
                 var flourish = ability as Flourish;
                 if (flourish != null) {
-                    if (flourish.Active) {
+                    if (flourish.IsActive) {
                         player.controlRight = false;
                         player.controlLeft = false;
                         player.controlJump = false;
