@@ -43,6 +43,8 @@ namespace TerrariaMoba.Players {
 
         public bool LacusianBlessing = false;
 
+        public bool TitaniumReflection = false;
+
         //Custom Stats
         public CustomStats customStats;
 
@@ -99,6 +101,8 @@ namespace TerrariaMoba.Players {
             EnsnaringVines = false;
 
             LacusianBlessing = false;
+
+            TitaniumReflection = false;
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet) {
@@ -193,15 +197,14 @@ namespace TerrariaMoba.Players {
             }
         }
 
-        public override void PreUpdateBuffs() {
-            base.PreUpdateBuffs();
-            /*
-            if (LacusianBlessing) {
-                player.statDefense += 12;
-                player.lifeRegen += 8;
-                player.allDamageMult += (float)0.16;
+        public override void PostUpdateRunSpeeds()
+        {
+            if (TitaniumReflection)
+            {
+                player.moveSpeed *= 0.5f;
+                player.maxRunSpeed *= 0.5f;
+                player.accRunSpeed *= 0.5f;
             }
-            */
         }
 
         public override void NaturalLifeRegen(ref float regen) {
@@ -262,6 +265,15 @@ namespace TerrariaMoba.Players {
                 
                 int drawX = (int)(drawInfo.position.X + drawPlayer.width / 2f - Main.screenPosition.X);
                 int drawY = (int)(drawInfo.position.Y + (drawPlayer.height - 2f) - Main.screenPosition.Y);
+                DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, 0, texture.Width, texture.Height), Lighting.GetColor((int)((drawInfo.position.X + drawPlayer.width / 2f) / 16f), (int)((drawInfo.position.Y + drawPlayer.height) / 16f)), 0f, new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
+                Main.playerDrawData.Add(data);
+            }
+
+            if (modPlayer.TitaniumReflection) {
+                Texture2D texture = mod.GetTexture("Textures/Flibnob/TitaniumShell");
+
+                int drawX = (int)(drawInfo.position.X + drawPlayer.width / 2f - Main.screenPosition.X);
+                int drawY = (int)(drawInfo.position.Y + drawPlayer.height / 2f - Main.screenPosition.Y);
                 DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, 0, texture.Width, texture.Height), Lighting.GetColor((int)((drawInfo.position.X + drawPlayer.width / 2f) / 16f), (int)((drawInfo.position.Y + drawPlayer.height) / 16f)), 0f, new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
                 Main.playerDrawData.Add(data);
             }

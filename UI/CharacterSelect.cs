@@ -27,18 +27,18 @@ namespace TerrariaMoba.UI {
                 CharacterEnum.Sylvia));
             iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieIcon"),
                 CharacterEnum.Marie));
-            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"),
-                CharacterEnum.Null));
-            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"),
-                CharacterEnum.Null));
-            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"),
-                CharacterEnum.Null));
-            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"),
-                CharacterEnum.Null));
-            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"),
-                CharacterEnum.Null));
-            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"),
-                CharacterEnum.Null));
+            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobIcon"),
+                CharacterEnum.Flibnob));
+            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoIcon"),
+                CharacterEnum.Osteo));
+            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Nocturne/NocturneIcon"),
+                CharacterEnum.Nocturne));
+            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Chastradamus/ChastradamusIcon"),
+                CharacterEnum.Chastradamus));
+            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/OldMan/OldManIcon"),
+                CharacterEnum.OldMan));
+            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Jorm/JormIcon"),
+                CharacterEnum.Jorm));
             iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"),
                 CharacterEnum.Null));
             iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"),
@@ -90,6 +90,10 @@ namespace TerrariaMoba.UI {
                         break;
                     case (CharacterEnum.Marie):
                         mobaPlayer.MyCharacter = new Marie(Main.LocalPlayer);
+                        mobaPlayer.MyCharacter.SyncTalents();
+                        break;
+                    case (CharacterEnum.Flibnob):
+                        mobaPlayer.MyCharacter = new Flibnob(Main.LocalPlayer);
                         mobaPlayer.MyCharacter.SyncTalents();
                         break;
                 }
