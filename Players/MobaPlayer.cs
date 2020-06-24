@@ -107,16 +107,14 @@ namespace TerrariaMoba.Players {
 
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TerrariaMoba.AbilityOneHotKey.JustPressed) {
-                MyCharacter.abilities[0].Start();
-                Packets.SyncAbilitiesPacket.Write(0, player.whoAmI);
+                MyCharacter.HandleAbility(0);
+                
             }
             if (TerrariaMoba.AbilityTwoHotKey.JustPressed) {
-                MyCharacter.abilities[1].Start();
-                Packets.SyncAbilitiesPacket.Write(1, player.whoAmI);
+                MyCharacter.HandleAbility(1);
             }
             if (TerrariaMoba.UltimateHotkey.JustPressed) {
-                MyCharacter.abilities[2].Start();
-                Packets.SyncAbilitiesPacket.Write(2, player.whoAmI);
+                MyCharacter.HandleAbility(2);
             }
             if (TerrariaMoba.LevelTalentOneHotKey.JustPressed) {
                 MyCharacter.LevelTalentOne();
@@ -164,7 +162,7 @@ namespace TerrariaMoba.Players {
         public override void PreUpdate() {
             if (CharacterPicked && InProgress) {
                 foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.IsActive)) {
-                    ability.InUse();
+                    ability.Using();
                     if (Main.myPlayer == ability.player.whoAmI && ability.NeedsSyncing) {
                         int index = Array.IndexOf(MyCharacter.abilities, ability);
                         int whoAmI = ability.player.whoAmI;
@@ -296,6 +294,10 @@ namespace TerrariaMoba.Players {
                 player.controlJump = false;
                 player.controlUp = false;
                 player.controlDown = false;
+            }
+
+            if (CharacterPicked && InProgress) {
+                MyCharacter.SetControls();
             }
         }
 

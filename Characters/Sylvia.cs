@@ -15,6 +15,7 @@ using TerrariaMoba.Abilities.Sylvia;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Stats;
 using EnsnaringVines = TerrariaMoba.Abilities.Sylvia.EnsnaringVines;
+using JunglesWrath = TerrariaMoba.Buffs.JunglesWrath;
 using VerdantFury = TerrariaMoba.Abilities.Sylvia.VerdantFury;
 
 namespace TerrariaMoba.Characters {
@@ -152,6 +153,21 @@ namespace TerrariaMoba.Characters {
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
             if (proj.ranged) {
                 target.AddBuff(BuffType<Buffs.JunglesWrath>(), 240, false);
+            }
+        }
+
+        public override void SetControls() {
+            foreach (Ability ability in abilities) {
+                var flourish = ability as Flourish;
+                if (flourish != null) {
+                    if (flourish.IsActive) {
+                        player.controlRight = false;
+                        player.controlLeft = false;
+                        player.controlJump = false;
+                        player.controlUp = false;
+                        player.controlDown = false;
+                    }
+                }
             }
         }
 

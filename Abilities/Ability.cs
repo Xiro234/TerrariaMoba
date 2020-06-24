@@ -14,12 +14,9 @@ using TerrariaMoba.UI;
 namespace TerrariaMoba.Abilities {
     public class Ability {
         public string Name = "";
-        public int ChannelTime = 0;
         public int Cooldown = 0;
         public int Timer = 0;
-        public int Index = 0;
         public bool IsActive = false;
-        public bool CanUse = false;
         public bool NeedsSyncing = false;
         public int ResourceCost = 0;
         public AbilityType Type = AbilityType.Active;
@@ -28,10 +25,8 @@ namespace TerrariaMoba.Abilities {
 
         public Ability() {
             Name = "";
-            ChannelTime = 0;
             Cooldown = 0;
             IsActive = false;
-            CanUse = false;
             ResourceCost = 0;
             Type = AbilityType.Active;
             Icon = TerrariaMoba.Instance.GetTexture("Textures/Lock");
@@ -41,17 +36,9 @@ namespace TerrariaMoba.Abilities {
             player = myPlayer;
         }
 
-        public virtual void Start() {
-            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
-            if (Cooldown == 0 && mobaPlayer.customStats.currentResource >= ResourceCost) {
-                mobaPlayer.customStats.currentResource -= ResourceCost;
-                OnCast();
-            }
-        }
-        
-        public virtual void OnCast() { }
-        public virtual void InUse() { CheckSync(); }
-        public virtual void OnEnd() { }
+        public virtual void Cast() { }
+        public virtual void Using() { CheckSync(); }
+        public virtual void End() { }
         public virtual void CheckSync() { }
         public virtual void ReadAbility(MemoryStream stream) { }
 

@@ -9,6 +9,8 @@ using TerrariaMoba.Stats;
 
 namespace TerrariaMoba.Buffs {
     public class JunglesWrath : ModBuff {
+        public int stacks = 0;
+        
         public override void SetDefaults() {
             DisplayName.SetDefault("Jungle's Wrath");
             Description.SetDefault("The jungle poisons you!");
@@ -18,23 +20,13 @@ namespace TerrariaMoba.Buffs {
         }
 
         public override void Update(Player player, ref int buffIndex) {
-            player.GetModPlayer<MobaPlayer>().JunglesWrath = true;
+            player.GetModPlayer<MobaPlayer>().customStats.lifeDegen += 2 * stacks;
         }
-        
+
         public override bool ReApply(Player player, int time, int buffIndex) {
-            var plr = player.GetModPlayer<MobaPlayer>();
-            bool add = false;
-            if (plr.JunglesWrathCount < 4) {
-                add = true;
-                plr.JunglesWrathCount++;
-            }
-
-            SyncJunglesWrathPacket.Write(player.whoAmI, add);
+            stacks += 1;
+            
             return false;
-        }
-
-        public override void ModifyBuffTip(ref string tip, ref int rare) {
-            tip += " Stacks: " + Main.LocalPlayer.GetModPlayer<MobaPlayer>().JunglesWrathCount;
         }
     }
 }
