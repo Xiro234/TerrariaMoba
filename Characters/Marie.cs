@@ -10,7 +10,9 @@ using TerrariaMoba.Abilities;
 using TerrariaMoba.Abilities.Marie;
 
 namespace TerrariaMoba.Characters {
-    public class Marie : Character {
+    public class Marie : Character
+    {
+        public float FloodboostTimer = 300f;
         public Marie(Player player) : base(player) {
             CharacterEnum = CharacterEnum.Marie;
         }
@@ -53,6 +55,9 @@ namespace TerrariaMoba.Characters {
             FountainOfTheGoddess ultimate = new FountainOfTheGoddess(player);
             abilities[2] = ultimate;
             */
+            
+            Floodboost trait = new Floodboost(player);
+            abilities[3] = trait;
             
             TidalImprisonment ultimate = new TidalImprisonment(player);
             abilities[2] = ultimate;

@@ -41,6 +41,7 @@ namespace TerrariaMoba.Players {
         public bool VerdantFury = false;
         public bool EnsnaringVines = false;
 
+        public bool FloodboostOn = false;
         public bool LacusianBlessing = false;
 
         public bool TitaniumReflection = false;
@@ -100,6 +101,7 @@ namespace TerrariaMoba.Players {
             JunglesWrath = false;
             EnsnaringVines = false;
 
+            FloodboostOn = false;
             LacusianBlessing = false;
 
             TitaniumReflection = false;
@@ -188,6 +190,7 @@ namespace TerrariaMoba.Players {
             if (!JunglesWrath) {
                 JunglesWrathCount = 1;
             }
+            
             if (LacusianBlessing) {
                 player.statDefense += 60; //12
                 player.lifeRegen += 20; //8
@@ -195,10 +198,14 @@ namespace TerrariaMoba.Players {
             }
         }
 
-        public override void PostUpdateRunSpeeds()
-        {
-            if (TitaniumReflection)
-            {
+        public override void PostUpdateRunSpeeds() {
+            if (FloodboostOn) {
+                player.moveSpeed *= 1.66f;
+                player.maxRunSpeed *= 1.66f;
+                player.accRunSpeed *= 1.66f;
+            }
+            
+            if (TitaniumReflection) {
                 player.moveSpeed *= 0.5f;
                 player.maxRunSpeed *= 0.5f;
                 player.accRunSpeed *= 0.5f;

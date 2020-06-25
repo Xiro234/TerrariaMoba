@@ -6,10 +6,10 @@ using TerrariaMoba.Abilities.Flibnob;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Players;
 
-namespace TerrariaMoba.Characters
-{
-    public class Flibnob : Character
-    {
+namespace TerrariaMoba.Characters {
+    public class Flibnob : Character {
+        public bool EarthsplitterJump = false;
+        
         public Flibnob(Player player) : base(player) {
             CharacterEnum = CharacterEnum.Flibnob;
         }
@@ -54,10 +54,14 @@ namespace TerrariaMoba.Characters
             Earthsplitter ultimate = new Earthsplitter(player);
             abilities[2] = ultimate;
             
+            BattleHardened trait = new BattleHardened(player);
+            abilities[3] = trait;
+            
             /*
             CullTheMeek ultimate = new CullTheMeek(player);
             abilities[2] = ultimate;
             */
+            
             
             CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobIcon");
         }
@@ -82,7 +86,7 @@ namespace TerrariaMoba.Characters
         public override void ModifyDrawLayers(List<PlayerLayer> layers) {
 
         }
-        
+
         public override void PostUpdateRunSpeeds() {
 
         }

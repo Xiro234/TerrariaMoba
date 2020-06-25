@@ -13,14 +13,14 @@ namespace TerrariaMoba.Abilities.Flibnob
             Icon = TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobAbilityOne");
         }
         
-        public override void OnCast()
+        public override void Cast()
         {
             Timer = (3 * 60) + 1;
             IsActive = true;
             player.AddBuff(BuffType<Buffs.Channeling>(), Timer);
         }
 
-        public override void InUse() {
+        public override void Using() {
             Timer--;
             if (Timer % 60 == 0) {
                 Vector2 position = Main.LocalPlayer.Center;
@@ -35,11 +35,11 @@ namespace TerrariaMoba.Abilities.Flibnob
                     TerrariaMoba.Instance.ProjectileType("FlameBelchSpawner"), 50, 0, Main.LocalPlayer.whoAmI, 0f)];
             }
             if (Timer == 0) {
-                OnEnd();
+                End();
             }
         }
 
-        public override void OnEnd()
+        public override void End()
         {
             Timer = 0;
             IsActive = false;

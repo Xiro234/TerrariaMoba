@@ -10,7 +10,7 @@ namespace TerrariaMoba.Abilities.Flibnob
             Icon = TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobAbilityTwo");
         }
         
-        public override void OnCast()
+        public override void Cast()
         {
             player.AddBuff(BuffType<Buffs.TitaniumReflection>(), 3 * 60);
             Cooldown = 10 * 60;

@@ -11,7 +11,7 @@ namespace TerrariaMoba.Abilities.Marie {
         }
 
         public override void Cast() {
-            Timer = (int) 2.5 * 60;
+            Timer = (int) (2.5 * 60);
             IsActive = true;
             player.AddBuff(BuffType<Buffs.Channeling>(), Timer);
         }
@@ -29,7 +29,7 @@ namespace TerrariaMoba.Abilities.Marie {
             IsActive = false;
             for (int i = 0; i < Main.maxPlayers; i++) {
                 Player plr = Main.player[i];
-                if (plr.active && plr != null) {
+                if (plr.active) {
                     if (plr.team == player.team) {
                         plr.statLife += 100;
                         CombatText.NewText(plr.Hitbox, Color.CornflowerBlue, 100, true);
