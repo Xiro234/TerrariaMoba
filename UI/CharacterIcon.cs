@@ -18,10 +18,28 @@ namespace TerrariaMoba.UI {
 
             switch (character) {
                 case(CharacterEnum.Sylvia):
-                    hoverText = "Sylvia Verda";
+                    hoverText = "Sylvia Verda, Markswoman of the Jungle";
                     break;
                 case(CharacterEnum.Marie):
-                    hoverText = "Marie Tidewrath";
+                    hoverText = "Marie Tidewrath, High Priestess of Lacusia";
+                    break;
+                case(CharacterEnum.Flibnob):
+                    hoverText = "Flibnob, the Ogre Lord";
+                    break;
+                case(CharacterEnum.Osteo):
+                    hoverText = "Osteo Prime, Last Necromancer of the Mudpits";
+                    break;
+                case(CharacterEnum.Nocturne):
+                    hoverText = "Nocturne Umbra, The Glory of Ecliptera";
+                    break;
+                case(CharacterEnum.Chastradamus):
+                    hoverText = "Chastradamus, the Plague Doctor";
+                    break;
+                case(CharacterEnum.OldMan):
+                    hoverText = "Old Man, The Venerable Trawler";
+                    break;
+                case(CharacterEnum.Jorm):
+                    hoverText = "Jorm Goldenhammer, Hero of the Ogre War";
                     break;
                 default:
                     hoverText = "";

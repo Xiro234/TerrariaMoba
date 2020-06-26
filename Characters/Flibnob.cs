@@ -1,67 +1,69 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
-using TerrariaMoba.Players;
+using TerrariaMoba.Abilities.Flibnob;
 using TerrariaMoba.Enums;
-using TerrariaMoba.Abilities;
-using TerrariaMoba.Abilities.Marie;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Characters {
-    public class Marie : Character
-    {
-        public float FloodboostTimer = 300f;
-        public Marie(Player player) : base(player) {
-            CharacterEnum = CharacterEnum.Marie;
+    public class Flibnob : Character {
+        public bool EarthsplitterJump = false;
+        
+        public Flibnob(Player player) : base(player) {
+            CharacterEnum = CharacterEnum.Flibnob;
         }
-
+        
         public override void ChooseCharacter() {
-            Main.NewText("Marie");
+            Main.NewText("Flibnob");
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
             Item vanityHelm = new Item();
-            vanityHelm.SetDefaults(3226);
-            Item dyeHelm = new Item();
-            dyeHelm.SetDefaults(1014);
+            vanityHelm.SetDefaults(3865);
             Item vanityChest = new Item();
-            vanityChest.SetDefaults(2499);
+            vanityChest.SetDefaults(667);
+            Item dyeChest = new Item();
+            dyeChest.SetDefaults(3555);
             Item vanityLeg = new Item();
-            vanityLeg.SetDefaults(2500);
+            vanityLeg.SetDefaults(668);
+            Item dyeLeg = new Item();
+            dyeLeg.SetDefaults(3555);
             Item primary = new Item();
-            primary.SetDefaults(741);
+            primary.SetDefaults(1224);
 
             player.armor[10] = vanityHelm;
             player.armor[11] = vanityChest;
             player.armor[12] = vanityLeg;
-            player.dye[0] = dyeHelm;
+            player.dye[1] = dyeChest;
+            player.dye[2] = dyeLeg;
             player.inventory[0] = primary;
-            player.Male = false;
-            player.hair = 5;
-            player.hairColor = new Color(0, 133, 255);
-            player.skinColor = new Color(235, 159, 125);
-            player.eyeColor = new Color(0, 0, 255);
-            player.statLifeMax2 = 1600;
-            player.statLife = 1600;
+            player.Male = true;
+            player.hair = 15;
+            player.hairColor = new Color(0, 0, 0);
+            player.skinColor = new Color(120, 63, 4);
+            player.eyeColor = new Color(255, 0, 0);
+            mobaPlayer.customStats.maxHealth = 2400;
+            player.statLifeMax2 = 2400;
+            player.statLife = 2400;
             
-            WarpingMaelstrom abilityOne = new WarpingMaelstrom(player);
+            FlameBelch abilityOne = new FlameBelch(player);
             abilities[0] = abilityOne;
             
-            TomeOfLacusia abilityTwo = new TomeOfLacusia(player);
+            TitaniumShell abilityTwo = new TitaniumShell(player);
             abilities[1] = abilityTwo;
             
+            Earthsplitter ultimate = new Earthsplitter(player);
+            abilities[2] = ultimate;
+            
+            BattleHardened trait = new BattleHardened(player);
+            abilities[3] = trait;
+            
             /*
-            FountainOfTheGoddess ultimate = new FountainOfTheGoddess(player);
+            CullTheMeek ultimate = new CullTheMeek(player);
             abilities[2] = ultimate;
             */
             
-            Floodboost trait = new Floodboost(player);
-            abilities[3] = trait;
             
-            TidalImprisonment ultimate = new TidalImprisonment(player);
-            abilities[2] = ultimate;
-            
-            CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieIcon");
+            CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobIcon");
         }
         
         public override void PreUpdate() {
@@ -84,7 +86,7 @@ namespace TerrariaMoba.Characters {
         public override void ModifyDrawLayers(List<PlayerLayer> layers) {
 
         }
-        
+
         public override void PostUpdateRunSpeeds() {
 
         }

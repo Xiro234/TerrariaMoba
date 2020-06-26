@@ -10,21 +10,13 @@ namespace TerrariaMoba.Abilities.Marie {
         }
         
         public override void Cast() {
-            Vector2 position = Main.LocalPlayer.Top;
-            Vector2 playerToMouse = Main.MouseWorld - Main.LocalPlayer.Center;
+            Vector2 playerToMouse = Main.MouseWorld - player.Center;
             int velX = Math.Sign((int)playerToMouse.X);
             int velY = (int) MathHelper.Clamp((playerToMouse.Y / 16.0f), -10f, 10f);
             Vector2 velocity = new Vector2(velX * 5, velY);
-            if (player.direction == 1 && velX == -1) {
-                player.velocity *= 0.4f;
-                player.direction = -1;
-            }
-            if (player.direction == -1 && velX == 1) {
-                player.velocity *= 0.4f;
-                player.direction = 1;
-            }
-            Projectile proj = Main.projectile[Projectile.NewProjectile(position, velocity, 
-                TerrariaMoba.Instance.ProjectileType("WaterShackleBomb"), 30, 0, Main.LocalPlayer.whoAmI)];
+
+            Projectile proj = Main.projectile[Projectile.NewProjectile(player.Top, velocity, 
+                TerrariaMoba.Instance.ProjectileType("WaterShackleBomb"), 30, 0, player.whoAmI)];
             Cooldown = 10 * 60;
         }
     }
