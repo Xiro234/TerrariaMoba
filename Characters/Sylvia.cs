@@ -13,7 +13,6 @@ using System.Collections.Generic;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.Abilities.Sylvia;
 using TerrariaMoba.Enums;
-using TerrariaMoba.Stats;
 using EnsnaringVines = TerrariaMoba.Abilities.Sylvia.EnsnaringVines;
 using JunglesWrath = TerrariaMoba.Buffs.JunglesWrath;
 using VerdantFury = TerrariaMoba.Abilities.Sylvia.VerdantFury;
@@ -53,8 +52,8 @@ namespace TerrariaMoba.Characters {
                 player.hairColor = new Color(52, 133, 34);
                 player.skinColor = new Color(198,134,66);
                 player.eyeColor = new Color(84,42,14);
-                mobaPlayer.customStats.maxHealth = 2000;
-                player.statLifeMax2 = 2000;
+                baseMaxHealth = 2000;
+                player.statLifeMax2 = baseMaxHealth;
                 player.statLife = 2000;
 
                 EnsnaringVines abilityOne = new EnsnaringVines(player);

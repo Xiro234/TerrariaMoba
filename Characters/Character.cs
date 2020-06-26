@@ -21,6 +21,15 @@ namespace TerrariaMoba.Characters {
         public int experience = 0;
         public CharacterEnum CharacterEnum;
         public Ability[] abilities;
+        
+        //Stats
+        public int baseMaxHealth;
+        public float baseLifeRegen;
+        public float baseLifeDegen;
+        public int baseMaxResource;
+        public float baseResourceRegen;
+        public float baseResourceDegen;
+        public int baseArmor;
 
         public Character(Player myPlayer) {
             player = myPlayer;
@@ -187,8 +196,10 @@ namespace TerrariaMoba.Characters {
         }
         
         public virtual void ResetEffects() {}
-        public virtual void PreUpdate() {}
-        public virtual void UpdateBadLifeRegen() {}
+
+        public virtual void PreUpdate() {
+        }
+        
         public virtual void PostUpdateBuffs() {}
 
         public virtual bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type,
@@ -204,11 +215,23 @@ namespace TerrariaMoba.Characters {
         public virtual void HandleAbility(int index) {
             Ability ability = abilities[index];
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
-            if (ability.Cooldown == 0 && mobaPlayer.customStats.currentResource >= ability.ResourceCost) {
-                mobaPlayer.customStats.currentResource -= ability.ResourceCost;
+            if (ability.Cooldown == 0 && mobaPlayer.currentResource >= ability.ResourceCost) {
+                mobaPlayer.currentResource -= ability.ResourceCost;
                 Packets.SyncAbilitiesPacket.Write(index, player.whoAmI);
                 ability.Cast();
             }
+        }
+
+        public virtual void UpdateBaseStats() {
+            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
+
+            mobaPlayer.maxHealth += baseMaxHealth;
+            mobaPlayer.lifeRegen += baseLifeRegen;
+            mobaPlayer.lifeDegen += baseLifeDegen;
+            mobaPlayer.maxResource += baseMaxResource;
+            mobaPlayer.resourceRegen = baseResourceRegen;
+            mobaPlayer.resourceDegen = baseResourceDegen;
+            mobaPlayer.armor += baseArmor;
         }
 
         //Etc.

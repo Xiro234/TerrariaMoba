@@ -39,7 +39,6 @@ namespace TerrariaMoba.Characters {
             player.hairColor = new Color(0, 133, 255);
             player.skinColor = new Color(235, 159, 125);
             player.eyeColor = new Color(0, 0, 255);
-            mobaPlayer.customStats.maxHealth = 1600;
             player.statLifeMax2 = 1600;
             player.statLife = 1600;
             

@@ -15,7 +15,6 @@ using TerrariaMoba.Abilities;
 using TerrariaMoba.Characters;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Packets;
-using TerrariaMoba.Stats;
 using TerrariaMoba.UI;
 using static TerrariaMobaUtils;
 using static Terraria.ModLoader.ModContent;
@@ -42,13 +41,29 @@ namespace TerrariaMoba.Players {
         public bool EnsnaringVines = false;
 
         public bool LacusianBlessing = false;
-
+        
         //Custom Stats
-        public CustomStats customStats;
+        public float percentThorns = 0f;
+        //public int shield = 0;
 
+        public int maxHealth = 0;
+        public int bonusHealth = 0;
+        public float lifeRegen = 0;
+        public int lifeRegenTimer = 0;
+        public float lifeDegen = 0;
+        public int lifeDegenTimer = 0;
+
+        public int maxResource = 0;
+        public int currentResource = 0;
+        public float resourceRegen = 0;
+        public int resourceRegenTimer = 0;
+        public float resourceDegen = 0;
+        public int resourceDegenTimer = 0;
+        
+        public int armor = 0;
+        
         public override void Initialize() {
             CharacterSelected = CharacterEnum.Null;
-            customStats = new CustomStats();
         }
 
         public override void clientClone(ModPlayer clientClone) {
@@ -56,23 +71,11 @@ namespace TerrariaMoba.Players {
         }
 
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer) {
-            ModPacket statPacket = mod.GetPacket();
-            statPacket.Write((byte)Message.SyncCustomStats);
-            statPacket.Write((byte)player.whoAmI);
-            customStats.Send(statPacket);
-            statPacket.Send();
-           
+
         }
 
         public override void SendClientChanges(ModPlayer clientPlayer) {
-            MobaPlayer clone = clientPlayer as MobaPlayer;
-            if (!customStats.Equals(clone.customStats)) {
-                ModPacket packet = mod.GetPacket();
-                packet.Write((byte)Message.SyncCustomStats);
-                packet.Write((byte)player.whoAmI);
-                customStats.Send(packet);
-                packet.Send();
-            }
+
         }
 
         public override void OnEnterWorld(Player player) {
@@ -86,14 +89,19 @@ namespace TerrariaMoba.Players {
         }
 
         public override void ResetEffects() {
-            customStats.percentThorns = 0f;
+            maxHealth = 0;
+            bonusHealth = 0;
+            lifeRegen = 0;
+            lifeDegen = 0;
+            maxResource = 0;
+            resourceRegen = 0;
+            resourceDegen = 0;
+
+            percentThorns = 0f;
             Silenced = false;
             Weakened = false;
             IsChanneling = false;
-            if (InProgress && CharacterPicked) {
-                player.statLifeMax2 = customStats.maxHealth;
-            }
-            
+
             VerdantFury = false;
             JunglesWrath = false;
             EnsnaringVines = false;
@@ -144,15 +152,7 @@ namespace TerrariaMoba.Players {
         }
         
         public override void UpdateBadLifeRegen() {
-            //JunglesWrath
-            if (JunglesWrath) {
-                if (player.lifeRegen > 0) {
-                    player.lifeRegen = 0;
-                }
 
-                player.lifeRegenTime = 0;
-                player.lifeRegen -= 4 * JunglesWrathCount;
-            }
         }
         
         public override void PreUpdate() {
@@ -172,7 +172,52 @@ namespace TerrariaMoba.Players {
                 foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.Cooldown > 0)) {
                     ability.Cooldown--;
                 }
+                
                 MyCharacter.PreUpdate();
+            }
+        }
+
+        public override void PostUpdateEquips() {
+            if (CharacterPicked && InProgress) {
+                MyCharacter.UpdateBaseStats();
+                
+                player.statLifeMax2 = maxHealth + bonusHealth;
+
+                if (lifeRegenTimer == 30) {
+                    player.statLife += (int)(lifeRegen / 2);
+                    lifeRegenTimer = 0;
+                }
+
+                if (lifeDegenTimer == 30) {
+                    player.statLife -= (int)(lifeDegen / 2);
+                    lifeDegenTimer = 0;
+                                    
+                    if (player.statLife <= 0) {
+                        if (PlayerLastHurt >= 0 && PlayerLastHurt <= 255) {
+                            player.KillMe(PlayerDeathReason.ByPlayer(PlayerLastHurt), lifeDegen, 0, true);
+                        }
+                    }
+                }
+                
+                if (resourceRegenTimer == 30) {
+                    currentResource += (int)(resourceRegen / 2);
+                    resourceRegenTimer = 0;
+                }
+
+                if (resourceDegenTimer == 30) {
+                    currentResource -= (int)(resourceDegen / 2);
+                    resourceDegenTimer = 0;
+                }
+
+                if (currentResource > maxResource) {
+                    currentResource = maxResource;
+                }
+                else if (currentResource < 0) {
+                    currentResource = 0;
+                }
+
+                lifeRegenTimer += 1;
+                lifeDegenTimer += 1;
             }
         }
 
@@ -223,6 +268,7 @@ namespace TerrariaMoba.Players {
             EditDamage(ref damage);
             target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
             SyncPvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
+            MyCharacter.ModifyHitPvpWithProj(proj, target, ref damage, ref crit);
         }
 
         public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit) {
@@ -301,13 +347,13 @@ namespace TerrariaMoba.Players {
 
                 int damage = sourceDamage;
                 
-                if (customStats.percentThorns > 0f && sendThorns) {
-                    target.GetModPlayer<MobaPlayer>().DamageOverride((int)(damage * customStats.percentThorns), Main.player[killer], target.whoAmI, false);
-                    SyncPvpHitPacket.Write(killer, (int)(damage * customStats.percentThorns), target.whoAmI, false);
+                if (percentThorns > 0f && sendThorns) {
+                    target.GetModPlayer<MobaPlayer>().DamageOverride((int)(damage * percentThorns), Main.player[killer], target.whoAmI, false);
+                    SyncPvpHitPacket.Write(killer, (int)(damage * percentThorns), target.whoAmI, false);
                 }
 
-                int armor = target.GetModPlayer<MobaPlayer>().customStats.armor;
-                damage *= ((100 - armor) / 100);
+                int otherArmor = target.GetModPlayer<MobaPlayer>().armor;
+                damage *= ((100 - otherArmor) / 100);
                 target.statLife -= damage;
 
                 CombatText.NewText(target.Hitbox, Color.OrangeRed, damage);

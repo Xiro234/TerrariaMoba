@@ -5,7 +5,6 @@ using TerrariaMoba;
 using TerrariaMoba.Characters;
 using TerrariaMoba.Packets;
 using TerrariaMoba.Players;
-using TerrariaMoba.Stats;
 
 namespace TerrariaMoba.Buffs {
     public class Silenced : ModBuff {

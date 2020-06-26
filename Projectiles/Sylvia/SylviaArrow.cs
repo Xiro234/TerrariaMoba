@@ -23,8 +23,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
 
         public override void Kill(int timeLeft) {
             Main.PlaySound(0, (int) projectile.position.X, (int) projectile.position.Y);
-            for (int num737 = 0; num737 < 10; num737++)
-            {
+            for (int i = 0; i < 10; i++) {
                 Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 7, 0f, 0f, 0, Color.Red, 1f);
             }
         }

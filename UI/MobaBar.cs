@@ -178,21 +178,11 @@ namespace TerrariaMoba.UI {
                 levelText.SetText(mobaPlayer.MyCharacter.level.ToString(), 0.75f, false);
             }
             
-            if (player.lifeRegen >= 0) {
-                lifeText.SetText(player.statLife + "/" + player.statLifeMax2 + " (+" + player.lifeRegen + ")", 0.75f, false);
-            }
-            else {
-                lifeText.SetText(player.statLife + "/" + player.statLifeMax2 + " (" + player.lifeRegen + ")", 0.75f, false);
-            }
+            lifeText.SetText(player.statLife + "/" + player.statLifeMax2 + " (+" + mobaPlayer.lifeRegen + ")", 0.75f, false);
+            
+            manaText.SetText(mobaPlayer.currentResource + "/" + mobaPlayer.maxResource + " (+" + mobaPlayer.resourceRegen + ")", 0.75f, false);
 
-            if (player.manaRegen >= 0) {
-                manaText.SetText(player.statMana + "/" + player.statManaMax + " (+" + player.manaRegen + ")", 0.75f, false);
-            }
-            else {
-                manaText.SetText(player.statMana + "/" + player.statManaMax + " (" + player.manaRegen + ")", 0.75f, false);
-            }
-
-            armorText.SetText(mobaPlayer.customStats.armor.ToString(), 0.6f, false);
+            armorText.SetText(mobaPlayer.armor.ToString(), 0.6f, false);
             moveSpeedText.SetText(Math.Round(player.velocity.Length()).ToString(), 0.6f, false);
 
             if (player.dead) {

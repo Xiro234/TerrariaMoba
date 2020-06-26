@@ -5,7 +5,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Players;
-using TerrariaMoba.Stats;
 using static Terraria.ModLoader.ModContent;
 using static TerrariaMobaUtils;
     

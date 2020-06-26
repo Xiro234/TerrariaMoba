@@ -111,20 +111,6 @@ namespace TerrariaMoba {
 				case(Message.SyncGameStart):
 					Packets.SyncGameStartPacket.Read(reader);
 					break;
-				case(Message.SyncCustomStats):
-					byte playerIndex = reader.ReadByte();
-					Player player = Main.player[playerIndex];
-					MobaPlayer mobaPlayer = player.GetModPlayer<MobaPlayer>();
-					mobaPlayer.customStats.Recieve(reader);
-
-					if (Main.netMode == NetmodeID.Server) {
-						ModPacket packet = GetPacket();
-						packet.Write((byte)Message.SyncCustomStats);
-						packet.Write(playerIndex);
-						mobaPlayer.customStats.Send(packet);
-						packet.Send(-1, whoAmI);
-					}
-					break;
 				case(Message.SyncAbilityValues):
 					Packets.SyncAbilityValues.Read(reader);
 					break;
