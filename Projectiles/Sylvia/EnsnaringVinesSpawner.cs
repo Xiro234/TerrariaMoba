@@ -20,12 +20,15 @@ namespace TerrariaMoba.Projectiles.Sylvia {
 
         public override void AI() {
             projectile.ai[0] += 1f;
-            
-            if (((int)projectile.ai[0] & 15) == 0) {
-                Vector2 newPos = new Vector2(projectile.position.X, GetYPos());
-                Projectile.NewProjectile(newPos, Vector2.Zero, mod.ProjectileType("EnsnaringVines"), projectile.damage, projectile.knockBack, projectile.owner);
+
+            if (((int) projectile.ai[0] & 15) == 0) {
+                if (Main.netMode != NetmodeID.Server && Main.myPlayer == projectile.owner) {
+                    Vector2 newPos = new Vector2(projectile.position.X, GetYPos());
+                    Projectile.NewProjectile(newPos, Vector2.Zero, mod.ProjectileType("EnsnaringVines"),
+                        projectile.damage, projectile.knockBack, projectile.owner);
+                }
             }
-            
+
             //var player = Main.player[projectile.owner].GetModPlayer<MobaPlayer>();
 
             /*

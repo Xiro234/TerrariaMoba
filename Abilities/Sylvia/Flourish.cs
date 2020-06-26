@@ -26,16 +26,19 @@ namespace TerrariaMoba.Abilities.Sylvia {
             NumberJavelins = 3;
             IsActive = true;
             teleporting = true;
-            
-            Vector2 position = player.Top;
-            Vector2 playerToMouse = Main.MouseWorld - player.Center;
-            int direction = -Math.Sign((int) playerToMouse.X);
+            if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
 
-            Vector2 velocity = new Vector2(direction * 0.5f, -0.866f); //Unit vector in specific direction
-            velocity *= 12;
+                Vector2 position = player.Top;
+                Vector2 playerToMouse = Main.MouseWorld - player.Center;
+                int direction = -Math.Sign((int) playerToMouse.X);
 
-            teleport = Main.projectile[Projectile.NewProjectile(position, velocity, TerrariaMoba.Instance.ProjectileType("SylviaUlt1Teleport"),
-                0, 0, player.whoAmI)];
+                Vector2 velocity = new Vector2(direction * 0.5f, -0.866f); //Unit vector in specific direction
+                velocity *= 12;
+
+                teleport = Main.projectile[Projectile.NewProjectile(position, velocity,
+                    TerrariaMoba.Instance.ProjectileType("SylviaUlt1Teleport"),
+                    0, 0, player.whoAmI)];
+            }
         }
 
         public override void Using() {
@@ -47,8 +50,11 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 player.immuneTime = 1;
             }
             else if (Timer == 345) {
-                player.Teleport(teleport.position, -1);
-                teleport.Kill();
+                if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
+                    player.position = teleport.position;
+                    NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, Main.myPlayer);
+                    teleport.Kill();
+                }
                 teleporting = false;
                 NumberJavelins = 3;
                 PreviousJavelins = 3;

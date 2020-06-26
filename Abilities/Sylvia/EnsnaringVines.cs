@@ -3,6 +3,7 @@ using System;
 using Microsoft.Xna.Framework.Graphics;
 using TerrariaMoba.Enums;
 using Microsoft.Xna.Framework;
+using Terraria.ID;
 
 namespace TerrariaMoba.Abilities.Sylvia {
     public class EnsnaringVines : Ability {
@@ -12,14 +13,17 @@ namespace TerrariaMoba.Abilities.Sylvia {
         }
 
         public override void Cast() {
-            Vector2 position = player.Center;
-            Vector2 playerToMouse = Main.MouseWorld - player.Center;
+            if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
+                Vector2 position = player.Center;
+                Vector2 playerToMouse = Main.MouseWorld - player.Center;
 
-            int direction = Math.Sign((int) playerToMouse.X);
-            Vector2 velocity = new Vector2(direction * 6, 0);
+                int direction = Math.Sign((int) playerToMouse.X);
+                Vector2 velocity = new Vector2(direction * 6, 0);
 
-            Projectile proj = Main.projectile[Projectile.NewProjectile(position, velocity,
-                TerrariaMoba.Instance.ProjectileType("EnsnaringVinesSpawner"), 30, 0, player.whoAmI)];
+                Projectile proj = Main.projectile[Projectile.NewProjectile(position, velocity,
+                    TerrariaMoba.Instance.ProjectileType("EnsnaringVinesSpawner"), 30, 0, player.whoAmI)];
+            }
+            
             Cooldown = 40 * 60;
         }
     }
