@@ -21,7 +21,7 @@ namespace TerrariaMoba.Abilities.Flibnob
             if (player.velocity.Y == 0 && player.oldVelocity.Y == 0 && !player.mount.Active)
             {
                 IsActive = false;
-                Vector2 position = Main.LocalPlayer.Center;
+                Vector2 position = player.Center;
 
                 if (player.direction < 0) {
                     position.X -= 110;
@@ -30,7 +30,8 @@ namespace TerrariaMoba.Abilities.Flibnob
                 }
                 Vector2 velocity = new Vector2(player.direction * 4f, 0);
 
-                Projectile proj = Main.projectile[Projectile.NewProjectile(position, velocity, TerrariaMoba.Instance.ProjectileType("EarthsplitterSpawner"), 500, 0, Main.LocalPlayer.whoAmI, 39f)];
+                Projectile proj = Main.projectile[Projectile.NewProjectile(position, velocity, 
+                    TerrariaMoba.Instance.ProjectileType("EarthsplitterSpawner"), 500, 0, player.whoAmI, 39f)];
                 Cooldown = 20 * 60;
             }
         }

@@ -12,9 +12,8 @@ namespace TerrariaMoba.Abilities.Flibnob
         
         public override void Cast()
         {
-            Vector2 position = Main.LocalPlayer.Center;
-            Projectile proj = Main.projectile[Projectile.NewProjectile(position, Vector2.Zero, 
-                TerrariaMoba.Instance.ProjectileType("CullPillar"), 0, 0, Main.LocalPlayer.whoAmI, 0f)];
+            Projectile proj = Main.projectile[Projectile.NewProjectile(player.Center, Vector2.Zero, 
+                TerrariaMoba.Instance.ProjectileType("CullPillar"), 0, 0, player.whoAmI, 0f)];
         }
     }
 }

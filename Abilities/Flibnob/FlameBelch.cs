@@ -23,7 +23,7 @@ namespace TerrariaMoba.Abilities.Flibnob
         public override void Using() {
             Timer--;
             if (Timer % 60 == 0) {
-                Vector2 position = Main.LocalPlayer.Center;
+                Vector2 position = player.Center;
                 Vector2 playerToMouse = Main.MouseWorld - position;
                 double mag = Math.Sqrt(playerToMouse.X * playerToMouse.X + playerToMouse.Y * playerToMouse.Y);
                 float dirX = (float)(playerToMouse.X * (6.0 / mag));
@@ -32,7 +32,7 @@ namespace TerrariaMoba.Abilities.Flibnob
                 
                 Main.PlaySound(SoundID.DD2_OgreAttack, player.Center);
                 Projectile proj = Main.projectile[Projectile.NewProjectile(position, vel, 
-                    TerrariaMoba.Instance.ProjectileType("FlameBelchSpawner"), 50, 0, Main.LocalPlayer.whoAmI, 0f)];
+                    TerrariaMoba.Instance.ProjectileType("FlameBelchSpawner"), 50, 0, player.whoAmI, 0f)];
             }
             if (Timer == 0) {
                 End();
