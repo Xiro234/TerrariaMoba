@@ -4,17 +4,14 @@ using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
-namespace TerrariaMoba.Abilities.Flibnob
-{
-    public class FlameBelch : Ability
-    {
+namespace TerrariaMoba.Abilities.Flibnob {
+    public class FlameBelch : Ability {
         public FlameBelch(Player myPlayer) : base(myPlayer) {
             Name = "Flame Belch";
             Icon = TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobAbilityOne");
         }
         
-        public override void Cast()
-        {
+        public override void Cast() {
             Timer = (3 * 60) + 1;
             IsActive = true;
             player.AddBuff(BuffType<Buffs.Channeling>(), Timer);
@@ -31,16 +28,17 @@ namespace TerrariaMoba.Abilities.Flibnob
                 Vector2 vel = new Vector2(dirX, dirY);
                 
                 Main.PlaySound(SoundID.DD2_OgreAttack, player.Center);
-                Projectile proj = Main.projectile[Projectile.NewProjectile(position, vel, 
-                    TerrariaMoba.Instance.ProjectileType("FlameBelchSpawner"), 50, 0, player.whoAmI, 0f)];
+                if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
+                   Projectile.NewProjectile(position, vel,
+                        TerrariaMoba.Instance.ProjectileType("FlameBelchSpawner"), 50, 0, player.whoAmI, 0f);
+                }
             }
             if (Timer == 0) {
                 End();
             }
         }
 
-        public override void End()
-        {
+        public override void End() {
             Timer = 0;
             IsActive = false;
             Cooldown = 10 * 60;

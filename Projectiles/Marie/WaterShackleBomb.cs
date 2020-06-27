@@ -11,6 +11,7 @@ namespace TerrariaMoba.Projectiles.Marie {
             projectile.width = 38;
             projectile.height = 38;
             projectile.friendly = true;
+            projectile.hostile = false;
             projectile.penetrate = -1;
             projectile.thrown = true;
             projectile.timeLeft = 300;
@@ -51,14 +52,13 @@ namespace TerrariaMoba.Projectiles.Marie {
             if (projectile.ai[0] > 5f) {
                 projectile.ai[0] = 10f;
                 if ((int)projectile.velocity.Y == 0 && (int)projectile.velocity.X != 0) {
-                    projectile.velocity.X = projectile.velocity.X * 0.95f;
-                    if ((double)projectile.velocity.X > -0.01 && (double)projectile.velocity.X < 0.01)
-                    {
+                    projectile.velocity.X *= 0.95f;
+                    if ((double)projectile.velocity.X > -0.01 && (double)projectile.velocity.X < 0.01) {
                         projectile.velocity.X = 0f;
                         projectile.netUpdate = true;
                     }
                 }
-                projectile.velocity.Y = projectile.velocity.Y + 0.2f;
+                projectile.velocity.Y += 0.2f;
             }
             projectile.rotation += projectile.velocity.X * 0.1f;
         }

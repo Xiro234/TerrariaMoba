@@ -1,8 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
-using TerrariaMoba.Characters;
-using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Projectiles.Flibnob {
     public class EarthsplitterSpawner : ModProjectile {
@@ -19,12 +18,15 @@ namespace TerrariaMoba.Projectiles.Flibnob {
         }
 
         public override void AI() {
-            //Character mychar = Main.player[projectile.owner].GetModPlayer<MobaPlayer>().MyCharacter;
+            Player player = Main.player[projectile.owner];
             projectile.ai[0] += 1f;
 
             if (((int)projectile.ai[0] % 40) == 0) {
                 Vector2 newPos = new Vector2(projectile.position.X, GetYPos());
-                Projectile.NewProjectile(newPos, Vector2.Zero, mod.ProjectileType("Earthsplitter"), projectile.damage, projectile.knockBack, projectile.owner);
+                if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
+                    Projectile.NewProjectile(newPos, Vector2.Zero, mod.ProjectileType("Earthsplitter"),
+                        projectile.damage, projectile.knockBack, player.whoAmI);
+                }
             }
             if (projectile.ai[0] >= 200) {
                 projectile.Kill();
