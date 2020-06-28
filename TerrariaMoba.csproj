@@ -15,8 +15,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Constants" />
-    <Folder Include="Packets\Buffs" />
-    <Folder Include="Stats" />
     <Folder Include="Textures\Marie" />
   </ItemGroup>
 </Project>

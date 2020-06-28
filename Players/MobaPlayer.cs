@@ -112,7 +112,6 @@ namespace TerrariaMoba.Players {
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TerrariaMoba.AbilityOneHotKey.JustPressed) {
                 MyCharacter.HandleAbility(0);
-                
             }
             if (TerrariaMoba.AbilityTwoHotKey.JustPressed) {
                 MyCharacter.HandleAbility(1);

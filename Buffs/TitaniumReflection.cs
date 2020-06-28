@@ -15,7 +15,7 @@ namespace TerrariaMoba.Buffs
         }
         
         public override void Update(Player player, ref int buffIndex) {
-            player.GetModPlayer<MobaPlayer>().TitaniumReflection = true;
+            //player.GetModPlayer<MobaPlayer>().TitaniumReflection = true;
         }
     }
 }

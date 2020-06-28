@@ -16,7 +16,7 @@ namespace TerrariaMoba.Buffs
 
         public override void Update(Player player, ref int buffIndex)
         {
-            player.GetModPlayer<MobaPlayer>().FloodboostOn = true;
+           //player.GetModPlayer<MobaPlayer>().FloodboostOn = true;
         }
     }
 }
