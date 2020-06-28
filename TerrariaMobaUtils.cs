@@ -93,6 +93,9 @@ public static class TerrariaMobaUtils {
             case CharacterEnum.Flibnob:
                 MyCharacter = new Flibnob(player);
                 break;
+            case CharacterEnum.Osteo:
+                MyCharacter = new Osteo(player);
+                break;
             default:
                 Main.NewText("Invalid Character: AssignCharacter");
                 break;

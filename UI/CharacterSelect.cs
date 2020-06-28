@@ -96,6 +96,10 @@ namespace TerrariaMoba.UI {
                         mobaPlayer.MyCharacter = new Flibnob(Main.LocalPlayer);
                         mobaPlayer.MyCharacter.SyncTalents();
                         break;
+                    case (CharacterEnum.Osteo):
+                        mobaPlayer.MyCharacter = new Osteo(Main.LocalPlayer);
+                        mobaPlayer.MyCharacter.SyncTalents();
+                        break;
                 }
 
                 Main.PlaySound(11);
