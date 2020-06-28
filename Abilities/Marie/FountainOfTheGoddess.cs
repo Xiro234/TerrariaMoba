@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 
 namespace TerrariaMoba.Abilities.Marie {
     public class FountainOfTheGoddess : Ability {
@@ -9,8 +10,11 @@ namespace TerrariaMoba.Abilities.Marie {
         }
         
         public override void Cast() {
-            Projectile proj = Main.projectile[Projectile.NewProjectile(player.Center, Vector2.Zero, 
-                TerrariaMoba.Instance.ProjectileType("FountainOfLacusia"), 0, 0, player.whoAmI, 29f)];
+            if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
+                Projectile.NewProjectile(player.Center, Vector2.Zero,
+                    TerrariaMoba.Instance.ProjectileType("FountainOfLacusia"), 0, 0, player.whoAmI, 29f);
+            }
+
             Cooldown = 10 * 60;
         }
     }

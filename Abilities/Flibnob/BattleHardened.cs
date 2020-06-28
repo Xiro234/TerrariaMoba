@@ -3,10 +3,8 @@ using Terraria;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Players;
 
-namespace TerrariaMoba.Abilities.Flibnob
-{
-    public class BattleHardened : Ability
-    {
+namespace TerrariaMoba.Abilities.Flibnob {
+    public class BattleHardened : Ability {
         public BattleHardened(Player myPlayer) : base(myPlayer) {
             Type = AbilityType.Passive;
             Name = "Battle Hardened";

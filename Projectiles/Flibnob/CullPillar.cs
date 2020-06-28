@@ -4,14 +4,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace TerrariaMoba.Projectiles.Flibnob
-{
-    class CullPillar : ModProjectile
-    {
+namespace TerrariaMoba.Projectiles.Flibnob {
+    class CullPillar : ModProjectile {
         const float hookRange = 25f;
 
-        public override void SetDefaults()
-        {
+        public override void SetDefaults() {
             projectile.width = 30;
             projectile.height = 48;
             projectile.friendly = true;
@@ -19,16 +16,14 @@ namespace TerrariaMoba.Projectiles.Flibnob
             projectile.timeLeft = 300;
         }
 
-        public override void AI()
-        {
+        public override void AI() {
             int playerID = -1;
             float closestDist = -1f;
             if (projectile.ai[1] <= 0) {
                 projectile.ai[1] = 1;
                 for (int i = 0; i < Main.maxPlayers; i++) {
                     float distToPillar = (Main.player[i].Center - projectile.Center).Length() / 16.0f;
-                    if (distToPillar <= hookRange && closestDist == -1f)
-                    { //((distToPillar <= hookRange && closestDist == -1f) && Main.myPlayer != i)
+                    if (distToPillar <= hookRange && closestDist == -1f) { //((distToPillar <= hookRange && closestDist == -1f) && Main.myPlayer != i)
                         playerID = i;
                         closestDist = distToPillar;
                     } 
@@ -55,12 +50,10 @@ namespace TerrariaMoba.Projectiles.Flibnob
             }
         }
 
-        public override bool PreDrawExtras(SpriteBatch spriteBatch)
-        {
+        public override bool PreDrawExtras(SpriteBatch spriteBatch) {
             Lighting.AddLight(projectile.Center, 0.9f, 0.4f, 0.4f);
 
-            if (projectile.ai[0] >= 0)
-            {
+            if (projectile.ai[0] >= 0) {
                 Player hookedPlr = Main.player[(int)projectile.ai[0]];
                 if (!hookedPlr.active) return true;
                 float pPosX = hookedPlr.Center.X;
@@ -75,12 +68,9 @@ namespace TerrariaMoba.Projectiles.Flibnob
                 float rotation2 = (float)Math.Atan2(projPosY, projPosX) - 1.57f;
                 bool flag2 = true;
 
-                if (projPosX == 0f && projPosY == 0f)
-                {
+                if (projPosX == 0f && projPosY == 0f) {
                     flag2 = false;
-                }
-                else
-                {
+                } else {
                     float projPosXY = (float)Math.Sqrt((projPosX * projPosX + projPosY * projPosY));
                     projPosXY = 12f / projPosXY;
                     projPosX *= projPosXY;
@@ -91,20 +81,15 @@ namespace TerrariaMoba.Projectiles.Flibnob
                     projPosY = projectile.position.Y + projectile.height * 0.5f - value.Y;
                 }
 
-                while (flag2)
-                {
+                while (flag2) {
                     float num = 12f;
                     float num2 = (float)Math.Sqrt((projPosX * projPosX + projPosY * projPosY));
                     float num3 = num2;
 
-                    if (float.IsNaN(num2) || float.IsNaN(num3))
-                    {
+                    if (float.IsNaN(num2) || float.IsNaN(num3)) {
                         flag2 = false;
-                    }
-                    else
-                    {
-                        if (num2 < 20f)
-                        {
+                    } else {
+                        if (num2 < 20f) {
                             num = num2 - 8f;
                             flag2 = false;
                         }
@@ -115,44 +100,35 @@ namespace TerrariaMoba.Projectiles.Flibnob
                         value.Y += projPosY;
                         projPosX = projectile.position.X + projectile.width * 0.5f - value.X;
                         projPosY = projectile.position.Y + projectile.height * 0.1f - value.Y;
-                        if (num3 > 12f)
-                        {
+                        if (num3 > 12f) {
                             float num4 = 0.3f;
                             float num5 = Math.Abs(projectile.velocity.X) + Math.Abs(projectile.velocity.Y);
-                            if (num5 > 16f)
-                            {
+                            if (num5 > 16f) {
                                 num5 = 16f;
                             }
                             num5 = 1f - num5 / 16f;
                             num4 *= num5;
                             num5 = num3 / 80f;
-                            if (num5 > 1f)
-                            {
+                            if (num5 > 1f) {
                                 num5 = 1f;
                             }
                             num4 *= num5;
-                            if (num4 < 0f)
-                            {
+                            if (num4 < 0f) {
                                 num4 = 0f;
                             }
                             num5 = 1f - projectile.localAI[0] / 100f;
                             num4 *= num5;
-                            if (projPosY > 0f)
-                            {
+                            if (projPosY > 0f) {
                                 projPosY *= 1f + num4;
                                 projPosX *= 1f - num4;
-                            }
-                            else
-                            {
+                            } else {
                                 num5 = Math.Abs(projectile.velocity.X) / 3f;
-                                if (num5 > 1f)
-                                {
+                                if (num5 > 1f) {
                                     num5 = 1f;
                                 }
                                 num5 -= 0.5f;
                                 num4 *= num5;
-                                if (num4 > 0f)
-                                {
+                                if (num4 > 0f) {
                                     num4 *= 2f;
                                 }
                                 projPosY *= 1f + num4;
@@ -168,12 +144,9 @@ namespace TerrariaMoba.Projectiles.Flibnob
                 }
 
                 return false;
-            }
-            else {
+            } else {
                 return true;
             }
         }
     }
-
-
 }

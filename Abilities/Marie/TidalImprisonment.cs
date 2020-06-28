@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 
 namespace TerrariaMoba.Abilities.Marie {
     public class TidalImprisonment : Ability {
@@ -15,8 +16,11 @@ namespace TerrariaMoba.Abilities.Marie {
             int velY = (int) MathHelper.Clamp((playerToMouse.Y / 16.0f), -10f, 10f);
             Vector2 velocity = new Vector2(velX * 5, velY);
 
-            Projectile proj = Main.projectile[Projectile.NewProjectile(player.Top, velocity, 
-                TerrariaMoba.Instance.ProjectileType("WaterShackleBomb"), 30, 0, player.whoAmI)];
+            if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
+                Projectile.NewProjectile(player.Top, velocity,
+                    TerrariaMoba.Instance.ProjectileType("WaterShackleBomb"), 30, 0, player.whoAmI);
+            }
+
             Cooldown = 10 * 60;
         }
     }

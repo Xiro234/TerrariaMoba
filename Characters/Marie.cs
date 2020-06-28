@@ -10,9 +10,7 @@ using TerrariaMoba.Abilities;
 using TerrariaMoba.Abilities.Marie;
 
 namespace TerrariaMoba.Characters {
-    public class Marie : Character
-    {
-        public float FloodboostTimer = 300f;
+    public class Marie : Character {
         public Marie(Player player) : base(player) {
             CharacterEnum = CharacterEnum.Marie;
         }

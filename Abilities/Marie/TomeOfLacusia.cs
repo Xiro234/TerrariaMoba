@@ -23,8 +23,7 @@ namespace TerrariaMoba.Abilities.Marie {
             }
         }
 
-        public override void End()
-        {
+        public override void End() {
             Timer = 0;
             IsActive = false;
             for (int i = 0; i < Main.maxPlayers; i++) {

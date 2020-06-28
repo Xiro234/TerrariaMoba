@@ -5,10 +5,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace TerrariaMoba.Projectiles.Marie
-{
-    public class FountainOfLacusia : ModProjectile
-    {
+namespace TerrariaMoba.Projectiles.Marie {
+    public class FountainOfLacusia : ModProjectile {
         public override void SetStaticDefaults() {
             Main.projFrames[projectile.type] = 6;
         }
@@ -29,8 +27,7 @@ namespace TerrariaMoba.Projectiles.Marie
                 float radius = 20 * 16.0f;
                 Main.PlaySound(SoundID.Item4, projectile.Center);
 
-                for (int a = 0; a < 360; a++)
-                {
+                for (int a = 0; a < 360; a++) {
                     int xPos = (int)(fountainPos.X + radius * Math.Cos(TerrariaMobaUtils.Conv2Rad(a)));
                     int yPos = (int)(fountainPos.Y + radius * Math.Sin(TerrariaMobaUtils.Conv2Rad(a)));
                     int dust = Dust.NewDust(new Vector2(xPos, yPos), 2, 2, 113, 0, 0, 0, default(Color));

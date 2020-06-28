@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 
 namespace TerrariaMoba.Projectiles.Marie {
     public class MaelstromBeam : ModProjectile {
-        
         public override void SetDefaults() {
             projectile.Name = "Maelstrom Beam";
             projectile.width = 14;
@@ -13,9 +12,9 @@ namespace TerrariaMoba.Projectiles.Marie {
             projectile.hostile = false;
             projectile.ignoreWater = true;
             projectile.tileCollide = true;
+            projectile.penetrate = -1;
             projectile.extraUpdates = 4;
             projectile.timeLeft = 600;
-            projectile.magic = true;
         }
 
         public override void AI() {
@@ -27,12 +26,13 @@ namespace TerrariaMoba.Projectiles.Marie {
                 
                 if (Main.rand.Next(1) == 0) {
                     int choice = Main.rand.Next(3);
-                    if (choice == 0)
+                    if (choice == 0) {
                         choice = 226;
-                    else if (choice == 1)
+                    } else if (choice == 1) {
                         choice = 34;
-                    else
+                    } else {
                         choice = 92;
+                    }
                     dust = Dust.NewDust(projPos, 1, 1, choice, 0f, 0f, 0, default(Color), 1f);
                 }
                 
@@ -41,10 +41,6 @@ namespace TerrariaMoba.Projectiles.Marie {
                 Main.dust[dust].scale = (float)Main.rand.Next(70, 110) * 0.013f;
                 Main.dust[dust].velocity *= 0.2f;
             }
-        }
-
-        public override bool CanDamage() {
-            return true;
         }
     }
 }
