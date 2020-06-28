@@ -2,12 +2,9 @@
 using Terraria.ModLoader;
 using TerrariaMoba.Players;
 
-namespace TerrariaMoba.Buffs
-{
-    public class TitaniumReflection : ModBuff
-    { 
-        public override void SetDefaults()
-        {
+namespace TerrariaMoba.Buffs {
+    public class TitaniumReflection : ModBuff { 
+        public override void SetDefaults() {
             DisplayName.SetDefault("Titanium Reflection");
             Description.SetDefault("You are encased in a Titanium Shell!");
             Main.buffNoTimeDisplay[Type] = false;
@@ -15,7 +12,7 @@ namespace TerrariaMoba.Buffs
         }
         
         public override void Update(Player player, ref int buffIndex) {
-            player.GetModPlayer<MobaPlayer>().TitaniumReflection = true;
+            player.GetModPlayer<MobaPlayer>().TitaniumShell = true;
         }
     }
 }

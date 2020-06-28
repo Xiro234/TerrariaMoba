@@ -40,7 +40,10 @@ namespace TerrariaMoba.Players {
         public bool VerdantFury = false;
         public bool EnsnaringVines = false;
 
+        public bool Floodboost = false;
         public bool LacusianBlessing = false;
+
+        public bool TitaniumShell = false;
         
         //Custom Stats
         public float percentThorns = 0f;
@@ -106,7 +109,10 @@ namespace TerrariaMoba.Players {
             JunglesWrath = false;
             EnsnaringVines = false;
 
+            Floodboost = false;
             LacusianBlessing = false;
+
+            TitaniumShell = false;
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet) {
@@ -236,17 +242,19 @@ namespace TerrariaMoba.Players {
             }
         }
 
-        public override void PreUpdateBuffs() {
-            base.PreUpdateBuffs();
-            /*
-            if (LacusianBlessing) {
-                player.statDefense += 12;
-                player.lifeRegen += 8;
-                player.allDamageMult += (float)0.16;
+        public override void PostUpdateRunSpeeds() {
+            if (Floodboost) {
+                player.moveSpeed *= 1.33f;
+                player.maxRunSpeed *= 1.33f;
+                player.accRunSpeed *= 1.33f;
             }
-            */
+            if (TitaniumShell) {
+                player.moveSpeed *= 0.5f;
+                player.maxRunSpeed *= 0.5f;
+                player.accRunSpeed *= 0.5f;
+            }
         }
-
+        
         public override void NaturalLifeRegen(ref float regen) {
             regen *= 0;
         }
@@ -306,6 +314,15 @@ namespace TerrariaMoba.Players {
                 
                 int drawX = (int)(drawInfo.position.X + drawPlayer.width / 2f - Main.screenPosition.X);
                 int drawY = (int)(drawInfo.position.Y + (drawPlayer.height - 2f) - Main.screenPosition.Y);
+                DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, 0, texture.Width, texture.Height), Lighting.GetColor((int)((drawInfo.position.X + drawPlayer.width / 2f) / 16f), (int)((drawInfo.position.Y + drawPlayer.height) / 16f)), 0f, new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
+                Main.playerDrawData.Add(data);
+            }
+            
+            if (modPlayer.TitaniumShell) {
+                Texture2D texture = mod.GetTexture("Textures/Flibnob/TitaniumShell");
+
+                int drawX = (int)(drawInfo.position.X + drawPlayer.width / 2f - Main.screenPosition.X);
+                int drawY = (int)(drawInfo.position.Y + drawPlayer.height / 2f - Main.screenPosition.Y);
                 DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, 0, texture.Width, texture.Height), Lighting.GetColor((int)((drawInfo.position.X + drawPlayer.width / 2f) / 16f), (int)((drawInfo.position.Y + drawPlayer.height) / 16f)), 0f, new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
                 Main.playerDrawData.Add(data);
             }
