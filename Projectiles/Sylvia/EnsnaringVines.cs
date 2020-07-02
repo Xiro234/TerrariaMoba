@@ -56,7 +56,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         public override void OnHitPvp(Player target, int damage, bool crit) {
             var player = Main.player[projectile.owner].GetModPlayer<MobaPlayer>();
 
-            target.AddBuff(BuffType<Buffs.EnsnaringVines>(), 90, false);
+            target.AddBuff(BuffType<Buffs.EnsnaringVinesBuff>(), 90, false);
 
             //Quashing Shrubbery
             if (player.MyCharacter.talentArray[1, 2]) {

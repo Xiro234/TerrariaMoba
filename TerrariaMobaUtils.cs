@@ -64,7 +64,7 @@ public static class TerrariaMobaUtils {
                     Player plr = Main.player[i];
                         
                     if (plr.active && plr.team == Main.player[killWhoAmI].team) {
-                        SyncExperiencePacket.Write(xpPerKill, i, killWhoAmI);
+                        ExperiencePacket.Write(xpPerKill, i, killWhoAmI);
                     }
                 }
             }

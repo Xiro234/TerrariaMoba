@@ -6,7 +6,7 @@ using TerrariaMoba;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Buffs {
-    public class VerdantFury : ModBuff {
+    public class VerdantFuryBuff : ModBuff {
         public override void SetDefaults() {
             DisplayName.SetDefault("Verdant Fury");
             Description.SetDefault("The Jungle's power flows through you!");

@@ -10,7 +10,7 @@ using TerrariaMoba.Players;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerrariaMoba.Packets {
-    public class SyncPvpHitPacket {
+    public class PvpHitPacket {
         public static void Read(BinaryReader reader) {
             if (Main.netMode == NetmodeID.Server) {
                 int target = reader.ReadInt32();

@@ -13,6 +13,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.Characters;
+using TerrariaMoba.Effects;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Packets;
 using TerrariaMoba.UI;
@@ -24,9 +25,6 @@ namespace TerrariaMoba.Players {
         //General
         public CharacterEnum CharacterSelected;
         public Character MyCharacter;
-        public bool AbilityOneUsed = false;
-        public bool AbilityTwoUsed = false;
-        public bool UltimateUsed = false;
         public bool CharacterPicked = false;
         public int PlayerLastHurt = -1;
         public bool Silenced = false;
@@ -34,11 +32,8 @@ namespace TerrariaMoba.Players {
         public bool IsChanneling = false;
         public bool InProgress = false;
         public int GameTime = 0;
-        
-        public bool JunglesWrath = false;
-        public int JunglesWrathCount = 1;
-        public bool VerdantFury = false;
-        public bool EnsnaringVines = false;
+
+        public SylviaEffects SylviaEffects;
 
         public bool LacusianBlessing = false;
         
@@ -64,6 +59,7 @@ namespace TerrariaMoba.Players {
         
         public override void Initialize() {
             CharacterSelected = CharacterEnum.Null;
+            SylviaEffects = new SylviaEffects();
         }
 
         public override void clientClone(ModPlayer clientClone) {
@@ -102,9 +98,7 @@ namespace TerrariaMoba.Players {
             Weakened = false;
             IsChanneling = false;
 
-            VerdantFury = false;
-            JunglesWrath = false;
-            EnsnaringVines = false;
+            SylviaEffects.ResetEffects();
 
             LacusianBlessing = false;
         }
@@ -164,7 +158,7 @@ namespace TerrariaMoba.Players {
                         byte[] abilitySpecific = ability.WriteAbility();
                         int length = abilitySpecific.Length;
                         
-                        Packets.SyncAbilityValues.Write(index, whoAmI, length, abilitySpecific);
+                        Packets.ReadWriteAbilityPacket.Write(index, whoAmI, length, abilitySpecific);
                     }
                 }
                 
@@ -174,6 +168,10 @@ namespace TerrariaMoba.Players {
                 
                 MyCharacter.PreUpdate();
             }
+        }
+
+        public override void PostUpdateMiscEffects() {
+            
         }
 
         public override void PostUpdateEquips() {
@@ -225,9 +223,6 @@ namespace TerrariaMoba.Players {
         }
 
         public override void PostUpdateBuffs() {
-            if (!JunglesWrath) {
-                JunglesWrathCount = 1;
-            }
             if (LacusianBlessing) {
                 player.statDefense += 60; //12
                 player.lifeRegen += 20; //8
@@ -264,24 +259,16 @@ namespace TerrariaMoba.Players {
         }
 
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
+            MyCharacter.ModifyHitPvpWithProj(proj, target, ref damage, ref crit);
             EditDamage(ref damage);
             target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
-            SyncPvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
-            MyCharacter.ModifyHitPvpWithProj(proj, target, ref damage, ref crit);
+            PvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
         }
 
         public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit) {
             EditDamage(ref damage);
             target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
-            SyncPvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
-        }
-        
-        public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) {
-            //JunglesWrath
-            if (JunglesWrath) {
-                r *= (0.7f - (JunglesWrathCount * 0.1f));
-                g *= (0.7f -(JunglesWrathCount * 0.1f));
-            }
+            PvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
         }
 
         public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
@@ -300,7 +287,7 @@ namespace TerrariaMoba.Players {
             Mod mod = ModLoader.GetMod("TerrariaMoba");
             MobaPlayer modPlayer = drawPlayer.GetModPlayer<MobaPlayer>();
 
-            if (modPlayer.EnsnaringVines) {
+            if (modPlayer.SylviaEffects.EnsnaringVines) {
                 Texture2D texture = mod.GetTexture("Textures/Sylvia/EnsnaringVines");
                 
                 int drawX = (int)(drawInfo.position.X + drawPlayer.width / 2f - Main.screenPosition.X);
@@ -308,15 +295,52 @@ namespace TerrariaMoba.Players {
                 DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, 0, texture.Width, texture.Height), Lighting.GetColor((int)((drawInfo.position.X + drawPlayer.width / 2f) / 16f), (int)((drawInfo.position.Y + drawPlayer.height) / 16f)), 0f, new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
                 Main.playerDrawData.Add(data);
             }
+            
+            if(modPlayer.SylviaEffects.JunglesWrath) {
+                Texture2D texture = mod.GetTexture("Textures/Sylvia/JunglesWrath/JunglesWrath1");
+                bool draw = true;
+                switch (modPlayer.SylviaEffects.JunglesWrathCount) {
+                    case(1):
+                        texture = mod.GetTexture("Textures/Sylvia/JunglesWrath/JunglesWrath1");
+                        break;
+                    case(2):
+                        texture = mod.GetTexture("Textures/Sylvia/JunglesWrath/JunglesWrath2");
+                        break;
+                    case(3):
+                        texture = mod.GetTexture("Textures/Sylvia/JunglesWrath/JunglesWrath3");
+                        break;
+                    case(4):
+                        texture = mod.GetTexture("Textures/Sylvia/JunglesWrath/JunglesWrath4");
+                        break;
+                    default:
+                        draw = false;
+                        break;
+                }
+
+                if (draw) {
+                    int drawX = (int) (drawInfo.position.X + drawPlayer.width / 2f - Main.screenPosition.X);
+                    int drawY = (int) (drawInfo.position.Y + (drawPlayer.height - 56f) - Main.screenPosition.Y);
+                    DrawData data = new DrawData(texture, new Vector2(drawX, drawY),
+                        new Rectangle(0, 0, texture.Width, texture.Height),
+                        Lighting.GetColor((int) ((drawInfo.position.X + drawPlayer.width / 2f) / 16f),
+                            (int) ((drawInfo.position.Y + drawPlayer.height) / 16f)), 0f,
+                        new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
+                    Main.playerDrawData.Add(data);
+                }
+            }
         });
         
         public override void ModifyDrawLayers(List<PlayerLayer> layers) {
             MiscEffects.visible = true;
+            if (player.dead) {
+                MiscEffects.visible = false;
+            }
             layers.Add(MiscEffects);
 
             if (CharacterPicked && InProgress) {
                 MyCharacter.ModifyDrawLayers(layers);
             }
+
         }
         
         public override void SetControls() {
@@ -348,7 +372,7 @@ namespace TerrariaMoba.Players {
                 
                 if (percentThorns > 0f && sendThorns) {
                     target.GetModPlayer<MobaPlayer>().DamageOverride((int)(damage * percentThorns), Main.player[killer], target.whoAmI, false);
-                    SyncPvpHitPacket.Write(killer, (int)(damage * percentThorns), target.whoAmI, false);
+                    PvpHitPacket.Write(killer, (int)(damage * percentThorns), target.whoAmI, false);
                 }
 
                 int otherArmor = target.GetModPlayer<MobaPlayer>().armor;

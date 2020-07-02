@@ -10,12 +10,10 @@ using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 using System;
 using System.Collections.Generic;
+using Terraria.DataStructures;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.Abilities.Sylvia;
 using TerrariaMoba.Enums;
-using EnsnaringVines = TerrariaMoba.Abilities.Sylvia.EnsnaringVines;
-using JunglesWrath = TerrariaMoba.Buffs.JunglesWrath;
-using VerdantFury = TerrariaMoba.Abilities.Sylvia.VerdantFury;
 
 namespace TerrariaMoba.Characters {
     public class Sylvia : Character {
@@ -62,15 +60,19 @@ namespace TerrariaMoba.Characters {
                 VerdantFury abilityTwo = new VerdantFury(player);
                 abilities[1] = abilityTwo;
                 
+                
                 Flourish ultimate = new Flourish(player);
                 abilities[2] = ultimate;
                 
+                
                 /*
-                TraitName = "Jungle's Wrath";
-                TraitCooldown = 0;
-                TraitIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaTrait");
+                PlanterasLastWill ultimate = new PlanterasLastWill(player);
+                abilities[2] = ultimate;
                 */
                 
+                JunglesWrath trait = new JunglesWrath(player);
+                abilities[3] = trait;
+
                 CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaIcon");
 
                 VerdantFuryTime = 20;
@@ -94,7 +96,7 @@ namespace TerrariaMoba.Characters {
 
         public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
             ref float knockBack) {
-            if (player.GetModPlayer<MobaPlayer>().VerdantFury && item.type == TerrariaMoba.Instance.ItemType("SylviaBow")) {
+            if (player.GetModPlayer<MobaPlayer>().SylviaEffects.VerdantFury && item.type == TerrariaMoba.Instance.ItemType("SylviaBow")) {
                 speedX *= VerdantFuryIncrease;
                 speedY *= VerdantFuryIncrease;
             }
@@ -124,7 +126,7 @@ namespace TerrariaMoba.Characters {
         }
 
         public override float UseTimeMultiplier(Item item) {
-            if (player.GetModPlayer<MobaPlayer>().VerdantFury && item.type == TerrariaMoba.Instance.ItemType("SylviaBow")) {
+            if (player.GetModPlayer<MobaPlayer>().SylviaEffects.VerdantFury && item.type == TerrariaMoba.Instance.ItemType("SylviaBow")) {
                 return VerdantFuryIncrease;
             }
 
@@ -148,10 +150,23 @@ namespace TerrariaMoba.Characters {
             MobaPlayer modPlayer = player.GetModPlayer<MobaPlayer>();
             float moveSpeedAdd = 1f;
         }
-        
+
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            if (proj.ranged) {
-                target.AddBuff(BuffType<Buffs.JunglesWrath>(), 240, false);
+            if (proj.type == TerrariaMoba.Instance.ProjectileType("SylviaArrow")) {
+                var otherMobaPlayer = target.GetModPlayer<MobaPlayer>();
+                bool doEffects = false;
+
+                if (!otherMobaPlayer.SylviaEffects.JunglesWrath) {
+                    otherMobaPlayer.SylviaEffects.JunglesWrathCount = 1;
+                }
+                else {
+                    if (++otherMobaPlayer.SylviaEffects.JunglesWrathCount >= 5) {
+                        otherMobaPlayer.SylviaEffects.JunglesWrathCount -= 5;
+                        damage += 50;
+                        doEffects = true;
+                    }
+                }
+                Packets.JunglesWrathAddPacket.Write(otherMobaPlayer.player.whoAmI, otherMobaPlayer.SylviaEffects.JunglesWrathCount, doEffects);
             }
         }
 

@@ -184,7 +184,7 @@ namespace TerrariaMoba.Characters {
         }
 
         public virtual void SyncTalents() {
-            SyncTalentsPacket.Write(Main.LocalPlayer.whoAmI, CharacterEnum, talentArray);
+            TalentsPacket.Write(Main.LocalPlayer.whoAmI, CharacterEnum, talentArray);
         }
 
         public virtual void ReadCharacter(BinaryReader reader) {
@@ -217,7 +217,7 @@ namespace TerrariaMoba.Characters {
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
             if (ability.Cooldown == 0 && mobaPlayer.currentResource >= ability.ResourceCost) {
                 mobaPlayer.currentResource -= ability.ResourceCost;
-                Packets.SyncAbilitiesPacket.Write(index, player.whoAmI);
+                Packets.AbilityCastPacket.Write(index, player.whoAmI);
                 ability.Cast();
             }
         }

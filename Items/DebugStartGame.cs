@@ -43,7 +43,7 @@ namespace TerrariaMoba.Items {
                     player.GetModPlayer<MobaPlayer>().MyCharacter.ChooseCharacter();
                     player.GetModPlayer<MobaPlayer>().StartGame();
                     if (Main.netMode == NetmodeID.MultiplayerClient) {
-                        Packets.SyncGameStartPacket.Write();
+                        Packets.GameStartPacket.Write();
                     }
 
                     Main.NewText("Game Started!");

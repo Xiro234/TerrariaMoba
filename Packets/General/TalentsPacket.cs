@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 using static TerrariaMobaUtils;
     
 namespace TerrariaMoba.Packets {
-    public class SyncTalentsPacket {
+    public class TalentsPacket {
     
         public static void Read(BinaryReader reader) {
             if (Main.netMode == NetmodeID.Server) {

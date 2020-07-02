@@ -97,22 +97,25 @@ namespace TerrariaMoba {
 			Message msg = (Message) reader.ReadByte();
 			switch (msg) {
 				case(Message.SyncExperience):
-					Packets.SyncExperiencePacket.Read(reader);
+					Packets.ExperiencePacket.Read(reader);
 					break;
 				case(Message.SyncPvpHit):
-					Packets.SyncPvpHitPacket.Read(reader);
+					Packets.PvpHitPacket.Read(reader);
 					break;
 				case(Message.SyncTalents):
-					Packets.SyncTalentsPacket.Read(reader);
+					Packets.TalentsPacket.Read(reader);
 					break;
 				case(Message.SyncAbilities):
-					Packets.SyncAbilitiesPacket.Read(reader);
+					Packets.AbilityCastPacket.Read(reader);
 					break;
 				case(Message.SyncGameStart):
-					Packets.SyncGameStartPacket.Read(reader);
+					Packets.GameStartPacket.Read(reader);
 					break;
 				case(Message.SyncAbilityValues):
-					Packets.SyncAbilityValues.Read(reader);
+					Packets.ReadWriteAbilityPacket.Read(reader);
+					break;
+				case(Message.SyncJunglesWrathAdd):
+					Packets.JunglesWrathAddPacket.Read(reader);
 					break;
 			}
 		}

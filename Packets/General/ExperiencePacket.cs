@@ -6,7 +6,7 @@ using TerrariaMoba.Enums;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Packets {
-    public class SyncExperiencePacket {
+    public class ExperiencePacket {
 
         public static void Read(BinaryReader reader) {
             if (Main.netMode == NetmodeID.Server) {
