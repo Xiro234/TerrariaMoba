@@ -193,9 +193,6 @@ namespace TerrariaMoba.Characters {
         public override void TalentSelect() {
             switch (level) {
                 case 1:
-                    Main.NewText("Move speed!");
-                    Main.NewText("Leap!");
-                    Main.NewText("Defense!");
                     canSelectTalent = true;
                     break;
                 case 4:

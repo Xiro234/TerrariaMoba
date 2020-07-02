@@ -13,6 +13,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.Characters;
+using TerrariaMoba.Effects;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Packets;
 using TerrariaMoba.UI;
@@ -34,11 +35,8 @@ namespace TerrariaMoba.Players {
         public bool IsChanneling = false;
         public bool InProgress = false;
         public int GameTime = 0;
-        
-        public bool JunglesWrath = false;
-        public int JunglesWrathCount = 1;
-        public bool VerdantFury = false;
-        public bool EnsnaringVines = false;
+
+        public SylviaEffects SylviaEffects;
 
         public bool Floodboost = false;
         public bool LacusianBlessing = false;
@@ -67,6 +65,7 @@ namespace TerrariaMoba.Players {
         
         public override void Initialize() {
             CharacterSelected = CharacterEnum.Null;
+            SylviaEffects = new SylviaEffects();
         }
 
         public override void clientClone(ModPlayer clientClone) {
@@ -105,9 +104,7 @@ namespace TerrariaMoba.Players {
             Weakened = false;
             IsChanneling = false;
 
-            VerdantFury = false;
-            JunglesWrath = false;
-            EnsnaringVines = false;
+            SylviaEffects.ResetEffects();
 
             Floodboost = false;
             LacusianBlessing = false;
@@ -171,7 +168,7 @@ namespace TerrariaMoba.Players {
                         byte[] abilitySpecific = ability.WriteAbility();
                         int length = abilitySpecific.Length;
                         
-                        Packets.SyncAbilityValues.Write(index, whoAmI, length, abilitySpecific);
+                        Packets.ReadWriteAbilityPacket.Write(index, whoAmI, length, abilitySpecific);
                     }
                 }
                 
@@ -232,9 +229,6 @@ namespace TerrariaMoba.Players {
         }
 
         public override void PostUpdateBuffs() {
-            if (!JunglesWrath) {
-                JunglesWrathCount = 1;
-            }
             if (LacusianBlessing) {
                 player.statDefense += 60; //12
                 player.lifeRegen += 20; //8
@@ -275,21 +269,21 @@ namespace TerrariaMoba.Players {
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
             EditDamage(ref damage);
             target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
-            SyncPvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
+            PvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
             MyCharacter.ModifyHitPvpWithProj(proj, target, ref damage, ref crit);
         }
 
         public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit) {
             EditDamage(ref damage);
             target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
-            SyncPvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
+            PvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
         }
         
         public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) {
             //JunglesWrath
-            if (JunglesWrath) {
-                r *= (0.7f - (JunglesWrathCount * 0.1f));
-                g *= (0.7f -(JunglesWrathCount * 0.1f));
+            if (SylviaEffects.JunglesWrath) {
+                r *= (0.7f - (SylviaEffects.JunglesWrathCount * 0.1f));
+                g *= (0.7f -(SylviaEffects.JunglesWrathCount * 0.1f));
             }
         }
 
@@ -309,7 +303,7 @@ namespace TerrariaMoba.Players {
             Mod mod = ModLoader.GetMod("TerrariaMoba");
             MobaPlayer modPlayer = drawPlayer.GetModPlayer<MobaPlayer>();
 
-            if (modPlayer.EnsnaringVines) {
+            if (modPlayer.SylviaEffects.EnsnaringVines) {
                 Texture2D texture = mod.GetTexture("Textures/Sylvia/EnsnaringVines");
                 
                 int drawX = (int)(drawInfo.position.X + drawPlayer.width / 2f - Main.screenPosition.X);
@@ -366,7 +360,7 @@ namespace TerrariaMoba.Players {
                 
                 if (percentThorns > 0f && sendThorns) {
                     target.GetModPlayer<MobaPlayer>().DamageOverride((int)(damage * percentThorns), Main.player[killer], target.whoAmI, false);
-                    SyncPvpHitPacket.Write(killer, (int)(damage * percentThorns), target.whoAmI, false);
+                    PvpHitPacket.Write(killer, (int)(damage * percentThorns), target.whoAmI, false);
                 }
 
                 int otherArmor = target.GetModPlayer<MobaPlayer>().armor;
