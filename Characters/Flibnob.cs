@@ -41,8 +41,8 @@ namespace TerrariaMoba.Characters {
             player.hairColor = new Color(0, 0, 0);
             player.skinColor = new Color(120, 63, 4);
             player.eyeColor = new Color(255, 0, 0);
-            mobaPlayer.maxHealth = 2400;
-            player.statLifeMax2 = 2400;
+            baseMaxHealth = 2400;
+            player.statLifeMax2 = baseMaxHealth;
             player.statLife = 2400;
             
             FlameBelch abilityOne = new FlameBelch(player);
