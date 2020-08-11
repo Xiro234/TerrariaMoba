@@ -97,8 +97,8 @@ namespace TerrariaMoba.Characters {
         public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
             ref float knockBack) {
             if (player.GetModPlayer<MobaPlayer>().SylviaEffects.VerdantFury && item.type == TerrariaMoba.Instance.ItemType("SylviaBow")) {
-                speedX *= VerdantFuryIncrease;
-                speedY *= VerdantFuryIncrease;
+                speedX *= VerdantFuryBuff;
+                speedY *= VerdantFuryBuff;
             }
             
             foreach (Ability ability in abilities) {
@@ -127,7 +127,7 @@ namespace TerrariaMoba.Characters {
 
         public override float UseTimeMultiplier(Item item) {
             if (player.GetModPlayer<MobaPlayer>().SylviaEffects.VerdantFury && item.type == TerrariaMoba.Instance.ItemType("SylviaBow")) {
-                return VerdantFuryIncrease;
+                return VerdantFuryBuff;
             }
 
             return 1f;

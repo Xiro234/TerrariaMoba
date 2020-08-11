@@ -12,10 +12,7 @@ namespace TerrariaMoba.Buffs {
         }
 
         public override void Update(Player player, ref int buffIndex) {
-            player.GetModPlayer<MobaPlayer>().LacusianBlessing = true;
-            player.statDefense += 12;
-            player.lifeRegen += 8;
-            player.allDamageMult += (float)0.16;
+            player.GetModPlayer<MobaPlayer>().MarieEffects.LacusianBlessing = true;
         }
     }
 }

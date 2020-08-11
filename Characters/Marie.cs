@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Players;
 using TerrariaMoba.Enums;
-using TerrariaMoba.Abilities;
 using TerrariaMoba.Abilities.Marie;
 
 namespace TerrariaMoba.Characters {
@@ -43,22 +40,23 @@ namespace TerrariaMoba.Characters {
             player.statLifeMax2 = baseMaxHealth;
             player.statLife = 1600;
             
-            WarpingMaelstrom abilityOne = new WarpingMaelstrom(player);
+            WhirlpoolInABottle abilityOne = new WhirlpoolInABottle(player);
             abilities[0] = abilityOne;
-            
+
             TomeOfLacusia abilityTwo = new TomeOfLacusia(player);
             abilities[1] = abilityTwo;
             
-            /*
+            
             FountainOfTheGoddess ultimate = new FountainOfTheGoddess(player);
+            abilities[2] = ultimate;
+            
+            /*
+            EyeOfTheStorm ultimate = new EyeOfTheStorm(player);
             abilities[2] = ultimate;
             */
             
             Floodboost trait = new Floodboost(player);
             abilities[3] = trait;
-            
-            TidalImprisonment ultimate = new TidalImprisonment(player);
-            abilities[2] = ultimate;
             
             CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieIcon");
         }
@@ -85,7 +83,11 @@ namespace TerrariaMoba.Characters {
         }
         
         public override void PostUpdateRunSpeeds() {
-
+            if (player.GetModPlayer<MobaPlayer>().MarieEffects.Floodboost) {
+                player.moveSpeed *= 1.33f;
+                player.maxRunSpeed *= 1.33f;
+                player.accRunSpeed *= 1.33f;
+            }
         }
         
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {

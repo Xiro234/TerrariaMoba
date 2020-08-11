@@ -4,6 +4,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+//Old Content, will not be used in the actual game.
+
 namespace TerrariaMoba.Projectiles.Marie {
     public class WaterShackleBomb : ModProjectile {
         public override void SetDefaults() {
