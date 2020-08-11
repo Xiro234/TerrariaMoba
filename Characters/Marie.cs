@@ -24,7 +24,7 @@ namespace TerrariaMoba.Characters {
             Item vanityLeg = new Item();
             vanityLeg.SetDefaults(2500);
             Item primary = new Item();
-            primary.SetDefaults(741);
+            primary.SetDefaults(TerrariaMoba.Instance.ItemType("MarieStaff"));
 
             player.armor[10] = vanityHelm;
             player.armor[11] = vanityChest;

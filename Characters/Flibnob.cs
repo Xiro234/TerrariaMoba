@@ -27,7 +27,7 @@ namespace TerrariaMoba.Characters {
             Item dyeLeg = new Item();
             dyeLeg.SetDefaults(3555);
             Item primary = new Item();
-            primary.SetDefaults(1224);
+            primary.SetDefaults(TerrariaMoba.Instance.ItemType("FlibnobAxe"));
 
             player.armor[10] = vanityHelm;
             player.armor[11] = vanityChest;
