@@ -16,7 +16,7 @@ namespace TerrariaMoba.Abilities.Marie {
         public override void Using() {
             Timer--;
             if (Timer == 120) {
-                player.AddBuff(BuffType<Buffs.Floodboost>(), 2 * 60);
+                player.AddBuff(BuffType<Buffs.Floodboost>(), 3 * 60);
             }
             if (Timer == 0) {
                 End();

@@ -207,7 +207,7 @@ namespace TerrariaMoba.Characters {
         public virtual float UseTimeMultiplier(Item item) { return 1f; }
         public virtual void ModifyDrawLayers(List<PlayerLayer> layers) {}
         public virtual void PreUpdateMovement() {}
-        public virtual void PostUpdateRunSpeeds() {}
+        public virtual void PostUpdateRunSpeeds() { }
         public virtual void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {}
 
         public virtual void SetControls() {}

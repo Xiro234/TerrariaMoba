@@ -8,8 +8,7 @@ using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Characters {
     public class Flibnob : Character {
-        public bool EarthsplitterJump = false;
-        
+
         public Flibnob(Player player) : base(player) {
             CharacterEnum = CharacterEnum.Flibnob;
         }
@@ -88,7 +87,11 @@ namespace TerrariaMoba.Characters {
         }
 
         public override void PostUpdateRunSpeeds() {
-
+            if (player.GetModPlayer<MobaPlayer>().FlibnobEffects.TitaniumShell) {
+                player.moveSpeed *= 0.5f;
+                player.maxRunSpeed *= 0.5f;
+                player.accRunSpeed *= 0.5f;
+            }
         }
         
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {

@@ -37,12 +37,9 @@ namespace TerrariaMoba.Players {
         public int GameTime = 0;
 
         public SylviaEffects SylviaEffects;
+        public MarieEffects MarieEffects;
+        public FlibnobEffects FlibnobEffects;
 
-        public bool Floodboost = false;
-        public bool LacusianBlessing = false;
-
-        public bool TitaniumShell = false;
-        
         //Custom Stats
         public float percentThorns = 0f;
         //public int shield = 0;
@@ -66,6 +63,8 @@ namespace TerrariaMoba.Players {
         public override void Initialize() {
             CharacterSelected = CharacterEnum.Null;
             SylviaEffects = new SylviaEffects();
+            MarieEffects = new MarieEffects();
+            FlibnobEffects = new FlibnobEffects();
         }
 
         public override void clientClone(ModPlayer clientClone) {
@@ -105,11 +104,8 @@ namespace TerrariaMoba.Players {
             IsChanneling = false;
 
             SylviaEffects.ResetEffects();
-
-            Floodboost = false;
-            LacusianBlessing = false;
-
-            TitaniumShell = false;
+            MarieEffects.ResetEffects();
+            FlibnobEffects.ResetEffects();
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet) {
@@ -229,23 +225,16 @@ namespace TerrariaMoba.Players {
         }
 
         public override void PostUpdateBuffs() {
-            if (LacusianBlessing) {
-                player.statDefense += 60; //12
-                player.lifeRegen += 20; //8
-                player.allDamageMult += (float)0.52; //0.16
+            if (MarieEffects.LacusianBlessing) {
+                player.statDefense += 12;
+                player.lifeRegen += 8;
+                player.allDamageMult += (float)0.16;
             }
         }
 
         public override void PostUpdateRunSpeeds() {
-            if (Floodboost) {
-                player.moveSpeed *= 1.33f;
-                player.maxRunSpeed *= 1.33f;
-                player.accRunSpeed *= 1.33f;
-            }
-            if (TitaniumShell) {
-                player.moveSpeed *= 0.5f;
-                player.maxRunSpeed *= 0.5f;
-                player.accRunSpeed *= 0.5f;
+            if (CharacterPicked && InProgress) {
+                MyCharacter.PostUpdateRunSpeeds();
             }
         }
         
@@ -298,6 +287,34 @@ namespace TerrariaMoba.Players {
             }
         }
 
+        public override float UseTimeMultiplier(Item item) {
+            if (CharacterPicked && InProgress) {
+                return MyCharacter.UseTimeMultiplier(item);
+            }
+            return 1f;
+        }
+        
+        // For use later when I rework Marie's ultimate.
+        /*
+        public static readonly PlayerLayer MiscEffectsBack = new PlayerLayer("TerrariaMoba", "MiscEffectsBack", PlayerLayer.MiscEffectsBack, delegate(PlayerDrawInfo drawInfo) {
+            Player drawPlayer = drawInfo.drawPlayer;
+            Mod mod = ModLoader.GetMod("TerrariaMoba");
+            MobaPlayer modPlayer = drawPlayer.GetModPlayer<MobaPlayer>();
+            
+            if (modPlayer.MarieEffects.LacusianBlessing) {
+                Texture2D texture = mod.GetTexture("Textures/Marie/GoddessOfLacusia");
+
+                int num140 = (int)(((float)drawPlayer.miscCounter / 300f * 6.28318548f).ToRotationVector2().Y * 6f);
+                
+                Vector2 drawXY = new Vector2((int)(drawInfo.position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2 + drawPlayer.width / 2), (int)(drawInfo.position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.bodyPosition + new Vector2((drawPlayer.bodyFrame.Width / 2), (drawPlayer.bodyFrame.Height / 2));
+                drawXY += new Vector2(-(float)drawPlayer.direction * 10f, (float)(-20 + num140));
+                
+                DrawData data = new DrawData(texture, drawXY, null, Lighting.GetColor((int)((drawInfo.position.X + drawPlayer.width / 2f) / 16f), (int)((drawInfo.position.Y + drawPlayer.height) / 16f)), drawPlayer.bodyRotation, texture.Size() / 2f, 1f, SpriteEffects.None, 0);
+                Main.playerDrawData.Add(data);
+            }
+        });
+        */
+        
         public static readonly PlayerLayer MiscEffects = new PlayerLayer("TerrariaMoba", "MiscEffects", PlayerLayer.MiscEffectsFront, delegate(PlayerDrawInfo drawInfo) {
             Player drawPlayer = drawInfo.drawPlayer;
             Mod mod = ModLoader.GetMod("TerrariaMoba");
@@ -312,7 +329,7 @@ namespace TerrariaMoba.Players {
                 Main.playerDrawData.Add(data);
             }
             
-            if (modPlayer.TitaniumShell) {
+            if (modPlayer.FlibnobEffects.TitaniumShell) {
                 Texture2D texture = mod.GetTexture("Textures/Flibnob/TitaniumShell");
 
                 int drawX = (int)(drawInfo.position.X + drawPlayer.width / 2f - Main.screenPosition.X);
@@ -323,6 +340,8 @@ namespace TerrariaMoba.Players {
         });
         
         public override void ModifyDrawLayers(List<PlayerLayer> layers) {
+            //MiscEffectsBack.visible = true;
+            //layers.Insert(0, MiscEffectsBack);
             MiscEffects.visible = true;
             layers.Add(MiscEffects);
 
