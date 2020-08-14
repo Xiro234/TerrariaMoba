@@ -178,6 +178,7 @@ namespace TerrariaMoba.Players {
 
         public override void PostUpdateEquips() {
             if (CharacterPicked && InProgress) {
+                MyCharacter.PostUpdateEquips();
                 MyCharacter.UpdateBaseStats();
                 
                 player.statLifeMax2 = maxHealth + bonusHealth;
@@ -225,6 +226,10 @@ namespace TerrariaMoba.Players {
         }
 
         public override void PostUpdateBuffs() {
+            if (CharacterPicked && InProgress) {
+                MyCharacter.PostUpdateBuffs();
+            }
+
             if (MarieEffects.LacusianBlessing) {
                 player.statDefense += 12;
                 player.lifeRegen += 8;
@@ -375,7 +380,7 @@ namespace TerrariaMoba.Players {
             if (!target.immune) {
                 PlayerLastHurt = killer;
 
-                int damage = sourceDamage;
+                float damage = sourceDamage;
                 
                 if (percentThorns > 0f && sendThorns) {
                     target.GetModPlayer<MobaPlayer>().DamageOverride((int)(damage * percentThorns), Main.player[killer], target.whoAmI, false);
@@ -383,13 +388,13 @@ namespace TerrariaMoba.Players {
                 }
 
                 int otherArmor = target.GetModPlayer<MobaPlayer>().armor;
-                damage *= ((100 - otherArmor) / 100);
-                target.statLife -= damage;
+                damage *= (100 - otherArmor) / 100f;
+                target.statLife -= (int) damage;
 
-                CombatText.NewText(target.Hitbox, Color.OrangeRed, damage);
+                CombatText.NewText(target.Hitbox, Color.OrangeRed, (int) damage);
                 
                 if (target.statLife <= 0) {
-                    target.KillMe(PlayerDeathReason.ByPlayer(PlayerLastHurt), damage, 1, true);
+                    target.KillMe(PlayerDeathReason.ByPlayer(PlayerLastHurt), (int) damage, 1, true);
                 }
                 
                 if (sendThorns) {

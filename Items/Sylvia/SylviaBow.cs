@@ -1,6 +1,5 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
-using TerrariaMoba;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using TerrariaMoba.Players;
@@ -14,19 +13,19 @@ namespace TerrariaMoba.Items.Sylvia {
         }
 
         public override void SetDefaults() {
-            item.damage = 20;
+            item.damage = 75;
             item.ranged = true;
             item.shoot = mod.ProjectileType("SylviaArrow");
             item.width = 20;
             item.height = 12;
-            item.useTime = 20;
+            item.useTime = 40;
+            item.useAnimation = 40;
             item.UseSound = SoundID.Item5;
-            item.shootSpeed = 10;
-            item.useAnimation = 20;
-            item.useStyle = 5;
+            item.shootSpeed = 9f;
+            item.useStyle = ItemUseStyleID.HoldingOut;
             item.knockBack = 0;
             item.value = 10000;
-            item.rare = 2;
+            item.rare = ItemRarityID.Green;
             item.autoReuse = false;
         }
         

@@ -18,7 +18,7 @@ namespace TerrariaMoba.Items.Marie {
             item.ranged = true;
             item.useTime = 60;
             item.useAnimation = 60;
-            item.shootSpeed = 9;
+            item.shootSpeed = 8.66f;
             item.shoot = mod.ProjectileType("SoTBolt");
             item.UseSound = SoundID.Item43;
             item.useStyle = ItemUseStyleID.HoldingOut;

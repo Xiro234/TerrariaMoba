@@ -20,7 +20,7 @@ namespace TerrariaMoba.Characters {
         private bool IsPhasing = false;
         private bool SylviaUlt1 = false;
         private int SylviaUlt1Timer = 0;
-        public float VerdantFuryBuff = 1.25f;
+        public float VerdantFuryBuff = 1.3f;
         private int VerdantFuryTime = 180;
         public float VerdantFuryIncrease = 0.05f;
         public int JunglesWrathTime = 180;
@@ -50,9 +50,9 @@ namespace TerrariaMoba.Characters {
                 player.hairColor = new Color(52, 133, 34);
                 player.skinColor = new Color(198,134,66);
                 player.eyeColor = new Color(84,42,14);
-                baseMaxHealth = 2000;
+                baseMaxHealth = 1340;
                 player.statLifeMax2 = baseMaxHealth;
-                player.statLife = 2000;
+                player.statLife = 1340;
 
                 EnsnaringVines abilityOne = new EnsnaringVines(player);
                 abilities[0] = abilityOne;

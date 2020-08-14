@@ -13,8 +13,8 @@ namespace TerrariaMoba.Abilities.Flibnob {
         }
 
         public override void Using() {
-            float change = -1 * (player.statLife - player.statLifeMax2) / (float)player.statLifeMax2 * 100;
-            int defBoost = (int) (1 * Math.Floor(change / 2f));
+            float change = -100f * ((player.statLife - player.statLifeMax2) / (float) player.statLifeMax2);
+            int defBoost = (int) Math.Floor(change / 2f);
             player.GetModPlayer<MobaPlayer>().armor = defBoost;
         }
     }

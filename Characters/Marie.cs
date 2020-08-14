@@ -36,9 +36,9 @@ namespace TerrariaMoba.Characters {
             player.hairColor = new Color(0, 133, 255);
             player.skinColor = new Color(235, 159, 125);
             player.eyeColor = new Color(0, 0, 255);
-            baseMaxHealth = 1600;
+            baseMaxHealth = 1460;
             player.statLifeMax2 = baseMaxHealth;
-            player.statLife = 1600;
+            player.statLife = 1460;
             
             WhirlpoolInABottle abilityOne = new WhirlpoolInABottle(player);
             abilities[0] = abilityOne;

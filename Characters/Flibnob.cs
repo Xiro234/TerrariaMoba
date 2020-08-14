@@ -40,26 +40,24 @@ namespace TerrariaMoba.Characters {
             player.hairColor = new Color(0, 0, 0);
             player.skinColor = new Color(120, 63, 4);
             player.eyeColor = new Color(255, 0, 0);
-            baseMaxHealth = 2400;
+            baseMaxHealth = 2060;
             player.statLifeMax2 = baseMaxHealth;
-            player.statLife = 2400;
+            player.statLife = 2060;
             
             FlameBelch abilityOne = new FlameBelch(player);
             abilities[0] = abilityOne;
             
             TitaniumShell abilityTwo = new TitaniumShell(player);
             abilities[1] = abilityTwo;
-            
+            /*
             Earthsplitter ultimate = new Earthsplitter(player);
             abilities[2] = ultimate;
-            
+            */
             BattleHardened trait = new BattleHardened(player);
             abilities[3] = trait;
             
-            /*
             CullTheMeek ultimate = new CullTheMeek(player);
             abilities[2] = ultimate;
-            */
             
             
             CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobIcon");
@@ -69,8 +67,10 @@ namespace TerrariaMoba.Characters {
             
         }
 
-        public override void PostUpdateBuffs() {
-
+        public override void PostUpdateEquips() {
+            if (player.GetModPlayer<MobaPlayer>().FlibnobEffects.TitaniumShell) {
+                player.GetModPlayer<MobaPlayer>().percentThorns += 0.25f;
+            }
         }
 
         public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
