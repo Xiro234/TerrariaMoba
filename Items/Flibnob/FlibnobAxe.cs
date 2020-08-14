@@ -15,8 +15,8 @@ namespace TerrariaMoba.Items.Flibnob {
             item.damage = 137;
             item.knockBack = 0;
             item.melee = true;
-            item.useTime = 72;
-            item.useAnimation = 72;
+            item.useTime = 70;
+            item.useAnimation = 70;
             item.UseSound = SoundID.Item1;
             item.useStyle = ItemUseStyleID.SwingThrow;
             item.value = 10000;

@@ -2,10 +2,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TerrariaMoba.Projectiles.Flibnob {
-    class CullPillar : ModProjectile {
+    public class CullPillar : ModProjectile {
         const float hookRange = 25f;
 
         public override void SetDefaults() {
@@ -13,21 +14,18 @@ namespace TerrariaMoba.Projectiles.Flibnob {
             projectile.height = 48;
             projectile.friendly = true;
             projectile.hostile = false;
-            projectile.timeLeft = 300;
+            projectile.timeLeft = 480;
         }
 
         public override void AI() {
+            Player player = Main.player[projectile.owner];
             int playerID = -1;
-            float closestDist = -1f;
+            float closestDist = 30f;
             if (projectile.ai[1] <= 0) {
                 projectile.ai[1] = 1;
                 for (int i = 0; i < Main.maxPlayers; i++) {
                     float distToPillar = (Main.player[i].Center - projectile.Center).Length() / 16.0f;
-                    if (distToPillar <= hookRange && closestDist == -1f) { //((distToPillar <= hookRange && closestDist == -1f) && Main.myPlayer != i)
-                        playerID = i;
-                        closestDist = distToPillar;
-                    } 
-                    if (distToPillar <= hookRange && distToPillar < closestDist) {
+                    if (distToPillar <= hookRange && distToPillar < closestDist && i != player.whoAmI && Main.player[i].team != player.team) {
                         playerID = i;
                         closestDist = distToPillar;
                     }
