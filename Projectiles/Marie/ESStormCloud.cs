@@ -44,7 +44,7 @@ namespace TerrariaMoba.Projectiles.Marie {
                     int rainX = (int) (projectile.position.X + 14f + Main.rand.Next(projectile.width - 18));
                     int rainY = (int) (projectile.position.Y + projectile.height - 20f);
                     Projectile.NewProjectile(rainX, rainY, 0f, 3.5f,
-                        TerrariaMoba.Instance.ProjectileType("ESLightning"), projectile.damage * 2, 0f, player.whoAmI, 0f, 0f);
+                        TerrariaMoba.Instance.ProjectileType("ESLightning"), projectile.damage * 3, 0f, player.whoAmI, 0f, 0f);
                 }
             }
         }

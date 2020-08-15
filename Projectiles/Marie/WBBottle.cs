@@ -33,7 +33,7 @@ namespace TerrariaMoba.Projectiles.Marie {
             Player player = Main.player[projectile.owner];
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
                 Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 0f, 
-                    TerrariaMoba.Instance.ProjectileType("WBWhirlpool"), 70, 0, player.whoAmI);
+                    TerrariaMoba.Instance.ProjectileType("WBWhirlpool"), 85, 0, player.whoAmI);
                 Main.PlaySound(SoundID.Item27, projectile.position);
             }
         }

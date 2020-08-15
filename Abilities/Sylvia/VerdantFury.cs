@@ -13,7 +13,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
 
         public override void Cast() {
             player.AddBuff(BuffType<Buffs.VerdantFuryBuff>(), 60 * 4);
-            Cooldown = 60 * 10;
+            Cooldown = 10 * 60;
         }
     }
 }

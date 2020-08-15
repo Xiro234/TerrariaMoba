@@ -81,7 +81,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
             NumberJavelins = 0;
             IsActive = false;
             teleporting = false;
-            Cooldown = 30 * 60;
+            Cooldown = 20 * 60;
         }
 
         public override void ReadAbility(MemoryStream stream) {

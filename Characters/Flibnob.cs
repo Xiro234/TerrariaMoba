@@ -49,16 +49,17 @@ namespace TerrariaMoba.Characters {
             
             TitaniumShell abilityTwo = new TitaniumShell(player);
             abilities[1] = abilityTwo;
-            /*
+            
             Earthsplitter ultimate = new Earthsplitter(player);
             abilities[2] = ultimate;
-            */
+            
             BattleHardened trait = new BattleHardened(player);
             abilities[3] = trait;
             
+            /*
             CullTheMeek ultimate = new CullTheMeek(player);
             abilities[2] = ultimate;
-            
+            */
             
             CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobIcon");
         }

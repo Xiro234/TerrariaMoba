@@ -113,7 +113,7 @@ namespace TerrariaMoba.Characters {
                             velocity *= 15;
 
                             Projectile.NewProjectile(position.X, position.Y, velocity.X, velocity.Y,
-                                TerrariaMoba.Instance.ProjectileType("SylviaUlt1Projectile"), 40, knockBack, player.whoAmI);
+                                TerrariaMoba.Instance.ProjectileType("SylviaUlt1Projectile"), 400, knockBack, player.whoAmI);
                             flourish.NumberJavelins--;
 
                             return false;

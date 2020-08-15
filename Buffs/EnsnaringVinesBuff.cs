@@ -1,8 +1,6 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
-using TerrariaMoba;
 using TerrariaMoba.Players;
-using Microsoft.Xna.Framework;
 
 namespace TerrariaMoba.Buffs {
     public class EnsnaringVinesBuff : ModBuff {
@@ -15,7 +13,7 @@ namespace TerrariaMoba.Buffs {
         }
 
         public override void Update(Player player, ref int buffIndex) {
-            //player.GetModPlayer<SylviaPlayer>().EnsnaringVines = true;
+            player.GetModPlayer<MobaPlayer>().SylviaEffects.EnsnaringVines = true;
         }
     }
 }

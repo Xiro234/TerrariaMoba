@@ -1,9 +1,7 @@
 ﻿using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Players;
 using Microsoft.Xna.Framework;
-using TerrariaMoba.Packets;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerrariaMoba.Projectiles.Sylvia {
@@ -54,14 +52,16 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         }
 
         public override void OnHitPvp(Player target, int damage, bool crit) {
-            var player = Main.player[projectile.owner].GetModPlayer<MobaPlayer>();
+            //var player = Main.player[projectile.owner].GetModPlayer<MobaPlayer>();
 
             target.AddBuff(BuffType<Buffs.EnsnaringVinesBuff>(), 90, false);
 
             //Quashing Shrubbery
+            /*
             if (player.MyCharacter.talentArray[1, 2]) {
                 target.AddBuff(BuffType<Buffs.Silenced>(), 90, false);
             }
+            */
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TerrariaMoba.Projectiles.Marie {
@@ -15,7 +16,7 @@ namespace TerrariaMoba.Projectiles.Marie {
             projectile.ignoreWater = true;
             projectile.magic = true;
             projectile.penetrate = -1;
-            projectile.timeLeft = 150;
+            projectile.timeLeft = 180;
         }
         
         public override void AI() {
@@ -23,6 +24,10 @@ namespace TerrariaMoba.Projectiles.Marie {
                 projectile.frameCounter = 0;
                 projectile.frame = ++projectile.frame % Main.projFrames[projectile.type];
             }
+        }
+        
+        public override void OnHitPvp(Player target, int damage, bool crit) {
+            target.AddBuff(BuffID.Slow, 15, false);
         }
     }
 }
