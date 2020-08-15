@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using TerrariaMoba;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
-using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.GameInput;
@@ -18,7 +15,6 @@ using TerrariaMoba.Enums;
 using TerrariaMoba.Packets;
 using TerrariaMoba.UI;
 using static TerrariaMobaUtils;
-using static Terraria.ModLoader.ModContent;
 
 namespace TerrariaMoba.Players {
     public class MobaPlayer : ModPlayer {
@@ -356,8 +352,7 @@ namespace TerrariaMoba.Players {
         }
         
         public override void SetControls() {
-            //EnsnaringVines
-            if (IsChanneling) {
+            if (IsChanneling || SylviaEffects.EnsnaringVines) {
                 player.controlRight = false;
                 player.controlLeft = false;
                 player.controlJump = false;

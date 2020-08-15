@@ -29,7 +29,7 @@ namespace TerrariaMoba.Abilities.Marie {
                 Main.PlaySound(SoundID.Item66, player.Center);
             }
             
-            Cooldown = 10 * 60;
+            Cooldown = 20 * 60;
         }
     }
 }

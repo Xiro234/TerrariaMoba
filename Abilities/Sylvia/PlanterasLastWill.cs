@@ -22,10 +22,10 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 Vector2 velocity = playerToMouse * 7;
 
                 Projectile proj = Main.projectile[Projectile.NewProjectile(position, velocity,
-                    TerrariaMoba.Instance.ProjectileType("SylviaUlt2"), 30, 0, player.whoAmI)];
+                    TerrariaMoba.Instance.ProjectileType("SylviaUlt2"), 680, 0, player.whoAmI)];
             }
             
-            Cooldown = 10 * 60;
+            Cooldown = 20 * 60;
         }
     }
 }

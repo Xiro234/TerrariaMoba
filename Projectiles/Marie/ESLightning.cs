@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TerrariaMoba.Projectiles.Marie {
@@ -25,6 +26,10 @@ namespace TerrariaMoba.Projectiles.Marie {
                 Main.dust[dust].scale = Main.rand.Next(60, 100) * 0.013f;
                 Main.dust[dust].velocity *= 0.2f;
             }
+        }
+
+        public override void OnHitPvp(Player target, int damage, bool crit) {
+            target.AddBuff(BuffID.Electrified, 75, false);
         }
     }
 }
