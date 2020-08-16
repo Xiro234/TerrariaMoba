@@ -64,9 +64,7 @@ namespace TerrariaMoba {
 			layers.RemoveAt(LayerIndex);
 			LayerIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Death Text"));
 			layers.RemoveAt(LayerIndex);
-			LayerIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Entity Health Bars"));
-			layers.RemoveAt(LayerIndex);
-			
+
 			int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
 			if (mouseTextIndex != -1) {
 				layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer(

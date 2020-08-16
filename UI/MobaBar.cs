@@ -171,10 +171,10 @@ namespace TerrariaMoba.UI {
             var player = Main.LocalPlayer;
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
             if (mobaPlayer.CharacterPicked) {
-                DrawIcon(ref ability1Cooldown, ref ability1Panel, mobaPlayer.MyCharacter.abilities[0].Cooldown);
-                DrawIcon(ref ability2Cooldown, ref ability2Panel, mobaPlayer.MyCharacter.abilities[1].Cooldown);
-                DrawIcon(ref ultimateCooldown, ref ultimatePanel, mobaPlayer.MyCharacter.abilities[2].Cooldown);
-                DrawIcon(ref traitCooldown, ref traitPanel, mobaPlayer.MyCharacter.abilities[3].Cooldown);
+                DrawIcon(ref ability1Cooldown, ref ability1Panel, mobaPlayer.MyCharacter.abilities[0].Cooldown, 0);
+                DrawIcon(ref ability2Cooldown, ref ability2Panel, mobaPlayer.MyCharacter.abilities[1].Cooldown, 1);
+                DrawIcon(ref ultimateCooldown, ref ultimatePanel, mobaPlayer.MyCharacter.abilities[2].Cooldown, 2);
+                DrawIcon(ref traitCooldown, ref traitPanel, mobaPlayer.MyCharacter.abilities[3].Cooldown, 3);
                 levelText.SetText(mobaPlayer.MyCharacter.level.ToString(), 0.75f, false);
             }
             
@@ -193,7 +193,7 @@ namespace TerrariaMoba.UI {
             }
         }
 
-        public void DrawIcon(ref UIText text,ref UIAbilityIcon icon, int timer) {
+        public void DrawIcon(ref UIText text,ref UIAbilityIcon icon, int timer, int index) {
             if(timer > 0) {
                 if (timer >= 40) {
                     text.SetText(Math.Ceiling(timer / 60f)
@@ -211,6 +211,8 @@ namespace TerrariaMoba.UI {
                 text.SetText("");
                 icon.isOnCooldown = false;
             }
+
+            icon.index = index;
         }
 
         public void UnLoad() {

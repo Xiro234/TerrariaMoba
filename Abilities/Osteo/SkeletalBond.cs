@@ -2,8 +2,8 @@
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.Osteo {
-    public class SkeletalRemains : Ability {
-        public SkeletalRemains(Player myPlayer) : base(myPlayer) {
+    public class SkeletalBond : Ability {
+        public SkeletalBond(Player myPlayer) : base(myPlayer) {
             Type = AbilityType.Passive;
             Name = "Skeletal Remains";
             IsActive = true;

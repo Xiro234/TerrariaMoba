@@ -13,6 +13,7 @@ namespace TerrariaMoba.UI {
         public bool isOnCooldown = false;
         public int cooldown = 0;
         public int cooldownTimer;
+        public int index = 0;
 
         public UIAbilityIcon(Texture2D texture, string abilityName) : base(texture) {
             hoverText = abilityName;
@@ -60,10 +61,14 @@ namespace TerrariaMoba.UI {
                         spriteBatch.Draw(Main.magicPixel, new Rectangle(right - i, top + j, 1, 1), color); //Top + j makes it go clockwise
                     }
                 }
+                
+                
             }
             else {
                 cooldown = 0;
             }
+            
+            Main.LocalPlayer.GetModPlayer<MobaPlayer>().MyCharacter.abilities[index].DrawSelf(spriteBatch, this);
         }
 
         public override void Click(UIMouseEvent evt) {

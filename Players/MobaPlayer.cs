@@ -62,6 +62,8 @@ namespace TerrariaMoba.Players {
         public int resourceDegenTimer = 0;
         
         public int armor = 0;
+
+        public int ultTimer = -1;
         
         public override void Initialize() {
             CharacterSelected = CharacterEnum.Null;
@@ -115,7 +117,6 @@ namespace TerrariaMoba.Players {
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TerrariaMoba.AbilityOneHotKey.JustPressed) {
                 MyCharacter.HandleAbility(0);
-                
             }
             if (TerrariaMoba.AbilityTwoHotKey.JustPressed) {
                 MyCharacter.HandleAbility(1);
@@ -148,34 +149,14 @@ namespace TerrariaMoba.Players {
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage,
             ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
-            if (pvp) {
+            if (InProgress) {
                 return false;
             }
             return true;
         }
-        
-        public override void UpdateBadLifeRegen() {
 
-        }
-        
         public override void PreUpdate() {
             if (CharacterPicked && InProgress) {
-                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.IsActive)) {
-                    ability.Using();
-                    if (Main.myPlayer == ability.player.whoAmI && ability.NeedsSyncing) {
-                        int index = Array.IndexOf(MyCharacter.abilities, ability);
-                        int whoAmI = ability.player.whoAmI;
-                        byte[] abilitySpecific = ability.WriteAbility();
-                        int length = abilitySpecific.Length;
-                        
-                        Packets.ReadWriteAbilityPacket.Write(index, whoAmI, length, abilitySpecific);
-                    }
-                }
-                
-                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.Cooldown > 0)) {
-                    ability.Cooldown--;
-                }
-                
                 MyCharacter.PreUpdate();
             }
         }
@@ -183,6 +164,7 @@ namespace TerrariaMoba.Players {
         public override void PostUpdateEquips() {
             if (CharacterPicked && InProgress) {
                 MyCharacter.UpdateBaseStats();
+                MyCharacter.PostUpdateEquips();
                 
                 player.statLifeMax2 = maxHealth + bonusHealth;
 
@@ -229,10 +211,28 @@ namespace TerrariaMoba.Players {
         }
 
         public override void PostUpdateBuffs() {
-            if (LacusianBlessing) {
-                player.statDefense += 60; //12
-                player.lifeRegen += 20; //8
-                player.allDamageMult += (float)0.52; //0.16
+            if (CharacterPicked && InProgress) {
+                /*if (LacusianBlessing) {
+                    player.statDefense += 60; //12
+                    player.lifeRegen += 20; //8
+                    player.allDamageMult += (float) 0.52; //0.16
+                }*/
+
+                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.IsActive)) {
+                    ability.Using();
+                    if (Main.myPlayer == ability.player.whoAmI && ability.NeedsSyncing) {
+                        int index = Array.IndexOf(MyCharacter.abilities, ability);
+                        int whoAmI = ability.player.whoAmI;
+                        byte[] abilitySpecific = ability.WriteAbility();
+                        int length = abilitySpecific.Length;
+
+                        Packets.ReadWriteAbilityPacket.Write(index, whoAmI, length, abilitySpecific);
+                    }
+                }
+
+                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.Cooldown > 0)) {
+                    ability.Cooldown--;
+                }
             }
         }
 
@@ -298,31 +298,10 @@ namespace TerrariaMoba.Players {
             }
         }
 
-        public static readonly PlayerLayer MiscEffects = new PlayerLayer("TerrariaMoba", "MiscEffects", PlayerLayer.MiscEffectsFront, delegate(PlayerDrawInfo drawInfo) {
-            Player drawPlayer = drawInfo.drawPlayer;
-            Mod mod = ModLoader.GetMod("TerrariaMoba");
-            MobaPlayer modPlayer = drawPlayer.GetModPlayer<MobaPlayer>();
-
-            if (modPlayer.SylviaEffects.EnsnaringVines) {
-                Texture2D texture = mod.GetTexture("Textures/Sylvia/EnsnaringVines");
-                
-                int drawX = (int)(drawInfo.position.X + drawPlayer.width / 2f - Main.screenPosition.X);
-                int drawY = (int)(drawInfo.position.Y + (drawPlayer.height - 2f) - Main.screenPosition.Y);
-                DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, 0, texture.Width, texture.Height), Lighting.GetColor((int)((drawInfo.position.X + drawPlayer.width / 2f) / 16f), (int)((drawInfo.position.Y + drawPlayer.height) / 16f)), 0f, new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
-                Main.playerDrawData.Add(data);
-            }
-            
-            if (modPlayer.TitaniumShell) {
-                Texture2D texture = mod.GetTexture("Textures/Flibnob/TitaniumShell");
-
-                int drawX = (int)(drawInfo.position.X + drawPlayer.width / 2f - Main.screenPosition.X);
-                int drawY = (int)(drawInfo.position.Y + drawPlayer.height / 2f - Main.screenPosition.Y);
-                DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, 0, texture.Width, texture.Height), Lighting.GetColor((int)((drawInfo.position.X + drawPlayer.width / 2f) / 16f), (int)((drawInfo.position.Y + drawPlayer.height) / 16f)), 0f, new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
-                Main.playerDrawData.Add(data);
-            }
-        });
+        
         
         public override void ModifyDrawLayers(List<PlayerLayer> layers) {
+            PlayerLayer MiscEffects = MobaLayers.MiscEffects;
             MiscEffects.visible = true;
             layers.Add(MiscEffects);
 
@@ -386,6 +365,17 @@ namespace TerrariaMoba.Players {
             InProgress = true;
             TerrariaMoba.Instance.ShowBar();
             TerrariaMoba.Instance.MobaBar.SetIcons();
+        }
+
+        public void HealMe(int amount, bool doText) {
+            MyCharacter.HealMe(ref amount);
+            if(doText) {
+                CombatText.NewText(player.Hitbox, CombatText.HealLife, amount, false);
+            }
+            player.statLife += amount;
+            if (player.statLife > player.statLifeMax2) {
+                player.statLife = player.statLifeMax2;
+            }
         }
     }
 }

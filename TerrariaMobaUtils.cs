@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using BaseMod;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using TerrariaMoba.Packets;
@@ -13,6 +14,7 @@ using Terraria.GameInput;
 using Terraria.ID;
 using TerrariaMoba.Players;
 using TerrariaMoba.Enums;
+using TerrariaMoba.NPCs;
 
 public static class TerrariaMobaUtils {
     public const int xpPerKill = 100;
@@ -114,6 +116,31 @@ public static class TerrariaMobaUtils {
         using (var ms = new MemoryStream()) {
             stream.CopyTo(ms);
             return ms.ToArray();
+        }
+    }
+
+    public static bool TargetClosestEnemy(NPC npc) {
+        float distance = Single.MaxValue;
+        int target = -1;
+        Player sourcePlayer = Main.player[npc.GetGlobalNPC<MobaGlobalNPC>().owner];
+        
+        for (int i = 0; i < Main.maxPlayers; i++) {
+            Player targetPlayer = Main.player[i];
+            if (sourcePlayer.team != targetPlayer.team) {
+                float length = Vector2.Distance(sourcePlayer.position, targetPlayer.position);
+                if (length < distance) {
+                    distance = length;
+                    target = targetPlayer.whoAmI;
+                }
+            }
+        }
+
+        if (target >= 0 && target <= 255) {
+            BaseAI.SetTarget(npc, target);
+            return true;
+        }
+        else {
+            return false;
         }
     }
 }

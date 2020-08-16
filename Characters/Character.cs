@@ -211,6 +211,7 @@ namespace TerrariaMoba.Characters {
         public virtual void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {}
 
         public virtual void SetControls() {}
+        public virtual void PostUpdateEquips() {}
 
         public virtual void HandleAbility(int index) {
             Ability ability = abilities[index];
@@ -221,6 +222,8 @@ namespace TerrariaMoba.Characters {
                 ability.Cast();
             }
         }
+        
+        public virtual void HealMe(ref int amount) {}
 
         public virtual void UpdateBaseStats() {
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
