@@ -30,7 +30,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
                 
                     Main.PlaySound(SoundID.DD2_OgreAttack, player.Center);
                     Projectile.NewProjectile(position, vel,
-                        TerrariaMoba.Instance.ProjectileType("FlameBelchSpawner"), 275, 0, player.whoAmI);
+                        TerrariaMoba.Instance.ProjectileType("FlameBelchSpawner"), 270, 0, player.whoAmI);
                 }
             }
             if (Timer == 0) {

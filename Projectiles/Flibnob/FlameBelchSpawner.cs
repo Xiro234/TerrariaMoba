@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Projectiles.Flibnob {
     public class FlameBelchSpawner : ModProjectile {
@@ -79,6 +81,10 @@ namespace TerrariaMoba.Projectiles.Flibnob {
                 projectile.ai[0] += 1f;
             }
             projectile.rotation += 0.3f * projectile.direction;
+        }
+
+        public override void OnHitPvp(Player target, int damage, bool crit) {
+            target.AddBuff(BuffID.OnFire, 105, false);
         }
     }
 }

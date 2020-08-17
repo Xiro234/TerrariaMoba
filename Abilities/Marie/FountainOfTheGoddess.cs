@@ -15,7 +15,7 @@ namespace TerrariaMoba.Abilities.Marie {
                     TerrariaMoba.Instance.ProjectileType("FountainOfLacusia"), 0, 0, player.whoAmI, 29f);
             }
 
-            Cooldown = 10 * 60;
+            Cooldown = 20 * 60;
         }
     }
 }
