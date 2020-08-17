@@ -31,7 +31,7 @@ namespace TerrariaMoba.Abilities.Marie {
                 if (plr.active) {
                     if (plr.team == player.team) {
                         plr.statLife += 200;
-                        CombatText.NewText(plr.Hitbox, Color.CornflowerBlue, 100, true);
+                        CombatText.NewText(plr.Hitbox, Color.CornflowerBlue, 200, true);
                         Main.PlaySound(SoundID.Item4, plr.Center);
                         for (int d = 0; d < 40; d++) {
                             Dust.NewDust(plr.position, plr.width, plr.height, 41, 0f, 0f, 150, default(Color), 1.5f);

@@ -7,7 +7,7 @@ namespace TerrariaMoba.Abilities.Marie {
     public class EyeOfTheStorm : Ability {
         public EyeOfTheStorm(Player myPlayer) : base(myPlayer) {
             Name = "Eye of the Storm";
-            Icon = TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieAbilityOne");
+            Icon = TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieUltimateTwo");
         }
         
         public override void Cast() {
@@ -25,7 +25,7 @@ namespace TerrariaMoba.Abilities.Marie {
                 }
                 Vector2 velocity = new Vector2(dirX, dirY);
 
-                Projectile.NewProjectile(position, velocity, TerrariaMoba.Instance.ProjectileType("ESSpawner"), 65, 0, player.whoAmI);
+                Projectile.NewProjectile(position, velocity, TerrariaMoba.Instance.ProjectileType("ESSpawner"), 60, 0, player.whoAmI);
                 Main.PlaySound(SoundID.Item66, player.Center);
             }
             

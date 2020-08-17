@@ -7,7 +7,7 @@ namespace TerrariaMoba.Abilities.Marie {
     public class WhirlpoolInABottle : Ability {
         public WhirlpoolInABottle(Player myPlayer) : base(myPlayer) {
             Name = "Whirlpool in a Bottle";
-            Icon = TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieUltimateTwo");
+            Icon = TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieAbilityOne");
         }
         
         public override void Cast() {
@@ -25,7 +25,7 @@ namespace TerrariaMoba.Abilities.Marie {
                 Vector2 velocity = new Vector2(dirX, dirY);
 
                 Projectile.NewProjectile(position, velocity, 
-                    TerrariaMoba.Instance.ProjectileType("WBBottle"), 200, 0, player.whoAmI);
+                    TerrariaMoba.Instance.ProjectileType("WBBottle"), 120, 0, player.whoAmI);
                 Main.PlaySound(SoundID.Item1, player.Center);
             }
             

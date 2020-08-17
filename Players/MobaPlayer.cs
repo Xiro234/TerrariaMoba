@@ -304,13 +304,19 @@ namespace TerrariaMoba.Players {
             
             if (modPlayer.MarieEffects.LacusianBlessing) {
                 Texture2D texture = mod.GetTexture("Textures/Marie/GoddessOfLacusia");
+                SpriteEffects effects;
 
-                int num140 = (int)(((float)drawPlayer.miscCounter / 300f * 6.28318548f).ToRotationVector2().Y * 6f);
+                if (drawPlayer.direction == 1) {
+                    effects = SpriteEffects.None;
+                } else {
+                    effects = SpriteEffects.FlipHorizontally;
+                }
                 
+                int num140 = (int)(((float)drawPlayer.miscCounter / 300f * 6.28318548f).ToRotationVector2().Y * 6f);
                 Vector2 drawXY = new Vector2((int)(drawInfo.position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2 + drawPlayer.width / 2), (int)(drawInfo.position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.bodyPosition + new Vector2((drawPlayer.bodyFrame.Width / 2), (drawPlayer.bodyFrame.Height / 2));
                 drawXY += new Vector2(-(float)drawPlayer.direction * 10f, (float)(-20 + num140));
                 
-                DrawData data = new DrawData(texture, drawXY, null, Lighting.GetColor((int)((drawInfo.position.X + drawPlayer.width / 2f) / 16f), (int)((drawInfo.position.Y + drawPlayer.height) / 16f)), drawPlayer.bodyRotation, texture.Size() / 2f, 1f, SpriteEffects.None, 0);
+                DrawData data = new DrawData(texture, drawXY, null, Lighting.GetColor((int)((drawInfo.position.X + drawPlayer.width / 2f) / 16f), (int)((drawInfo.position.Y + drawPlayer.height) / 16f)), drawPlayer.bodyRotation, texture.Size() / 2f, 1f, effects, 0);
                 Main.playerDrawData.Add(data);
             }
         });

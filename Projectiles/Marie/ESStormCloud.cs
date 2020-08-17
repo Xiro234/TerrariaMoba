@@ -12,7 +12,7 @@ namespace TerrariaMoba.Projectiles.Marie {
             projectile.Name = "ES Storm Cloud";
             projectile.width = 366; 
             projectile.height = 104; 
-            projectile.timeLeft = 360;
+            projectile.timeLeft = 380;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
             projectile.penetrate = -1;
@@ -20,15 +20,17 @@ namespace TerrariaMoba.Projectiles.Marie {
 
         public override void AI() {
             Player player = Main.player[projectile.owner];
-            projectile.ai[0] += 1f;
-            projectile.ai[1] += 1f;
-            
+            if (projectile.timeLeft > 20) {
+                projectile.ai[0] += 1f;
+                projectile.ai[1] += 1f;
+            }
+
             if (++projectile.frameCounter >= 5) {
                 projectile.frameCounter = 0;
                 projectile.frame = ++projectile.frame % Main.projFrames[projectile.type];
             }
             
-            if (projectile.ai[0] > 2f) {
+            if (projectile.ai[0] >= 4f) {
                 projectile.ai[0] = 0f;
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
                     int rainX = (int) (projectile.position.X + 14f + Main.rand.Next(projectile.width - 18));
@@ -38,7 +40,7 @@ namespace TerrariaMoba.Projectiles.Marie {
                 }
             }
 
-            if (projectile.ai[1] > 30f) {
+            if (projectile.ai[1] >= 45f) {
                 projectile.ai[1] = 0f;
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
                     int rainX = (int) (projectile.position.X + 14f + Main.rand.Next(projectile.width - 18));
