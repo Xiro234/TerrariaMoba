@@ -1,6 +1,9 @@
-﻿using Terraria;
+﻿using System;
+using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using TerrariaMoba.Enums;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Items.Marie {
     public class MarieStaff : ModItem {
@@ -13,12 +16,12 @@ namespace TerrariaMoba.Items.Marie {
         public override void SetDefaults() {
             item.width = 34;
             item.height = 34;
-            item.damage = 62;
+            item.damage = 69;
             item.knockBack = 0;
             item.ranged = true;
-            item.useTime = 60;
-            item.useAnimation = 60;
-            item.shootSpeed = 7f;
+            item.useTime = 54;
+            item.useAnimation = 54;
+            item.shootSpeed = 7.33f;
             item.shoot = mod.ProjectileType("SoTBolt");
             item.UseSound = SoundID.Item43;
             item.useStyle = ItemUseStyleID.HoldingOut;
@@ -26,6 +29,17 @@ namespace TerrariaMoba.Items.Marie {
             item.value = 10000;
             item.rare = ItemRarityID.Cyan;
             item.autoReuse = false;
+        }
+        
+        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat) {
+            var plr = player.GetModPlayer<MobaPlayer>();
+            if (plr.CharacterPicked) {
+                if (plr.MyCharacter.CharacterEnum == CharacterEnum.Marie) {
+                    if (plr.MyCharacter.level > 1) {
+                        add += (float)Math.Pow(1.04f, plr.MyCharacter.level - 1) - 1;
+                    }
+                }
+            }
         }
     }
 }

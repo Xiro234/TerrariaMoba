@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Projectiles.Marie {
     public class WBBottle : ModProjectile {
@@ -33,7 +34,7 @@ namespace TerrariaMoba.Projectiles.Marie {
             Player player = Main.player[projectile.owner];
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
                 Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 0f, 
-                    TerrariaMoba.Instance.ProjectileType("WBWhirlpool"), 85, 0, player.whoAmI);
+                    TerrariaMoba.Instance.ProjectileType("WBWhirlpool"), (int)player.GetModPlayer<MobaPlayer>().MarieStats.A1WhirlpoolDmg.Value, 0, player.whoAmI);
                 Main.PlaySound(SoundID.Item27, projectile.position);
             }
         }

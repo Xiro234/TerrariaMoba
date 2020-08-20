@@ -15,7 +15,6 @@ namespace TerrariaMoba.Characters {
         
         public override void ChooseCharacter() {
             Main.NewText("Flibnob");
-            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
             Item vanityHelm = new Item();
             vanityHelm.SetDefaults(3865);
             Item vanityChest = new Item();
@@ -42,8 +41,8 @@ namespace TerrariaMoba.Characters {
             player.eyeColor = new Color(255, 0, 0);
             baseMaxHealth = 2060;
             player.statLifeMax2 = baseMaxHealth;
-            player.statLife = 2060;
-            
+            player.statLife = baseMaxHealth;
+
             FlameBelch abilityOne = new FlameBelch(player);
             abilities[0] = abilityOne;
             
@@ -101,6 +100,11 @@ namespace TerrariaMoba.Characters {
 
         public override void LevelUp() {
             level += 1;
+            player.GetModPlayer<MobaPlayer>().FlibnobStats.LevelUp();
+            baseMaxHealth = (int)player.GetModPlayer<MobaPlayer>().FlibnobStats.MaxHealth.Value;
+            baseLifeRegen = (baseMaxHealth * 0.125f) / 60;
+            baseMaxResource = (int)player.GetModPlayer<MobaPlayer>().FlibnobStats.MaxResource.Value;
+            baseResourceRegen = (baseMaxResource * 0.125f) / 30;
             TalentSelect();
         }
 

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using TerrariaMoba.Players;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerrariaMoba.Abilities.Marie {
@@ -30,8 +31,8 @@ namespace TerrariaMoba.Abilities.Marie {
                 Player plr = Main.player[i];
                 if (plr.active) {
                     if (plr.team == player.team) {
-                        plr.statLife += 200;
-                        CombatText.NewText(plr.Hitbox, Color.CornflowerBlue, 200, true);
+                        plr.statLife += (int)player.GetModPlayer<MobaPlayer>().MarieStats.A2Heal.Value;
+                        CombatText.NewText(plr.Hitbox, Color.CornflowerBlue, (int)player.GetModPlayer<MobaPlayer>().MarieStats.A2Heal.Value, true);
                         Main.PlaySound(SoundID.Item4, plr.Center);
                         for (int d = 0; d < 40; d++) {
                             Dust.NewDust(plr.position, plr.width, plr.height, 41, 0f, 0f, 150, default(Color), 1.5f);

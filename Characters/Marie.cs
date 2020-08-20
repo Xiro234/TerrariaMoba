@@ -8,13 +8,13 @@ using TerrariaMoba.Abilities.Marie;
 
 namespace TerrariaMoba.Characters {
     public class Marie : Character {
+        
         public Marie(Player player) : base(player) {
             CharacterEnum = CharacterEnum.Marie;
         }
 
         public override void ChooseCharacter() {
             Main.NewText("Marie");
-            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
             Item vanityHelm = new Item();
             vanityHelm.SetDefaults(3226);
             Item dyeHelm = new Item();
@@ -36,24 +36,26 @@ namespace TerrariaMoba.Characters {
             player.hairColor = new Color(0, 133, 255);
             player.skinColor = new Color(235, 159, 125);
             player.eyeColor = new Color(0, 0, 255);
+            
             baseMaxHealth = 1460;
             player.statLifeMax2 = baseMaxHealth;
-            player.statLife = 1460;
+            player.statLife = baseMaxHealth;
+            baseLifeRegen = (baseMaxHealth * 0.125f) / 60;
+            baseMaxResource = 500;
+            player.statMana = baseMaxResource;
+            baseResourceRegen = (baseMaxResource * 0.125f) / 30;
+            baseArmor = 0;
             
             WhirlpoolInABottle abilityOne = new WhirlpoolInABottle(player);
             abilities[0] = abilityOne;
-
             TomeOfLacusia abilityTwo = new TomeOfLacusia(player);
             abilities[1] = abilityTwo;
-            
             /*
             FountainOfTheGoddess ultimate = new FountainOfTheGoddess(player);
             abilities[2] = ultimate;
             */
-            
             EyeOfTheStorm ultimate = new EyeOfTheStorm(player);
             abilities[2] = ultimate;
-            
             Floodboost trait = new Floodboost(player);
             abilities[3] = trait;
             
@@ -95,6 +97,11 @@ namespace TerrariaMoba.Characters {
 
         public override void LevelUp() {
             level += 1;
+            player.GetModPlayer<MobaPlayer>().MarieStats.LevelUp();
+            baseMaxHealth = (int)player.GetModPlayer<MobaPlayer>().MarieStats.MaxHealth.Value;
+            baseLifeRegen = (baseMaxHealth * 0.125f) / 60;
+            baseMaxResource = (int)player.GetModPlayer<MobaPlayer>().MarieStats.MaxResource.Value;
+            baseResourceRegen = (baseMaxResource * 0.125f) / 30;
             TalentSelect();
         }
 

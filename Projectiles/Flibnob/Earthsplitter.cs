@@ -36,7 +36,7 @@ namespace TerrariaMoba.Projectiles.Flibnob {
             
             projectile.ai[0] += 1f;
 
-            if (projectile.ai[0] >= 40) {
+            if (projectile.ai[0] >= 15) {
                 projectile.Kill();
             }
         }

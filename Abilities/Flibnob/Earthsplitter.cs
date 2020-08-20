@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Flibnob {
     public class Earthsplitter : Ability {
@@ -24,10 +25,11 @@ namespace TerrariaMoba.Abilities.Flibnob {
                     } else {
                         position.X += 110;
                     }
-                    Vector2 velocity = new Vector2(player.direction * 4f, 0);
+                    Vector2 velocity = new Vector2(player.direction * 10f, 0);
 
                     Projectile.NewProjectile(position, velocity, 
-                        TerrariaMoba.Instance.ProjectileType("EarthsplitterSpawner"), 470, 0, player.whoAmI, 39f);
+                        TerrariaMoba.Instance.ProjectileType("EarthsplitterSpawner"), 
+                        (int)player.GetModPlayer<MobaPlayer>().FlibnobStats.U2EarthDmg.Value, 0, player.whoAmI, 14f);
                 }
 
                 Cooldown = 20 * 60;

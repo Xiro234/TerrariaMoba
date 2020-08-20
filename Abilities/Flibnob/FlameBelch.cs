@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using TerrariaMoba.Players;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerrariaMoba.Abilities.Flibnob {
@@ -30,7 +31,8 @@ namespace TerrariaMoba.Abilities.Flibnob {
                 
                     Main.PlaySound(SoundID.DD2_OgreAttack, player.Center);
                     Projectile.NewProjectile(position, vel,
-                        TerrariaMoba.Instance.ProjectileType("FlameBelchSpawner"), 270, 0, player.whoAmI);
+                        TerrariaMoba.Instance.ProjectileType("FlameBelchSpawner"), 
+                        (int)player.GetModPlayer<MobaPlayer>().FlibnobStats.A1FireballDmg.Value, 0, player.whoAmI);
                 }
             }
             if (Timer == 0) {

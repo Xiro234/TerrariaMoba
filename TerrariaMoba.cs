@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
+using Steamworks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -90,6 +91,7 @@ namespace TerrariaMoba {
 			LevelTalentThreeHotKey = null;
 			BecomeSylvia = null;
 
+			Instance = null;
 			MobaBar.UnLoad();
 		}
 

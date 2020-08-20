@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Marie {
     public class WhirlpoolInABottle : Ability {
@@ -25,7 +26,7 @@ namespace TerrariaMoba.Abilities.Marie {
                 Vector2 velocity = new Vector2(dirX, dirY);
 
                 Projectile.NewProjectile(position, velocity, 
-                    TerrariaMoba.Instance.ProjectileType("WBBottle"), 120, 0, player.whoAmI);
+                    TerrariaMoba.Instance.ProjectileType("WBBottle"), (int)player.GetModPlayer<MobaPlayer>().MarieStats.A1BottleDmg.Value, 0, player.whoAmI);
                 Main.PlaySound(SoundID.Item1, player.Center);
             }
             

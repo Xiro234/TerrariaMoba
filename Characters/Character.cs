@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -54,6 +53,7 @@ namespace TerrariaMoba.Characters {
         public Texture2D CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Lock");
 
         public virtual void TalentSelect() { }
+
         public virtual void LevelUp() { }
         
         public virtual void ChooseCharacter() { }

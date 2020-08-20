@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Projectiles.Sylvia {
     public class SylviaUlt2 : ModProjectile {
@@ -44,13 +45,14 @@ namespace TerrariaMoba.Projectiles.Sylvia {
 
         public override void Kill(int timeLeft) {
             if (Main.myPlayer == projectile.owner) {
+                Player player = Main.player[projectile.owner];
                 int numProjectiles = 6;
                 for (int i = 0; i < numProjectiles; i++) {
                     Vector2 velocity = Main.rand.NextVector2Unit();
                     velocity *= 4;
 
                     Projectile.NewProjectile(projectile.position, velocity,
-                        TerrariaMoba.Instance.ProjectileType("SylviaSpores"), 30, 0, projectile.owner);
+                        TerrariaMoba.Instance.ProjectileType("SylviaSpores"), (int)player.GetModPlayer<MobaPlayer>().SylviaStats.U2SporeDmg.Value, 0, projectile.owner);
                 }
             }
         }

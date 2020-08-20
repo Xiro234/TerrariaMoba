@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System;
+using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
@@ -37,11 +38,8 @@ namespace TerrariaMoba.Items.Sylvia {
             var plr = player.GetModPlayer<MobaPlayer>();
             if (plr.CharacterPicked) {
                 if (plr.MyCharacter.CharacterEnum == CharacterEnum.Sylvia) {
-                    //Graceful Leap
-                    if (plr.MyCharacter.talentArray[0, 1]) {
-                        if (player.velocity.Y != 0) {
-                            add += 0.08f;
-                        }
+                    if (plr.MyCharacter.level > 1) {
+                        add += (float)Math.Pow(1.04f, plr.MyCharacter.level - 1) - 1;
                     }
                 }
             }

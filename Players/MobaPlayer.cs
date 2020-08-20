@@ -13,6 +13,7 @@ using TerrariaMoba.Characters;
 using TerrariaMoba.Effects;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Packets;
+using TerrariaMoba.Stats;
 using TerrariaMoba.UI;
 using static TerrariaMobaUtils;
 
@@ -35,6 +36,10 @@ namespace TerrariaMoba.Players {
         public SylviaEffects SylviaEffects;
         public MarieEffects MarieEffects;
         public FlibnobEffects FlibnobEffects;
+
+        public SylviaStats SylviaStats;
+        public MarieStats MarieStats;
+        public FlibnobStats FlibnobStats;
 
         //Custom Stats
         public float percentThorns = 0f;
@@ -61,6 +66,9 @@ namespace TerrariaMoba.Players {
             SylviaEffects = new SylviaEffects();
             MarieEffects = new MarieEffects();
             FlibnobEffects = new FlibnobEffects();
+            SylviaStats = new SylviaStats();
+            MarieStats = new MarieStats();
+            FlibnobStats = new FlibnobStats();
         }
 
         public override void clientClone(ModPlayer clientClone) {
@@ -176,7 +184,7 @@ namespace TerrariaMoba.Players {
             if (CharacterPicked && InProgress) {
                 MyCharacter.PostUpdateEquips();
                 MyCharacter.UpdateBaseStats();
-                
+
                 player.statLifeMax2 = maxHealth + bonusHealth;
 
                 if (lifeRegenTimer == 30) {

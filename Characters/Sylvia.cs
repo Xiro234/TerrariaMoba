@@ -1,16 +1,9 @@
-﻿using TerrariaMoba;
-using TerrariaMoba.Buffs;
-using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
+﻿using Terraria.ModLoader;
 using TerrariaMoba.Players;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
-using static Terraria.ModLoader.ModContent;
-using System;
 using System.Collections.Generic;
-using Terraria.DataStructures;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.Abilities.Sylvia;
 using TerrariaMoba.Enums;
@@ -31,7 +24,6 @@ namespace TerrariaMoba.Characters {
 
         public override void ChooseCharacter() {
                 Main.NewText("Sylvia");
-                var mobaPlayer = player.GetModPlayer<MobaPlayer>();
                 Item vanityHelm = new Item();
                 vanityHelm.SetDefaults(208);
                 Item vanityChest = new Item();
@@ -52,24 +44,18 @@ namespace TerrariaMoba.Characters {
                 player.eyeColor = new Color(84,42,14);
                 baseMaxHealth = 1340;
                 player.statLifeMax2 = baseMaxHealth;
-                player.statLife = 1340;
+                player.statLife = baseMaxHealth;
 
                 EnsnaringVines abilityOne = new EnsnaringVines(player);
                 abilities[0] = abilityOne;
-                
                 VerdantFury abilityTwo = new VerdantFury(player);
                 abilities[1] = abilityTwo;
-                
-                
+                /*
                 Flourish ultimate = new Flourish(player);
                 abilities[2] = ultimate;
-                
-                
-                /*
+                aaaaaa*/
                 PlanterasLastWill ultimate = new PlanterasLastWill(player);
                 abilities[2] = ultimate;
-                */
-                
                 JunglesWrath trait = new JunglesWrath(player);
                 abilities[3] = trait;
 
@@ -113,7 +99,8 @@ namespace TerrariaMoba.Characters {
                             velocity *= 15;
 
                             Projectile.NewProjectile(position.X, position.Y, velocity.X, velocity.Y,
-                                TerrariaMoba.Instance.ProjectileType("SylviaUlt1Projectile"), 400, knockBack, player.whoAmI);
+                                TerrariaMoba.Instance.ProjectileType("SylviaUlt1Projectile"), 
+                                (int)player.GetModPlayer<MobaPlayer>().SylviaStats.U1JavelinDmg.Value, knockBack, player.whoAmI);
                             flourish.NumberJavelins--;
 
                             return false;
@@ -187,6 +174,11 @@ namespace TerrariaMoba.Characters {
 
         public override void LevelUp() {
             level += 1;
+            player.GetModPlayer<MobaPlayer>().SylviaStats.LevelUp();
+            baseMaxHealth = (int)player.GetModPlayer<MobaPlayer>().SylviaStats.MaxHealth.Value;
+            baseLifeRegen = (baseMaxHealth * 0.125f) / 60;
+            baseMaxResource = (int)player.GetModPlayer<MobaPlayer>().SylviaStats.MaxResource.Value;
+            baseResourceRegen = (baseMaxResource * 0.125f) / 30;
             TalentSelect();
         }
 

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using TerrariaMoba.Enums;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Sylvia {
     public class PlanterasLastWill : Ability {
@@ -22,7 +23,8 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 Vector2 velocity = playerToMouse * 7;
 
                 Projectile proj = Main.projectile[Projectile.NewProjectile(position, velocity,
-                    TerrariaMoba.Instance.ProjectileType("SylviaUlt2"), 680, 0, player.whoAmI)];
+                    TerrariaMoba.Instance.ProjectileType("SylviaUlt2"), 
+                    (int)player.GetModPlayer<MobaPlayer>().SylviaStats.U2HeadDmg.Value, 0, player.whoAmI)];
             }
             
             Cooldown = 20 * 60;

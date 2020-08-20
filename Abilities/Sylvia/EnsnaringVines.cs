@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using TerrariaMoba.Enums;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Sylvia {
     public class EnsnaringVines : Ability {
@@ -21,7 +22,8 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 Vector2 velocity = new Vector2(direction * 6, 0);
 
                 Projectile proj = Main.projectile[Projectile.NewProjectile(position, velocity,
-                    TerrariaMoba.Instance.ProjectileType("EnsnaringVinesSpawner"), 225, 0, player.whoAmI)];
+                    TerrariaMoba.Instance.ProjectileType("EnsnaringVinesSpawner"), 
+                    (int)player.GetModPlayer<MobaPlayer>().SylviaStats.A1VineDmg.Value, 0, player.whoAmI)];
             }
             
             Cooldown = 10 * 60;
