@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Packets;
 using TerrariaMoba.Players;
@@ -11,8 +12,12 @@ namespace TerrariaMoba.NPCs {
         public int owner = -1;
 
         public override void ModifyHitPlayer(NPC npc, Player target, ref int damage, ref bool crit) {
-            target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, owner, true);
-            PvpHitPacket.Write(target.whoAmI, damage, owner, true);
+            if (Main.netMode == NetmodeID.SinglePlayer) {
+                target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, owner, true);
+            }
+            else {
+                PvpHitPacket.Write(target.whoAmI, damage, owner, true);
+            }
         }
 
         public override bool PreNPCLoot(NPC npc) {
