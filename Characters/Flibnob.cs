@@ -69,9 +69,9 @@ namespace TerrariaMoba.Characters {
         }
 
         public override void PostUpdateEquips() {
-            if (player.GetModPlayer<MobaPlayer>().FlibnobEffects.TitaniumShell) {
+            /*if (player.GetModPlayer<MobaPlayer>().FlibnobEffects.TitaniumShell) {
                 player.GetModPlayer<MobaPlayer>().percentThorns += 0.25f;
-            }
+            }*/
         }
 
         public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
@@ -88,11 +88,11 @@ namespace TerrariaMoba.Characters {
         }
 
         public override void PostUpdateRunSpeeds() {
-            if (player.GetModPlayer<MobaPlayer>().FlibnobEffects.TitaniumShell) {
+            /*if (player.GetModPlayer<MobaPlayer>().FlibnobEffects.TitaniumShell) {
                 player.moveSpeed *= 0.5f;
                 player.maxRunSpeed *= 0.5f;
                 player.accRunSpeed *= 0.5f;
-            }
+            }*/
         }
         
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
