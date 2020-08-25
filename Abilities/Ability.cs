@@ -4,6 +4,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Packets;
@@ -45,5 +46,7 @@ namespace TerrariaMoba.Abilities {
         public virtual byte[] WriteAbility() {
             return null;
         }
+
+        public virtual void DrawSelf(SpriteBatch spriteBatch, UIAbilityIcon abilityIcon) { }
     }
 }

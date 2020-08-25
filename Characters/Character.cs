@@ -20,7 +20,7 @@ namespace TerrariaMoba.Characters {
         public int experience = 0;
         public CharacterEnum CharacterEnum;
         public Ability[] abilities;
-        
+
         //Stats
         public int baseMaxHealth;
         public float baseLifeRegen;
@@ -198,8 +198,7 @@ namespace TerrariaMoba.Characters {
         public virtual void ResetEffects() {}
 
         public virtual void PreUpdate() {}
-
-        public virtual void PostUpdateEquips() {}
+        
 
         public virtual void PostUpdateBuffs() {}
 
@@ -212,16 +211,22 @@ namespace TerrariaMoba.Characters {
         public virtual void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {}
 
         public virtual void SetControls() {}
+        public virtual void PostUpdateEquips() {}
+
+        public virtual void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback,
+            ref bool crit, ref int hitDirection) {}
 
         public virtual void HandleAbility(int index) {
             Ability ability = abilities[index];
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
-            if (ability.Cooldown == 0 && mobaPlayer.currentResource >= ability.ResourceCost) {
+            if (ability.Cooldown == 0 && mobaPlayer.currentResource >= ability.ResourceCost && !ability.IsActive) {
                 mobaPlayer.currentResource -= ability.ResourceCost;
                 Packets.AbilityCastPacket.Write(index, player.whoAmI);
                 ability.Cast();
             }
         }
+        
+        public virtual void HealMe(ref int amount) {}
 
         public virtual void UpdateBaseStats() {
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
@@ -236,5 +241,7 @@ namespace TerrariaMoba.Characters {
         }
 
         //Etc.
+        public virtual void SlayEffect(Player deadPlayer) {}
+        public virtual void TeamSlayEffect(Player deadPlayer) {}
     }
 }

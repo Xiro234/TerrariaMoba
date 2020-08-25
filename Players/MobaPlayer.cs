@@ -60,6 +60,8 @@ namespace TerrariaMoba.Players {
         public int resourceDegenTimer = 0;
         
         public int armor = 0;
+
+        public int ultTimer = -1;
         
         public override void Initialize() {
             CharacterSelected = CharacterEnum.Null;
@@ -115,13 +117,15 @@ namespace TerrariaMoba.Players {
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TerrariaMoba.AbilityOneHotKey.JustPressed) {
                 MyCharacter.HandleAbility(0);
-                
             }
             if (TerrariaMoba.AbilityTwoHotKey.JustPressed) {
                 MyCharacter.HandleAbility(1);
             }
             if (TerrariaMoba.UltimateHotkey.JustPressed) {
                 MyCharacter.HandleAbility(2);
+            }
+            if (TerrariaMoba.TraitHotkey.JustPressed) {
+                MyCharacter.HandleAbility(3);
             }
             if (TerrariaMoba.LevelTalentOneHotKey.JustPressed) {
                 MyCharacter.LevelTalentOne();
@@ -131,9 +135,6 @@ namespace TerrariaMoba.Players {
             }
             if (TerrariaMoba.LevelTalentThreeHotKey.JustPressed) {
                 MyCharacter.LevelTalentThree();
-            }
-            if (TerrariaMoba.BecomeSylvia.JustPressed) {
-                AssignCharacter(ref MyCharacter, CharacterEnum.Sylvia, player);
             }
 
             if (TerrariaMoba.OpenCharacterSelect.JustPressed) {
@@ -153,29 +154,9 @@ namespace TerrariaMoba.Players {
             }
             return true;
         }
-        
-        public override void UpdateBadLifeRegen() {
 
-        }
-        
         public override void PreUpdate() {
             if (CharacterPicked && InProgress) {
-                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.IsActive)) {
-                    ability.Using();
-                    if (Main.myPlayer == ability.player.whoAmI && ability.NeedsSyncing) {
-                        int index = Array.IndexOf(MyCharacter.abilities, ability);
-                        int whoAmI = ability.player.whoAmI;
-                        byte[] abilitySpecific = ability.WriteAbility();
-                        int length = abilitySpecific.Length;
-                        
-                        Packets.ReadWriteAbilityPacket.Write(index, whoAmI, length, abilitySpecific);
-                    }
-                }
-                
-                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.Cooldown > 0)) {
-                    ability.Cooldown--;
-                }
-                
                 MyCharacter.PreUpdate();
             }
         }
@@ -245,6 +226,17 @@ namespace TerrariaMoba.Players {
             if (CharacterPicked && InProgress) {
                 MyCharacter.PostUpdateRunSpeeds();
             }
+            
+            if (MarieEffects.Floodboost) {
+                player.moveSpeed *= 1.33f;
+                player.maxRunSpeed *= 1.33f;
+                player.accRunSpeed *= 1.33f;
+            }
+            if (FlibnobEffects.TitaniumShell) {
+                player.moveSpeed *= 0.5f;
+                player.maxRunSpeed *= 0.5f;
+                player.accRunSpeed *= 0.5f;
+            }
         }
         
         public override void NaturalLifeRegen(ref float regen) {
@@ -252,15 +244,11 @@ namespace TerrariaMoba.Players {
         }
 
         public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
-            if (this.player.whoAmI != Main.myPlayer) {
-                return;
-            }
-
             if (Main.netMode == NetmodeID.MultiplayerClient && pvp) {
-                TerrariaMobaUtils.MobaKill(damageSource.SourcePlayerIndex);
+                TerrariaMobaUtils.MobaKill(damageSource.SourcePlayerIndex, player.whoAmI);
             }
             else {
-                TerrariaMobaUtils.MobaKill(PlayerLastHurt);
+                TerrariaMobaUtils.MobaKill(PlayerLastHurt, player.whoAmI);
             }
         }
 
@@ -276,7 +264,12 @@ namespace TerrariaMoba.Players {
             target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
             PvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
         }
-        
+
+        public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit,
+            ref int hitDirection) {
+            MyCharacter.ModifyHitNPCWithProj(proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
+        }
+
         public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) {
             //JunglesWrath
             if (SylviaEffects.JunglesWrath) {
@@ -296,12 +289,6 @@ namespace TerrariaMoba.Players {
             }
         }
 
-        public override float UseTimeMultiplier(Item item) {
-            if (CharacterPicked && InProgress) {
-                return MyCharacter.UseTimeMultiplier(item);
-            }
-            return 1f;
-        }
         
         // For use later when I rework Marie's ultimate.
         /*
@@ -355,8 +342,7 @@ namespace TerrariaMoba.Players {
         });
         
         public override void ModifyDrawLayers(List<PlayerLayer> layers) {
-            //MiscEffectsBack.visible = true;
-            //layers.Insert(0, MiscEffectsBack);
+            PlayerLayer MiscEffects = MobaLayers.MiscEffects;
             MiscEffects.visible = true;
             layers.Add(MiscEffects);
 
@@ -389,7 +375,7 @@ namespace TerrariaMoba.Players {
             if (!target.immune) {
                 PlayerLastHurt = killer;
 
-                float damage = sourceDamage;
+                int damage = sourceDamage;
                 
                 if (percentThorns > 0f && sendThorns) {
                     target.GetModPlayer<MobaPlayer>().DamageOverride((int)(damage * percentThorns), Main.player[killer], target.whoAmI, false);
@@ -397,19 +383,17 @@ namespace TerrariaMoba.Players {
                 }
 
                 int otherArmor = target.GetModPlayer<MobaPlayer>().armor;
-                damage *= (100 - otherArmor) / 100f;
-                target.statLife -= (int) damage;
+                damage *= ((100 - otherArmor) / 100);
+                target.statLife -= damage;
 
-                CombatText.NewText(target.Hitbox, Color.OrangeRed, (int) damage);
+                CombatText.NewText(target.Hitbox, Color.OrangeRed, damage);
                 
                 if (target.statLife <= 0) {
-                    target.KillMe(PlayerDeathReason.ByPlayer(PlayerLastHurt), (int) damage, 1, true);
+                    target.KillMe(PlayerDeathReason.ByPlayer(PlayerLastHurt), damage, 1, true);
                 }
                 
                 if (sendThorns) {
                     Main.PlaySound(1, target.position);
-                    target.immune = true;
-                    target.immuneTime = 8;
                 }
             }
         }
@@ -419,6 +403,17 @@ namespace TerrariaMoba.Players {
             InProgress = true;
             TerrariaMoba.Instance.ShowBar();
             TerrariaMoba.Instance.MobaBar.SetIcons();
+        }
+
+        public void HealMe(int amount, bool doText) {
+            MyCharacter.HealMe(ref amount);
+            if(doText) {
+                CombatText.NewText(player.Hitbox, CombatText.HealLife, amount, false);
+            }
+            player.statLife += amount;
+            if (player.statLife > player.statLifeMax2) {
+                player.statLife = player.statLifeMax2;
+            }
         }
     }
 }

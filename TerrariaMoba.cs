@@ -7,6 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Packets;
 using TerrariaMoba.Players;
 using TerrariaMoba.UI;
 
@@ -14,11 +15,11 @@ namespace TerrariaMoba {
 	public class TerrariaMoba : Mod {
 		public static ModHotKey AbilityOneHotKey;
 		public static ModHotKey AbilityTwoHotKey;
+		public static ModHotKey TraitHotkey;
 		public static ModHotKey LevelTalentOneHotKey;
 		public static ModHotKey LevelTalentTwoHotKey;
 		public static ModHotKey LevelTalentThreeHotKey;
 		public static ModHotKey UltimateHotkey;
-		public static ModHotKey BecomeSylvia;
 		public static ModHotKey OpenCharacterSelect;
 		public static TerrariaMoba Instance { get; private set; }
 
@@ -36,11 +37,11 @@ namespace TerrariaMoba {
 		public override void Load() {
 			AbilityOneHotKey = RegisterHotKey("Ability One", "Q");
 			AbilityTwoHotKey = RegisterHotKey("Ability Two", "F");
+			TraitHotkey = RegisterHotKey("Trait", "C");
 			UltimateHotkey = RegisterHotKey("Ultimate", "R");
 			LevelTalentOneHotKey = RegisterHotKey("Level Talent One", "Z");
 			LevelTalentTwoHotKey = RegisterHotKey("Level Talent Two", "X");
 			LevelTalentThreeHotKey = RegisterHotKey("Level Talent Three", "C");
-			BecomeSylvia = RegisterHotKey("Become Sylvia", "V");
 			OpenCharacterSelect = RegisterHotKey("Open Character Select", "P");
 
 			if (!Main.dedServ) {
@@ -65,9 +66,7 @@ namespace TerrariaMoba {
 			layers.RemoveAt(LayerIndex);
 			LayerIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Death Text"));
 			layers.RemoveAt(LayerIndex);
-			LayerIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Entity Health Bars"));
-			layers.RemoveAt(LayerIndex);
-			
+
 			int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
 			if (mouseTextIndex != -1) {
 				layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer(
@@ -89,7 +88,6 @@ namespace TerrariaMoba {
 			LevelTalentOneHotKey = null;
 			LevelTalentTwoHotKey = null;
 			LevelTalentThreeHotKey = null;
-			BecomeSylvia = null;
 
 			Instance = null;
 			MobaBar.UnLoad();

@@ -84,11 +84,11 @@ namespace TerrariaMoba.Characters {
         }
         
         public override void PostUpdateRunSpeeds() {
-            if (player.GetModPlayer<MobaPlayer>().MarieEffects.Floodboost) {
+            /*if (player.GetModPlayer<MobaPlayer>().MarieEffects.Floodboost) {
                 player.moveSpeed *= 1.33f;
                 player.maxRunSpeed *= 1.33f;
                 player.accRunSpeed *= 1.33f;
-            }
+            }*/
         }
         
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {

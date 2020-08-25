@@ -134,7 +134,7 @@ namespace TerrariaMoba.Characters {
         }
         
         public override void PostUpdateRunSpeeds() {
-            MobaPlayer modPlayer = player.GetModPlayer<MobaPlayer>();
+            var modPlayer = player.GetModPlayer<MobaPlayer>();
             float moveSpeedAdd = 1f;
         }
 
