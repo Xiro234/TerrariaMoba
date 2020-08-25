@@ -124,6 +124,9 @@ namespace TerrariaMoba.Players {
             if (TerrariaMoba.UltimateHotkey.JustPressed) {
                 MyCharacter.HandleAbility(2);
             }
+            if (TerrariaMoba.TraitHotkey.JustPressed) {
+                MyCharacter.HandleAbility(3);
+            }
             if (TerrariaMoba.LevelTalentOneHotKey.JustPressed) {
                 MyCharacter.LevelTalentOne();
             }
@@ -132,9 +135,6 @@ namespace TerrariaMoba.Players {
             }
             if (TerrariaMoba.LevelTalentThreeHotKey.JustPressed) {
                 MyCharacter.LevelTalentThree();
-            }
-            if (TerrariaMoba.BecomeSylvia.JustPressed) {
-                AssignCharacter(ref MyCharacter, CharacterEnum.Sylvia, player);
             }
 
             if (TerrariaMoba.OpenCharacterSelect.JustPressed) {
@@ -254,15 +254,11 @@ namespace TerrariaMoba.Players {
         }
 
         public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
-            if (this.player.whoAmI != Main.myPlayer) {
-                return;
-            }
-
             if (Main.netMode == NetmodeID.MultiplayerClient && pvp) {
-                TerrariaMobaUtils.MobaKill(damageSource.SourcePlayerIndex);
+                TerrariaMobaUtils.MobaKill(damageSource.SourcePlayerIndex, player.whoAmI);
             }
             else {
-                TerrariaMobaUtils.MobaKill(PlayerLastHurt);
+                TerrariaMobaUtils.MobaKill(PlayerLastHurt, player.whoAmI);
             }
         }
 
@@ -278,7 +274,12 @@ namespace TerrariaMoba.Players {
             target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
             PvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
         }
-        
+
+        public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit,
+            ref int hitDirection) {
+            MyCharacter.ModifyHitNPCWithProj(proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
+        }
+
         public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) {
             //JunglesWrath
             if (SylviaEffects.JunglesWrath) {
@@ -354,8 +355,6 @@ namespace TerrariaMoba.Players {
                 
                 if (sendThorns) {
                     Main.PlaySound(1, target.position);
-                    target.immune = true;
-                    target.immuneTime = 8;
                 }
             }
         }
