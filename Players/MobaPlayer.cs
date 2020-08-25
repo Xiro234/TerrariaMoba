@@ -246,15 +246,23 @@ namespace TerrariaMoba.Players {
 
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
             EditDamage(ref damage);
-            target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
-            PvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
             MyCharacter.ModifyHitPvpWithProj(proj, target, ref damage, ref crit);
+            if (Main.netMode == NetmodeID.SinglePlayer) {
+                target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
+            }
+            else {
+                PvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
+            }
         }
 
         public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit) {
             EditDamage(ref damage);
-            target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
-            PvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
+            if (Main.netMode == NetmodeID.SinglePlayer) {
+                target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
+            }
+            else {
+                PvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
+            }
         }
 
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit,
@@ -370,8 +378,12 @@ namespace TerrariaMoba.Players {
                 int damage = sourceDamage;
                 
                 if (percentThorns > 0f && sendThorns) {
-                    target.GetModPlayer<MobaPlayer>().DamageOverride((int)(damage * percentThorns), Main.player[killer], target.whoAmI, false);
-                    PvpHitPacket.Write(killer, (int)(damage * percentThorns), target.whoAmI, false);
+                    if (Main.netMode == NetmodeID.SinglePlayer) {
+                        target.GetModPlayer<MobaPlayer>().DamageOverride((int)(damage * percentThorns), Main.player[killer], target.whoAmI, false);
+                    }
+                    else {
+                        PvpHitPacket.Write(killer, (int)(damage * percentThorns), target.whoAmI, false);
+                    }
                 }
 
                 int otherArmor = target.GetModPlayer<MobaPlayer>().armor;
