@@ -27,7 +27,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
                     Vector2 velocity = new Vector2(player.direction * 4f, 0);
 
                     Projectile.NewProjectile(position, velocity, 
-                        TerrariaMoba.Instance.ProjectileType("EarthsplitterSpawner"), 500, 0, player.whoAmI, 39f);
+                        TerrariaMoba.Instance.ProjectileType("EarthsplitterSpawner"), 470, 0, player.whoAmI, 39f);
                 }
 
                 Cooldown = 20 * 60;

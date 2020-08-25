@@ -21,11 +21,10 @@ namespace TerrariaMoba.Projectiles.Flibnob {
             Player player = Main.player[projectile.owner];
             projectile.ai[0] += 1f;
 
-            if (((int)projectile.ai[0] % 40) == 0) {
-                Vector2 newPos = new Vector2(projectile.position.X, GetYPos());
+            if ((int)projectile.ai[0] % 40 == 0) {
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
-                    Projectile.NewProjectile(newPos, Vector2.Zero, mod.ProjectileType("Earthsplitter"),
-                        projectile.damage, projectile.knockBack, player.whoAmI);
+                    Vector2 newPos = new Vector2(projectile.position.X, GetYPos()); 
+                    Projectile.NewProjectile(newPos.X, newPos.Y - 8f, 0f, 0f, mod.ProjectileType("Earthsplitter"), projectile.damage, projectile.knockBack, player.whoAmI);
                 }
             }
             if (projectile.ai[0] >= 200) {

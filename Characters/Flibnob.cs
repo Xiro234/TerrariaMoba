@@ -8,8 +8,7 @@ using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Characters {
     public class Flibnob : Character {
-        public bool EarthsplitterJump = false;
-        
+
         public Flibnob(Player player) : base(player) {
             CharacterEnum = CharacterEnum.Flibnob;
         }
@@ -28,7 +27,7 @@ namespace TerrariaMoba.Characters {
             Item dyeLeg = new Item();
             dyeLeg.SetDefaults(3555);
             Item primary = new Item();
-            primary.SetDefaults(1224);
+            primary.SetDefaults(TerrariaMoba.Instance.ItemType("FlibnobAxe"));
 
             player.armor[10] = vanityHelm;
             player.armor[11] = vanityChest;
@@ -41,9 +40,9 @@ namespace TerrariaMoba.Characters {
             player.hairColor = new Color(0, 0, 0);
             player.skinColor = new Color(120, 63, 4);
             player.eyeColor = new Color(255, 0, 0);
-            baseMaxHealth = 2400;
+            baseMaxHealth = 2060;
             player.statLifeMax2 = baseMaxHealth;
-            player.statLife = 2400;
+            player.statLife = 2060;
             
             FlameBelch abilityOne = new FlameBelch(player);
             abilities[0] = abilityOne;
@@ -62,7 +61,6 @@ namespace TerrariaMoba.Characters {
             abilities[2] = ultimate;
             */
             
-            
             CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobIcon");
         }
         
@@ -70,8 +68,10 @@ namespace TerrariaMoba.Characters {
             
         }
 
-        public override void PostUpdateBuffs() {
-
+        public override void PostUpdateEquips() {
+            if (player.GetModPlayer<MobaPlayer>().FlibnobEffects.TitaniumShell) {
+                player.GetModPlayer<MobaPlayer>().percentThorns += 0.25f;
+            }
         }
 
         public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
@@ -88,7 +88,11 @@ namespace TerrariaMoba.Characters {
         }
 
         public override void PostUpdateRunSpeeds() {
-
+            if (player.GetModPlayer<MobaPlayer>().FlibnobEffects.TitaniumShell) {
+                player.moveSpeed *= 0.5f;
+                player.maxRunSpeed *= 0.5f;
+                player.accRunSpeed *= 0.5f;
+            }
         }
         
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {

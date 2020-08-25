@@ -12,7 +12,7 @@ namespace TerrariaMoba.Buffs {
         }
         
         public override void Update(Player player, ref int buffIndex) {
-            player.GetModPlayer<MobaPlayer>().TitaniumShell = true;
+            player.GetModPlayer<MobaPlayer>().FlibnobEffects.TitaniumShell = true;
         }
     }
 }

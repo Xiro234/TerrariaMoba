@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Players;
 using TerrariaMoba.Enums;
-using TerrariaMoba.Abilities;
 using TerrariaMoba.Abilities.Marie;
 
 namespace TerrariaMoba.Characters {
@@ -27,7 +24,7 @@ namespace TerrariaMoba.Characters {
             Item vanityLeg = new Item();
             vanityLeg.SetDefaults(2500);
             Item primary = new Item();
-            primary.SetDefaults(741);
+            primary.SetDefaults(TerrariaMoba.Instance.ItemType("MarieStaff"));
 
             player.armor[10] = vanityHelm;
             player.armor[11] = vanityChest;
@@ -39,13 +36,13 @@ namespace TerrariaMoba.Characters {
             player.hairColor = new Color(0, 133, 255);
             player.skinColor = new Color(235, 159, 125);
             player.eyeColor = new Color(0, 0, 255);
-            baseMaxHealth = 1600;
+            baseMaxHealth = 1460;
             player.statLifeMax2 = baseMaxHealth;
-            player.statLife = 1600;
+            player.statLife = 1460;
             
-            WarpingMaelstrom abilityOne = new WarpingMaelstrom(player);
+            WhirlpoolInABottle abilityOne = new WhirlpoolInABottle(player);
             abilities[0] = abilityOne;
-            
+
             TomeOfLacusia abilityTwo = new TomeOfLacusia(player);
             abilities[1] = abilityTwo;
             
@@ -54,11 +51,11 @@ namespace TerrariaMoba.Characters {
             abilities[2] = ultimate;
             */
             
+            EyeOfTheStorm ultimate = new EyeOfTheStorm(player);
+            abilities[2] = ultimate;
+            
             Floodboost trait = new Floodboost(player);
             abilities[3] = trait;
-            
-            TidalImprisonment ultimate = new TidalImprisonment(player);
-            abilities[2] = ultimate;
             
             CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieIcon");
         }
@@ -85,7 +82,11 @@ namespace TerrariaMoba.Characters {
         }
         
         public override void PostUpdateRunSpeeds() {
-
+            if (player.GetModPlayer<MobaPlayer>().MarieEffects.Floodboost) {
+                player.moveSpeed *= 1.33f;
+                player.maxRunSpeed *= 1.33f;
+                player.accRunSpeed *= 1.33f;
+            }
         }
         
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {

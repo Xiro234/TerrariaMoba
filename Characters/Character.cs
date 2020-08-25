@@ -197,9 +197,10 @@ namespace TerrariaMoba.Characters {
         
         public virtual void ResetEffects() {}
 
-        public virtual void PreUpdate() {
-        }
-        
+        public virtual void PreUpdate() {}
+
+        public virtual void PostUpdateEquips() {}
+
         public virtual void PostUpdateBuffs() {}
 
         public virtual bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type,

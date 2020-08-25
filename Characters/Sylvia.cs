@@ -20,7 +20,7 @@ namespace TerrariaMoba.Characters {
         private bool IsPhasing = false;
         private bool SylviaUlt1 = false;
         private int SylviaUlt1Timer = 0;
-        public float VerdantFuryBuff = 1.25f;
+        public float VerdantFuryBuff = 1.3f;
         private int VerdantFuryTime = 180;
         public float VerdantFuryIncrease = 0.05f;
         public int JunglesWrathTime = 180;
@@ -50,9 +50,9 @@ namespace TerrariaMoba.Characters {
                 player.hairColor = new Color(52, 133, 34);
                 player.skinColor = new Color(198,134,66);
                 player.eyeColor = new Color(84,42,14);
-                baseMaxHealth = 2000;
+                baseMaxHealth = 1340;
                 player.statLifeMax2 = baseMaxHealth;
-                player.statLife = 2000;
+                player.statLife = 1340;
 
                 EnsnaringVines abilityOne = new EnsnaringVines(player);
                 abilities[0] = abilityOne;
@@ -97,8 +97,8 @@ namespace TerrariaMoba.Characters {
         public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
             ref float knockBack) {
             if (player.GetModPlayer<MobaPlayer>().SylviaEffects.VerdantFury && item.type == TerrariaMoba.Instance.ItemType("SylviaBow")) {
-                speedX *= VerdantFuryIncrease;
-                speedY *= VerdantFuryIncrease;
+                speedX *= VerdantFuryBuff;
+                speedY *= VerdantFuryBuff;
             }
             
             foreach (Ability ability in abilities) {
@@ -113,7 +113,7 @@ namespace TerrariaMoba.Characters {
                             velocity *= 15;
 
                             Projectile.NewProjectile(position.X, position.Y, velocity.X, velocity.Y,
-                                TerrariaMoba.Instance.ProjectileType("SylviaUlt1Projectile"), 40, knockBack, player.whoAmI);
+                                TerrariaMoba.Instance.ProjectileType("SylviaUlt1Projectile"), 400, knockBack, player.whoAmI);
                             flourish.NumberJavelins--;
 
                             return false;
@@ -127,7 +127,7 @@ namespace TerrariaMoba.Characters {
 
         public override float UseTimeMultiplier(Item item) {
             if (player.GetModPlayer<MobaPlayer>().SylviaEffects.VerdantFury && item.type == TerrariaMoba.Instance.ItemType("SylviaBow")) {
-                return VerdantFuryIncrease;
+                return VerdantFuryBuff;
             }
 
             return 1f;

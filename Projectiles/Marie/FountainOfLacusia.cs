@@ -15,8 +15,7 @@ namespace TerrariaMoba.Projectiles.Marie {
             projectile.Name = "Fountain of Lacusia";
             projectile.width = 32;
             projectile.height = 64;
-            projectile.friendly = true;
-            projectile.hostile = false;
+            //projectile.scale = 2f;
             projectile.timeLeft = 360;
         }
 
@@ -52,10 +51,6 @@ namespace TerrariaMoba.Projectiles.Marie {
                     }
                 }
             }
-        }
-
-        public override bool CanDamage() {
-            return false;
         }
     }
 }
