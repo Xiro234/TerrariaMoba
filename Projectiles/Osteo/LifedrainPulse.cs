@@ -17,7 +17,6 @@ namespace TerrariaMoba.Projectiles.Osteo {
             drawOffsetX = -24;
             projectile.hide = true;
             projectile.tileCollide = true;
-            projectile.timeLeft = 60;
             projectile.alpha = 255;
             projectile.penetrate = -1;
         }
@@ -26,11 +25,6 @@ namespace TerrariaMoba.Projectiles.Osteo {
             projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
             int dust = Dust.NewDust(projectile.Center, 0, 0, 60, 0f, 0f, 100, Color.DarkSlateBlue, 1.3f);
             Main.dust[dust].noGravity = true;
-
-            if (projectile.timeLeft > 30) {
-                projectile.alpha = (int)((projectile.timeLeft - 30) * ((float)255 / 30));
-                Main.dust[dust].alpha = (int)((projectile.timeLeft - 30) * ((float)255 / 30));
-            }
         }
 
         public override void OnHitPvp(Player target, int damage, bool crit) {

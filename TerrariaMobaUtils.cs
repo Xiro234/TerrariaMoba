@@ -56,26 +56,35 @@ public static class TerrariaMobaUtils {
         }
     }
         
-    public static void MobaKill(int killWhoAmI) {
+    public static void MobaKill(int killer, int deadPlayer) {
         //Credit to https://github.com/hamstar0/tml-playerstatistics-mod for modifications on his work
-        if (killWhoAmI >= 0 && killWhoAmI < Main.player.Length) {
-            var otherPlayer = Main.player[killWhoAmI].GetModPlayer<MobaPlayer>();
+        if (killer >= 0 && killer < Main.player.Length) {
+            var killerModPlayer = Main.player[killer].GetModPlayer<MobaPlayer>();
 
-            if (otherPlayer != null) {
+            if (killerModPlayer != null) {
                 for (int i = 0; i < Main.maxPlayers; i++) {
                     Player plr = Main.player[i];
                         
-                    if (plr.active && plr.team == Main.player[killWhoAmI].team) {
-                        ExperiencePacket.Write(xpPerKill, i, killWhoAmI);
+                    if (plr.active && plr.team == Main.player[killer].team) {
+                        //ExperiencePacket.Write(xpPerKill, i, killWhoAmI);
+                    }
+                }
+                killerModPlayer.MyCharacter.SlayEffect(Main.player[deadPlayer]);
+
+                for (int i = 0; i < Main.maxPlayers; i++) {
+                    if (Main.player[i] != null && Main.player[i].active) {
+                        if (Main.player[i].team == Main.player[killer].team) {
+                            Main.player[i].GetModPlayer<MobaPlayer>().MyCharacter.TeamSlayEffect(Main.player[deadPlayer]);
+                        }
                     }
                 }
             }
             else {
-                Main.NewText("Invalid ModPlayer for " + Main.player[killWhoAmI].name, Color.Red);
+                Main.NewText("Invalid ModPlayer for " + Main.player[killer].name, Color.Red);
             }
         }
         else {
-            Main.NewText("Invalid player whoAmI: " + killWhoAmI, Color.Red);
+            Main.NewText("Invalid player whoAmI: " + killer, Color.Red);
         }
     }
         

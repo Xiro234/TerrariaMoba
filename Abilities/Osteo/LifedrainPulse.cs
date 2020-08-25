@@ -17,33 +17,38 @@ namespace TerrariaMoba.Abilities.Osteo {
         }
 
         public override void Using() {
+            int numProj = 8;
             if (Timer == 0 || Timer == 60) {
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
-                    for (int i = 0; i < 45; i++) {
-                        double x = Math.Cos(((Math.PI / 180) * ((360 / 45) * i)));
-                        double y = Math.Sin(((Math.PI / 180) * ((360 / 45) * i)));
+                    for (int i = 0; i < numProj; i++) {
+                        double x = Math.Cos(((Math.PI / 180) * ((360f / numProj) * i)));
+                        double y = Math.Sin(((Math.PI / 180) * ((360f / numProj) * i)));
                         Vector2 direction = new Vector2((float) x, (float) y);
-                        Vector2 velocity = direction * 5;
-                        Projectile.NewProjectile(player.Center, velocity,
+                        Vector2 position = player.Center + direction * 16;
+                        Vector2 velocity = direction * 6.25f;
+                        var proj = Projectile.NewProjectileDirect(position, velocity,
                             TerrariaMoba.Instance.ProjectileType("LifedrainPulse"), 10, 0, player.whoAmI);
+
+                        proj.timeLeft = 90;
                     }
                 }
             }
             else if (Timer == 120) {
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
-                    for (int i = 0; i < 60; i++) {
-                        double x = Math.Cos(((Math.PI / 180) * ((360 / 45) * i)));
-                        double y = Math.Sin(((Math.PI / 180) * ((360 / 45) * i)));
+                    for (int i = 0; i < numProj; i++) {
+                        double x = Math.Cos(((Math.PI / 180) * ((360f / numProj) * i)));
+                        double y = Math.Sin(((Math.PI / 180) * ((360f / numProj) * i)));
                         Vector2 direction = new Vector2((float) x, (float) y);
-                        Vector2 velocity = direction * 5;
-                        Projectile.NewProjectile(player.Center, velocity,
+                        Vector2 position = player.Center + direction * 16;
+                        Vector2 velocity = direction * 6.25f;
+                        var proj = Projectile.NewProjectileDirect(position, velocity,
                             TerrariaMoba.Instance.ProjectileType("LifedrainPulseThird"), 10, 0, player.whoAmI);
+                        proj.timeLeft = 90;
                     }
                 }
                 End();
             }
-
-
+            
             Timer++;
         }
 

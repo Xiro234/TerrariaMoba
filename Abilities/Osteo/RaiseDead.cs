@@ -1,10 +1,12 @@
-﻿using BaseMod;
+﻿using System.Collections.Generic;
+using BaseMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.NPCs;
+using TerrariaMoba.Players;
 using TerrariaMoba.UI;
 using static Terraria.ModLoader.ModContent;
 
@@ -13,6 +15,7 @@ namespace TerrariaMoba.Abilities.Osteo {
     public class RaiseDead : Ability {
         public int marrowMax = 400;
         public int marrow = 400;
+
         
         public RaiseDead(Player myPlayer) : base(myPlayer) {
             Name = "Raise Dead";
@@ -31,6 +34,8 @@ namespace TerrariaMoba.Abilities.Osteo {
 
                     Main.npc[npc].GetGlobalNPC<MobaGlobalNPC>().owner = player.whoAmI;
                     Main.npc[npc].direction = player.direction;
+                    (player.GetModPlayer<MobaPlayer>().MyCharacter as Characters.Osteo).skeleList.Add(Main.npc[npc]);
+                    
                     marrow -= 100;
                 }
 

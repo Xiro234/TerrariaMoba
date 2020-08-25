@@ -1,23 +1,24 @@
 ﻿using TerrariaMoba;
-using TerrariaMoba.Buffs;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 using TerrariaMoba.Players;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using System;
 using System.Collections.Generic;
-using Terraria.DataStructures;
+using Terraria.Enums;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.Abilities.Osteo;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Items;
 
 namespace TerrariaMoba.Characters {
     public class Osteo : Character {
+        public List<NPC> skeleList;
+
         public Osteo(Player player) : base(player) {
             CharacterEnum = CharacterEnum.Osteo;
+            skeleList = new List<NPC>();
         }
 
         public override void ChooseCharacter() {
@@ -29,7 +30,7 @@ namespace TerrariaMoba.Characters {
             Item vanityLeg = new Item();
             vanityLeg.SetDefaults(3876);
             Item primary = new Item();
-            primary.SetDefaults(TerrariaMoba.Instance.ItemType("SylviaBow"));
+            primary.SetDefaults(TerrariaMoba.Instance.ItemType("OsteoTome"));
 
             player.armor[10] = vanityHelm;
             player.armor[11] = vanityChest;
@@ -49,8 +50,9 @@ namespace TerrariaMoba.Characters {
             
             abilities[0] = new RaiseDead(player);
             abilities[1] = new LifedrainPulse(player);
+            abilities[2] = new SoulSiphon(player);
             abilities[3] = new SkeletalBond(player);
-            abilities[2] = new SongOfTheDamned(player);
+            //abilities[2] = new SongOfTheDamned(player);
             //TalentSelect();
         }
 
@@ -61,14 +63,34 @@ namespace TerrariaMoba.Characters {
                 var raiseDead = ability as RaiseDead;
                 if (raiseDead != null) {
                     if (mobaPlayer.lifeRegenTimer == 30) {
-                        raiseDead.marrow += (int)mobaPlayer.lifeRegen;
+                        raiseDead.marrow += (int) mobaPlayer.lifeRegen;
                         if (raiseDead.marrow > raiseDead.marrowMax) {
                             raiseDead.marrow = raiseDead.marrowMax;
                         }
                     }
 
                     mobaPlayer.lifeRegen = 0f;
+
+                    for (int i = skeleList.Count - 1; i >= 0; i--) {
+                        NPC npc = skeleList[i];
+                        if (!npc.active || npc == null) {
+                            skeleList.RemoveAt(i);
+                        }
+                    }
                 }
+            }
+        }
+
+        public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
+            if (proj.type == TerrariaMoba.Instance.ProjectileType("LifedrainPulseThird")) {
+                player.GetModPlayer<MobaPlayer>().HealMe(20, true);
+            }
+        }
+
+        public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit,
+            ref int hitDirection) {
+            if (proj.type == TerrariaMoba.Instance.ProjectileType("LifedrainPulseThird")) {
+                player.GetModPlayer<MobaPlayer>().HealMe(20, true);
             }
         }
 
@@ -91,6 +113,16 @@ namespace TerrariaMoba.Characters {
                     }
 
                     amount = (int)(amount * (2f / 3f));
+                }
+            }
+        }
+
+        public override void TeamSlayEffect(Player deadPlayer) {
+            foreach (Ability ability in abilities) {
+                var soulSiphon = ability as SoulSiphon;
+                if (soulSiphon != null) {
+                    Projectile.NewProjectile(deadPlayer.position, Vector2.One,
+                        TerrariaMoba.Instance.ProjectileType("OsteoSoul"), 0, 0, player.whoAmI);
                 }
             }
         }
