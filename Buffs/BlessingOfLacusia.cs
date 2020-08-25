@@ -12,7 +12,7 @@ namespace TerrariaMoba.Buffs {
         }
 
         public override void Update(Player player, ref int buffIndex) {
-            //player.GetModPlayer<MobaPlayer>().MarieEffects.LacusianBlessing = true;
+            player.GetModPlayer<MobaPlayer>().MarieEffects.LacusianBlessing = true;
         }
     }
 }

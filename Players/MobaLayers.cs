@@ -22,7 +22,7 @@ namespace TerrariaMoba.Players {
                 Main.playerDrawData.Add(data);
             }
             
-            if (modPlayer.TitaniumShell) {
+            if (modPlayer.FlibnobEffects.TitaniumShell) {
                 Texture2D texture = mod.GetTexture("Textures/Flibnob/TitaniumShell");
 
                 int drawX = (int)(drawInfo.position.X + drawPlayer.width / 2f - Main.screenPosition.X);
