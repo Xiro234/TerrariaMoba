@@ -198,8 +198,7 @@ namespace TerrariaMoba.Characters {
         public virtual void ResetEffects() {}
 
         public virtual void PreUpdate() {}
-
-        public virtual void PostUpdateEquips() {}
+        
 
         public virtual void PostUpdateBuffs() {}
 
