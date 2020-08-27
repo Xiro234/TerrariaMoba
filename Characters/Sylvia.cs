@@ -30,7 +30,6 @@ namespace TerrariaMoba.Characters {
         }
 
         public override void ChooseCharacter() {
-                Main.NewText("Sylvia");
                 var mobaPlayer = player.GetModPlayer<MobaPlayer>();
                 Item vanityHelm = new Item();
                 vanityHelm.SetDefaults(208);

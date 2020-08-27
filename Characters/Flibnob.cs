@@ -14,7 +14,6 @@ namespace TerrariaMoba.Characters {
         }
         
         public override void ChooseCharacter() {
-            Main.NewText("Flibnob");
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
             Item vanityHelm = new Item();
             vanityHelm.SetDefaults(3865);
