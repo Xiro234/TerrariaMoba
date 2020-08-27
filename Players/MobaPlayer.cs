@@ -158,6 +158,22 @@ namespace TerrariaMoba.Players {
                 MyCharacter.PostUpdateEquips();
                 MyCharacter.UpdateBaseStats();
                 
+                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.IsActive)) {
+                    ability.Using();
+                    if (Main.myPlayer == ability.player.whoAmI && ability.NeedsSyncing) {
+                        int index = Array.IndexOf(MyCharacter.abilities, ability);
+                        int whoAmI = ability.player.whoAmI;
+                        byte[] abilitySpecific = ability.WriteAbility();
+                        int length = abilitySpecific.Length;
+
+                        Packets.ReadWriteAbilityPacket.Write(index, whoAmI, length, abilitySpecific);
+                    }
+                }
+
+                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.Cooldown > 0)) {
+                    ability.Cooldown--;
+                }
+                
                 player.statLifeMax2 = maxHealth + bonusHealth;
 
                 if (lifeRegenTimer == 30) {
@@ -316,31 +332,7 @@ namespace TerrariaMoba.Players {
             }
         });
         */
-        
-        public static readonly PlayerLayer MiscEffects = new PlayerLayer("TerrariaMoba", "MiscEffects", PlayerLayer.MiscEffectsFront, delegate(PlayerDrawInfo drawInfo) {
-            Player drawPlayer = drawInfo.drawPlayer;
-            Mod mod = ModLoader.GetMod("TerrariaMoba");
-            MobaPlayer modPlayer = drawPlayer.GetModPlayer<MobaPlayer>();
 
-            if (modPlayer.SylviaEffects.EnsnaringVines) {
-                Texture2D texture = mod.GetTexture("Textures/Sylvia/EnsnaringVines");
-                
-                int drawX = (int)(drawInfo.position.X + drawPlayer.width / 2f - Main.screenPosition.X);
-                int drawY = (int)(drawInfo.position.Y + (drawPlayer.height - 2f) - Main.screenPosition.Y);
-                DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, 0, texture.Width, texture.Height), Lighting.GetColor((int)((drawInfo.position.X + drawPlayer.width / 2f) / 16f), (int)((drawInfo.position.Y + drawPlayer.height) / 16f)), 0f, new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
-                Main.playerDrawData.Add(data);
-            }
-            
-            if (modPlayer.FlibnobEffects.TitaniumShell) {
-                Texture2D texture = mod.GetTexture("Textures/Flibnob/TitaniumShell");
-
-                int drawX = (int)(drawInfo.position.X + drawPlayer.width / 2f - Main.screenPosition.X);
-                int drawY = (int)(drawInfo.position.Y + drawPlayer.height / 2f - Main.screenPosition.Y);
-                DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, 0, texture.Width, texture.Height), Lighting.GetColor((int)((drawInfo.position.X + drawPlayer.width / 2f) / 16f), (int)((drawInfo.position.Y + drawPlayer.height) / 16f)), 0f, new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
-                Main.playerDrawData.Add(data);
-            }
-        });
-        
         public override void ModifyDrawLayers(List<PlayerLayer> layers) {
             PlayerLayer MiscEffects = MobaLayers.MiscEffects;
             MiscEffects.visible = true;
