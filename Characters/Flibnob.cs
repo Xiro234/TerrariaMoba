@@ -44,18 +44,11 @@ namespace TerrariaMoba.Characters {
             player.statLifeMax2 = baseMaxHealth;
             player.statLife = 2060;
             
-            FlameBelch abilityOne = new FlameBelch(player);
-            abilities[0] = abilityOne;
-            
-            TitaniumShell abilityTwo = new TitaniumShell(player);
-            abilities[1] = abilityTwo;
-            
-            Earthsplitter ultimate = new Earthsplitter(player);
-            abilities[2] = ultimate;
-            
-            BattleHardened trait = new BattleHardened(player);
-            abilities[3] = trait;
-            
+            QAbility = new FlameBelch(player);
+            EAbility = new TitaniumShell(player);
+            RAbility = new Earthsplitter(player);
+            TAbility = new BattleHardened(player);
+
             /*
             CullTheMeek ultimate = new CullTheMeek(player);
             abilities[2] = ultimate;

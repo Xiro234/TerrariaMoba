@@ -21,9 +21,6 @@ namespace TerrariaMoba.Players {
         //General
         public CharacterEnum CharacterSelected;
         public Character MyCharacter;
-        public bool AbilityOneUsed = false;
-        public bool AbilityTwoUsed = false;
-        public bool UltimateUsed = false;
         public bool CharacterPicked = false;
         public int PlayerLastHurt = -1;
         public bool Silenced = false;
@@ -65,18 +62,6 @@ namespace TerrariaMoba.Players {
             FlibnobEffects = new FlibnobEffects();
         }
 
-        public override void clientClone(ModPlayer clientClone) {
-            MobaPlayer clone = clientClone as MobaPlayer;
-        }
-
-        public override void SyncPlayer(int toWho, int fromWho, bool newPlayer) {
-
-        }
-
-        public override void SendClientChanges(ModPlayer clientPlayer) {
-
-        }
-
         public override void OnEnterWorld(Player player) {
             TerrariaMoba.Instance.MobaBar = null;
             TerrariaMoba.Instance.MobaBar = new MobaBar();
@@ -108,16 +93,16 @@ namespace TerrariaMoba.Players {
 
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TerrariaMoba.AbilityOneHotKey.JustPressed) {
-                MyCharacter.HandleAbility(0);
+                MyCharacter.HandleAbility(MyCharacter.QAbility);
             }
             if (TerrariaMoba.AbilityTwoHotKey.JustPressed) {
-                MyCharacter.HandleAbility(1);
+                MyCharacter.HandleAbility(MyCharacter.EAbility);
             }
             if (TerrariaMoba.UltimateHotkey.JustPressed) {
-                MyCharacter.HandleAbility(2);
+                MyCharacter.HandleAbility(MyCharacter.RAbility);
             }
             if (TerrariaMoba.TraitHotkey.JustPressed) {
-                MyCharacter.HandleAbility(3);
+                MyCharacter.HandleAbility(MyCharacter.RAbility);
             }
             if (TerrariaMoba.LevelTalentOneHotKey.JustPressed) {
                 MyCharacter.LevelTalentOne();
@@ -161,7 +146,7 @@ namespace TerrariaMoba.Players {
                 foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.IsActive)) {
                     ability.Using();
                     if (Main.myPlayer == ability.player.whoAmI && ability.NeedsSyncing) {
-                        int index = Array.IndexOf(MyCharacter.abilities, ability);
+                        int index = MyCharacter.abilities.IndexOf(ability);
                         int whoAmI = ability.player.whoAmI;
                         byte[] abilitySpecific = ability.WriteAbility();
                         int length = abilitySpecific.Length;

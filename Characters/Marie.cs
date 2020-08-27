@@ -40,22 +40,15 @@ namespace TerrariaMoba.Characters {
             player.statLifeMax2 = baseMaxHealth;
             player.statLife = 1460;
             
-            WhirlpoolInABottle abilityOne = new WhirlpoolInABottle(player);
-            abilities[0] = abilityOne;
-
-            TomeOfLacusia abilityTwo = new TomeOfLacusia(player);
-            abilities[1] = abilityTwo;
+            QAbility = new WhirlpoolInABottle(player);
+            EAbility = new TomeOfLacusia(player);
+            RAbility = new EyeOfTheStorm(player);
+            TAbility = new Floodboost(player);
             
             /*
             FountainOfTheGoddess ultimate = new FountainOfTheGoddess(player);
             abilities[2] = ultimate;
             */
-            
-            EyeOfTheStorm ultimate = new EyeOfTheStorm(player);
-            abilities[2] = ultimate;
-            
-            Floodboost trait = new Floodboost(player);
-            abilities[3] = trait;
             
             CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieIcon");
         }

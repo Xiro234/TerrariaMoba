@@ -48,10 +48,11 @@ namespace TerrariaMoba.Characters {
 
             CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoIcon");
             
-            abilities[0] = new RaiseDead(player);
-            abilities[1] = new LifedrainPulse(player);
-            abilities[2] = new SoulSiphon(player);
-            abilities[3] = new SkeletalBond(player);
+            EAbility = new RaiseDead(player);
+            QAbility = new LifedrainPulse(player);
+            RAbility = new SoulSiphon(player);
+            TAbility = new SkeletalBond(player);
+            
             //abilities[2] = new SongOfTheDamned(player);
             //TalentSelect();
         }
