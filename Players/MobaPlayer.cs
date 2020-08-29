@@ -40,8 +40,8 @@ namespace TerrariaMoba.Players {
         public float percentThorns = 0f;
         //public int shield = 0;
 
-        public int maxHealth = 0;
-        public int bonusHealth = 0;
+        public int maxLife = 0;
+        public int bonusLife = 0;
         public float lifeRegen = 0;
         public int lifeRegenTimer = 0;
         public float lifeDegen = 0;
@@ -80,8 +80,8 @@ namespace TerrariaMoba.Players {
         }
 
         public override void ResetEffects() {
-            maxHealth = 0;
-            bonusHealth = 0;
+            maxLife = 0;
+            bonusLife = 0;
             lifeRegen = 0;
             lifeDegen = 0;
             maxResource = 0;
@@ -148,9 +148,8 @@ namespace TerrariaMoba.Players {
         public override void PostUpdateEquips() {
             if (CharacterPicked && InProgress) {
                 MyCharacter.PostUpdateEquips();
-                MyCharacter.UpdateBaseStats();
-
-                player.statLifeMax2 = maxHealth + bonusHealth;
+                
+                player.statLifeMax2 = maxLife + bonusLife;
 
                 if (lifeRegenTimer == 30) {
                     player.statLife += (int)(lifeRegen / 2);
@@ -187,7 +186,7 @@ namespace TerrariaMoba.Players {
 
                 lifeRegenTimer += 1;
                 lifeDegenTimer += 1;
-
+                
                 foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.IsActive)) {
                     ability.Using();
                     if (Main.myPlayer == ability.player.whoAmI && ability.NeedsSyncing) {
@@ -253,29 +252,36 @@ namespace TerrariaMoba.Players {
         }
 
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            EditDamage(ref damage);
-            MyCharacter.ModifyHitPvpWithProj(proj, target, ref damage, ref crit);
-            if (Main.netMode == NetmodeID.SinglePlayer) {
-                target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
-            }
-            else {
-                PvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
+            if (InProgress) {
+                EditDamage(ref damage);
+                MyCharacter.ModifyHitPvpWithProj(proj, target, ref damage, ref crit);
+                if (Main.netMode == NetmodeID.SinglePlayer) {
+                    target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
+                }
+                else {
+                    PvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
+                }
             }
         }
 
         public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit) {
-            EditDamage(ref damage);
-            if (Main.netMode == NetmodeID.SinglePlayer) {
-                target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
-            }
-            else {
-                PvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
+            if (InProgress) {
+                EditDamage(ref damage);
+                if (Main.netMode == NetmodeID.SinglePlayer) {
+                    target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
+                }
+                else {
+                    PvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
+                }
             }
         }
 
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit,
             ref int hitDirection) {
-            MyCharacter.ModifyHitNPCWithProj(proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
+            if (InProgress) {
+                EditDamage(ref damage);
+                MyCharacter.ModifyHitNPCWithProj(proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
+            }
         }
 
         public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) {
@@ -387,7 +393,7 @@ namespace TerrariaMoba.Players {
         }
         
         public void StartGame() {
-            MyCharacter.ChooseCharacter();
+            MyCharacter.SetCharacter();
             InProgress = true;
             TerrariaMoba.Instance.ShowBar();
             TerrariaMoba.Instance.MobaBar.SetIcons();

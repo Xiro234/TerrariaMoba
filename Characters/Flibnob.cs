@@ -8,57 +8,45 @@ using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Characters {
     public class Flibnob : Character {
-
         public Flibnob(Player player) : base(player) {
             CharacterEnum = CharacterEnum.Flibnob;
         }
         
-        public override void ChooseCharacter() {
-            Main.NewText("Flibnob");
-            Item vanityHelm = new Item();
-            vanityHelm.SetDefaults(3865);
-            Item vanityChest = new Item();
-            vanityChest.SetDefaults(667);
-            Item dyeChest = new Item();
-            dyeChest.SetDefaults(3555);
-            Item vanityLeg = new Item();
+        public override void InitializeCharacter() {
+            CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobIcon");
+        }
+        
+        public override void SetPlayer() {
+            vanityHead.SetDefaults(3865);
+            vanityBody.SetDefaults(667);
+            dyeBody.SetDefaults(3555);
             vanityLeg.SetDefaults(668);
-            Item dyeLeg = new Item();
             dyeLeg.SetDefaults(3555);
-            Item primary = new Item();
             primary.SetDefaults(TerrariaMoba.Instance.ItemType("FlibnobAxe"));
 
-            player.armor[10] = vanityHelm;
-            player.armor[11] = vanityChest;
-            player.armor[12] = vanityLeg;
-            player.dye[1] = dyeChest;
-            player.dye[2] = dyeLeg;
-            player.inventory[0] = primary;
             player.Male = true;
             player.hair = 15;
             player.hairColor = new Color(0, 0, 0);
             player.skinColor = new Color(120, 63, 4);
             player.eyeColor = new Color(255, 0, 0);
-            baseMaxHealth = 2060;
-            player.statLifeMax2 = baseMaxHealth;
-            player.statLife = baseMaxHealth;
-            baseLifeRegen = (baseMaxHealth * 0.125f) / 60;
+        }
+
+        public override void SetStats() {
+            baseMaxLife = 2060;
+            baseLifeRegen = (baseMaxLife * 0.125f) / 60;
             baseMaxResource = 500;
-            player.statMana = baseMaxResource;
             baseResourceRegen = (baseMaxResource * 0.125f) / 30;
             baseArmor = 0;
-            
+
             QAbility = new FlameBelch(player);
             EAbility = new TitaniumShell(player);
             RAbility = new Earthsplitter(player);
-            TAbility = new BattleHardened(player);
+            CAbility = new BattleHardened(player);
 
             /*
             CullTheMeek ultimate = new CullTheMeek(player);
             abilities[2] = ultimate;
             */
-            
-            CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobIcon");
         }
         
         public override void PreUpdate() {
@@ -99,8 +87,8 @@ namespace TerrariaMoba.Characters {
         public override void LevelUp() {
             level += 1;
             player.GetModPlayer<MobaPlayer>().FlibnobStats.LevelUp();
-            baseMaxHealth = (int)player.GetModPlayer<MobaPlayer>().FlibnobStats.MaxHealth.Value;
-            baseLifeRegen = (baseMaxHealth * 0.125f) / 60;
+            baseMaxLife = (int)player.GetModPlayer<MobaPlayer>().FlibnobStats.MaxHealth.Value;
+            baseLifeRegen = (baseMaxLife * 0.125f) / 60;
             baseMaxResource = (int)player.GetModPlayer<MobaPlayer>().FlibnobStats.MaxResource.Value;
             baseResourceRegen = (baseMaxResource * 0.125f) / 30;
             TalentSelect();

@@ -17,43 +17,37 @@ namespace TerrariaMoba.Characters {
             skeleList = new List<NPC>();
         }
 
-        public override void ChooseCharacter() {
-            Item vanityHelm = new Item();
-            vanityHelm.SetDefaults(ItemID.SkeletronPrimeMask);
-            Item vanityChest = new Item();
-            vanityChest.SetDefaults(3875);
-            Item vanityLeg = new Item();
+        public override void InitializeCharacter() {
+            CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoIcon");
+        }
+
+        public override void SetPlayer() {
+            vanityHead.SetDefaults(ItemID.SkeletronPrimeMask);
+            vanityBody.SetDefaults(3875);
             vanityLeg.SetDefaults(3876);
-            Item primary = new Item();
             primary.SetDefaults(TerrariaMoba.Instance.ItemType("OsteoTome"));
 
-            player.armor[10] = vanityHelm;
-            player.armor[11] = vanityChest;
-            player.armor[12] = vanityLeg;
-            player.inventory[0] = primary;
             player.Male = true;
             player.hair = 15;
             player.hairColor = new Color(52, 133, 34);
             player.skinColor = new Color(198,134,66);
             player.eyeColor = new Color(84,42,14);
-            baseMaxHealth = 1440;
-            player.statLifeMax2 = baseMaxHealth;
-            player.statLife = baseMaxHealth;
-            baseLifeRegen = (baseMaxHealth * 0.125f) / 60;
+
+            
+        }
+
+        public override void SetStats() {
+            baseMaxLife = 1440;
+            baseLifeRegen = (baseMaxLife * 0.125f) / 60;
             baseMaxResource = 500;
-            player.statMana = baseMaxResource;
             baseResourceRegen = (baseMaxResource * 0.125f) / 30;
             baseArmor = 0;
             
-            CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoIcon");
-            
-            QAbility = new RaiseDead(player);
-            EAbility = new LifedrainPulse(player);
+            EAbility = new RaiseDead(player);
+            QAbility = new LifedrainPulse(player);
             RAbility = new SoulSiphon(player);
-            TAbility = new SkeletalBond(player);
-            
+            CAbility = new SkeletalBond(player);
             //abilities[2] = new SongOfTheDamned(player);
-            //TalentSelect();
         }
 
         public override void PostUpdateEquips() {
@@ -97,8 +91,8 @@ namespace TerrariaMoba.Characters {
         public override void LevelUp() {
             level += 1;
             player.GetModPlayer<MobaPlayer>().MarieStats.LevelUp();
-            baseMaxHealth = (int)player.GetModPlayer<MobaPlayer>().MarieStats.MaxHealth.Value;
-            baseLifeRegen = (baseMaxHealth * 0.125f) / 60;
+            baseMaxLife = (int)player.GetModPlayer<MobaPlayer>().MarieStats.MaxHealth.Value;
+            baseLifeRegen = (baseMaxLife * 0.125f) / 60;
             baseMaxResource = (int)player.GetModPlayer<MobaPlayer>().MarieStats.MaxResource.Value;
             baseResourceRegen = (baseMaxResource * 0.125f) / 30;
             //TalentSelect();

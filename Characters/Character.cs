@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -20,15 +21,26 @@ namespace TerrariaMoba.Characters {
         public int experience = 0;
         public CharacterEnum CharacterEnum;
         public List<Ability> abilities;
+        public Texture2D CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Lock");
 
         //Stats
-        public int baseMaxHealth;
+        public int baseMaxLife;
         public float baseLifeRegen;
         public float baseLifeDegen;
         public int baseMaxResource;
         public float baseResourceRegen;
         public float baseResourceDegen;
         public int baseArmor;
+        
+        //Items
+        public Item primary;
+        
+        public Item vanityHead;
+        public Item dyeHead;
+        public Item vanityBody;
+        public Item dyeBody;
+        public Item vanityLeg;
+        public Item dyeLeg;
         
         //Ability Properties
         public Ability QAbility {
@@ -51,20 +63,61 @@ namespace TerrariaMoba.Characters {
             set { abilities[3] = value; }
         }
         
-        public Ability TAbility {
+        public Ability CAbility {
             get { return abilities[4]; }
             set { abilities[4] = value; }
         }
 
         public Character(Player myPlayer) {
             player = myPlayer;
-            var plr = player.GetModPlayer<MobaPlayer>();
+            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
+            
+            vanityHead = new Item();
+            dyeHead = new Item();
+            vanityBody = new Item();
+            dyeBody = new Item();
+            vanityLeg = new Item();
+            dyeLeg = new Item();
+            primary = new Item();
+
             abilities = new List<Ability>(8);
             for(int i = 0; i < abilities.Capacity; i++) {
-                abilities.Insert(i, new Ability());
+                abilities.Add(new Ability());
             }
             talentArray = new bool[7, 4];
-            plr.CharacterPicked = true;
+            mobaPlayer.CharacterPicked = true;
+        }
+        
+        public void SetCharacter() {
+            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
+            TerrariaMobaUtils.ClearInventory(mobaPlayer);
+            InitializeCharacter();
+            SetPlayer();
+            SetStats();
+            
+            player.inventory[0] = primary;
+            player.armor[10] = vanityHead;
+            player.armor[11] = vanityBody;
+            player.armor[12] = vanityLeg;
+
+            player.dye[0] = dyeHead;
+            player.dye[1] = dyeBody;
+            player.dye[2] = dyeLeg;
+
+            player.statLifeMax2 = baseMaxLife;
+            player.statLife = baseMaxLife;
+        }
+
+        public virtual void SetPlayer() {}
+
+        public virtual void SetStats() {
+            baseMaxLife = 1000;
+            baseLifeRegen = 4;
+            baseLifeDegen = 0;
+            baseMaxResource = 500;
+            baseResourceRegen = 4;
+            baseResourceDegen = 0;
+            baseArmor = 0;
         }
         
         public virtual void GainExperience(int xp) {
@@ -75,13 +128,10 @@ namespace TerrariaMoba.Characters {
                 experience -= xpPerLevel;
             }
         }
-
-        public Texture2D CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Lock");
-
+        
         public virtual void TalentSelect() { }
-
         public virtual void LevelUp() { }
-        public virtual void ChooseCharacter() { }
+        public virtual void InitializeCharacter() { }
 
         public virtual void LevelTalentOne() {
             Main.NewText(canSelectTalent);
@@ -247,7 +297,7 @@ namespace TerrariaMoba.Characters {
         public virtual void UpdateBaseStats() {
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
 
-            mobaPlayer.maxHealth += baseMaxHealth;
+            mobaPlayer.maxLife += baseMaxLife;
             mobaPlayer.lifeRegen += baseLifeRegen;
             mobaPlayer.lifeDegen += baseLifeDegen;
             mobaPlayer.maxResource += baseMaxResource;

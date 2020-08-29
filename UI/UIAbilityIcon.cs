@@ -5,36 +5,31 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 using System;
 using Microsoft.Xna.Framework.Input;
+using TerrariaMoba.Abilities;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.UI {
     public class UIAbilityIcon : UIImage {
-        public string hoverText;
-        public bool isOnCooldown = false;
-        public int cooldown = 0;
-        public int cooldownTimer;
-        public int index = 0;
+        public Ability ability;
+        public int abilityMaxCooldown = 0;
 
-        public UIAbilityIcon(Texture2D texture, string abilityName) : base(texture) {
-            hoverText = abilityName;
+        public UIAbilityIcon(Texture2D texture) : base(texture) {
+            ability = new Ability();
         }
 
-        public void SetIcon(Texture2D texture, string abilityName) {
-            SetImage(texture);
-            hoverText = abilityName;
-        }
-        
         protected override void DrawSelf(SpriteBatch spriteBatch) {
             base.DrawSelf(spriteBatch);
+            SetImage(ability.Icon);
+            
             if (IsMouseHovering) {
-                Main.hoverItemName = hoverText;
+                Main.hoverItemName = ability.Name;
             }
 
             //Cooldown Effect
-            if (isOnCooldown) {
+            if (ability.Cooldown > 0) {
                 Rectangle hitbox = GetDimensions().ToRectangle();
-                if (cooldown == 0) {
-                    cooldown = cooldownTimer;
+                if (abilityMaxCooldown == 0) {
+                    abilityMaxCooldown = ability.Cooldown;
                 }
 
                 //pixel adjustments so it covers the entirety of the icon
@@ -43,7 +38,7 @@ namespace TerrariaMoba.UI {
                 int top = hitbox.Top + 1;
                 int bottom = hitbox.Bottom + 1;
                 
-                float rads = (float)(Math.PI * 2) - ((float)(Math.PI * 2) * ((float) cooldownTimer / (float) cooldown));
+                float rads = (float)(Math.PI * 2) - ((float)(Math.PI * 2) * ((float) ability.Cooldown / (float) abilityMaxCooldown));
                 
                 for (int i = 0; i < right - left; i++) {
                     for (int j = 0; j < bottom - top; j++) {
@@ -65,20 +60,20 @@ namespace TerrariaMoba.UI {
                 
             }
             else {
-                cooldown = 0;
+                abilityMaxCooldown = 0;
             }
-            
-            Main.LocalPlayer.GetModPlayer<MobaPlayer>().MyCharacter.abilities[index].DrawSelf(spriteBatch, this);
+
+            ability.DrawSelf(spriteBatch, this);
         }
 
         public override void Click(UIMouseEvent evt) {
             if (Main.keyState.IsKeyDown(Keys.LeftAlt)) {
                 var modPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
-                if (isOnCooldown) {
-                    Main.NewText(Main.LocalPlayer.name + " is ready to use " + hoverText + " in " + Math.Ceiling(cooldownTimer / 60f)  + " seconds!");
+                if (ability.Cooldown > 0) {
+                    Main.NewText(Main.LocalPlayer.name + " is ready to use " + ability.Name + " in " + Math.Ceiling(ability.Cooldown / 60f)  + " seconds!");
                 }
                 else {
-                    Main.NewText(Main.LocalPlayer.name + " is ready to use " + hoverText + "!");
+                    Main.NewText(Main.LocalPlayer.name + " is ready to use " + ability.Name + "!");
                 }
             }
         }

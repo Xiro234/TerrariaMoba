@@ -145,4 +145,19 @@ public static class TerrariaMobaUtils {
             return false;
         }
     }
+    
+    
+    public static void ClearInventory(MobaPlayer mobaPlayer) {
+        for (int i = 0; i < mobaPlayer.player.inventory.Length; i++) {
+            mobaPlayer.player.inventory[i] = new Item();
+        }
+            
+        for (int i = 0; i < mobaPlayer.player.armor.Length; i++) {
+            mobaPlayer.player.armor[i] = new Item();
+        }
+
+        for (int i = 0; i < mobaPlayer.player.dye.Length; i++) {
+            mobaPlayer.player.armor[i] = new Item();
+        }
+    }
 }
