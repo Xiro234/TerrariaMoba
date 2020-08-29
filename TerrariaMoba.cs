@@ -1,14 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
-using Steamworks;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
 using TerrariaMoba.Enums;
-using TerrariaMoba.Packets;
-using TerrariaMoba.Players;
 using TerrariaMoba.UI;
 
 namespace TerrariaMoba {

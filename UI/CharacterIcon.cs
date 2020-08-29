@@ -5,8 +5,6 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Players;
-using System;
-using TerrariaMoba.Characters;
 
 namespace TerrariaMoba.UI {
     public class CharacterIcon : UIImage {

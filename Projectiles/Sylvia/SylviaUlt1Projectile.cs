@@ -1,8 +1,6 @@
 ﻿using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Projectiles.Sylvia {
     public class SylviaUlt1Projectile : ModProjectile {

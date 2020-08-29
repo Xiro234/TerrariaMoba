@@ -14,6 +14,7 @@ namespace TerrariaMoba.Abilities.Osteo {
 
         public SoulSiphon(Player myPlayer) : base(myPlayer) {
             Name = "Soul Siphon";
+            Icon = TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoUltimateTwo");
             soulList = new List<Projectile>();
             soulPositions = new List<Vector2>();
         }

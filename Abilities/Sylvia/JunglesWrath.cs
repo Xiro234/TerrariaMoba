@@ -1,8 +1,5 @@
 ﻿using Terraria;
-using System;
-using Microsoft.Xna.Framework.Graphics;
 using TerrariaMoba.Enums;
-using Microsoft.Xna.Framework;
 
 namespace TerrariaMoba.Abilities.Sylvia {
     public class JunglesWrath : Ability {

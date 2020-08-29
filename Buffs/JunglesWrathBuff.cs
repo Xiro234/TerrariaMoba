@@ -1,9 +1,5 @@
-﻿using System.IO;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
-using TerrariaMoba;
-using TerrariaMoba.Characters;
-using TerrariaMoba.Packets;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Buffs {

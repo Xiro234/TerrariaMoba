@@ -8,7 +8,6 @@ using TerrariaMoba.Abilities.Marie;
 
 namespace TerrariaMoba.Characters {
     public class Marie : Character {
-        
         public Marie(Player player) : base(player) {
             CharacterEnum = CharacterEnum.Marie;
         }
@@ -36,7 +35,6 @@ namespace TerrariaMoba.Characters {
             player.hairColor = new Color(0, 133, 255);
             player.skinColor = new Color(235, 159, 125);
             player.eyeColor = new Color(0, 0, 255);
-            
             baseMaxHealth = 1460;
             player.statLifeMax2 = baseMaxHealth;
             player.statLife = baseMaxHealth;
@@ -46,16 +44,19 @@ namespace TerrariaMoba.Characters {
             baseResourceRegen = (baseMaxResource * 0.125f) / 30;
             baseArmor = 0;
             
-            WhirlpoolInABottle abilityOne = new WhirlpoolInABottle(player);
-            abilities[0] = abilityOne;
-            TomeOfLacusia abilityTwo = new TomeOfLacusia(player);
-            abilities[1] = abilityTwo;
+            QAbility = new WhirlpoolInABottle(player);
+            EAbility = new TomeOfLacusia(player);
+            RAbility = new EyeOfTheStorm(player);
+            TAbility = new Floodboost(player);
+            
             /*
             FountainOfTheGoddess ultimate = new FountainOfTheGoddess(player);
             abilities[2] = ultimate;
             */
+            
             EyeOfTheStorm ultimate = new EyeOfTheStorm(player);
             abilities[2] = ultimate;
+            
             Floodboost trait = new Floodboost(player);
             abilities[3] = trait;
             

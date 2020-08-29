@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Projectiles.Osteo {
     public class LifedrainPulseThird : ModProjectile {

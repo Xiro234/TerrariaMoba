@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Terraria.ModLoader;
 using System.Linq;
 using Terraria;
 using Terraria.GameInput;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using Terraria.ID;
 using TerrariaMoba.Abilities;
@@ -15,16 +13,12 @@ using TerrariaMoba.Enums;
 using TerrariaMoba.Packets;
 using TerrariaMoba.Stats;
 using TerrariaMoba.UI;
-using static TerrariaMobaUtils;
 
 namespace TerrariaMoba.Players {
     public class MobaPlayer : ModPlayer {
         //General
         public CharacterEnum CharacterSelected;
         public Character MyCharacter;
-        public bool AbilityOneUsed = false;
-        public bool AbilityTwoUsed = false;
-        public bool UltimateUsed = false;
         public bool CharacterPicked = false;
         public int PlayerLastHurt = -1;
         public bool Silenced = false;
@@ -73,18 +67,6 @@ namespace TerrariaMoba.Players {
             FlibnobStats = new FlibnobStats();
         }
 
-        public override void clientClone(ModPlayer clientClone) {
-            MobaPlayer clone = clientClone as MobaPlayer;
-        }
-
-        public override void SyncPlayer(int toWho, int fromWho, bool newPlayer) {
-
-        }
-
-        public override void SendClientChanges(ModPlayer clientPlayer) {
-
-        }
-
         public override void OnEnterWorld(Player player) {
             TerrariaMoba.Instance.MobaBar = null;
             TerrariaMoba.Instance.MobaBar = new MobaBar();
@@ -116,16 +98,16 @@ namespace TerrariaMoba.Players {
 
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TerrariaMoba.AbilityOneHotKey.JustPressed) {
-                MyCharacter.HandleAbility(0);
+                MyCharacter.HandleAbility(MyCharacter.QAbility);
             }
             if (TerrariaMoba.AbilityTwoHotKey.JustPressed) {
-                MyCharacter.HandleAbility(1);
+                MyCharacter.HandleAbility(MyCharacter.EAbility);
             }
             if (TerrariaMoba.UltimateHotkey.JustPressed) {
-                MyCharacter.HandleAbility(2);
+                MyCharacter.HandleAbility(MyCharacter.RAbility);
             }
             if (TerrariaMoba.TraitHotkey.JustPressed) {
-                MyCharacter.HandleAbility(3);
+                MyCharacter.HandleAbility(MyCharacter.RAbility);
             }
             if (TerrariaMoba.LevelTalentOneHotKey.JustPressed) {
                 MyCharacter.LevelTalentOne();
@@ -165,7 +147,23 @@ namespace TerrariaMoba.Players {
             if (CharacterPicked && InProgress) {
                 MyCharacter.PostUpdateEquips();
                 MyCharacter.UpdateBaseStats();
+                
+                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.IsActive)) {
+                    ability.Using();
+                    if (Main.myPlayer == ability.player.whoAmI && ability.NeedsSyncing) {
+                        int index = MyCharacter.abilities.IndexOf(ability);
+                        int whoAmI = ability.player.whoAmI;
+                        byte[] abilitySpecific = ability.WriteAbility();
+                        int length = abilitySpecific.Length;
 
+                        Packets.ReadWriteAbilityPacket.Write(index, whoAmI, length, abilitySpecific);
+                    }
+                }
+
+                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.Cooldown > 0)) {
+                    ability.Cooldown--;
+                }
+                
                 player.statLifeMax2 = maxHealth + bonusHealth;
 
                 if (lifeRegenTimer == 30) {
@@ -324,31 +322,7 @@ namespace TerrariaMoba.Players {
             }
         });
         */
-        
-        public static readonly PlayerLayer MiscEffects = new PlayerLayer("TerrariaMoba", "MiscEffects", PlayerLayer.MiscEffectsFront, delegate(PlayerDrawInfo drawInfo) {
-            Player drawPlayer = drawInfo.drawPlayer;
-            Mod mod = ModLoader.GetMod("TerrariaMoba");
-            MobaPlayer modPlayer = drawPlayer.GetModPlayer<MobaPlayer>();
 
-            if (modPlayer.SylviaEffects.EnsnaringVines) {
-                Texture2D texture = mod.GetTexture("Textures/Sylvia/EnsnaringVines");
-                
-                int drawX = (int)(drawInfo.position.X + drawPlayer.width / 2f - Main.screenPosition.X);
-                int drawY = (int)(drawInfo.position.Y + (drawPlayer.height - 2f) - Main.screenPosition.Y);
-                DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, 0, texture.Width, texture.Height), Lighting.GetColor((int)((drawInfo.position.X + drawPlayer.width / 2f) / 16f), (int)((drawInfo.position.Y + drawPlayer.height) / 16f)), 0f, new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
-                Main.playerDrawData.Add(data);
-            }
-            
-            if (modPlayer.FlibnobEffects.TitaniumShell) {
-                Texture2D texture = mod.GetTexture("Textures/Flibnob/TitaniumShell");
-
-                int drawX = (int)(drawInfo.position.X + drawPlayer.width / 2f - Main.screenPosition.X);
-                int drawY = (int)(drawInfo.position.Y + drawPlayer.height / 2f - Main.screenPosition.Y);
-                DrawData data = new DrawData(texture, new Vector2(drawX, drawY), new Rectangle(0, 0, texture.Width, texture.Height), Lighting.GetColor((int)((drawInfo.position.X + drawPlayer.width / 2f) / 16f), (int)((drawInfo.position.Y + drawPlayer.height) / 16f)), 0f, new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
-                Main.playerDrawData.Add(data);
-            }
-        });
-        
         public override void ModifyDrawLayers(List<PlayerLayer> layers) {
             PlayerLayer MiscEffects = MobaLayers.MiscEffects;
             MiscEffects.visible = true;

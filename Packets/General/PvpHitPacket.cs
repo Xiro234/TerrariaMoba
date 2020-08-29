@@ -1,13 +1,9 @@
 ﻿using System.IO;
-using System.Xml.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
 using TerrariaMoba.Enums;
-using TerrariaMoba.Buffs;
 using TerrariaMoba.Players;
-using static Terraria.ModLoader.ModContent;
 
 namespace TerrariaMoba.Packets {
     public class PvpHitPacket {

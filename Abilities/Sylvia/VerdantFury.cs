@@ -1,8 +1,5 @@
 ﻿using Terraria;
 using static Terraria.ModLoader.ModContent;
-using System;
-using Microsoft.Xna.Framework.Graphics;
-using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.Sylvia {
     public class VerdantFury : Ability {

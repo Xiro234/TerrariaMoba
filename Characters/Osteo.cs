@@ -1,16 +1,12 @@
-﻿using TerrariaMoba;
-using Terraria.ModLoader;
-using TerrariaMoba.Players;
+﻿using TerrariaMoba.Players;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using System.Collections.Generic;
-using Terraria.Enums;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.Abilities.Osteo;
 using TerrariaMoba.Enums;
-using TerrariaMoba.Items;
 
 namespace TerrariaMoba.Characters {
     public class Osteo : Character {
@@ -22,7 +18,6 @@ namespace TerrariaMoba.Characters {
         }
 
         public override void ChooseCharacter() {
-            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
             Item vanityHelm = new Item();
             vanityHelm.SetDefaults(ItemID.SkeletronPrimeMask);
             Item vanityChest = new Item();
@@ -42,16 +37,21 @@ namespace TerrariaMoba.Characters {
             player.skinColor = new Color(198,134,66);
             player.eyeColor = new Color(84,42,14);
             baseMaxHealth = 2000;
-            baseLifeRegen = 2f;
             player.statLifeMax2 = baseMaxHealth;
-            player.statLife = 2000;
-
+            player.statLife = baseMaxHealth;
+            baseLifeRegen = (baseMaxHealth * 0.125f) / 60;
+            baseMaxResource = 500;
+            player.statMana = baseMaxResource;
+            baseResourceRegen = (baseMaxResource * 0.125f) / 30;
+            baseArmor = 0;
+            
             CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoIcon");
             
-            abilities[0] = new RaiseDead(player);
-            abilities[1] = new LifedrainPulse(player);
-            abilities[2] = new SoulSiphon(player);
-            abilities[3] = new SkeletalBond(player);
+            QAbility = new RaiseDead(player);
+            EAbility = new LifedrainPulse(player);
+            RAbility = new SoulSiphon(player);
+            TAbility = new SkeletalBond(player);
+            
             //abilities[2] = new SongOfTheDamned(player);
             //TalentSelect();
         }

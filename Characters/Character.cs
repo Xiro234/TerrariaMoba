@@ -19,7 +19,7 @@ namespace TerrariaMoba.Characters {
         public int xpPerLevel = 100;
         public int experience = 0;
         public CharacterEnum CharacterEnum;
-        public Ability[] abilities;
+        public List<Ability> abilities;
 
         //Stats
         public int baseMaxHealth;
@@ -29,13 +29,39 @@ namespace TerrariaMoba.Characters {
         public float baseResourceRegen;
         public float baseResourceDegen;
         public int baseArmor;
+        
+        //Ability Properties
+        public Ability QAbility {
+            get { return abilities[0]; }
+            set { abilities[0] = value; }
+        }
+        
+        public Ability EAbility {
+            get { return abilities[1]; }
+            set { abilities[1] = value; }
+        }
+        
+        public Ability FAbility {
+            get { return abilities[2]; }
+            set { abilities[2] = value; }
+        }
+        
+        public Ability RAbility {
+            get { return abilities[3]; }
+            set { abilities[3] = value; }
+        }
+        
+        public Ability TAbility {
+            get { return abilities[4]; }
+            set { abilities[4] = value; }
+        }
 
         public Character(Player myPlayer) {
             player = myPlayer;
             var plr = player.GetModPlayer<MobaPlayer>();
-            abilities = new Ability[8];
-            for(int i = 0; i < abilities.Length; i++) {
-                abilities[i] = new Ability();
+            abilities = new List<Ability>(8);
+            for(int i = 0; i < abilities.Capacity; i++) {
+                abilities.Insert(i, new Ability());
             }
             talentArray = new bool[7, 4];
             plr.CharacterPicked = true;
@@ -55,7 +81,6 @@ namespace TerrariaMoba.Characters {
         public virtual void TalentSelect() { }
 
         public virtual void LevelUp() { }
-        
         public virtual void ChooseCharacter() { }
 
         public virtual void LevelTalentOne() {
@@ -196,32 +221,23 @@ namespace TerrariaMoba.Characters {
         }
         
         public virtual void ResetEffects() {}
-
         public virtual void PreUpdate() {}
-        
-
         public virtual void PostUpdateBuffs() {}
-
-        public virtual bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type,
-            ref int damage, ref float knockBack) { return true; }
+        public virtual bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) { return true; }
         public virtual float UseTimeMultiplier(Item item) { return 1f; }
         public virtual void ModifyDrawLayers(List<PlayerLayer> layers) {}
         public virtual void PreUpdateMovement() {}
         public virtual void PostUpdateRunSpeeds() {}
         public virtual void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {}
-
         public virtual void SetControls() {}
         public virtual void PostUpdateEquips() {}
-
-        public virtual void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback,
-            ref bool crit, ref int hitDirection) {}
-
-        public virtual void HandleAbility(int index) {
-            Ability ability = abilities[index];
+        public virtual void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {}
+        
+        public virtual void HandleAbility(Ability ability) {
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
             if (ability.Cooldown == 0 && mobaPlayer.currentResource >= ability.ResourceCost && !ability.IsActive) {
                 mobaPlayer.currentResource -= ability.ResourceCost;
-                Packets.AbilityCastPacket.Write(index, player.whoAmI);
+                Packets.AbilityCastPacket.Write(abilities.IndexOf(ability), player.whoAmI);
                 ability.Cast();
             }
         }

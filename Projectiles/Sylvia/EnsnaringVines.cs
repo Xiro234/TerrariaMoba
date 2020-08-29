@@ -1,6 +1,5 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
-using TerrariaMoba.Players;
 using Microsoft.Xna.Framework;
 using static Terraria.ModLoader.ModContent;
 

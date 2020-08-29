@@ -11,7 +11,7 @@ namespace TerrariaMoba.Abilities.Osteo {
             Type = AbilityType.Active;
             Name = "Skeletal Bond";
             IsActive = true;
-            Icon = TerrariaMoba.Instance.GetTexture("Textures/Lock");
+            Icon = TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoTrait");
         }
 
         public override void Cast() {

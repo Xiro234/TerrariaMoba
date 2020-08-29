@@ -1,13 +1,8 @@
 ﻿using Terraria;
 using System;
 using System.IO;
-using Microsoft.Xna.Framework.Graphics;
-using TerrariaMoba.Enums;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
-using Terraria.ModLoader;
-using TerrariaMoba.Players;
-using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.Sylvia {
     public class Flourish : Ability {

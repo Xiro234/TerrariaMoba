@@ -45,19 +45,21 @@ namespace TerrariaMoba.Characters {
                 baseMaxHealth = 1340;
                 player.statLifeMax2 = baseMaxHealth;
                 player.statLife = baseMaxHealth;
+                baseLifeRegen = (baseMaxHealth * 0.125f) / 60;
+                baseMaxResource = 500;
+                player.statMana = baseMaxResource;
+                baseResourceRegen = (baseMaxResource * 0.125f) / 30;
+                baseArmor = 0;
 
-                EnsnaringVines abilityOne = new EnsnaringVines(player);
-                abilities[0] = abilityOne;
-                VerdantFury abilityTwo = new VerdantFury(player);
-                abilities[1] = abilityTwo;
+                QAbility = new EnsnaringVines(player);
+                EAbility = new VerdantFury(player);
+                RAbility = new Flourish(player);
+                TAbility = new JunglesWrath(player);
+                
                 /*
-                Flourish ultimate = new Flourish(player);
-                abilities[2] = ultimate;
-                aaaaaa*/
                 PlanterasLastWill ultimate = new PlanterasLastWill(player);
                 abilities[2] = ultimate;
-                JunglesWrath trait = new JunglesWrath(player);
-                abilities[3] = trait;
+                */
 
                 CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaIcon");
 

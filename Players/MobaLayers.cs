@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 using Terraria;
 using Terraria.DataStructures;
-using System;
 using TerrariaMoba.Effects;
 
 namespace TerrariaMoba.Players {

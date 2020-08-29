@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using TerrariaMoba.Effects;
@@ -9,7 +8,7 @@ namespace TerrariaMoba.Abilities.Osteo {
     public class SongOfTheDamned : Ability {
         public SongOfTheDamned(Player myPlayer) : base(myPlayer) {
             Name = "Song of the Damned";
-            Icon = TerrariaMoba.Instance.GetTexture("Textures/Lock");
+            Icon = TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoUltimateOne");
         }
 
         public override void Cast() {

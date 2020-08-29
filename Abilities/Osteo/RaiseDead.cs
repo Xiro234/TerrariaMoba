@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using BaseMod;
+﻿using BaseMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 using TerrariaMoba.NPCs;
 using TerrariaMoba.Players;
 using TerrariaMoba.UI;
@@ -19,7 +16,7 @@ namespace TerrariaMoba.Abilities.Osteo {
         
         public RaiseDead(Player myPlayer) : base(myPlayer) {
             Name = "Raise Dead";
-            Icon = TerrariaMoba.Instance.GetTexture("Textures/Lock");
+            Icon = TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoAbilityOne");
         }
 
         public override void Cast() {

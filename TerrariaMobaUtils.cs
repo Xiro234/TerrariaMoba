@@ -1,17 +1,10 @@
 ﻿using System;
-using TerrariaMoba;
 using TerrariaMoba.Characters;
 using Microsoft.Xna.Framework;
-using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using BaseMod;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using TerrariaMoba.Packets;
-using Terraria.GameInput;
-using Terraria.ID;
 using TerrariaMoba.Players;
 using TerrariaMoba.Enums;
 using TerrariaMoba.NPCs;

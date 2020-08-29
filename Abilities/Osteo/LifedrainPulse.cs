@@ -8,7 +8,7 @@ namespace TerrariaMoba.Abilities.Osteo {
     public class LifedrainPulse : Ability {
         public LifedrainPulse(Player myPlayer) : base(myPlayer) {
             Name = "Lifedrain Pulse";
-            Icon = TerrariaMoba.Instance.GetTexture("Textures/Lock");
+            Icon = TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoAbilityTwo");
         }
 
         public override void Cast() {

@@ -1,11 +1,9 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Players;
-using static Terraria.ModLoader.ModContent;
 using static TerrariaMobaUtils;
     
 namespace TerrariaMoba.Packets {

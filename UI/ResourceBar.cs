@@ -1,10 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 using TerrariaMoba.Players;
-using System;
 
 namespace TerrariaMoba.UI {
     public class ResourceBar : UIElement {
