@@ -8,7 +8,7 @@
         public Stat U1Dmg;
 
         public OsteoStats() {
-            MaxHealth = new Stat(2060, 1.04f);
+            MaxHealth = new Stat(1440, 1.04f);
             MaxResource = new Stat(500, 1.04f);
             A1SkeleDmg = new Stat(160, 1.04f);
             A1SkeleHealth = new Stat(400, 1.04f);

@@ -27,7 +27,7 @@ namespace TerrariaMoba.Abilities.Osteo {
                         Vector2 position = player.Center + direction * 16;
                         Vector2 velocity = direction * 6.25f;
                         var proj = Projectile.NewProjectileDirect(position, velocity,
-                            TerrariaMoba.Instance.ProjectileType("LifedrainPulse"), 10, 0, player.whoAmI);
+                            TerrariaMoba.Instance.ProjectileType("LifedrainPulse"), (int)player.GetModPlayer<MobaPlayer>().OsteoStats.A2Dmg.Value, 0, player.whoAmI);
 
                         proj.timeLeft = 90;
                     }
@@ -42,7 +42,7 @@ namespace TerrariaMoba.Abilities.Osteo {
                         Vector2 position = player.Center + direction * 16;
                         Vector2 velocity = direction * 6.25f;
                         var proj = Projectile.NewProjectileDirect(position, velocity,
-                            TerrariaMoba.Instance.ProjectileType("LifedrainPulseThird"), 10, 0, player.whoAmI);
+                            TerrariaMoba.Instance.ProjectileType("LifedrainPulseThird"), (int)(player.GetModPlayer<MobaPlayer>().OsteoStats.A2Dmg.Value * 1.66f), 0, player.whoAmI);
                         proj.timeLeft = 90;
                     }
                 }

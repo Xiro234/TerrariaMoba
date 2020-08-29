@@ -34,6 +34,7 @@ namespace TerrariaMoba.Players {
         public SylviaStats SylviaStats;
         public MarieStats MarieStats;
         public FlibnobStats FlibnobStats;
+        public OsteoStats OsteoStats;
 
         //Custom Stats
         public float percentThorns = 0f;
@@ -65,6 +66,7 @@ namespace TerrariaMoba.Players {
             SylviaStats = new SylviaStats();
             MarieStats = new MarieStats();
             FlibnobStats = new FlibnobStats();
+            OsteoStats = new OsteoStats();
         }
 
         public override void OnEnterWorld(Player player) {
@@ -147,23 +149,7 @@ namespace TerrariaMoba.Players {
             if (CharacterPicked && InProgress) {
                 MyCharacter.PostUpdateEquips();
                 MyCharacter.UpdateBaseStats();
-                
-                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.IsActive)) {
-                    ability.Using();
-                    if (Main.myPlayer == ability.player.whoAmI && ability.NeedsSyncing) {
-                        int index = MyCharacter.abilities.IndexOf(ability);
-                        int whoAmI = ability.player.whoAmI;
-                        byte[] abilitySpecific = ability.WriteAbility();
-                        int length = abilitySpecific.Length;
 
-                        Packets.ReadWriteAbilityPacket.Write(index, whoAmI, length, abilitySpecific);
-                    }
-                }
-
-                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.Cooldown > 0)) {
-                    ability.Cooldown--;
-                }
-                
                 player.statLifeMax2 = maxHealth + bonusHealth;
 
                 if (lifeRegenTimer == 30) {
@@ -201,6 +187,22 @@ namespace TerrariaMoba.Players {
 
                 lifeRegenTimer += 1;
                 lifeDegenTimer += 1;
+
+                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.IsActive)) {
+                    ability.Using();
+                    if (Main.myPlayer == ability.player.whoAmI && ability.NeedsSyncing) {
+                        int index = MyCharacter.abilities.IndexOf(ability);
+                        int whoAmI = ability.player.whoAmI;
+                        byte[] abilitySpecific = ability.WriteAbility();
+                        int length = abilitySpecific.Length;
+
+                        Packets.ReadWriteAbilityPacket.Write(index, whoAmI, length, abilitySpecific);
+                    }
+                }
+
+                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.Cooldown > 0)) {
+                    ability.Cooldown--;
+                }
             }
         }
 

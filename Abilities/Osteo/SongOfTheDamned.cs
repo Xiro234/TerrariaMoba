@@ -56,7 +56,7 @@ namespace TerrariaMoba.Abilities.Osteo {
                     if (Main.player[i].team != player.team) {
                         var modPlayer = Main.player[i].GetModPlayer<MobaPlayer>();
                         if (!Main.player[i].dead) {
-                            modPlayer.DamageOverride(600, Main.player[i], player.whoAmI, true);
+                            modPlayer.DamageOverride((int)player.GetModPlayer<MobaPlayer>().OsteoStats.U1Dmg.Value, Main.player[i], player.whoAmI, true);
                             Main.PlaySound(SoundID.Item71, Main.player[i].position);
                         }
                         modPlayer.ultTimer = -1;

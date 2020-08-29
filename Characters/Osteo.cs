@@ -36,7 +36,7 @@ namespace TerrariaMoba.Characters {
             player.hairColor = new Color(52, 133, 34);
             player.skinColor = new Color(198,134,66);
             player.eyeColor = new Color(84,42,14);
-            baseMaxHealth = 2000;
+            baseMaxHealth = 1440;
             player.statLifeMax2 = baseMaxHealth;
             player.statLife = baseMaxHealth;
             baseLifeRegen = (baseMaxHealth * 0.125f) / 60;
@@ -92,6 +92,16 @@ namespace TerrariaMoba.Characters {
             if (proj.type == TerrariaMoba.Instance.ProjectileType("LifedrainPulseThird")) {
                 player.GetModPlayer<MobaPlayer>().HealMe(20, true);
             }
+        }
+        
+        public override void LevelUp() {
+            level += 1;
+            player.GetModPlayer<MobaPlayer>().MarieStats.LevelUp();
+            baseMaxHealth = (int)player.GetModPlayer<MobaPlayer>().MarieStats.MaxHealth.Value;
+            baseLifeRegen = (baseMaxHealth * 0.125f) / 60;
+            baseMaxResource = (int)player.GetModPlayer<MobaPlayer>().MarieStats.MaxResource.Value;
+            baseResourceRegen = (baseMaxResource * 0.125f) / 30;
+            //TalentSelect();
         }
 
         public override void HealMe(ref int amount) {

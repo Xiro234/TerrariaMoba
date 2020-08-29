@@ -66,7 +66,7 @@ namespace TerrariaMoba.NPCs {
                 }
             }
         }
-
+        
         public override void SendExtraAI(BinaryWriter writer) {
             writer.Write(groundTimer);
         }
