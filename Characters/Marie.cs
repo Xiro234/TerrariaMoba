@@ -30,7 +30,7 @@ namespace TerrariaMoba.Characters {
         }
 
         public override void SetStats() {
-            baseMaxHealth = 1460;
+            baseMaxLife = 1460;
 
             QAbility = new WhirlpoolInABottle(player);
             EAbility = new TomeOfLacusia(player);

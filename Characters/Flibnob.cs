@@ -32,7 +32,7 @@ namespace TerrariaMoba.Characters {
         }
 
         public override void SetStats() {
-            baseMaxHealth = 2060;
+            baseMaxLife = 2060;
 
             QAbility = new FlameBelch(player);
             EAbility = new TitaniumShell(player);

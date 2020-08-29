@@ -6,16 +6,17 @@ using Terraria.UI;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader;
+using TerrariaMoba.Abilities;
 using TerrariaMoba.Players;
 using TerrariaMoba.UI;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.UI {
     public class MobaBar : UIState {
-        private UIText ability1Cooldown;
-        private UIText ability2Cooldown;
-        private UIText ultimateCooldown;
-        private UIText traitCooldown;
+        private UIText QCooldown;
+        private UIText ECooldown;
+        private UIText RCooldown;
+        private UIText CCooldown;
         private UIText lifeText;
         private UIText manaText;
         private UIText armorText;
@@ -26,10 +27,10 @@ namespace TerrariaMoba.UI {
         private UIImage characterIcon;
         private UIImage moveSpeedIcon;
         private UIImage armorIcon;
-        private UIAbilityIcon ability1Panel;
-        private UIAbilityIcon ability2Panel;
-        private UIAbilityIcon ultimatePanel;
-        private UIAbilityIcon traitPanel;
+        private UIAbilityIcon QPanel;
+        private UIAbilityIcon EPanel;
+        private UIAbilityIcon RPanel;
+        private UIAbilityIcon CPanel;
         private ResourceBar lifeBar;
         private ResourceBar manaBar;
         private ResourceBar experienceBar;
@@ -40,41 +41,41 @@ namespace TerrariaMoba.UI {
             bar.HAlign = 0.5f;
             Append(bar);
 
-            ability1Panel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"), "");
-            ability1Panel.Top.Set(50, 0);
-            ability1Panel.Left.Set(268, 0);
+            QPanel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"));
+            QPanel.Top.Set(50, 0);
+            QPanel.Left.Set(268, 0);
             
-            ability1Cooldown = new UIText("");
-            ability1Cooldown.VAlign = 0.5f;
-            ability1Cooldown.HAlign = 0.5f;
-            ability1Panel.Append(ability1Cooldown);
+            QCooldown = new UIText("");
+            QCooldown.VAlign = 0.5f;
+            QCooldown.HAlign = 0.5f;
+            QPanel.Append(QCooldown);
 
-            ability2Panel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"), "");
-            ability2Panel.Top.Set(50, 0);
-            ability2Panel.Left.Set(338, 0);
+            EPanel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"));
+            EPanel.Top.Set(50, 0);
+            EPanel.Left.Set(338, 0);
             
-            ability2Cooldown = new UIText("");
-            ability2Cooldown.VAlign = 0.5f;
-            ability2Cooldown.HAlign = 0.5f;
-            ability2Panel.Append(ability2Cooldown);
+            ECooldown = new UIText("");
+            ECooldown.VAlign = 0.5f;
+            ECooldown.HAlign = 0.5f;
+            EPanel.Append(ECooldown);
             
-            ultimatePanel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"), "");
-            ultimatePanel.Top.Set(50, 0);
-            ultimatePanel.Left.Set(408, 0);
+            RPanel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"));
+            RPanel.Top.Set(50, 0);
+            RPanel.Left.Set(408, 0);
             
-            ultimateCooldown = new UIText("");
-            ultimateCooldown.VAlign = 0.5f;
-            ultimateCooldown.HAlign = 0.5f;
-            ultimatePanel.Append(ultimateCooldown);
+            RCooldown = new UIText("");
+            RCooldown.VAlign = 0.5f;
+            RCooldown.HAlign = 0.5f;
+            RPanel.Append(RCooldown);
             
-            traitPanel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"), "");
-            traitPanel.Top.Set(50, 0);
-            traitPanel.Left.Set(478, 0);
+            CPanel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"));
+            CPanel.Top.Set(50, 0);
+            CPanel.Left.Set(478, 0);
             
-            traitCooldown = new UIText("");
-            traitCooldown.VAlign = 0.5f;
-            traitCooldown.HAlign = 0.5f;
-            traitPanel.Append(traitCooldown);
+            CCooldown = new UIText("");
+            CCooldown.VAlign = 0.5f;
+            CCooldown.HAlign = 0.5f;
+            CPanel.Append(CCooldown);
             
             lifeBar = new ResourceBar(Color.DarkGreen, Color.Lime, 0);
             lifeBar.Left.Set(54, 0);
@@ -142,10 +143,10 @@ namespace TerrariaMoba.UI {
             bar.Append(experienceBar);
             bar.Append(armorText);
             bar.Append(moveSpeedText);
-            bar.Append(ability1Panel);
-            bar.Append(ability2Panel);
-            bar.Append(ultimatePanel);
-            bar.Append(traitPanel);
+            bar.Append(QPanel);
+            bar.Append(EPanel);
+            bar.Append(RPanel);
+            bar.Append(CPanel);
             bar.Append(characterIcon);
             bar.Append(levelText);
             bar.Append(moveSpeedIcon);
@@ -153,13 +154,9 @@ namespace TerrariaMoba.UI {
         }
 
         public void SetIcons() {
-            var player = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
-            
-            ability1Panel.SetIcon(player.MyCharacter.abilities[0].Icon,player.MyCharacter.abilities[0].Name);
-            ability2Panel.SetIcon(player.MyCharacter.abilities[1].Icon,player.MyCharacter.abilities[1].Name);
-            ultimatePanel.SetIcon(player.MyCharacter.abilities[2].Icon,player.MyCharacter.abilities[2].Name);
-            traitPanel.SetIcon(player.MyCharacter.abilities[3].Icon,player.MyCharacter.abilities[3].Name);
-            characterIcon.SetImage(player.MyCharacter.CharacterIcon);
+            var mobaPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
+
+            characterIcon.SetImage(mobaPlayer.MyCharacter.CharacterIcon);
         }
 
         public override void Update(GameTime gameTime) {
@@ -171,10 +168,10 @@ namespace TerrariaMoba.UI {
             var player = Main.LocalPlayer;
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
             if (mobaPlayer.CharacterPicked) {
-                DrawIcon(ref ability1Cooldown, ref ability1Panel, mobaPlayer.MyCharacter.abilities[0].Cooldown, 0);
-                DrawIcon(ref ability2Cooldown, ref ability2Panel, mobaPlayer.MyCharacter.abilities[1].Cooldown, 1);
-                DrawIcon(ref ultimateCooldown, ref ultimatePanel, mobaPlayer.MyCharacter.abilities[2].Cooldown, 2);
-                DrawIcon(ref traitCooldown, ref traitPanel, mobaPlayer.MyCharacter.abilities[3].Cooldown, 3);
+                DrawIcon(ref QCooldown, ref QPanel, mobaPlayer.MyCharacter.QAbility.Cooldown, mobaPlayer.MyCharacter.QAbility);
+                DrawIcon(ref ECooldown, ref EPanel, mobaPlayer.MyCharacter.EAbility.Cooldown, mobaPlayer.MyCharacter.EAbility);
+                DrawIcon(ref RCooldown, ref RPanel, mobaPlayer.MyCharacter.RAbility.Cooldown, mobaPlayer.MyCharacter.RAbility);
+                DrawIcon(ref CCooldown, ref CPanel, mobaPlayer.MyCharacter.CAbility.Cooldown, mobaPlayer.MyCharacter.CAbility);
                 levelText.SetText(mobaPlayer.MyCharacter.level.ToString(), 0.75f, false);
             }
             
@@ -193,7 +190,7 @@ namespace TerrariaMoba.UI {
             }
         }
 
-        public void DrawIcon(ref UIText text,ref UIAbilityIcon icon, int timer, int index) {
+        public void DrawIcon(ref UIText text,ref UIAbilityIcon icon, int timer, Ability ability) {
             if(timer > 0) {
                 if (timer >= 40) {
                     text.SetText(Math.Ceiling(timer / 60f)
@@ -203,23 +200,19 @@ namespace TerrariaMoba.UI {
                     text.SetText((Math.Ceiling((timer / 60f) * 10) / 10f)
                         .ToString());
                 }
-                
-                icon.isOnCooldown = true;
-                icon.cooldownTimer = timer;
             }
             else {
                 text.SetText("");
-                icon.isOnCooldown = false;
             }
 
-            icon.index = index;
+            icon.ability = ability;
         }
 
         public void UnLoad() {
-            ability1Cooldown = null;
-            ability2Cooldown = null;
-            ultimateCooldown = null;
-            traitCooldown = null;
+            QCooldown = null;
+            ECooldown = null;
+            RCooldown = null;
+            CCooldown = null;
             lifeText = null;
             manaText = null;
             armorText = null;
@@ -230,10 +223,10 @@ namespace TerrariaMoba.UI {
             characterIcon = null;
             moveSpeedIcon = null;
             armorIcon = null;
-            ability1Panel = null;
-            ability2Panel = null;
-            ultimatePanel = null;
-            traitPanel = null;
+            QPanel = null;
+            EPanel = null;
+            RPanel = null;
+            CPanel = null;
             lifeBar = null;
             manaBar = null;
             experienceBar = null;

@@ -37,8 +37,8 @@ namespace TerrariaMoba.Players {
         public float percentThorns = 0f;
         //public int shield = 0;
 
-        public int maxHealth = 0;
-        public int bonusHealth = 0;
+        public int maxLife = 0;
+        public int bonusLife = 0;
         public float lifeRegen = 0;
         public int lifeRegenTimer = 0;
         public float lifeDegen = 0;
@@ -73,8 +73,8 @@ namespace TerrariaMoba.Players {
         }
 
         public override void ResetEffects() {
-            maxHealth = 0;
-            bonusHealth = 0;
+            maxLife = 0;
+            bonusLife = 0;
             lifeRegen = 0;
             lifeDegen = 0;
             maxResource = 0;
@@ -142,24 +142,8 @@ namespace TerrariaMoba.Players {
             if (CharacterPicked && InProgress) {
                 MyCharacter.PostUpdateEquips();
                 MyCharacter.UpdateBaseStats();
-                
-                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.IsActive)) {
-                    ability.Using();
-                    if (Main.myPlayer == ability.player.whoAmI && ability.NeedsSyncing) {
-                        int index = MyCharacter.abilities.IndexOf(ability);
-                        int whoAmI = ability.player.whoAmI;
-                        byte[] abilitySpecific = ability.WriteAbility();
-                        int length = abilitySpecific.Length;
 
-                        Packets.ReadWriteAbilityPacket.Write(index, whoAmI, length, abilitySpecific);
-                    }
-                }
-
-                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.Cooldown > 0)) {
-                    ability.Cooldown--;
-                }
-                
-                player.statLifeMax2 = maxHealth + bonusHealth;
+                player.statLifeMax2 = maxLife + bonusLife;
 
                 if (lifeRegenTimer == 30) {
                     player.statLife += (int)(lifeRegen / 2);
@@ -196,6 +180,22 @@ namespace TerrariaMoba.Players {
 
                 lifeRegenTimer += 1;
                 lifeDegenTimer += 1;
+                
+                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.IsActive)) {
+                    ability.Using();
+                    if (Main.myPlayer == ability.player.whoAmI && ability.NeedsSyncing) {
+                        int index = MyCharacter.abilities.IndexOf(ability);
+                        int whoAmI = ability.player.whoAmI;
+                        byte[] abilitySpecific = ability.WriteAbility();
+                        int length = abilitySpecific.Length;
+
+                        Packets.ReadWriteAbilityPacket.Write(index, whoAmI, length, abilitySpecific);
+                    }
+                }
+
+                foreach (Ability ability in MyCharacter.abilities.Where(ability => ability.Cooldown > 0)) {
+                    ability.Cooldown--;
+                }
             }
         }
 

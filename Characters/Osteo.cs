@@ -39,7 +39,7 @@ namespace TerrariaMoba.Characters {
         }
 
         public override void SetStats() {
-            baseMaxHealth = 2000;
+            baseMaxLife = 2000;
             baseLifeRegen = 2f;
             
             EAbility = new RaiseDead(player);

@@ -24,7 +24,7 @@ namespace TerrariaMoba.Characters {
         public Texture2D CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Lock");
 
         //Stats
-        public int baseMaxHealth;
+        public int baseMaxLife;
         public float baseLifeRegen;
         public float baseLifeDegen;
         public int baseMaxResource;
@@ -104,14 +104,14 @@ namespace TerrariaMoba.Characters {
             player.dye[1] = dyeBody;
             player.dye[2] = dyeLeg;
 
-            player.statLifeMax2 = baseMaxHealth;
-            player.statLife = baseMaxHealth;
+            player.statLifeMax2 = baseMaxLife;
+            player.statLife = baseMaxLife;
         }
 
         public virtual void SetPlayer() {}
 
         public virtual void SetStats() {
-            baseMaxHealth = 1000;
+            baseMaxLife = 1000;
             baseLifeRegen = 4;
             baseLifeDegen = 0;
             baseMaxResource = 500;
@@ -300,7 +300,7 @@ namespace TerrariaMoba.Characters {
         public virtual void UpdateBaseStats() {
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
 
-            mobaPlayer.maxHealth += baseMaxHealth;
+            mobaPlayer.maxLife += baseMaxLife;
             mobaPlayer.lifeRegen += baseLifeRegen;
             mobaPlayer.lifeDegen += baseLifeDegen;
             mobaPlayer.maxResource += baseMaxResource;

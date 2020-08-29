@@ -48,7 +48,7 @@ namespace TerrariaMoba.Characters {
         }
 
         public override void SetStats() {
-            baseMaxHealth = 1340;
+            baseMaxLife = 1340;
 
             QAbility = new EnsnaringVines(player);
             EAbility = new VerdantFury(player);
