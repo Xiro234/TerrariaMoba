@@ -12,46 +12,37 @@ namespace TerrariaMoba.Characters {
             CharacterEnum = CharacterEnum.Marie;
         }
 
-        public override void ChooseCharacter() {
-            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
-            Item vanityHelm = new Item();
-            vanityHelm.SetDefaults(3226);
-            Item dyeHelm = new Item();
-            dyeHelm.SetDefaults(1014);
-            Item vanityChest = new Item();
-            vanityChest.SetDefaults(2499);
-            Item vanityLeg = new Item();
+        public override void InitializeCharacter() {
+            CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieIcon");
+        }
+
+        public override void SetPlayer() {
+            vanityHead.SetDefaults(3226);
+            dyeHead.SetDefaults(1014);
             vanityLeg.SetDefaults(2500);
-            Item primary = new Item();
             primary.SetDefaults(TerrariaMoba.Instance.ItemType("MarieStaff"));
 
-            player.armor[10] = vanityHelm;
-            player.armor[11] = vanityChest;
-            player.armor[12] = vanityLeg;
-            player.dye[0] = dyeHelm;
-            player.inventory[0] = primary;
             player.Male = false;
             player.hair = 5;
             player.hairColor = new Color(0, 133, 255);
             player.skinColor = new Color(235, 159, 125);
             player.eyeColor = new Color(0, 0, 255);
+        }
+
+        public override void SetStats() {
             baseMaxHealth = 1460;
-            player.statLifeMax2 = baseMaxHealth;
-            player.statLife = 1460;
-            
+
             QAbility = new WhirlpoolInABottle(player);
             EAbility = new TomeOfLacusia(player);
             RAbility = new EyeOfTheStorm(player);
-            TAbility = new Floodboost(player);
+            CAbility = new Floodboost(player);
             
             /*
             FountainOfTheGoddess ultimate = new FountainOfTheGoddess(player);
             abilities[2] = ultimate;
             */
-            
-            CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieIcon");
         }
-        
+
         public override void PreUpdate() {
             
         }

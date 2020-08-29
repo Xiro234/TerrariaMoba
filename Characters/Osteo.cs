@@ -21,40 +21,32 @@ namespace TerrariaMoba.Characters {
             skeleList = new List<NPC>();
         }
 
-        public override void ChooseCharacter() {
-            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
-            Item vanityHelm = new Item();
-            vanityHelm.SetDefaults(ItemID.SkeletronPrimeMask);
-            Item vanityChest = new Item();
-            vanityChest.SetDefaults(3875);
-            Item vanityLeg = new Item();
+        public override void InitializeCharacter() {
+            CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoIcon");
+        }
+
+        public override void SetPlayer() {
+            vanityHead.SetDefaults(ItemID.SkeletronPrimeMask);
+            vanityBody.SetDefaults(3875);
             vanityLeg.SetDefaults(3876);
-            Item primary = new Item();
             primary.SetDefaults(TerrariaMoba.Instance.ItemType("OsteoTome"));
 
-            player.armor[10] = vanityHelm;
-            player.armor[11] = vanityChest;
-            player.armor[12] = vanityLeg;
-            player.inventory[0] = primary;
             player.Male = true;
             player.hair = 15;
             player.hairColor = new Color(52, 133, 34);
             player.skinColor = new Color(198,134,66);
             player.eyeColor = new Color(84,42,14);
+        }
+
+        public override void SetStats() {
             baseMaxHealth = 2000;
             baseLifeRegen = 2f;
-            player.statLifeMax2 = baseMaxHealth;
-            player.statLife = 2000;
-
-            CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoIcon");
             
             EAbility = new RaiseDead(player);
             QAbility = new LifedrainPulse(player);
             RAbility = new SoulSiphon(player);
-            TAbility = new SkeletalBond(player);
-            
+            CAbility = new SkeletalBond(player);
             //abilities[2] = new SongOfTheDamned(player);
-            //TalentSelect();
         }
 
         public override void PostUpdateEquips() {

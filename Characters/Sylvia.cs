@@ -29,44 +29,31 @@ namespace TerrariaMoba.Characters {
             CharacterEnum = CharacterEnum.Sylvia;
         }
 
-        public override void ChooseCharacter() {
-                var mobaPlayer = player.GetModPlayer<MobaPlayer>();
-                Item vanityHelm = new Item();
-                vanityHelm.SetDefaults(208);
-                Item vanityChest = new Item();
-                vanityChest.SetDefaults(1853);
-                Item vanityLeg = new Item();
-                vanityLeg.SetDefaults(1854);
-                Item primary = new Item();
-                primary.SetDefaults(TerrariaMoba.Instance.ItemType("SylviaBow"));
+        public override void InitializeCharacter() {
+            CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaIcon");
+            VerdantFuryTime = 20;
+        }
 
-                player.armor[10] = vanityHelm;
-                player.armor[11] = vanityChest;
-                player.armor[12] = vanityLeg;
-                player.inventory[0] = primary;
-                player.Male = false;
-                player.hair = 55;
-                player.hairColor = new Color(52, 133, 34);
-                player.skinColor = new Color(198,134,66);
-                player.eyeColor = new Color(84,42,14);
-                baseMaxHealth = 1340;
-                player.statLifeMax2 = baseMaxHealth;
-                player.statLife = 1340;
+        public override void SetPlayer() {
+            vanityHead.SetDefaults(208);
+            vanityBody.SetDefaults(1853);
+            vanityLeg.SetDefaults(1854);
+            primary.SetDefaults(TerrariaMoba.Instance.ItemType("SylviaBow"));
 
-                QAbility = new EnsnaringVines(player);
-                EAbility = new VerdantFury(player);
-                RAbility = new Flourish(player);
-                TAbility = new JunglesWrath(player);
-                
-                /*
-                PlanterasLastWill ultimate = new PlanterasLastWill(player);
-                abilities[2] = ultimate;
-                */
+            player.Male = false;
+            player.hair = 55;
+            player.hairColor = new Color(52, 133, 34);
+            player.skinColor = new Color(198,134,66);
+            player.eyeColor = new Color(84,42,14);
+        }
 
-                CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaIcon");
+        public override void SetStats() {
+            baseMaxHealth = 1340;
 
-                VerdantFuryTime = 20;
-                //TalentSelect();
+            QAbility = new EnsnaringVines(player);
+            EAbility = new VerdantFury(player);
+            RAbility = new Flourish(player);
+            CAbility = new JunglesWrath(player);
         }
 
         public override void ReadCharacter(BinaryReader reader) {

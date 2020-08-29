@@ -246,29 +246,36 @@ namespace TerrariaMoba.Players {
         }
 
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            EditDamage(ref damage);
-            MyCharacter.ModifyHitPvpWithProj(proj, target, ref damage, ref crit);
-            if (Main.netMode == NetmodeID.SinglePlayer) {
-                target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
-            }
-            else {
-                PvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
+            if (InProgress) {
+                EditDamage(ref damage);
+                MyCharacter.ModifyHitPvpWithProj(proj, target, ref damage, ref crit);
+                if (Main.netMode == NetmodeID.SinglePlayer) {
+                    target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
+                }
+                else {
+                    PvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
+                }
             }
         }
 
         public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit) {
-            EditDamage(ref damage);
-            if (Main.netMode == NetmodeID.SinglePlayer) {
-                target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
-            }
-            else {
-                PvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
+            if (InProgress) {
+                EditDamage(ref damage);
+                if (Main.netMode == NetmodeID.SinglePlayer) {
+                    target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, player.whoAmI, true);
+                }
+                else {
+                    PvpHitPacket.Write(target.whoAmI, damage, player.whoAmI, true);
+                }
             }
         }
 
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit,
             ref int hitDirection) {
-            MyCharacter.ModifyHitNPCWithProj(proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
+            if (InProgress) {
+                EditDamage(ref damage);
+                MyCharacter.ModifyHitNPCWithProj(proj, target, ref damage, ref knockback, ref crit, ref hitDirection);
+            }
         }
 
         public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) {
@@ -380,7 +387,7 @@ namespace TerrariaMoba.Players {
         }
         
         public void StartGame() {
-            MyCharacter.ChooseCharacter();
+            MyCharacter.SetCharacter();
             InProgress = true;
             TerrariaMoba.Instance.ShowBar();
             TerrariaMoba.Instance.MobaBar.SetIcons();
