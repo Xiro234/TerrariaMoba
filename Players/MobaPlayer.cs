@@ -148,6 +148,7 @@ namespace TerrariaMoba.Players {
         public override void PostUpdateEquips() {
             if (CharacterPicked && InProgress) {
                 MyCharacter.PostUpdateEquips();
+                MyCharacter.UpdateBaseStats();
                 
                 player.statLifeMax2 = maxLife + bonusLife;
 

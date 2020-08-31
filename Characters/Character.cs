@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -287,7 +286,7 @@ namespace TerrariaMoba.Characters {
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
             if (ability.Cooldown == 0 && mobaPlayer.currentResource >= ability.ResourceCost && !ability.IsActive) {
                 mobaPlayer.currentResource -= ability.ResourceCost;
-                Packets.AbilityCastPacket.Write(abilities.IndexOf(ability), player.whoAmI);
+                AbilityCastPacket.Write(abilities.IndexOf(ability), player.whoAmI);
                 ability.Cast();
             }
         }

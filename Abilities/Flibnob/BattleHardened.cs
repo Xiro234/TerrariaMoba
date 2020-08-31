@@ -22,5 +22,4 @@ namespace TerrariaMoba.Abilities.Flibnob {
                 oldDefBoost = defBoost;
             }
         }
-    }
-}
+    } }
