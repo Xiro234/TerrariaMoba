@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Players;
 
-namespace TerrariaMoba.Packets {
+namespace TerrariaMoba.Packets.General {
     public class PvpHitPacket {
         public static void Read(BinaryReader reader) {
             if (Main.netMode == NetmodeID.Server) {

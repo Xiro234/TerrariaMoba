@@ -1,8 +1,9 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
-using TerrariaMoba;
+using TerrariaMoba.Packets.General;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
+using TerrariaMoba.Packets.GameStart;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Items {
@@ -29,7 +30,7 @@ namespace TerrariaMoba.Items {
         public override string Texture => "Terraria/Item_" + ItemID.Abeemination;
         
         public override bool UseItem(Player player) {
-            if (player.whoAmI == Main.myPlayer) {
+            if (!Main.dedServ) {
                 bool canStart = true;
                 for (int i = 0; i < Main.maxPlayers; i++) {
                     if (Main.player[i] != null && Main.player[i].active) {
@@ -40,17 +41,18 @@ namespace TerrariaMoba.Items {
                 }
 
                 if (canStart) {
-                    player.GetModPlayer<MobaPlayer>().MyCharacter.SetCharacter();;
-                    player.GetModPlayer<MobaPlayer>().StartGame();
-                    if (Main.netMode == NetmodeID.MultiplayerClient) {
-                        Packets.GameStartPacket.Write();
+                    for (int i = 0; i < Main.maxPlayers; i++) {
+                        if (Main.player[i] != null && Main.player[i].active) {
+                            var plr = Main.player[i].GetModPlayer<MobaPlayer>();
+                            plr.StartGame();
+                        }
                     }
-
                     Main.NewText("Game Started!");
                 }
-                else {
-                    Main.NewText("Not everyone has chosen a character!");
-                }
+                
+            }
+            else {
+                Main.NewText("Not everyone has chosen a character!");
             }
 
             return true;

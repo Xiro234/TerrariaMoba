@@ -1,48 +1,19 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
+using TerrariaMoba.Characters;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.UI {
     public class CharacterIcon : UIImage {
-        public string hoverText;
-        public CharacterEnum character;
+        public Character character;
 
-        public CharacterIcon(Texture2D texture, CharacterEnum newCharacter) : base(texture) {
+        public CharacterIcon(Character newCharacter) : base(newCharacter.CharacterIcon) {
             character = newCharacter;
-
-            switch (character) {
-                case(CharacterEnum.Sylvia):
-                    hoverText = "Sylvia Verda, Markswoman of the Jungle";
-                    break;
-                case(CharacterEnum.Marie):
-                    hoverText = "Marie Tidewrath, High Priestess of Lacusia";
-                    break;
-                case(CharacterEnum.Flibnob):
-                    hoverText = "Flibnob, the Ogre Lord";
-                    break;
-                case(CharacterEnum.Osteo):
-                    hoverText = "Osteo Prime, Last Necromancer of the Mudpits";
-                    break;
-                case(CharacterEnum.Nocturne):
-                    hoverText = "Nocturne Umbra, The Glory of Ecliptera";
-                    break;
-                case(CharacterEnum.Chastradamus):
-                    hoverText = "Chastradamus, the Plague Doctor";
-                    break;
-                case(CharacterEnum.OldMan):
-                    hoverText = "Old Man, The Venerable Trawler";
-                    break;
-                case(CharacterEnum.Jorm):
-                    hoverText = "Jorm Goldenhammer, Hero of the Ogre War";
-                    break;
-                default:
-                    hoverText = "";
-                    break;
-            }
         }
         
         protected override void DrawSelf(SpriteBatch spriteBatch) {
@@ -50,10 +21,10 @@ namespace TerrariaMoba.UI {
             var modPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
 
             if (IsMouseHovering) {
-                Main.hoverItemName = hoverText;
+                Main.hoverItemName = character.FullName;
             }
 
-            if (modPlayer.CharacterSelected == character && character != CharacterEnum.Null) {
+            if (modPlayer.selectedCharacter == character.identity && character.identity != CharacterIdentity.Base) {
                 Rectangle hitbox = GetDimensions().ToRectangle();
 
                 int left = hitbox.Left;
@@ -69,7 +40,7 @@ namespace TerrariaMoba.UI {
 
         public override void Click(UIMouseEvent evt) {
             var modPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
-            modPlayer.CharacterSelected = character;
+            modPlayer.selectedCharacter = character.identity;
             Main.PlaySound(10);
         }
 

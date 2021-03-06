@@ -1,7 +1,9 @@
-﻿using Terraria;
+﻿/*using System;
+using Terraria;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerrariaMoba.Abilities.Flibnob {
+    [Serializable]
     public class TitaniumShell : Ability {
         public TitaniumShell(Player myPlayer) : base(myPlayer) {
             Name = "Titanium Shell";
@@ -9,8 +11,8 @@ namespace TerrariaMoba.Abilities.Flibnob {
         }
         
         public override void Cast() {
-            player.AddBuff(BuffType<Buffs.TitaniumReflection>(), 3 * 60);
-            Cooldown = 10 * 60;
+            User.AddBuff(BuffType<Buffs.TitaniumReflection>(), 3 * 60);
+            cooldownTimer = 10 * 60;
         }
     }
-}
+}*/

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿/*using System;
+using System.Collections.Generic;
 using BaseMod;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -8,6 +9,7 @@ using TerrariaMoba.Players;
 using static Terraria.ModLoader.ModContent;
 
 namespace TerrariaMoba.Abilities.Osteo {
+    [Serializable]
     public class SoulSiphon : Ability {
         private List<Projectile> soulList;
         private List<Vector2> soulPositions;
@@ -20,20 +22,20 @@ namespace TerrariaMoba.Abilities.Osteo {
         }
 
 
-        public override void Cast() {
+        public override void OnCast() {
             if (soulList.Count == 0) {
-                if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
-                    var proj = Projectile.NewProjectileDirect(player.Center, Vector2.Zero,
-                        TerrariaMoba.Instance.ProjectileType("OsteoSoul"), 0, 0, player.whoAmI);
+                if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
+                    var proj = Projectile.NewProjectileDirect(User.Center, Vector2.Zero,
+                        TerrariaMoba.Instance.ProjectileType("OsteoSoul"), 0, 0, User.whoAmI);
                     soulList.Add(proj);
                 }
-                soulPositions.Add(player.Center);
+                soulPositions.Add(User.Center);
             }
             else {
-                if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
+                if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
                     Projectile consumeSoul = null;
                     foreach (var soul in soulList) {
-                        if (Vector2.Distance(soul.position, player.Center) < 16 * 16) {
+                        if (Vector2.Distance(soul.position, User.Center) < 16 * 16) {
                             consumeSoul = soul;
                             break;
                         }
@@ -47,7 +49,7 @@ namespace TerrariaMoba.Abilities.Osteo {
 
                 Vector2? consumeSoulNullable = null;
                 foreach (Vector2 soul in soulPositions) {
-                    if (Vector2.Distance(soul, player.Center) < 16 * 16) {
+                    if (Vector2.Distance(soul, User.Center) < 16 * 16) {
                         consumeSoulNullable = soul;
                         break;
                     }
@@ -56,10 +58,10 @@ namespace TerrariaMoba.Abilities.Osteo {
                 if (consumeSoulNullable != null) {
                     Vector2 consumeSoul = consumeSoulNullable.GetValueOrDefault();
                     soulPositions.Remove(consumeSoul);
-                    float distance = Vector2.Distance(consumeSoul, player.Center);
+                    float distance = Vector2.Distance(consumeSoul, User.Center);
 
                     for (float i = 0f; i < distance; i ++) {
-                        Vector2 position = Vector2.Lerp(consumeSoul, player.Center, i / distance);
+                        Vector2 position = Vector2.Lerp(consumeSoul, User.Center, i / distance);
                         var dust = Dust.NewDustPerfect(position, 15, Vector2.Zero, 0, Color.SteelBlue, 1f);
                         dust.noGravity = true;
                         dust.noLight = true;
@@ -69,28 +71,28 @@ namespace TerrariaMoba.Abilities.Osteo {
                     for (int i = 0; i < maxSkeles; i++) {
                         if (i < maxSkeles / 2) {
                             Vector2 position = BaseAI.Trace(
-                                new Vector2(player.Center.X + ((96) * player.direction) + (i * 32),
-                                    player.Center.Y - 64),
-                                new Vector2(player.Center.X, Main.bottomWorld), new Vector2(-1, -1), -1, false, true);
+                                new Vector2(User.Center.X + ((96) * User.direction) + (i * 32),
+                                    User.Center.Y - 64),
+                                new Vector2(User.Center.X, Main.bottomWorld), new Vector2(-1, -1), -1, false, true);
 
                             int npc = NPC.NewNPC((int) position.X, (int) position.Y, NPCType<OsteoSkeleton>());
 
-                            Main.npc[npc].GetGlobalNPC<MobaGlobalNPC>().owner = player.whoAmI;
-                            Main.npc[npc].direction = player.direction;
-                            (player.GetModPlayer<MobaPlayer>().MyCharacter as Characters.Osteo).skeleList.Add(
+                            Main.npc[npc].GetGlobalNPC<MobaGlobalNPC>().owner = User.whoAmI;
+                            Main.npc[npc].direction = User.direction;
+                            (User.GetModPlayer<MobaPlayer>().MyCharacter as Characters.Osteo).skeleList.Add(
                                 Main.npc[npc]);
                         }
                         else {
                             Vector2 position = BaseAI.Trace(
-                                new Vector2(player.Center.X + ((96) * -player.direction) - ((i - maxSkeles / 2) * 32),
-                                    player.Center.Y - 64),
-                                new Vector2(player.Center.X, Main.bottomWorld), new Vector2(-1, -1), -1, false, true);
+                                new Vector2(User.Center.X + ((96) * -User.direction) - ((i - maxSkeles / 2) * 32),
+                                    User.Center.Y - 64),
+                                new Vector2(User.Center.X, Main.bottomWorld), new Vector2(-1, -1), -1, false, true);
 
                             int npc = NPC.NewNPC((int) position.X, (int) position.Y, NPCType<OsteoSkeleton>());
 
-                            Main.npc[npc].GetGlobalNPC<MobaGlobalNPC>().owner = player.whoAmI;
-                            Main.npc[npc].direction = -player.direction;
-                            (player.GetModPlayer<MobaPlayer>().MyCharacter as Characters.Osteo).skeleList.Add(
+                            Main.npc[npc].GetGlobalNPC<MobaGlobalNPC>().owner = User.whoAmI;
+                            Main.npc[npc].direction = -User.direction;
+                            (User.GetModPlayer<MobaPlayer>().MyCharacter as Characters.Osteo).skeleList.Add(
                                 Main.npc[npc]);
                         }
                     }
@@ -99,9 +101,9 @@ namespace TerrariaMoba.Abilities.Osteo {
             }
         }
 
-        public override void Using() {
+        public override void WhileActive() {
             if (Timer == 360) {
-                End();
+                TimeOut();
             }
 
             //some buff here
@@ -109,9 +111,9 @@ namespace TerrariaMoba.Abilities.Osteo {
             Timer++;
         }
 
-        public override void End() {
+        public override void TimeOut() {
             Timer = 0;
             IsActive = false;
         }
     }
-}
+}*/

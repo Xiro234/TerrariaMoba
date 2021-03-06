@@ -3,8 +3,10 @@ using Microsoft.Xna.Framework;
 using Terraria.UI;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ID;
 using TerrariaMoba.Characters;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Packets.GameStart;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.UI {
@@ -19,27 +21,17 @@ namespace TerrariaMoba.UI {
         public override void OnInitialize() {
             iconList = new List<CharacterIcon>();
             
-            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaIcon"),
-                CharacterEnum.Sylvia));
-            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieIcon"),
-                CharacterEnum.Marie));
-            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobIcon"),
-                CharacterEnum.Flibnob));
-            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoIcon"),
-                CharacterEnum.Osteo));
-            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Nocturne/NocturneIcon"),
-                CharacterEnum.Nocturne));
-            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Chastradamus/ChastradamusIcon"),
-                CharacterEnum.Chastradamus));
-            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/OldMan/OldManIcon"),
-                CharacterEnum.OldMan));
-            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Jorm/JormIcon"),
-                CharacterEnum.Jorm));
-            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"),
-                CharacterEnum.Null));
-            iconList.Add(new CharacterIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"),
-                CharacterEnum.Null));
-            
+            // iconList.Add(new CharacterIcon(new Sylvia(Main.LocalPlayer)));
+            // iconList.Add(new CharacterIcon(new Flibnob(Main.LocalPlayer)));
+            // iconList.Add(new CharacterIcon(new Osteo(Main.LocalPlayer)));
+            // iconList.Add(new CharacterIcon(new Marie(Main.LocalPlayer)));
+            // iconList.Add(new CharacterIcon(new Character(Main.LocalPlayer)));
+            // iconList.Add(new CharacterIcon(new Character(Main.LocalPlayer)));
+            // iconList.Add(new CharacterIcon(new Character(Main.LocalPlayer)));
+            // iconList.Add(new CharacterIcon(new Character(Main.LocalPlayer)));
+            // iconList.Add(new CharacterIcon(new Character(Main.LocalPlayer)));
+            // iconList.Add(new CharacterIcon(new Character(Main.LocalPlayer)));
+
             background = new UIImage(TerrariaMoba.Instance.GetTexture("Textures/CharacterSelect"));
             background.VAlign = 0.5f;
             background.HAlign = 0.5f;
@@ -68,7 +60,7 @@ namespace TerrariaMoba.UI {
                 Main.LocalPlayer.mouseInterface = true;
             }
 
-            if (mobaPlayer.CharacterSelected == CharacterEnum.Null) {
+            if (mobaPlayer.selectedCharacter == CharacterIdentity.Base) {
                 checkmark.SetImage(TerrariaMoba.Instance.GetTexture("Textures/CheckMarkUnselected"));
             }
             else {
@@ -78,33 +70,18 @@ namespace TerrariaMoba.UI {
 
         public void OnCheckClick(UIMouseEvent evt, UIElement listeningElement) {
             var mobaPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
-            if (mobaPlayer.CharacterSelected != CharacterEnum.Null) {
-                switch (mobaPlayer.CharacterSelected) {
-                    case (CharacterEnum.Sylvia):
-                        mobaPlayer.MyCharacter = new Sylvia(Main.LocalPlayer);
-                        mobaPlayer.MyCharacter.SyncTalents();
-                        break;
-                    case (CharacterEnum.Marie):
-                        mobaPlayer.MyCharacter = new Marie(Main.LocalPlayer);
-                        mobaPlayer.MyCharacter.SyncTalents();
-                        break;
-                    case (CharacterEnum.Flibnob):
-                        mobaPlayer.MyCharacter = new Flibnob(Main.LocalPlayer);
-                        mobaPlayer.MyCharacter.SyncTalents();
-                        break;
-                    case (CharacterEnum.Osteo):
-                        mobaPlayer.MyCharacter = new Osteo(Main.LocalPlayer);
-                        mobaPlayer.MyCharacter.SyncTalents();
-                        break;
+            if (mobaPlayer.selectedCharacter != CharacterIdentity.Base) {
+                if (TerrariaMobaUtils.AssignCharacter(ref mobaPlayer.MyCharacter, mobaPlayer.selectedCharacter,
+                    mobaPlayer.player)) {
+                    new SyncCharacterSelection().Send();
                 }
-
-                Main.PlaySound(11);
+                Main.PlaySound(SoundID.MenuClose);
                 TerrariaMoba.Instance.HideSelect();
             }
         }
 
         public void OnCheckMouseOver(UIMouseEvent evt, UIElement listeningElement) {
-            Main.PlaySound(12);
+            Main.PlaySound(SoundID.MenuTick);
         }
     }
 }

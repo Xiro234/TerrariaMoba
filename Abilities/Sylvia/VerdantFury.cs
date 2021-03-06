@@ -1,5 +1,5 @@
-﻿using Terraria;
-using static Terraria.ModLoader.ModContent;
+﻿/*using Terraria;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Sylvia {
     public class VerdantFury : Ability {
@@ -8,9 +8,12 @@ namespace TerrariaMoba.Abilities.Sylvia {
             Icon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaAbilityTwo");
         }
 
-        public override void Cast() {
-            player.AddBuff(BuffType<Buffs.VerdantFuryBuff>(), 60 * 4);
-            Cooldown = 10 * 60;
+        public override void OnCast() {
+            //player.AddBuff(BuffType<Buffs.VerdantFuryBuff>(), 60 * 4);
+            if (Main.LocalPlayer == User) {
+                User.GetModPlayer<MobaPlayer>().AddEffect(new Slow(360, User.whoAmI,0.3f));
+            }
+            cooldownTimer = 10 * 60;
         }
     }
-}
+}*/

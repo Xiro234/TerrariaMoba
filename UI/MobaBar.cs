@@ -168,11 +168,11 @@ namespace TerrariaMoba.UI {
             var player = Main.LocalPlayer;
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
             if (mobaPlayer.CharacterPicked) {
-                DrawIcon(ref QCooldown, ref QPanel, mobaPlayer.MyCharacter.QAbility.Cooldown, mobaPlayer.MyCharacter.QAbility);
-                DrawIcon(ref ECooldown, ref EPanel, mobaPlayer.MyCharacter.EAbility.Cooldown, mobaPlayer.MyCharacter.EAbility);
-                DrawIcon(ref RCooldown, ref RPanel, mobaPlayer.MyCharacter.RAbility.Cooldown, mobaPlayer.MyCharacter.RAbility);
-                DrawIcon(ref CCooldown, ref CPanel, mobaPlayer.MyCharacter.CAbility.Cooldown, mobaPlayer.MyCharacter.CAbility);
-                levelText.SetText(mobaPlayer.MyCharacter.level.ToString(), 0.75f, false);
+                DrawIcon(ref QCooldown, ref QPanel, mobaPlayer.MyCharacter.SlotOne.CooldownTimer, mobaPlayer.MyCharacter.SlotOne);
+                DrawIcon(ref ECooldown, ref EPanel, mobaPlayer.MyCharacter.SlotTwo.CooldownTimer, mobaPlayer.MyCharacter.SlotTwo);
+                DrawIcon(ref RCooldown, ref RPanel, mobaPlayer.MyCharacter.SlotFour.CooldownTimer, mobaPlayer.MyCharacter.SlotFour);
+                DrawIcon(ref CCooldown, ref CPanel, mobaPlayer.MyCharacter.SlotFive.CooldownTimer, mobaPlayer.MyCharacter.SlotFive);
+                levelText.SetText(mobaPlayer.MyCharacter.Level.ToString(), 0.75f, false);
             }
             
             lifeText.SetText(player.statLife + "/" + player.statLifeMax2 + " (+" + mobaPlayer.lifeRegen + ")", 0.75f, false);
@@ -180,7 +180,7 @@ namespace TerrariaMoba.UI {
             manaText.SetText(mobaPlayer.currentResource + "/" + mobaPlayer.maxResource + " (+" + mobaPlayer.resourceRegen + ")", 0.75f, false);
 
             armorText.SetText(mobaPlayer.armor.ToString(), 0.6f, false);
-            moveSpeedText.SetText(Math.Round(player.velocity.Length()).ToString(), 0.6f, false);
+            moveSpeedText.SetText(((player.maxRunSpeed / 3) * 100).ToString() + "%", 0.6f, false);
 
             if (player.dead) {
                 deathTimer.SetText(Math.Ceiling(player.respawnTimer / 60f).ToString());

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using TerrariaMoba.Packets;
+using TerrariaMoba.Packets.General;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.NPCs {

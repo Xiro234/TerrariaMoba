@@ -1,26 +1,31 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ModLoader;
 using TerrariaMoba.Abilities;
-using TerrariaMoba.Packets;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Characters {
-    public class Character {
-        public Player player;
-        public int level = 1;
-        public bool canSelectTalent = false;
-        public string characterName = "none";
-        public bool[,] talentArray;
+    public abstract class Character {
+        public Player User { get; }
+        public int Level { get; protected set; }
+        public string CharacterName { get; protected set; }
+        public bool[,] TalentArray { get; protected set; }
         public int xpPerLevel = 100;
-        public int experience = 0;
-        public CharacterEnum CharacterEnum;
-        public List<Ability> abilities;
-        public Texture2D CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Lock");
+        public int Experience { get; protected set; }
+        public List<Ability> Abilities { get; protected set; }
+
+        public virtual Texture2D CharacterIcon {
+            get => TerrariaMoba.Instance.GetTexture("Textures/Lock");
+        }
+
+        public virtual CharacterIdentity identity {
+            get => CharacterIdentity.Base;
+        }
+        public virtual string FullName {
+            get => "Default Character";
+        }
 
         //Stats
         public int baseMaxLife;
@@ -30,7 +35,7 @@ namespace TerrariaMoba.Characters {
         public float baseResourceRegen;
         public float baseResourceDegen;
         public int baseArmor;
-        
+
         //Items
         public Item primary;
         
@@ -42,34 +47,33 @@ namespace TerrariaMoba.Characters {
         public Item dyeLeg;
         
         //Ability Properties
-        public Ability QAbility {
-            get { return abilities[0]; }
-            set { abilities[0] = value; }
+        public Ability SlotOne {
+            get { return Abilities[0]; }
+            protected set { Abilities[0] = value; }
         }
         
-        public Ability EAbility {
-            get { return abilities[1]; }
-            set { abilities[1] = value; }
+        public Ability SlotTwo {
+            get { return Abilities[1]; }
+            protected set { Abilities[1] = value; }
         }
         
-        public Ability FAbility {
-            get { return abilities[2]; }
-            set { abilities[2] = value; }
+        public Ability SlotThree {
+            get { return Abilities[2]; }
+            protected set { Abilities[2] = value; }
         }
         
-        public Ability RAbility {
-            get { return abilities[3]; }
-            set { abilities[3] = value; }
+        public Ability SlotFour {
+            get { return Abilities[3]; }
+            protected set { Abilities[3] = value; }
         }
         
-        public Ability CAbility {
-            get { return abilities[4]; }
-            set { abilities[4] = value; }
+        public Ability SlotFive {
+            get { return Abilities[4]; }
+            protected set { Abilities[4] = value; }
         }
 
-        public Character(Player myPlayer) {
-            player = myPlayer;
-            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
+        public Character(Player user) {
+            User = user;
             
             vanityHead = new Item();
             dyeHead = new Item();
@@ -78,33 +82,34 @@ namespace TerrariaMoba.Characters {
             vanityLeg = new Item();
             dyeLeg = new Item();
             primary = new Item();
-
+            
+            /*
             abilities = new List<Ability>(8);
             for(int i = 0; i < abilities.Capacity; i++) {
                 abilities.Add(new Ability());
             }
-            talentArray = new bool[7, 4];
-            mobaPlayer.CharacterPicked = true;
+            */
+            TalentArray = new bool[7, 4];
         }
         
         public void SetCharacter() {
-            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
+            var mobaPlayer = User.GetModPlayer<MobaPlayer>();
             TerrariaMobaUtils.ClearInventory(mobaPlayer);
             InitializeCharacter();
             SetPlayer();
             SetStats();
             
-            player.inventory[0] = primary;
-            player.armor[10] = vanityHead;
-            player.armor[11] = vanityBody;
-            player.armor[12] = vanityLeg;
+            User.inventory[0] = primary;
+            User.armor[10] = vanityHead;
+            User.armor[11] = vanityBody;
+            User.armor[12] = vanityLeg;
 
-            player.dye[0] = dyeHead;
-            player.dye[1] = dyeBody;
-            player.dye[2] = dyeLeg;
+            User.dye[0] = dyeHead;
+            User.dye[1] = dyeBody;
+            User.dye[2] = dyeLeg;
 
-            player.statLifeMax2 = baseMaxLife;
-            player.statLife = baseMaxLife;
+            User.statLifeMax2 = baseMaxLife;
+            User.statLife = baseMaxLife;
         }
 
         public virtual void SetPlayer() {}
@@ -120,11 +125,11 @@ namespace TerrariaMoba.Characters {
         }
         
         public virtual void GainExperience(int xp) {
-            experience += xp;
+            Experience += xp;
 
-            while (experience >= xpPerLevel) {
+            while (Experience >= xpPerLevel) {
                 LevelUp();
-                experience -= xpPerLevel;
+                Experience -= xpPerLevel;
             }
         }
         
@@ -133,142 +138,145 @@ namespace TerrariaMoba.Characters {
         public virtual void InitializeCharacter() { }
 
         public virtual void LevelTalentOne() {
+            /*
             Main.NewText(canSelectTalent);
-            Main.NewText(level);
+            Main.NewText(Level);
             if (canSelectTalent) {
-                switch (level) {
+                switch (Level) {
                     case 1:
                         Main.NewText("Level up one!");
-                        talentArray[0, 0] = true;
+                        TalentArray[0, 0] = true;
                         break;
                     case 4:
-                        talentArray[1, 0] = true;
+                        TalentArray[1, 0] = true;
                         break;
                     case 7:
-                        talentArray[2, 0] = true;
+                        TalentArray[2, 0] = true;
                         break;
                     case 10:
-                        talentArray[3, 0] = true;
+                        TalentArray[3, 0] = true;
                         break;
                     case 13:
-                        talentArray[4, 0] = true;
+                        TalentArray[4, 0] = true;
                         break;
                     case 16:
-                        talentArray[5, 0] = true;
+                        TalentArray[5, 0] = true;
                         break;
                     case 20:
-                        talentArray[6, 0] = true;
+                        TalentArray[6, 0] = true;
                         break;
                 }
                 canSelectTalent = false;
                 SyncTalents();
             }
+            */
         }
         
         public virtual void LevelTalentTwo() {
-            if (canSelectTalent) {
-                switch (level) {
+            /*if (canSelectTalent) {
+                switch (Level) {
                     case 1:
                         Main.NewText("Level up two!");
-                        talentArray[0, 1] = true;
+                        TalentArray[0, 1] = true;
                         break;
                     case 4:
-                        talentArray[1, 1] = true;
+                        TalentArray[1, 1] = true;
                         break;
                     case 7:
-                        talentArray[2, 1] = true;
+                        TalentArray[2, 1] = true;
                         break;
                     case 10:
-                        talentArray[3, 1] = true;
+                        TalentArray[3, 1] = true;
                         break;
                     case 13:
-                        talentArray[4, 1] = true;
+                        TalentArray[4, 1] = true;
                         break;
                     case 16:
-                        talentArray[5, 1] = true;
+                        TalentArray[5, 1] = true;
                         break;
                     case 20:
-                        talentArray[6, 1] = true;
+                        TalentArray[6, 1] = true;
                         break;
                 }
                 canSelectTalent = false;
                 SyncTalents();
-            }
+            }*/
         }
         
         public virtual void LevelTalentThree() {
-            if (canSelectTalent) {
-                switch (level) {
+            /*if (canSelectTalent) {
+                switch (Level) {
                     case 1:
                         Main.NewText("Level up three!");
-                        talentArray[0, 2] = true;
+                        TalentArray[0, 2] = true;
                         break;
                     case 4:
-                        talentArray[1, 2] = true;
+                        TalentArray[1, 2] = true;
                         break;
                     case 7:
-                        talentArray[2, 2] = true;
+                        TalentArray[2, 2] = true;
                         break;
                     case 10:
-                        talentArray[3, 2] = true;
+                        TalentArray[3, 2] = true;
                         break;
                     case 13:
-                        talentArray[4, 2] = true;
+                        TalentArray[4, 2] = true;
                         break;
                     case 16:
-                        talentArray[5, 2] = true;
+                        TalentArray[5, 2] = true;
                         break;
                     case 20:
-                        talentArray[6, 2] = true;
+                        TalentArray[6, 2] = true;
                         break;
                 }
                 canSelectTalent = false;
                 SyncTalents();
-            }
+            }*/
         }
 
         public virtual void LevelTalentFour() {
-            if (canSelectTalent) {
-                switch (level) {
+            /*if (canSelectTalent) {
+                switch (Level) {
                     case 1:
-                        talentArray[0, 3] = true;
+                        TalentArray[0, 3] = true;
                         break;
                     case 4:
-                        talentArray[1, 3] = true;
+                        TalentArray[1, 3] = true;
                         break;
                     case 7:
-                        talentArray[2, 3] = true;
+                        TalentArray[2, 3] = true;
                         break;
                     case 10:
-                        talentArray[3, 3] = true;
+                        TalentArray[3, 3] = true;
                         break;
                     case 13:
-                        talentArray[4, 3] = true;
+                        TalentArray[4, 3] = true;
                         break;
                     case 16:
-                        talentArray[5, 3] = true;
+                        TalentArray[5, 3] = true;
                         break;
                     case 20:
-                        talentArray[6, 3] = true;
+                        TalentArray[6, 3] = true;
                         break;
                 }
                 canSelectTalent = false;
                 SyncTalents();
-            }
+            }*/
         }
 
         public virtual void SyncTalents() {
-            TalentsPacket.Write(Main.LocalPlayer.whoAmI, CharacterEnum, talentArray);
+
         }
 
         public virtual void ReadCharacter(BinaryReader reader) {
-            level = reader.ReadInt32();
+            Level = reader.ReadInt32();
         }
 
         public virtual void WriteCharacter(BinaryWriter writer) {
-            writer.Write(level);
+            writer.Write(Level);
         }
         
+        /*
         public virtual void ResetEffects() {}
         public virtual void PreUpdate() {}
         public virtual void PostUpdateBuffs() {}
@@ -281,20 +289,20 @@ namespace TerrariaMoba.Characters {
         public virtual void SetControls() {}
         public virtual void PostUpdateEquips() {}
         public virtual void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {}
+        */
         
         public virtual void HandleAbility(Ability ability) {
+            /*
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
-            if (ability.Cooldown == 0 && mobaPlayer.currentResource >= ability.ResourceCost && !ability.IsActive) {
+            if (ability.cooldownTimer == 0 && mobaPlayer.currentResource >= ability.ResourceCost && !ability.IsActive) {
                 mobaPlayer.currentResource -= ability.ResourceCost;
-                AbilityCastPacket.Write(abilities.IndexOf(ability), player.whoAmI);
-                ability.Cast();
+                ability.OnCast();
             }
+            */
         }
         
-        public virtual void HealMe(ref int amount) {}
-
         public virtual void UpdateBaseStats() {
-            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
+            var mobaPlayer = User.GetModPlayer<MobaPlayer>();
 
             mobaPlayer.maxLife += baseMaxLife;
             mobaPlayer.lifeRegen += baseLifeRegen;

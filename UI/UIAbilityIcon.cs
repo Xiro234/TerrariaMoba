@@ -14,7 +14,7 @@ namespace TerrariaMoba.UI {
         public int abilityMaxCooldown = 0;
 
         public UIAbilityIcon(Texture2D texture) : base(texture) {
-            ability = new Ability();
+            //ability = new Ability();
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch) {
@@ -26,10 +26,10 @@ namespace TerrariaMoba.UI {
             }
 
             //Cooldown Effect
-            if (ability.Cooldown > 0) {
+            if (ability.CooldownTimer > 0) {
                 Rectangle hitbox = GetDimensions().ToRectangle();
                 if (abilityMaxCooldown == 0) {
-                    abilityMaxCooldown = ability.Cooldown;
+                    abilityMaxCooldown = ability.CooldownTimer;
                 }
 
                 //pixel adjustments so it covers the entirety of the icon
@@ -38,7 +38,7 @@ namespace TerrariaMoba.UI {
                 int top = hitbox.Top + 1;
                 int bottom = hitbox.Bottom + 1;
                 
-                float rads = (float)(Math.PI * 2) - ((float)(Math.PI * 2) * ((float) ability.Cooldown / (float) abilityMaxCooldown));
+                float rads = (float)(Math.PI * 2) - ((float)(Math.PI * 2) * ((float) ability.CooldownTimer / (float) abilityMaxCooldown));
                 
                 for (int i = 0; i < right - left; i++) {
                     for (int j = 0; j < bottom - top; j++) {
@@ -63,14 +63,14 @@ namespace TerrariaMoba.UI {
                 abilityMaxCooldown = 0;
             }
 
-            ability.DrawSelf(spriteBatch, this);
+            ability.AdditionalDrawing(spriteBatch, this);
         }
 
         public override void Click(UIMouseEvent evt) {
             if (Main.keyState.IsKeyDown(Keys.LeftAlt)) {
                 var modPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
-                if (ability.Cooldown > 0) {
-                    Main.NewText(Main.LocalPlayer.name + " is ready to use " + ability.Name + " in " + Math.Ceiling(ability.Cooldown / 60f)  + " seconds!");
+                if (ability.CooldownTimer > 0) {
+                    Main.NewText(Main.LocalPlayer.name + " is ready to use " + ability.Name + " in " + Math.Ceiling(ability.CooldownTimer / 60f)  + " seconds!");
                 }
                 else {
                     Main.NewText(Main.LocalPlayer.name + " is ready to use " + ability.Name + "!");

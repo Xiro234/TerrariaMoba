@@ -1,15 +1,28 @@
-﻿using Terraria.ModLoader;
+﻿/*using Terraria.ModLoader;
 using TerrariaMoba.Players;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.Abilities.Sylvia;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Characters {
     public class Sylvia : Character {
+        public override string FullName {
+            get => "Sylvia Verda, Markswoman of the Lush Jungle";
+        }
+        
+        public override CharacterIdentity identity {
+            get => CharacterIdentity.Sylvia;
+        }
+        
+        public override Texture2D CharacterIcon {
+            get => TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaIcon");
+        }
+
         private bool IsPhasing = false;
         private bool SylviaUlt1 = false;
         private int SylviaUlt1Timer = 0;
@@ -18,12 +31,9 @@ namespace TerrariaMoba.Characters {
         public float VerdantFuryIncrease = 0.05f;
         public int JunglesWrathTime = 180;
 
-        public Sylvia(Player player) : base(player) {
-            CharacterEnum = CharacterEnum.Sylvia;
-        }
+        public Sylvia(Player player) : base(player) { }
 
         public override void InitializeCharacter() {
-            CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaIcon");
             VerdantFuryTime = 20;
         }
 
@@ -52,7 +62,7 @@ namespace TerrariaMoba.Characters {
             RAbility = new Flourish(player);
             CAbility = new JunglesWrath(player);
         }
-
+        /*
         public override void ReadCharacter(BinaryReader reader) {
             base.ReadCharacter(reader);
         }
@@ -141,7 +151,7 @@ namespace TerrariaMoba.Characters {
                         doEffects = true;
                     }
                 }
-                Packets.JunglesWrathAddPacket.Write(otherMobaPlayer.player.whoAmI, otherMobaPlayer.SylviaEffects.JunglesWrathCount, doEffects);
+                Packets.General.JunglesWrathAddPacket.Write(otherMobaPlayer.player.whoAmI, otherMobaPlayer.SylviaEffects.JunglesWrathCount, doEffects);
             }
         }
 
@@ -159,7 +169,7 @@ namespace TerrariaMoba.Characters {
                 }
             }
         }
-
+        #1#
         public override void LevelUp() {
             level += 1;
             player.GetModPlayer<MobaPlayer>().SylviaStats.LevelUp();
@@ -194,4 +204,4 @@ namespace TerrariaMoba.Characters {
             }
         }
     }
-}
+}*/

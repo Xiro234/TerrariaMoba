@@ -30,9 +30,9 @@ namespace TerrariaMoba.Items.Flibnob {
         public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat) {
             var plr = player.GetModPlayer<MobaPlayer>();
             if (plr.CharacterPicked) {
-                if (plr.MyCharacter.CharacterEnum == CharacterEnum.Flibnob) {
-                    if (plr.MyCharacter.level > 1) {
-                        add += (float)Math.Pow(1.04f, plr.MyCharacter.level - 1) - 1;
+                if (plr.selectedCharacter == CharacterIdentity.Flibnob) {
+                    if (plr.MyCharacter.Level > 1) {
+                        add += (float)Math.Pow(1.04f, plr.MyCharacter.Level - 1) - 1;
                     }
                 }
             }

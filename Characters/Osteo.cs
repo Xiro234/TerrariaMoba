@@ -1,24 +1,32 @@
-﻿using TerrariaMoba.Players;
+﻿/*using TerrariaMoba.Players;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.Abilities.Osteo;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Characters {
     public class Osteo : Character {
+        public override string FullName {
+            get => "Osteo Prime, Last Necromancer of the Mudpits";
+        }
+        
+        public override CharacterIdentity identity {
+            get => CharacterIdentity.Osteo;
+        }
+        
+        public override Texture2D CharacterIcon {
+            get => TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoIcon");
+        }
+        
         public List<NPC> skeleList;
 
         public Osteo(Player player) : base(player) {
-            CharacterEnum = CharacterEnum.Osteo;
             skeleList = new List<NPC>();
-        }
-
-        public override void InitializeCharacter() {
-            CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoIcon");
         }
 
         public override void SetPlayer() {
@@ -49,7 +57,7 @@ namespace TerrariaMoba.Characters {
             CAbility = new SkeletalBond(player);
             //abilities[2] = new SongOfTheDamned(player);
         }
-
+        /*
         public override void PostUpdateEquips() {
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
 
@@ -87,7 +95,7 @@ namespace TerrariaMoba.Characters {
                 player.GetModPlayer<MobaPlayer>().HealMe(20, true);
             }
         }
-        
+        #1#
         public override void LevelUp() {
             level += 1;
             player.GetModPlayer<MobaPlayer>().MarieStats.LevelUp();
@@ -139,4 +147,4 @@ namespace TerrariaMoba.Characters {
             base.WriteCharacter(writer);
         }
     }
-}
+}*/

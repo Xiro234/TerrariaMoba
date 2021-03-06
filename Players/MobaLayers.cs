@@ -7,7 +7,7 @@ using TerrariaMoba.Effects;
 
 namespace TerrariaMoba.Players {
     public static class MobaLayers {
-        public static readonly PlayerLayer MiscEffects = new PlayerLayer("TerrariaMoba", "MiscEffects", PlayerLayer.MiscEffectsFront, delegate(PlayerDrawInfo drawInfo) {
+        public static readonly PlayerLayer MiscEffectsFront = new PlayerLayer("TerrariaMoba", "MiscEffects", PlayerLayer.MiscEffectsFront, delegate(PlayerDrawInfo drawInfo) {
             Player drawPlayer = drawInfo.drawPlayer;
             Mod mod = ModLoader.GetMod("TerrariaMoba");
             MobaPlayer modPlayer = drawPlayer.GetModPlayer<MobaPlayer>();
@@ -80,7 +80,14 @@ namespace TerrariaMoba.Players {
                         new Vector2(texture.Width / 2f, texture.Height / 2f), 1f, SpriteEffects.None, 0);
                     Main.playerDrawData.Add(data);
                 }
+                
             }
         });
+
+        public static readonly PlayerLayer MiscEffectsBack = new PlayerLayer("TerrariaMoba", "MiscEffects",
+            PlayerLayer.MiscEffectsBack,
+            delegate(PlayerDrawInfo drawInfo) {
+                
+            });
     }
 }

@@ -4,8 +4,8 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
-using TerrariaMoba.Enums;
 using TerrariaMoba.UI;
+using WebmilioCommons.Networking;
 
 namespace TerrariaMoba {
 	public class TerrariaMoba : Mod {
@@ -29,7 +29,7 @@ namespace TerrariaMoba {
 		public TerrariaMoba() {
 			Instance = this;
 		}
-		
+
 		public override void Load() {
 			AbilityOneHotKey = RegisterHotKey("Ability One", "Q");
 			AbilityTwoHotKey = RegisterHotKey("Ability Two", "F");
@@ -58,8 +58,8 @@ namespace TerrariaMoba {
 
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
 			int LayerIndex;
-			LayerIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
-			layers.RemoveAt(LayerIndex);
+			//LayerIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
+			//layers.RemoveAt(LayerIndex);
 			LayerIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Death Text"));
 			layers.RemoveAt(LayerIndex);
 
@@ -90,22 +90,11 @@ namespace TerrariaMoba {
 		}
 
 		public override void HandlePacket(BinaryReader reader, int whoAmI) {
-			Message msg = (Message) reader.ReadByte();
+			NetworkPacketLoader.Instance.HandlePacket(reader, whoAmI);
+			/*Message msg = (Message) reader.ReadByte();
 			switch (msg) {
-				case(Message.SyncExperience):
-					Packets.ExperiencePacket.Read(reader);
-					break;
 				case(Message.SyncPvpHit):
 					Packets.PvpHitPacket.Read(reader);
-					break;
-				case(Message.SyncTalents):
-					Packets.TalentsPacket.Read(reader);
-					break;
-				case(Message.SyncAbilities):
-					Packets.AbilityCastPacket.Read(reader);
-					break;
-				case(Message.SyncGameStart):
-					Packets.GameStartPacket.Read(reader);
 					break;
 				case(Message.SyncAbilityValues):
 					Packets.ReadWriteAbilityPacket.Read(reader);
@@ -113,7 +102,10 @@ namespace TerrariaMoba {
 				case(Message.SyncJunglesWrathAdd):
 					Packets.JunglesWrathAddPacket.Read(reader);
 					break;
-			}
+				case(Message.SyncEffect):
+					//Packets.EffectPacket.Read(reader);
+					break;
+			}*/
 		}
 
 		internal void ShowBar() {

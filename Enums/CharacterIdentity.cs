@@ -1,6 +1,6 @@
 ﻿namespace TerrariaMoba.Enums {
-    public enum CharacterEnum : int {
-        Null = 1,
+    public enum CharacterIdentity : byte {
+        Base = 1,
         Sylvia,
         Marie,
         Flibnob,

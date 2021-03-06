@@ -7,7 +7,7 @@ using TerrariaMoba.Enums;
 using TerrariaMoba.Players;
 using static Terraria.ModLoader.ModContent;
 
-namespace TerrariaMoba.Packets {
+namespace TerrariaMoba.Packets.General {
     public class JunglesWrathAddPacket {
         public static void Read(BinaryReader reader) {
             if (Main.netMode == NetmodeID.Server) {

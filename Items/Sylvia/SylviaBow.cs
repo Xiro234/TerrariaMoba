@@ -38,9 +38,9 @@ namespace TerrariaMoba.Items.Sylvia {
         public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat) {
             var plr = player.GetModPlayer<MobaPlayer>();
             if (plr.CharacterPicked) {
-                if (plr.MyCharacter.CharacterEnum == CharacterEnum.Sylvia) {
-                    if (plr.MyCharacter.level > 1) {
-                        add += (float)Math.Pow(1.04f, plr.MyCharacter.level - 1) - 1;
+                if (plr.selectedCharacter == CharacterIdentity.Sylvia) {
+                    if (plr.MyCharacter.Level > 1) {
+                        add += (float)Math.Pow(1.04f, plr.MyCharacter.Level - 1) - 1;
                     }
                 }
             }

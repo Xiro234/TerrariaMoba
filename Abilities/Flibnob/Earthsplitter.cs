@@ -1,9 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿/*using System;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Flibnob {
+    [Serializable]
     public class Earthsplitter : Ability {
         public Earthsplitter(Player myPlayer) : base(myPlayer) {
             Name = "Earthsplitter";
@@ -11,29 +13,29 @@ namespace TerrariaMoba.Abilities.Flibnob {
         }
 
         public override void Cast() {
-            player.velocity.Y = -14.6f;
+            User.velocity.Y = -14.6f;
             IsActive = true;
         }
 
-        public override void Using() {
-            if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
-                if (player.velocity.Y == 0 && player.oldVelocity.Y == 0 && !player.mount.Active) {
+        public override void WhileActive() {
+            if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
+                if (User.velocity.Y == 0 && User.oldVelocity.Y == 0 && !User.mount.Active) {
                     IsActive = false;
-                    Vector2 position = player.Center;
-                    if (player.direction < 0) {
+                    Vector2 position = User.Center;
+                    if (User.direction < 0) {
                         position.X -= 110;
                     } else {
                         position.X += 110;
                     }
-                    Vector2 velocity = new Vector2(player.direction * 10f, 0);
+                    Vector2 velocity = new Vector2(User.direction * 10f, 0);
 
                     Projectile.NewProjectile(position, velocity, 
                         TerrariaMoba.Instance.ProjectileType("EarthsplitterSpawner"), 
-                        (int)player.GetModPlayer<MobaPlayer>().FlibnobStats.U2EarthDmg.Value, 0, player.whoAmI, 14f);
+                        (int)User.GetModPlayer<MobaPlayer>().FlibnobStats.U2EarthDmg.Value, 0, User.whoAmI, 14f);
                 }
 
-                Cooldown = 20 * 60;
+                cooldownTimer = 20 * 60;
             }
         }
     }
-}
+}*/

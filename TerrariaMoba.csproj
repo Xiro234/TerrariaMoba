@@ -19,10 +19,10 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="BaseMod, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\references\mods\BaseMod_v1.9.0.2.dll</HintPath>
+      <HintPath>..\..\references\mods\BaseMod_v2.0.0.0.dll</HintPath>
     </Reference>
-    <Reference Include="HamstarHelpers, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\references\mods\HamstarHelpers_v5.8.2.dll</HintPath>
+    <Reference Include="WebmilioCommons, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Mod Reader\WebmilioCommons\WebmilioCommons.XNA.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

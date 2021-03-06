@@ -9,6 +9,7 @@ namespace TerrariaMoba.Enums {
         SyncAbilities,
         SyncAbilityValues,
         SyncTalents,
-        SyncJunglesWrathAdd
+        SyncJunglesWrathAdd,
+        SyncEffect
     }
 }

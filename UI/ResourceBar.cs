@@ -29,7 +29,7 @@ namespace TerrariaMoba.UI {
                     quotient = (float) player.statMana / player.statManaMax;
                 }
                 else {
-                    quotient = (float) player.GetModPlayer<MobaPlayer>().MyCharacter.experience /
+                    quotient = (float) player.GetModPlayer<MobaPlayer>().MyCharacter.Experience /
                                player.GetModPlayer<MobaPlayer>().MyCharacter.xpPerLevel;
                 }
 

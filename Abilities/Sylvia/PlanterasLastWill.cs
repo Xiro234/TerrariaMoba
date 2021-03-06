@@ -1,19 +1,21 @@
-﻿using Terraria;
+﻿/*using System;
+using Terraria;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Sylvia {
+    [Serializable]
     public class PlanterasLastWill : Ability {
         public PlanterasLastWill(Player myPlayer) : base(myPlayer) {
             Name = "Plantera's Last Will";
             Icon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaUltimateTwo");
         }
         
-        public override void Cast() {
-            if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
-                Vector2 position = player.Center;
-                Vector2 playerToMouse = Main.MouseWorld - player.Center;
+        public override void OnCast() {
+            if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
+                Vector2 position = User.Center;
+                Vector2 playerToMouse = Main.MouseWorld - User.Center;
                 playerToMouse.Normalize();
                 position += playerToMouse * 20;
                 
@@ -21,10 +23,10 @@ namespace TerrariaMoba.Abilities.Sylvia {
 
                 Projectile proj = Main.projectile[Projectile.NewProjectile(position, velocity,
                     TerrariaMoba.Instance.ProjectileType("SylviaUlt2"), 
-                    (int)player.GetModPlayer<MobaPlayer>().SylviaStats.U2HeadDmg.Value, 0, player.whoAmI)];
+                    (int)User.GetModPlayer<MobaPlayer>().SylviaStats.U2HeadDmg.Value, 0, User.whoAmI)];
             }
             
-            Cooldown = 20 * 60;
+            cooldownTimer = 20 * 60;
         }
     }
-}
+}*/

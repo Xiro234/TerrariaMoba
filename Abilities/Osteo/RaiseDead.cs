@@ -1,4 +1,5 @@
-﻿using BaseMod;
+﻿/*using System;
+using BaseMod;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -9,6 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 
 namespace TerrariaMoba.Abilities.Osteo {
+    [Serializable]
     public class RaiseDead : Ability {
         public int marrowMax = 400;
         public int marrow = 400;
@@ -19,32 +21,32 @@ namespace TerrariaMoba.Abilities.Osteo {
             Icon = TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoAbilityOne");
         }
 
-        public override void Cast() {
+        public override void OnCast() {
             int numSkeletons = marrow / 100;
             if (numSkeletons > 0) {
                 for (int i = 0; i < numSkeletons; i++) {
                     Vector2 position = BaseAI.Trace(
-                        new Vector2(player.Center.X + ((96) * player.direction) + (i * 32), player.Center.Y - 64),
-                        new Vector2(player.Center.X, Main.bottomWorld), new Vector2(-1, -1), -1, false, true);
+                        new Vector2(User.Center.X + ((96) * User.direction) + (i * 32), User.Center.Y - 64),
+                        new Vector2(User.Center.X, Main.bottomWorld), new Vector2(-1, -1), -1, false, true);
 
                     int npc = NPC.NewNPC((int) position.X, (int) position.Y, NPCType<OsteoSkeleton>());
 
-                    Main.npc[npc].GetGlobalNPC<MobaGlobalNPC>().owner = player.whoAmI;
-                    Main.npc[npc].direction = player.direction;
-                    (player.GetModPlayer<MobaPlayer>().MyCharacter as Characters.Osteo).skeleList.Add(Main.npc[npc]);
+                    Main.npc[npc].GetGlobalNPC<MobaGlobalNPC>().owner = User.whoAmI;
+                    Main.npc[npc].direction = User.direction;
+                    (User.GetModPlayer<MobaPlayer>().MyCharacter as Characters.Osteo).skeleList.Add(Main.npc[npc]);
                     
                     marrow -= 100;
                 }
 
-                Cooldown = 360;
+                cooldownTimer = 360;
             }
         }
 
-        public override void DrawSelf(SpriteBatch spriteBatch, UIAbilityIcon abilityIcon) {
+        public override void AdditionalDrawing(SpriteBatch spriteBatch, UIAbilityIcon abilityIcon) {
             Vector2 iconPos = abilityIcon.GetDimensions().Position();
             Vector2 pos = new Vector2(iconPos.X + 2, iconPos.Y + abilityIcon.Height.Pixels - 12);
             Color color = Color.Aqua;
             Utils.DrawBorderString(spriteBatch, marrow + "/" + marrowMax, pos, color, 0.65f);
         }
     }
-}
+}*/

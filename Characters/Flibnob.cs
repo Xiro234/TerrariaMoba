@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+﻿/*using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Abilities.Flibnob;
@@ -8,13 +9,17 @@ using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Characters {
     public class Flibnob : Character {
-        public Flibnob(Player player) : base(player) {
-            CharacterEnum = CharacterEnum.Flibnob;
+        public override string FullName { get => "Flibnob, the Chieftain of Krommock"; }
+        public override CharacterIdentity identity {
+            get => CharacterIdentity.Flibnob;
         }
+        public override Texture2D CharacterIcon {
+            get => TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobIcon");
+        }
+
+        public Flibnob(Player player) : base(player) { }
         
-        public override void InitializeCharacter() {
-            CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobIcon");
-        }
+        public override void InitializeCharacter() { }
         
         public override void SetPlayer() {
             vanityHead.SetDefaults(3865);
@@ -46,9 +51,9 @@ namespace TerrariaMoba.Characters {
             /*
             CullTheMeek ultimate = new CullTheMeek(player);
             abilities[2] = ultimate;
-            */
+            #1#
         }
-        
+        /*
         public override void PreUpdate() {
             
         }
@@ -56,7 +61,7 @@ namespace TerrariaMoba.Characters {
         public override void PostUpdateEquips() {
             /*if (player.GetModPlayer<MobaPlayer>().FlibnobEffects.TitaniumShell) {
                 player.GetModPlayer<MobaPlayer>().percentThorns += 0.25f;
-            }*/
+            }
         }
 
         public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
@@ -77,13 +82,14 @@ namespace TerrariaMoba.Characters {
                 player.moveSpeed *= 0.5f;
                 player.maxRunSpeed *= 0.5f;
                 player.accRunSpeed *= 0.5f;
-            }*/
+            }
         }
         
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
 
         }
-
+        
+        #1#
         public override void LevelUp() {
             level += 1;
             player.GetModPlayer<MobaPlayer>().FlibnobStats.LevelUp();
@@ -121,4 +127,4 @@ namespace TerrariaMoba.Characters {
             }
         }
     }
-}
+}*/

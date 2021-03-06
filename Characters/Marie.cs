@@ -1,20 +1,28 @@
-﻿using System.Collections.Generic;
+﻿/*using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Players;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Abilities.Marie;
 
+
 namespace TerrariaMoba.Characters {
     public class Marie : Character {
-        public Marie(Player player) : base(player) {
-            CharacterEnum = CharacterEnum.Marie;
+        public override string FullName {
+            get => "Marie Tidewrath, High Priestess of Lacusia";
+        }
+        public override CharacterIdentity identity {
+            get => CharacterIdentity.Marie;
+        }
+        public override Texture2D CharacterIcon {
+            get => TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieIcon");
         }
 
-        public override void InitializeCharacter() {
-            CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieIcon");
-        }
+        public Marie(Player player) : base(player) { }
+
+        public override void InitializeCharacter() { }
 
         public override void SetPlayer() {
             vanityHead.SetDefaults(3226);
@@ -41,11 +49,10 @@ namespace TerrariaMoba.Characters {
             /*
             FountainOfTheGoddess ultimate = new FountainOfTheGoddess(player);
             abilities[2] = ultimate;
-            */
-            
-            CharacterIcon = TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieIcon");
+            #1#
         }
-
+        
+        /*
         public override void PreUpdate() {
             
         }
@@ -72,13 +79,13 @@ namespace TerrariaMoba.Characters {
                 player.moveSpeed *= 1.33f;
                 player.maxRunSpeed *= 1.33f;
                 player.accRunSpeed *= 1.33f;
-            }*/
+            }
         }
         
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
 
         }
-
+        #1#
         public override void LevelUp() {
             level += 1;
             player.GetModPlayer<MobaPlayer>().MarieStats.LevelUp();
@@ -116,4 +123,4 @@ namespace TerrariaMoba.Characters {
             }
         }
     }
-}
+}*/
