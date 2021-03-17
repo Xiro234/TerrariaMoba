@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="BaseMod, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\references\mods\BaseMod_v2.0.0.0.dll</HintPath>
+      <HintPath>..\..\Mod Reader\BaseMod\BaseMod.XNA.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
