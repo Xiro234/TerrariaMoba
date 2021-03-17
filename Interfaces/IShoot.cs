@@ -2,7 +2,7 @@
 using Terraria;
 
 namespace TerrariaMoba.Interfaces {
-    public interface IShoot {
+    public interface IShoot : IAbilityEffectInterface {
         bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
             ref float knockBack);
     }

@@ -36,8 +36,7 @@ namespace TerrariaMoba.Projectiles.Marie {
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
                     int rainX = (int) (projectile.position.X + 14f + Main.rand.Next(projectile.width - 18));
                     int rainY = (int) projectile.position.Y + projectile.height;
-                    Projectile.NewProjectile(rainX, rainY, 0f, 4.25f,
-                        TerrariaMoba.Instance.ProjectileType("ESRain"), (int)player.GetModPlayer<MobaPlayer>().MarieStats.U2RainDmg.Value, 0f, player.whoAmI, 0f, 0f);
+                    //Projectile.NewProjectile(rainX, rainY, 0f, 4.25f, TerrariaMoba.Instance.ProjectileType("ESRain"), (int)player.GetModPlayer<MobaPlayer>().MarieStats.U2RainDmg.Value, 0f, player.whoAmI, 0f, 0f);
                 }
             }
 
@@ -46,8 +45,7 @@ namespace TerrariaMoba.Projectiles.Marie {
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
                     int rainX = (int) (projectile.position.X + 14f + Main.rand.Next(projectile.width - 18));
                     int rainY = (int) (projectile.position.Y + projectile.height - 20f);
-                    Projectile.NewProjectile(rainX, rainY, 0f, 3.5f,
-                        TerrariaMoba.Instance.ProjectileType("ESLightning"), (int)player.GetModPlayer<MobaPlayer>().MarieStats.U2LightningDmg.Value, 0f, player.whoAmI, 0f, 0f);
+                    //Projectile.NewProjectile(rainX, rainY, 0f, 3.5f, TerrariaMoba.Instance.ProjectileType("ESLightning"), (int)player.GetModPlayer<MobaPlayer>().MarieStats.U2LightningDmg.Value, 0f, player.whoAmI, 0f, 0f);
                 }
             }
         }

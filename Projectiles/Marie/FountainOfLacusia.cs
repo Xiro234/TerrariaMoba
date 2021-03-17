@@ -46,7 +46,6 @@ namespace TerrariaMoba.Projectiles.Marie {
                     if (plr.team == Main.player[projectile.owner].team) {
                         float dist = (plr.Center - projectile.Center).Length() / 16.0f;
                         if (dist <= 20) {
-                            plr.AddBuff(BuffType<Buffs.BlessingOfLacusia>(), 10);
                         }
                     }
                 }

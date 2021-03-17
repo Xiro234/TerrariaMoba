@@ -1,14 +1,16 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using static Terraria.ModLoader.ModContent;
+using Terraria.ID;
 
 namespace TerrariaMoba.Projectiles.Sylvia {
-    public class EnsnaringVines : ModProjectile {
+    public class EnsnaringVinesTrap : ModProjectile {
 
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("EnsnaringVines");
         }
+        
+        public int TrapDuration { get; set; }
 
         public override void SetDefaults() {
             projectile.friendly = true;
@@ -16,10 +18,10 @@ namespace TerrariaMoba.Projectiles.Sylvia {
             projectile.height = 26;
             projectile.tileCollide = false;
         }
-
+        
         public override void AI() {
-            if (projectile.ai[0] == 0) {
-                Main.PlaySound(6, projectile.position);
+            if ((int)projectile.ai[0] == 0) {
+                Main.PlaySound(SoundID.Grass, projectile.position);
                 for (int i = 0; i < 20; i++) {
                     Dust.NewDust(projectile.position, projectile.width, projectile.height, 57, 0,
                         0, 150, Color.LightGreen, 0.7f);
@@ -37,30 +39,18 @@ namespace TerrariaMoba.Projectiles.Sylvia {
             }
             else {
             */
-                if (projectile.ai[0] >= 330) {
-                    projectile.Kill();
-                }
+            
+            if ((int)projectile.ai[0] == TrapDuration) {
+                projectile.Kill();
+            }
         }
 
         public override void Kill(int timeLeft) {
-            Main.PlaySound(6, projectile.position);
+            Main.PlaySound(SoundID.Grass, projectile.position);
             for (int i = 0; i < 20; i++) {
                 Dust.NewDust(projectile.position, projectile.width, projectile.height, 57, 0,
                     0, 150, Color.LightGreen, 0.7f);
             }
         }
-
-        public override void OnHitPvp(Player target, int damage, bool crit) {
-            //var player = Main.player[projectile.owner].GetModPlayer<MobaPlayer>();
-
-            target.AddBuff(BuffType<Buffs.EnsnaringVinesBuff>(), 90, false);
-
-            //Quashing Shrubbery
-            /*
-            if (player.MyCharacter.talentArray[1, 2]) {
-                target.AddBuff(BuffType<Buffs.Silenced>(), 90, false);
-            }
-            */
-        }
-    }
+     }
 }

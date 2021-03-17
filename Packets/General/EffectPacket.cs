@@ -1,7 +1,5 @@
-﻿using System.IO;
-using Terraria.ModLoader;
-using TerrariaMoba.Abilities;
-using TerrariaMoba.Effects;
+﻿/*using Terraria.ModLoader;
+using TerrariaMoba.StatusEffects;
 using TerrariaMoba.Players;
 using WebmilioCommons.Networking;
 using WebmilioCommons.Networking.Packets;
@@ -12,13 +10,13 @@ namespace TerrariaMoba.Packets.General {
 
         public int index = -1;
         
-        public Effect effect {
-            get => base.ModPlayer.effectList[index];
+        public StatusEffect StatusEffect {
+            get => base.ModPlayer.EffectList[index];
             set { }
         }
 
-        public EffectPacket(Effect newEffect) {
-            index = EffectManager.GetIndexOfEffect(effect);
+        public EffectPacket(StatusEffect newStatusEffect) {
+            index = StatusEffectManager.GetIndexOfEffect(StatusEffect);
         }
 
         protected override bool PreSend(ModPacket modPacket, int? fromWho = null, int? toWho = null) {
@@ -28,4 +26,4 @@ namespace TerrariaMoba.Packets.General {
             return base.PreSend(modPacket, fromWho , toWho);
         }
     }
-}
+}*/

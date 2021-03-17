@@ -1,4 +1,4 @@
-﻿namespace TerrariaMoba.Stats {
+﻿namespace TerrariaMoba.Statistic {
     public class OsteoStats {
         public Stat MaxHealth;
         public Stat MaxResource;

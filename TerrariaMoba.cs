@@ -1,11 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
+using TerrariaMoba.Network;
+using TerrariaMoba.StatusEffects;
 using TerrariaMoba.UI;
-using WebmilioCommons.Networking;
 
 namespace TerrariaMoba {
 	public class TerrariaMoba : Mod {
@@ -31,13 +33,12 @@ namespace TerrariaMoba {
 		}
 
 		public override void Load() {
+			On.Terraria.Main.DamageVar += (orig, dmg) => (int)Math.Round(dmg);
+			
 			AbilityOneHotKey = RegisterHotKey("Ability One", "Q");
 			AbilityTwoHotKey = RegisterHotKey("Ability Two", "F");
 			TraitHotkey = RegisterHotKey("Trait", "C");
 			UltimateHotkey = RegisterHotKey("Ultimate", "R");
-			LevelTalentOneHotKey = RegisterHotKey("Level Talent One", "Z");
-			LevelTalentTwoHotKey = RegisterHotKey("Level Talent Two", "X");
-			LevelTalentThreeHotKey = RegisterHotKey("Level Talent Three", "C");
 			OpenCharacterSelect = RegisterHotKey("Open Character Select", "P");
 
 			if (!Main.dedServ) {
@@ -49,6 +50,8 @@ namespace TerrariaMoba {
 				SelectInterface = new UserInterface();
 				SelectInterface.SetState(null);
 			}
+			
+			StatusEffectManager.Load();
 		}
 
 		public override void UpdateUI(GameTime gameTime) {
@@ -90,22 +93,7 @@ namespace TerrariaMoba {
 		}
 
 		public override void HandlePacket(BinaryReader reader, int whoAmI) {
-			NetworkPacketLoader.Instance.HandlePacket(reader, whoAmI);
-			/*Message msg = (Message) reader.ReadByte();
-			switch (msg) {
-				case(Message.SyncPvpHit):
-					Packets.PvpHitPacket.Read(reader);
-					break;
-				case(Message.SyncAbilityValues):
-					Packets.ReadWriteAbilityPacket.Read(reader);
-					break;
-				case(Message.SyncJunglesWrathAdd):
-					Packets.JunglesWrathAddPacket.Read(reader);
-					break;
-				case(Message.SyncEffect):
-					//Packets.EffectPacket.Read(reader);
-					break;
-			}*/
+			NetworkHandler.HandlePacket(reader, whoAmI);
 		}
 
 		internal void ShowBar() {

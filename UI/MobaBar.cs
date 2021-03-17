@@ -1,15 +1,10 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
 using Terraria.UI;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
-using Terraria.ModLoader;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.Players;
-using TerrariaMoba.UI;
-using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.UI {
     public class MobaBar : UIState {
@@ -156,7 +151,7 @@ namespace TerrariaMoba.UI {
         public void SetIcons() {
             var mobaPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
 
-            characterIcon.SetImage(mobaPlayer.MyCharacter.CharacterIcon);
+            characterIcon.SetImage(mobaPlayer.Hero.CharacterIcon);
         }
 
         public override void Update(GameTime gameTime) {
@@ -167,19 +162,17 @@ namespace TerrariaMoba.UI {
             
             var player = Main.LocalPlayer;
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
-            if (mobaPlayer.CharacterPicked) {
-                DrawIcon(ref QCooldown, ref QPanel, mobaPlayer.MyCharacter.SlotOne.CooldownTimer, mobaPlayer.MyCharacter.SlotOne);
-                DrawIcon(ref ECooldown, ref EPanel, mobaPlayer.MyCharacter.SlotTwo.CooldownTimer, mobaPlayer.MyCharacter.SlotTwo);
-                DrawIcon(ref RCooldown, ref RPanel, mobaPlayer.MyCharacter.SlotFour.CooldownTimer, mobaPlayer.MyCharacter.SlotFour);
-                DrawIcon(ref CCooldown, ref CPanel, mobaPlayer.MyCharacter.SlotFive.CooldownTimer, mobaPlayer.MyCharacter.SlotFive);
-                levelText.SetText(mobaPlayer.MyCharacter.Level.ToString(), 0.75f, false);
-            }
+            DrawIcon(ref QCooldown, ref QPanel, mobaPlayer.Hero.SlotOne.CooldownTimer, mobaPlayer.Hero.SlotOne);
+            DrawIcon(ref ECooldown, ref EPanel, mobaPlayer.Hero.SlotTwo.CooldownTimer, mobaPlayer.Hero.SlotTwo);
+            DrawIcon(ref RCooldown, ref RPanel, mobaPlayer.Hero.SlotFour.CooldownTimer, mobaPlayer.Hero.SlotFour);
+            DrawIcon(ref CCooldown, ref CPanel, mobaPlayer.Hero.SlotFive.CooldownTimer, mobaPlayer.Hero.SlotFive);
+            levelText.SetText(mobaPlayer.Hero.Level.ToString(), 0.75f, false);
             
-            lifeText.SetText(player.statLife + "/" + player.statLifeMax2 + " (+" + mobaPlayer.lifeRegen + ")", 0.75f, false);
+            //lifeText.SetText(player.statLife + "/" + player.statLifeMax2 + " (+" + mobaPlayer.lifeRegen + ")", 0.75f, false);
             
-            manaText.SetText(mobaPlayer.currentResource + "/" + mobaPlayer.maxResource + " (+" + mobaPlayer.resourceRegen + ")", 0.75f, false);
+            //manaText.SetText(mobaPlayer.currentResource + "/" + mobaPlayer.maxResource + " (+" + mobaPlayer.resourceRegen + ")", 0.75f, false);
 
-            armorText.SetText(mobaPlayer.armor.ToString(), 0.6f, false);
+            //armorText.SetText(mobaPlayer.armor.ToString(), 0.6f, false);
             moveSpeedText.SetText(((player.maxRunSpeed / 3) * 100).ToString() + "%", 0.6f, false);
 
             if (player.dead) {

@@ -1,4 +1,4 @@
-﻿using TerrariaMoba.Players;
+﻿/*using TerrariaMoba.Players;
 using WebmilioCommons.Networking.Packets;
 
 
@@ -19,6 +19,6 @@ namespace TerrariaMoba.Packets.General {
                     character = character
                 }.Send(Node.FromServer(), null, false);
             }
-        }*/
+        }#1#
     }
-}
+}*/

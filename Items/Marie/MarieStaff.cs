@@ -30,16 +30,5 @@ namespace TerrariaMoba.Items.Marie {
             item.rare = ItemRarityID.Cyan;
             item.autoReuse = false;
         }
-        
-        public override void ModifyWeaponDamage(Player player, ref float add, ref float mult, ref float flat) {
-            var plr = player.GetModPlayer<MobaPlayer>();
-            if (plr.CharacterPicked) {
-                if (plr.selectedCharacter == CharacterIdentity.Marie) {
-                    if (plr.MyCharacter.Level > 1) {
-                        add += (float)Math.Pow(1.04f, plr.MyCharacter.Level - 1) - 1;
-                    }
-                }
-            }
-        }
     }
 }

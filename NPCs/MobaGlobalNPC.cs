@@ -12,11 +12,10 @@ namespace TerrariaMoba.NPCs {
         public int owner = -1;
 
         public override void ModifyHitPlayer(NPC npc, Player target, ref int damage, ref bool crit) {
-            if (Main.netMode == NetmodeID.SinglePlayer) {
-                target.GetModPlayer<MobaPlayer>().DamageOverride(damage, target, owner, true);
-            }
-            else {
-                PvpHitPacket.Write(target.whoAmI, damage, owner, true);
+            //target.GetModPlayer<MobaPlayer>().TakePvpDamage(damage, target.whoAmI, owner, true);
+            if (Main.netMode == NetmodeID.MultiplayerClient) {
+                //new PvpHitPacket(null, null, (byte) target.whoAmI, damage, (byte) owner).Send();
+                //TODO - Fix npc hits
             }
         }
 

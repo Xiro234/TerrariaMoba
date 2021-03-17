@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria.UI;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using TerrariaMoba.Characters;
-using TerrariaMoba.Enums;
-using TerrariaMoba.Packets.GameStart;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.UI {
@@ -21,16 +21,18 @@ namespace TerrariaMoba.UI {
         public override void OnInitialize() {
             iconList = new List<CharacterIcon>();
             
-            // iconList.Add(new CharacterIcon(new Sylvia(Main.LocalPlayer)));
-            // iconList.Add(new CharacterIcon(new Flibnob(Main.LocalPlayer)));
-            // iconList.Add(new CharacterIcon(new Osteo(Main.LocalPlayer)));
-            // iconList.Add(new CharacterIcon(new Marie(Main.LocalPlayer)));
-            // iconList.Add(new CharacterIcon(new Character(Main.LocalPlayer)));
-            // iconList.Add(new CharacterIcon(new Character(Main.LocalPlayer)));
-            // iconList.Add(new CharacterIcon(new Character(Main.LocalPlayer)));
-            // iconList.Add(new CharacterIcon(new Character(Main.LocalPlayer)));
-            // iconList.Add(new CharacterIcon(new Character(Main.LocalPlayer)));
-            // iconList.Add(new CharacterIcon(new Character(Main.LocalPlayer)));
+            List<Type> types = (typeof(Character).Assembly.GetTypes().Where(type => type.IsSubclassOf(typeof(Character)) && !type.IsAbstract)).ToList();
+
+            for (int i = 0; i < numCharacterPortraits; i++) {
+                Character Hero = null;
+                if (i < types.Count) {
+                    var type = types[i];
+                    Hero = (Character)Activator.CreateInstance(type);
+                }
+               
+                iconList.Add(new CharacterIcon(Hero));
+            }
+
 
             background = new UIImage(TerrariaMoba.Instance.GetTexture("Textures/CharacterSelect"));
             background.VAlign = 0.5f;
@@ -60,7 +62,7 @@ namespace TerrariaMoba.UI {
                 Main.LocalPlayer.mouseInterface = true;
             }
 
-            if (mobaPlayer.selectedCharacter == CharacterIdentity.Base) {
+            if (mobaPlayer.selectedCharacter == null) {
                 checkmark.SetImage(TerrariaMoba.Instance.GetTexture("Textures/CheckMarkUnselected"));
             }
             else {
@@ -70,11 +72,11 @@ namespace TerrariaMoba.UI {
 
         public void OnCheckClick(UIMouseEvent evt, UIElement listeningElement) {
             var mobaPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
-            if (mobaPlayer.selectedCharacter != CharacterIdentity.Base) {
-                if (TerrariaMobaUtils.AssignCharacter(ref mobaPlayer.MyCharacter, mobaPlayer.selectedCharacter,
+            if (mobaPlayer.selectedCharacter != null) {
+                /*if (TerrariaMobaUtils.AssignCharacter(ref mobaPlayer.Hero, mobaPlayer.selectedCharacter,
                     mobaPlayer.player)) {
-                    new SyncCharacterSelection().Send();
-                }
+                    //TODO - Sync Character Selection
+                }*/
                 Main.PlaySound(SoundID.MenuClose);
                 TerrariaMoba.Instance.HideSelect();
             }

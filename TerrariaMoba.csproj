@@ -15,14 +15,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Constants" />
+    <Folder Include="Packets\Sylvia" />
     <Folder Include="Textures\Marie" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="BaseMod, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\references\mods\BaseMod_v2.0.0.0.dll</HintPath>
-    </Reference>
-    <Reference Include="WebmilioCommons, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Mod Reader\WebmilioCommons\WebmilioCommons.XNA.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

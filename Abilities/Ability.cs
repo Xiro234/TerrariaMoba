@@ -6,19 +6,22 @@ using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Players;
 using TerrariaMoba.UI;
-using WebmilioCommons.Networking.Packets;
-using WebmilioCommons.Networking.Serializing;
 
 namespace TerrariaMoba.Abilities {
-    public abstract class Ability : INetworkSerializable {
+    public abstract class Ability {
         public string Name { get; protected set; }
         public int BaseCooldown { get; }
         public int BaseResourceCost { get; }
+
         public AbilityType AbilityType { get; }
         public Player User { get; private set; }
+        
+        /// <summary>
+        /// Display icon on the HUD.
+        /// </summary>
         public abstract Texture2D Icon { get; }
         
-        //Adding talents later.
+        //TODO - Adding talents later.
 
         public int CooldownTimer { get; set; }
         public bool IsActive { get; set; }
@@ -59,33 +62,9 @@ namespace TerrariaMoba.Abilities {
         /// </summary>
         /// <returns></returns>
         public virtual bool CanCastAbility() {
-            return (CooldownTimer == 0) && (User.GetModPlayer<MobaPlayer>().currentResource > BaseResourceCost);
+            return true;
         }
         
-        public void Receive(NetworkPacket networkPacket, BinaryReader reader) {
-            /*
-            Name = reader.ReadString();
-            cooldownTimer = reader.ReadInt32();
-            Timer = reader.ReadInt32();
-            IsActive = reader.ReadBoolean();
-            ResourceCost = reader.ReadInt32();
-            AbilityType = (AbilityType)reader.ReadByte();
-            playerIndex = reader.ReadInt32();
-            */
-        }
-
-        public void Send(NetworkPacket networkPacket, ModPacket modPacket) {
-            /*
-            modPacket.Write(Name);
-            modPacket.Write(cooldownTimer);
-            modPacket.Write(Timer);
-            modPacket.Write(IsActive);
-            modPacket.Write(ResourceCost);
-            modPacket.Write((byte)AbilityType);
-            modPacket.Write(playerIndex);
-            */
-        }
-
         public virtual void AdditionalDrawing(SpriteBatch spriteBatch, UIAbilityIcon abilityIcon) { }
     }
 }

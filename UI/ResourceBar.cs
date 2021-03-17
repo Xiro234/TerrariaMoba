@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.UI;
+using TerrariaMoba.Characters;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.UI {
@@ -19,6 +20,7 @@ namespace TerrariaMoba.UI {
         
         protected override void DrawSelf(SpriteBatch spriteBatch) {
             base.DrawSelf(spriteBatch);
+            
             float quotient;
             var player = Main.LocalPlayer;
             if (player != null) {
@@ -29,8 +31,8 @@ namespace TerrariaMoba.UI {
                     quotient = (float) player.statMana / player.statManaMax;
                 }
                 else {
-                    quotient = (float) player.GetModPlayer<MobaPlayer>().MyCharacter.Experience /
-                               player.GetModPlayer<MobaPlayer>().MyCharacter.xpPerLevel;
+                    quotient = (float) player.GetModPlayer<MobaPlayer>().Hero.Experience /
+                               Character.XP_PER_LEVEL;
                 }
 
                 quotient = Utils.Clamp(quotient, 0f, 1f);

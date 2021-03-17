@@ -1,9 +1,7 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
-using TerrariaMoba.Packets.General;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
-using TerrariaMoba.Packets.GameStart;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Items {
@@ -33,16 +31,17 @@ namespace TerrariaMoba.Items {
             if (!Main.dedServ) {
                 bool canStart = true;
                 for (int i = 0; i < Main.maxPlayers; i++) {
-                    if (Main.player[i] != null && Main.player[i].active) {
-                        if (!Main.player[i].GetModPlayer<MobaPlayer>().CharacterPicked) {
+                    if (Main.player[i].active) {
+                        if (Main.player[i].GetModPlayer<MobaPlayer>().Hero == null) {
                             canStart = false;
+                            break;
                         }
                     }
                 }
 
                 if (canStart) {
                     for (int i = 0; i < Main.maxPlayers; i++) {
-                        if (Main.player[i] != null && Main.player[i].active) {
+                        if (Main.player[i].active) {
                             var plr = Main.player[i].GetModPlayer<MobaPlayer>();
                             plr.StartGame();
                         }

@@ -50,8 +50,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
                     Vector2 velocity = Main.rand.NextVector2Unit();
                     velocity *= 4;
 
-                    Projectile.NewProjectile(projectile.position, velocity,
-                        TerrariaMoba.Instance.ProjectileType("SylviaSpores"), (int)player.GetModPlayer<MobaPlayer>().SylviaStats.U2SporeDmg.Value, 0, projectile.owner);
+                    //Projectile.NewProjectile(projectile.position, velocity, TerrariaMoba.Instance.ProjectileType("SylviaSpores"), (int)player.GetModPlayer<MobaPlayer>().SylviaStats.U2SporeDmg.Value, 0, projectile.owner);
                 }
             }
         }

@@ -1,4 +1,4 @@
-﻿namespace TerrariaMoba.Stats {
+﻿namespace TerrariaMoba.Statistic {
     public class Stat {
         public float Value { get; set; }
         public float Scalar { get; }

@@ -1,4 +1,4 @@
-﻿using System.IO;
+﻿/*using System.IO;
 using Terraria;
 using TerrariaMoba.Players;
 using WebmilioCommons.Networking;
@@ -18,4 +18,4 @@ namespace TerrariaMoba.Packets.GameStart {
             return true;
         }
     }
-}
+}*/

@@ -1,4 +1,4 @@
-﻿using System.IO;
+﻿/*using System.IO;
 using Terraria;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Players;
@@ -22,4 +22,4 @@ namespace TerrariaMoba.Packets.GameStart {
             return true;
         }
     }
-}
+}*/
