@@ -22,7 +22,6 @@ namespace TerrariaMoba.Abilities.Sylvia {
 
         public const int ROOT_BASE_DURATION = 120;
 
-
         public override void OnCast() {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
                 Vector2 playerToMouse = Main.MouseWorld - User.Center;
