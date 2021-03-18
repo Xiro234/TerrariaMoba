@@ -33,6 +33,10 @@
             ResourceType = resourceType;
         }
 
+        public Statistics() {
+            ResetStats();
+        }
+
         public void ResetStats() {
             MaxHealth = 0;
             HealthRegen = 0;

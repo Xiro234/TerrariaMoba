@@ -8,9 +8,9 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.StatusEffects;
-using TerrariaMoba.Enums;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Network;
+using TerrariaMoba.Statistic;
 using TerrariaMoba.UI;
 
 namespace TerrariaMoba.Players {
@@ -22,10 +22,11 @@ namespace TerrariaMoba.Players {
 
         public int ultTimer = -1;
         public List<Ability> TestAbilities;
-        
+
         public override void Initialize() {
             EffectList = new List<StatusEffect>();
             TestAbilities = new List<Ability>();
+            Stats = new Statistics();
         }
 
         public override void OnEnterWorld(Player player) {
