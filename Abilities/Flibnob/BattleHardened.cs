@@ -1,26 +1,22 @@
-﻿/*using System;
-using Terraria;
+﻿using Microsoft.Xna.Framework.Graphics;
 using TerrariaMoba.Enums;
-using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Flibnob {
-    [Serializable]
     public class BattleHardened : Ability {
-        private int oldDefBoost;
-        public BattleHardened(Player myPlayer) : base(myPlayer) {
-            AbilityType = Enums.AbilityType.Passive;
-            Name = "Battle Hardened";
-            IsActive = true;
-            Icon = TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobTrait");
-            oldDefBoost = 0;
-        }
+        public BattleHardened() : base("Battle Hardened", 0, 0, AbilityType.Passive) { }
 
-        public override void WhileActive() {
-            float change = (float) (User.statLifeMax2 - User.statLife) / User.statLifeMax2 * 100f;
-            int defBoost = (int) Math.Floor(change / 2f);
-            if (defBoost != oldDefBoost) {
-                User.GetModPlayer<MobaPlayer>().armor += defBoost - oldDefBoost;
-                oldDefBoost = defBoost;
-            }
-        }
-    } }*/
+        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobTrait"); }
+
+        public const int BASE_ARMOR_GAIN = 1;
+        public const int BASE_MR_GAIN = 0;
+    }
+}
+/*
+public override void WhileActive() {
+    float change = (float) (User.statLifeMax2 - User.statLife) / User.statLifeMax2 * 100f;
+    int defBoost = (int) Math.Floor(change / 2f);
+    if (defBoost != oldDefBoost) {
+        User.GetModPlayer<MobaPlayer>().armor += defBoost - oldDefBoost;
+        oldDefBoost = defBoost;
+    }
+}*/

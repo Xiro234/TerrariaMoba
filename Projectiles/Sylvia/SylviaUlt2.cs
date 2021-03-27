@@ -2,21 +2,30 @@
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using TerrariaMoba.Players;
+using TerrariaMoba.Abilities.Sylvia;
 
 namespace TerrariaMoba.Projectiles.Sylvia {
     public class SylviaUlt2 : ModProjectile {
+        
+        public int SporeDamage { get; set; }
+        public int NumberOfSpores { get; set; }
+        public int SporeDuration { get; set; }
+        
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("SylviaUlt2");
         }
         
         public override void SetDefaults() {
             projectile.friendly = true;
-            projectile.tileCollide = true;
+            projectile.tileCollide = false;
             projectile.width = 20;
             projectile.height = 20;
             projectile.aiStyle = 0;
             drawOffsetX = -46;
+
+            SporeDamage = PlanterasLastWill.SPORE_BASE_DAMAGE;
+            NumberOfSpores = PlanterasLastWill.SPORE_BASE_NUMBER;
+            SporeDuration = PlanterasLastWill.SPORE_BASE_DURATION;
         }
 
         public override void AI() {
@@ -44,13 +53,12 @@ namespace TerrariaMoba.Projectiles.Sylvia {
 
         public override void Kill(int timeLeft) {
             if (Main.myPlayer == projectile.owner) {
-                Player player = Main.player[projectile.owner];
-                int numProjectiles = 6;
-                for (int i = 0; i < numProjectiles; i++) {
+                for (int i = 0; i < NumberOfSpores; i++) {
                     Vector2 velocity = Main.rand.NextVector2Unit();
                     velocity *= 4;
 
-                    //Projectile.NewProjectile(projectile.position, velocity, TerrariaMoba.Instance.ProjectileType("SylviaSpores"), (int)player.GetModPlayer<MobaPlayer>().SylviaStats.U2SporeDmg.Value, 0, projectile.owner);
+                    //TODO - Create new spore projectile and pass on SporeDuration.
+                    //Projectile.NewProjectile(projectile.position, velocity, TerrariaMoba.Instance.ProjectileType("SylviaSpores"), SporeDamage, 0, projectile.owner);
                 }
             }
         }

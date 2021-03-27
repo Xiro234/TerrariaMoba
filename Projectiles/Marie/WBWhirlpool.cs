@@ -4,6 +4,9 @@ using Terraria.ModLoader;
 
 namespace TerrariaMoba.Projectiles.Marie {
     public class WBWhirlpool : ModProjectile {
+
+        public int PoolDuration { get; set; }
+
         public override void SetStaticDefaults() {
             Main.projFrames[projectile.type] = 6;
         }
@@ -24,10 +27,6 @@ namespace TerrariaMoba.Projectiles.Marie {
                 projectile.frameCounter = 0;
                 projectile.frame = ++projectile.frame % Main.projFrames[projectile.type];
             }
-        }
-        
-        public override void OnHitPvp(Player target, int damage, bool crit) {
-            target.AddBuff(BuffID.Slow, 15, false);
         }
     }
 }

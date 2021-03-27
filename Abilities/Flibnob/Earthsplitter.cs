@@ -1,19 +1,26 @@
-﻿/*using System;
+﻿using Terraria;
 using Microsoft.Xna.Framework;
-using Terraria;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
-using TerrariaMoba.Players;
+using TerrariaMoba.Enums;
+using TerrariaMoba.Interfaces;
+using TerrariaMoba.Projectiles.Flibnob;
 
 namespace TerrariaMoba.Abilities.Flibnob {
-    [Serializable]
-    public class Earthsplitter : Ability {
-        public Earthsplitter(Player myPlayer) : base(myPlayer) {
-            Name = "Earthsplitter";
-            Icon = TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobUltimateOne");
-        }
+    public class Earthsplitter : Ability, IModifyHitPvpWithProj {
+        public Earthsplitter() : base("Earthsplitter", 60, 0, AbilityType.Active) { }
+        
+        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobUltimateOne"); }
 
-        public override void Cast() {
-            User.velocity.Y = -14.6f;
+        public const float LEAP_BASE_HEIGHT = -14.6f;
+
+        public const int EARTH_BASE_DAMAGE = 1000;
+        public const int EARTH_BASE_NUMBER = 5;
+        public const int EARTH_BASE_DURATION = 30;
+        public const int EARTH_BASE_DELAY = 15;
+
+        public override void OnCast() {
+            User.velocity.Y = LEAP_BASE_HEIGHT;
             IsActive = true;
         }
 
@@ -29,13 +36,23 @@ namespace TerrariaMoba.Abilities.Flibnob {
                     }
                     Vector2 velocity = new Vector2(User.direction * 10f, 0);
 
-                    Projectile.NewProjectile(position, velocity, 
-                        TerrariaMoba.Instance.ProjectileType("EarthsplitterSpawner"), 
-                        (int)User.GetModPlayer<MobaPlayer>().FlibnobStats.U2EarthDmg.Value, 0, User.whoAmI, 14f);
-                }
+                    Projectile proj = Projectile.NewProjectileDirect(position, velocity, 
+                        TerrariaMoba.Instance.ProjectileType("EarthsplitterSpawner"), 0, 0, User.whoAmI);
+                    
+                    EarthsplitterSpawner spawner = proj.modProjectile as EarthsplitterSpawner;
 
-                cooldownTimer = 20 * 60;
+                    if (spawner != null) {
+                        spawner.EarthDamage = EARTH_BASE_DAMAGE;
+                        spawner.NumberOfEarths = EARTH_BASE_NUMBER;
+                        spawner.EarthDuration = EARTH_BASE_DURATION;
+                        spawner.EarthDistance = EARTH_BASE_DELAY;
+                    }
+                }
             }
         }
+
+        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
+            //TODO - Whatever debuff this will inflict goes here.
+        }
     }
-}*/
+}

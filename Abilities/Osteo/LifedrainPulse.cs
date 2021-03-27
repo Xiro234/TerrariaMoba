@@ -1,4 +1,19 @@
-﻿/*using System;
+﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.ID;
+using TerrariaMoba.Enums;
+
+namespace TerrariaMoba.Abilities.Osteo {
+    public class LifedrainPulse : Ability {
+        public LifedrainPulse() : base("Lifedrain Pulse", 60, 0, AbilityType.Active) { }
+
+        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoAbilityTwo"); }
+    }
+}
+
+/*using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

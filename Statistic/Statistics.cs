@@ -6,7 +6,7 @@
         
         public float MaxHealth { get; set; }
         public float HealthRegen { get; set; }
-
+        
         public float MaxResource { get; set; }
         public float ResourceRegen { get; set; }
         public Resource ResourceType { get; set; }

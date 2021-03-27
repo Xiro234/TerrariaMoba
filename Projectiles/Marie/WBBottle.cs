@@ -2,10 +2,13 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Projectiles.Marie {
     public class WBBottle : ModProjectile {
+
+        public int PoolDamage { get; set; }
+        public int PoolDuration { get; set; }
+
         public override void SetDefaults() {
             projectile.width = 14;
             projectile.height = 14;
@@ -32,9 +35,15 @@ namespace TerrariaMoba.Projectiles.Marie {
 
         public override void Kill(int timeLeft) {
             Player player = Main.player[projectile.owner];
-            if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
-                //Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 0f, TerrariaMoba.Instance.ProjectileType("WBWhirlpool"), (int)player.GetModPlayer<MobaPlayer>().MarieStats.A1WhirlpoolDmg.Value, 0, player.whoAmI);
+            if (Main.netMode != NetmodeID.Server && Main.myPlayer == projectile.owner) { 
+                Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, 
+                    TerrariaMoba.Instance.ProjectileType("WBWhirlpool"), PoolDamage, 0, projectile.whoAmI);
                 Main.PlaySound(SoundID.Item27, projectile.position);
+                
+                WBWhirlpool pool = proj.modProjectile as WBWhirlpool;
+                if (pool != null) {
+                    pool.PoolDuration = PoolDuration;
+                }
             }
         }
     }

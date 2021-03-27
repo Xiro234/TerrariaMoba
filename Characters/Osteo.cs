@@ -1,26 +1,40 @@
-﻿/*using TerrariaMoba.Players;
-using System.IO;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
-using TerrariaMoba.Abilities;
-using TerrariaMoba.Abilities.Osteo;
-using TerrariaMoba.Enums;
+using TerrariaMoba.Abilities.Sylvia;
+using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Characters {
     public class Osteo : Character {
-        public override string FullName {
-            get => "Osteo Prime, Last Necromancer of the Mudpits";
-        }
-        
-        public override CharacterIdentity identity {
-            get => CharacterIdentity.Osteo;
+        public Osteo(Player user) : base(user, new Statistics(1440f, 0f, 500f,
+            0f, Statistics.Resource.Mana, 75f, 1.5f, 9f), new EnsnaringVinesAbility()) { }
+
+        public override string Name {
+            get => "Osteo Prime";
         }
         
         public override Texture2D CharacterIcon {
             get => TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoIcon");
+        }
+
+        public override bool IsMale { get => true; }
+        public override int HairID { get => 15; }
+        public override Color HairColor { get => Color.Black; }
+        public override Color SkinColor { get => Color.WhiteSmoke; }
+        public override Color EyeColor { get => Color.Red; }
+        public override int PrimaryWeaponID { get => TerrariaMoba.Instance.ItemType("OsteoTome"); }
+        public override int HeadVanityID { get => ItemID.SkeletronPrimeMask; }
+        public override int BodyVanityID { get => ItemID.ApprenticeAltShirt; }
+        public override int LegVanityID { get => ItemID.ApprenticeAltPants; }
+    }
+}
+
+/*
+namespace TerrariaMoba.Characters {
+    public class Osteo : Character {
+        public override string FullName {
+            get => "Osteo Prime, Last Necromancer of the Mudpits";
         }
         
         public List<NPC> skeleList;

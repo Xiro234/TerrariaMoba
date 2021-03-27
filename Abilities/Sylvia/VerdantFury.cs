@@ -1,4 +1,29 @@
-﻿/*using Terraria;
+﻿using Terraria;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.ID;
+using TerrariaMoba.Enums;
+using TerrariaMoba.StatusEffects;
+using TerrariaMoba.StatusEffects.Sylvia;
+
+namespace TerrariaMoba.Abilities.Sylvia {
+    public class VerdantFury : Ability {
+        public VerdantFury() : base("Verdant Fury", 60, 0, AbilityType.Active) { }
+        
+        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaAbilityTwo"); }
+        
+        public const float BUFF_ATKSPD_MODIFIER = 1.3f;
+        public const float BUFF_ATKVEL_MODIFIER = 1.3f;
+        public const int BUFF_BASE_DURATION = 240;
+
+        public override void OnCast() {
+            if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
+                StatusEffectManager.AddEffect(User, new VerdantFuryEffect(BUFF_BASE_DURATION, BUFF_ATKSPD_MODIFIER, BUFF_ATKVEL_MODIFIER, false));
+            }
+        }
+    }
+}
+
+/*using Terraria;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Sylvia {

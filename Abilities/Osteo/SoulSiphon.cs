@@ -1,4 +1,19 @@
-﻿/*using System;
+﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.ID;
+using TerrariaMoba.Enums;
+
+namespace TerrariaMoba.Abilities.Osteo {
+    public class SoulSiphon : Ability {
+        public SoulSiphon() : base("Soul Siphon", 60, 0, AbilityType.Active) { }
+
+        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoUltimateTwo"); }
+    }
+}
+
+/*using System;
 using System.Collections.Generic;
 using BaseMod;
 using Microsoft.Xna.Framework;

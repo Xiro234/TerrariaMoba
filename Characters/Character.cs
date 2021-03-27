@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using TerrariaMoba.Abilities;
@@ -20,6 +21,13 @@ namespace TerrariaMoba.Characters {
         public List<Ability> Abilities { get; protected set; }
         public Statistics BaseStatistics { get; private set; }
         public int Level { get; protected set; }
+
+        //Appearance
+        public virtual bool IsMale { get => true; }
+        public virtual int HairID { get => 0; }
+        public virtual Color HairColor { get => Color.Tomato; }
+        public virtual Color SkinColor { get => Color.Tomato; }
+        public virtual Color EyeColor { get => Color.Tomato; }
 
         //Items
         public virtual int PrimaryWeaponID { get => 0; }
