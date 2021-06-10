@@ -9,17 +9,17 @@ using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.UI {
     public class MobaBar : UIState {
-        private UIText QCooldown;
-        private UIText ECooldown;
-        private UIText RCooldown;
-        private UIText CCooldown;
-        private UIText deathTimer;
-        private UIImage bar;
-        private UIImage characterIcon;
-        private UIAbilityIcon QPanel;
-        private UIAbilityIcon EPanel;
-        private UIAbilityIcon RPanel;
-        private UIAbilityIcon CPanel;
+        private static UIText QCooldown;
+        private static UIText ECooldown;
+        private static UIText RCooldown;
+        private static UIText CCooldown;
+        private static UIText deathTimer;
+        private static UIImage bar;
+        private static UIImage characterIcon;
+        private static UIAbilityIcon QPanel;
+        private static UIAbilityIcon EPanel;
+        private static UIAbilityIcon RPanel;
+        private static UIAbilityIcon CPanel;
         private ResourceBar lifeBar;
         private ResourceBar resourceBar;
 
@@ -160,7 +160,7 @@ namespace TerrariaMoba.UI {
             }
         }
 
-        public void DrawIcon(ref UIText text,ref UIAbilityIcon icon, int timer, Ability ability) {
+        public void DrawIcon(ref UIText text, ref UIAbilityIcon icon, int timer, Ability ability) {
             if(timer > 0) {
                 if (timer >= 40) {
                     text.SetText(Math.Ceiling(timer / 60f)

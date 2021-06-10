@@ -11,8 +11,8 @@ namespace TerrariaMoba.Network {
             PVP_HIT = 0,
             ADD_STATUS_EFFECT,
             SYNC_STATUS_EFFECT,
-            SYNC_EFFECT_LIST
-            
+            SYNC_EFFECT_LIST,
+            START_GAME
         }
         
         public static void HandlePacket(BinaryReader reader, int sender) {
@@ -30,6 +30,9 @@ namespace TerrariaMoba.Network {
                 case NetTag.SYNC_EFFECT_LIST:
                     ReceiveSyncEffectList(reader, sender);
                     break;
+                case NetTag.START_GAME:
+                    ReceiveStartGame(reader, sender);
+                    break;
                 default:
                     //TODO - Add error logging
                     break;
@@ -43,7 +46,7 @@ namespace TerrariaMoba.Network {
             modPacket.Write(damage);
             modPacket.Write((byte)target);
             modPacket.Write((byte)killer);
-            modPacket.Send();
+            modPacket.Send(ignoreClient: killer);
         }
 
         public static void ReceivePvpHit(BinaryReader reader, int sender) {
@@ -130,6 +133,21 @@ namespace TerrariaMoba.Network {
             
             if (Main.netMode == NetmodeID.Server) {
                 SendSyncEffectList(whoAmI, sender);
+            }
+        }
+        #endregion
+
+        #region START_GAME
+        public static void SendStartGame() {
+            ModPacket modPacket = TerrariaMoba.Instance.GetPacket();
+            modPacket.Write((byte)NetTag.START_GAME);
+            modPacket.Send();
+        }
+
+        public static void ReceiveStartGame(BinaryReader reader, int sender) {
+            MobaWorld.MatchInProgress = true;
+            if (Main.netMode == NetmodeID.Server) {
+                NetMessage.SendData(MessageID.WorldData);
             }
         }
         #endregion

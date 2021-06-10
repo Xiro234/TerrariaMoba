@@ -2,6 +2,8 @@
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
+using Terraria.Localization;
+using TerrariaMoba.Network;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Items {
@@ -21,37 +23,26 @@ namespace TerrariaMoba.Items {
             item.UseSound = SoundID.Item3;
             item.maxStack = 30;
             item.consumable = false;
-            item.rare = 3;
+            item.rare = ItemRarityID.Orange;
             item.color = Color.Yellow;
         }
         
         public override string Texture => "Terraria/Item_" + ItemID.Abeemination;
-        
-        public override bool UseItem(Player player) {
-            if (!Main.dedServ) {
-                bool canStart = true;
-                for (int i = 0; i < Main.maxPlayers; i++) {
-                    if (Main.player[i].active) {
-                        if (Main.player[i].GetModPlayer<MobaPlayer>().Hero == null) {
-                            canStart = false;
-                            break;
-                        }
-                    }
-                }
 
-                if (canStart) {
-                    for (int i = 0; i < Main.maxPlayers; i++) {
-                        if (Main.player[i].active) {
-                            var plr = Main.player[i].GetModPlayer<MobaPlayer>();
-                            plr.StartGame();
-                        }
-                    }
-                    Main.NewText("Game Started!");
-                }
-                
+        public override bool UseItem(Player player) {
+            if (Main.netMode == NetmodeID.Server) {
+                NetMessage.BroadcastChatMessage(NetworkText.FromLiteral("Match Started!"), Color.Aqua);
             }
-            else {
-                Main.NewText("Not everyone has chosen a character!");
+            else if (Main.netMode == NetmodeID.SinglePlayer) {
+                Main.NewText("Match Started!", Color.Aqua);
+            }
+
+            if (Main.netMode == NetmodeID.SinglePlayer) {
+                MobaWorld.MatchInProgress = true;
+            }
+
+            if (Main.netMode == NetmodeID.MultiplayerClient && player.whoAmI == Main.myPlayer) {
+                NetworkHandler.SendStartGame();
             }
 
             return true;

@@ -64,7 +64,5 @@ namespace TerrariaMoba.Abilities {
         public virtual bool CanCastAbility() {
             return true;
         }
-        
-        public virtual void AdditionalDrawing(SpriteBatch spriteBatch, UIAbilityIcon abilityIcon) { }
     }
 }
