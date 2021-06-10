@@ -14,7 +14,7 @@ namespace TerrariaMoba.Items.Sylvia {
         }
 
         public override void SetDefaults() {
-            item.damage = 75;
+            item.damage = 10;
             item.ranged = true;
             item.noMelee = true;
             item.shoot = mod.ProjectileType("SylviaArrow");

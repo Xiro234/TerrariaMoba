@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.ModLoader;
 using TerrariaMoba.Network;
 using TerrariaMoba.Players;
 
@@ -9,7 +11,8 @@ namespace TerrariaMoba.StatusEffects {
     public class StatusEffectManager {
         private static Dictionary<Type, int> StatusEffectDict { get; set; }
         private static List<Type> StatusEffectTypesList { get; set; }
-
+        
+        #region NETWORK
         public static bool AddEffect(Player player, StatusEffect statusEffect, bool quiet = false) {
             statusEffect.SetPlayer(player);
             statusEffect.Apply();
@@ -18,9 +21,35 @@ namespace TerrariaMoba.StatusEffects {
             if (!quiet) {
                 NetworkHandler.SendAddEffect(statusEffect, player.whoAmI);
             }
+            //TODO - Add error checking for adding effect
             return true;
         }
 
+        public static bool RemoveEffect(Player player, StatusEffect statusEffect, bool quiet = false) {
+            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
+            bool returnVar = mobaPlayer.EffectList.Remove(statusEffect);
+
+            if (returnVar && !quiet) {
+                NetworkHandler.SendSyncEffectList(player.whoAmI, player.whoAmI);
+            }
+            
+            return returnVar;
+        }
+
+        public static bool SyncSingleEffect(Player player, StatusEffect statusEffect) {
+            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
+            int index = mobaPlayer.EffectList.IndexOf(statusEffect);
+
+            if (index >= 0) {
+                NetworkHandler.SendSyncEffect(index, player.whoAmI, Main.myPlayer);
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        #endregion
+        
         public static StatusEffect GetNewEffectInstance(int ID) {
             TerrariaMoba.Instance.Logger.Info(ID);
 
@@ -47,6 +76,24 @@ namespace TerrariaMoba.StatusEffects {
             }
 
             StatusEffectTypesList = typesList;
+        }
+
+        public static void WriteListToPacket(ModPacket modPacket, List<StatusEffect> effectList) {
+            foreach (var effect in effectList) {
+                modPacket.Write(GetIDOfEffect(effect));
+                effect.SendEffectElements(modPacket);
+            }
+        }
+
+        public static void ReadListFromPacket(BinaryReader reader, MobaPlayer target, int count) {
+            target.EffectList = new List<StatusEffect>();
+
+            for (int i = 0; i < count; i++) {
+                int id = reader.ReadInt32();
+                var effect = GetNewEffectInstance(id);
+                effect.ReceiveEffectElements(reader);
+                target.EffectList.Add(effect);
+            }
         }
     }
 }

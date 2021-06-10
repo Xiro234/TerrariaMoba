@@ -1,82 +1,54 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Graphics;
 using Terraria;
 using Terraria.UI;
 using TerrariaMoba.Characters;
 using TerrariaMoba.Players;
+using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.UI {
     public class ResourceBar : UIElement {
-        private Color gradientA;
-        private Color gradientB;
-        private int previousLife;
-        private int resource; //0 for life, 1 for mana
+        private Resource resource { get; set; }
+        private Texture2D bar;
 
-        public ResourceBar(Color gradA, Color gradB, int res) {
-            gradientA = gradA;
-            gradientB = gradB;
+        public ResourceBar(Resource res) {
             resource = res;
+            bar = UIUtils.GetBarFromResource(resource);
         }
-        
+
         protected override void DrawSelf(SpriteBatch spriteBatch) {
             base.DrawSelf(spriteBatch);
             
             float quotient;
             var player = Main.LocalPlayer;
+            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
             if (player != null) {
-                if (resource == 0) {
+                string text = "";
+
+                if (resource == Resource.Life) {
                     quotient = (float) player.statLife / player.statLifeMax2;
+                    text = player.statLife + "/" + player.statLifeMax2;
                 }
-                else if (resource == 1) {
-                    quotient = (float) player.statMana / player.statManaMax;
+                else if (resource == Resource.Experience) {
+                    quotient = (float) mobaPlayer.Hero.Experience / Character.XP_PER_LEVEL;
+                    text = mobaPlayer.Hero.Experience + "/" + Character.XP_PER_LEVEL;
                 }
                 else {
-                    quotient = (float) player.GetModPlayer<MobaPlayer>().Hero.Experience /
-                               Character.XP_PER_LEVEL;
+                    float maxResource = mobaPlayer.Stats.MaxResource + mobaPlayer.Hero.BaseStatistics.MaxResource;
+                    float currentResource = mobaPlayer.CurrentResource;
+                    quotient = currentResource / maxResource;
+                    text = currentResource + "/" + maxResource;
                 }
 
                 quotient = Utils.Clamp(quotient, 0f, 1f);
-                Rectangle hitbox = GetDimensions().ToRectangle();
-
-                int left = hitbox.Left;
-                int right = hitbox.Right;
-                int top = hitbox.Top;
-                int bottom = hitbox.Bottom;
-                if (resource != 2) {
-                    int steps = (int) ((right - left) * quotient);
-                    int i = 0;
-                    for (i = 0; i < steps; i++) {
-                        float percent = (float) i / (right - left);
-                        spriteBatch.Draw(Main.magicPixel, new Rectangle(left + i, hitbox.Y, 1, hitbox.Height),
-                            Color.Lerp(gradientA, gradientB, percent));
-                    }
-
-                    if (resource == 0) {
-                        if (previousLife > player.statLife) {
-                            int prevLifeSteps =
-                                (int) ((right - left) *
-                                       ((float) (previousLife - player.statLife) / player.statLifeMax2) +
-                                       i);
-                            for (int j = i; j < prevLifeSteps; j++) {
-                                spriteBatch.Draw(Main.magicPixel, new Rectangle(left + j, hitbox.Y, 1, hitbox.Height),
-                                    Color.Red);
-                            }
-
-                            previousLife -= 2;
-                        }
-                        else if (previousLife <= player.statLife) {
-                            previousLife = player.statLife;
-                        }
-                    }
-                }
-                else {
-                    int steps = (int) ((bottom - top) * quotient);
-                    for (int i = 0; i < steps; i++) {
-                        float percent = (float) i / (bottom - top);
-                        spriteBatch.Draw(Main.magicPixel, new Rectangle(hitbox.X, bottom - i, hitbox.Width, 1),
-                            Color.Lerp(gradientA, gradientB, percent));
-                    }
-                }
+                Rectangle rectangle = GetDimensions().ToRectangle();
+                
+                float scale = 0.6f;
+                spriteBatch.Draw(bar, rectangle.Center(), new Rectangle(0, 0, (int)(bar.Width * quotient), bar.Height), Color.White);
+                Vector2 stringPos = rectangle.Center() + new Vector2(bar.Width / 2f, bar.Height / 2f);
+                stringPos -= (new Vector2(Main.fontMouseText.MeasureString(text).X / 2f,Main.fontMouseText.MeasureString(text).Y / 3f)) * scale;
+                spriteBatch.DrawString(Main.fontMouseText, text, stringPos, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
             }
         }
     }

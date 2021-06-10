@@ -9,8 +9,9 @@ namespace TerrariaMoba.Network {
     public static class NetworkHandler {
         public enum NetTag : byte {
             PVP_HIT = 0,
-            STATUS_EFFECT,
+            ADD_STATUS_EFFECT,
             SYNC_STATUS_EFFECT,
+            SYNC_EFFECT_LIST
             
         }
         
@@ -20,8 +21,14 @@ namespace TerrariaMoba.Network {
                 case NetTag.PVP_HIT:
                     ReceivePvpHit(reader, sender);
                     break;
-                case NetTag.STATUS_EFFECT:
+                case NetTag.ADD_STATUS_EFFECT:
                     ReceiveAddEffect(reader, sender);
+                    break;
+                case NetTag.SYNC_STATUS_EFFECT:
+                    ReceiveSyncEffect(reader, sender);
+                    break;
+                case NetTag.SYNC_EFFECT_LIST:
+                    ReceiveSyncEffectList(reader, sender);
                     break;
                 default:
                     //TODO - Add error logging
@@ -59,7 +66,7 @@ namespace TerrariaMoba.Network {
             int ID = StatusEffectManager.GetIDOfEffect(effect);
 
             ModPacket modPacket = TerrariaMoba.Instance.GetPacket();
-            modPacket.Write((byte)NetTag.STATUS_EFFECT);
+            modPacket.Write((byte)NetTag.ADD_STATUS_EFFECT);
             modPacket.Write(ID);
             modPacket.Write(target);
             effect.SendEffectElements(modPacket);
@@ -87,6 +94,7 @@ namespace TerrariaMoba.Network {
             modPacket.Write((byte)NetTag.SYNC_STATUS_EFFECT);
             modPacket.Write(index);
             modPacket.Write(target);
+            TerrariaMoba.Instance.Logger.Error(index + " " + Main.player[target].GetModPlayer<MobaPlayer>().EffectList.Count);
             Main.player[target].GetModPlayer<MobaPlayer>().EffectList[index].SendEffectElements(modPacket);
             modPacket.Send(ignoreClient: ignore);
         }
@@ -98,6 +106,30 @@ namespace TerrariaMoba.Network {
             
             if (Main.netMode == NetmodeID.Server) {
                 SendSyncEffect(index, target, sender);
+            }
+        }
+        #endregion
+        
+        #region SYNC_EFFECT_LIST
+        public static void SendSyncEffectList(int target, int ignore = -1) {
+            var mobaPlayer = Main.player[target].GetModPlayer<MobaPlayer>();
+            ModPacket modPacket = TerrariaMoba.Instance.GetPacket();
+            modPacket.Write((byte)NetTag.SYNC_EFFECT_LIST);
+            modPacket.Write(target);
+            int count = mobaPlayer.EffectList.Count;
+            modPacket.Write(count);
+            StatusEffectManager.WriteListToPacket(modPacket, mobaPlayer.EffectList);
+            modPacket.Send(ignoreClient: ignore);
+        }
+
+        public static void ReceiveSyncEffectList(BinaryReader reader, int sender) {
+            int whoAmI = reader.ReadInt32();
+            var target = Main.player[whoAmI].GetModPlayer<MobaPlayer>();
+            int count = reader.ReadInt32();
+            StatusEffectManager.ReadListFromPacket(reader, target, count);
+            
+            if (Main.netMode == NetmodeID.Server) {
+                SendSyncEffectList(whoAmI, sender);
             }
         }
         #endregion
