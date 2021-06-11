@@ -16,7 +16,6 @@ namespace TerrariaMoba.Abilities.Sylvia {
 
         public const int JAVELIN_BASE_DAMAGE = 400;
         public const int JAVELIN_BASE_NUMBER = 3;
-
         public const int AIRTIME_BASE_DURATION = 360;
 
         public Projectile teleport = null;
