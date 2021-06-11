@@ -8,7 +8,7 @@ using TerrariaMoba.Statistic;
 namespace TerrariaMoba.Characters {
     public class Jorm : Character {
         public Jorm(Player user) : base(user, new Statistics(2150f, 0f, 500f,
-            0f, Statistics.Resource.Mana, 99f, 0.91f, 9f), new EnsnaringVinesAbility()) { }
+            0f, Resource.Mana, 99f, 0.91f, 9f), new EnsnaringVinesAbility()) { }
 
         public override string Name {
             get => "Jorm Goldenhammer";

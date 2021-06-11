@@ -37,7 +37,6 @@ namespace TerrariaMoba.Characters {
         public virtual int BodyDyeID { get => 0; }
         public virtual int LegVanityID { get => 0; }
         public virtual int LegDyeID { get => 0; }
-        public virtual bool IsMale { get => true; }
         
         //Ability Properties
         public Ability SlotOne {
