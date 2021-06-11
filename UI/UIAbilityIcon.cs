@@ -2,20 +2,14 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
-using Terraria.UI;
 using System;
-using Microsoft.Xna.Framework.Input;
 using TerrariaMoba.Abilities;
-using TerrariaMoba.Players;
 
 namespace TerrariaMoba.UI {
     public class UIAbilityIcon : UIImage {
-        public Ability ability;
-        public int abilityMaxCooldown = 0;
+        public Ability ability { get; set; }
 
-        public UIAbilityIcon(Texture2D texture) : base(texture) {
-            //ability = new Ability();
-        }
+        public UIAbilityIcon(Texture2D texture) : base(texture) { }
 
         protected override void DrawSelf(SpriteBatch spriteBatch) {
             base.DrawSelf(spriteBatch);
@@ -28,9 +22,6 @@ namespace TerrariaMoba.UI {
             //Cooldown Effect
             if (ability.CooldownTimer > 0) {
                 Rectangle hitbox = GetDimensions().ToRectangle();
-                if (abilityMaxCooldown == 0) {
-                    abilityMaxCooldown = ability.CooldownTimer;
-                }
 
                 //pixel adjustments so it covers the entirety of the icon
                 int left = hitbox.Left - 1;
@@ -38,7 +29,7 @@ namespace TerrariaMoba.UI {
                 int top = hitbox.Top + 1;
                 int bottom = hitbox.Bottom + 1;
                 
-                float rads = (float)(Math.PI * 2) - ((float)(Math.PI * 2) * ((float) ability.CooldownTimer / (float) abilityMaxCooldown));
+                float rads = (float)(Math.PI * 2) - ((float)(Math.PI * 2) * ((float) ability.CooldownTimer / (float) ability.BaseCooldown));
                 
                 for (int i = 0; i < right - left; i++) {
                     for (int j = 0; j < bottom - top; j++) {
@@ -56,17 +47,10 @@ namespace TerrariaMoba.UI {
                         spriteBatch.Draw(Main.magicPixel, new Rectangle(right - i, top + j, 1, 1), color); //Top + j makes it go clockwise
                     }
                 }
-                
-                
             }
-            else {
-                abilityMaxCooldown = 0;
-            }
-
-            ability.AdditionalDrawing(spriteBatch, this);
         }
 
-        public override void Click(UIMouseEvent evt) {
+        /*public override void Click(UIMouseEvent evt) {
             if (Main.keyState.IsKeyDown(Keys.LeftAlt)) {
                 var modPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
                 if (ability.CooldownTimer > 0) {
@@ -76,6 +60,6 @@ namespace TerrariaMoba.UI {
                     Main.NewText(Main.LocalPlayer.name + " is ready to use " + ability.Name + "!");
                 }
             }
-        }
+        }*/
     }
 }

@@ -5,35 +5,28 @@ using Terraria;
 using Terraria.GameContent.UI.Elements;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.Players;
+using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.UI {
     public class MobaBar : UIState {
-        private UIText QCooldown;
-        private UIText ECooldown;
-        private UIText RCooldown;
-        private UIText CCooldown;
-        private UIText lifeText;
-        private UIText manaText;
-        private UIText armorText;
-        private UIText moveSpeedText;
-        private UIText deathTimer;
-        private UIText levelText;
-        private UIImage bar;
-        private UIImage characterIcon;
-        private UIImage moveSpeedIcon;
-        private UIImage armorIcon;
-        private UIAbilityIcon QPanel;
-        private UIAbilityIcon EPanel;
-        private UIAbilityIcon RPanel;
-        private UIAbilityIcon CPanel;
+        private static UIText QCooldown;
+        private static UIText ECooldown;
+        private static UIText RCooldown;
+        private static UIText CCooldown;
+        private static UIText deathTimer;
+        private static UIImage bar;
+        private static UIImage characterIcon;
+        private static UIAbilityIcon QPanel;
+        private static UIAbilityIcon EPanel;
+        private static UIAbilityIcon RPanel;
+        private static UIAbilityIcon CPanel;
         private ResourceBar lifeBar;
-        private ResourceBar manaBar;
-        private ResourceBar experienceBar;
+        private ResourceBar resourceBar;
 
         public override void OnInitialize() {
             bar = new UIImage(TerrariaMoba.Instance.GetTexture("Textures/MobaBarBackground"));
-            bar.VAlign = 0.95f;
-            bar.HAlign = 0.5f;
+            bar.VAlign = 0.99f;
+            bar.HAlign = 0.05f;
             Append(bar);
 
             QPanel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"));
@@ -72,13 +65,15 @@ namespace TerrariaMoba.UI {
             CCooldown.HAlign = 0.5f;
             CPanel.Append(CCooldown);
             
-            lifeBar = new ResourceBar(Color.DarkGreen, Color.Lime, 0);
-            lifeBar.Left.Set(54, 0);
-            lifeBar.Top.Set(5, 0);
-            lifeBar.Width.Set(432, 0);
-            lifeBar.Height.Set(14, 0);
+            lifeBar = new ResourceBar(Resource.Life);
+            lifeBar.Left.Set(146, 0);
+            lifeBar.Top.Set(6, 0);
+            
+            resourceBar = new ResourceBar(Resource.Mana);
+            resourceBar.Left.Set(146, 0);
+            resourceBar.Top.Set(22, 0);
 
-            lifeText = new UIText("");
+            /*lifeText = new UIText("");
             lifeText.VAlign = 0.5f;
             lifeText.HAlign = 0.5f;
             lifeText.TextColor = new Color(255f, 255f, 255f, 0f);
@@ -106,7 +101,7 @@ namespace TerrariaMoba.UI {
             levelText.Left.Set(224, 0);
             levelText.Top.Set(92, 0);
             levelText.Width.Set(6, 0);
-            levelText.Height.Set(6, 0);
+            levelText.Height.Set(6, 0);*/
 
             characterIcon = new UIImage(TerrariaMoba.Instance.GetTexture("Textures/Lock"));
             characterIcon.Left.Set(180, 0);
@@ -116,25 +111,9 @@ namespace TerrariaMoba.UI {
             deathTimer.VAlign = 0.5f;
             deathTimer.HAlign = 0.5f;
             characterIcon.Append(deathTimer);
-            
-            moveSpeedIcon = new UIImage(TerrariaMoba.Instance.GetTexture("Textures/moveSpeedImage"));
-            moveSpeedIcon.Left.Set(16, 0);
-            moveSpeedIcon.Top.Set(54, 0);
-            
-            moveSpeedText = new UIText("");
-            moveSpeedText.Left.Set(32, 0);
-            moveSpeedText.Top.Set(58, 0);
 
-            armorIcon = new UIImage(TerrariaMoba.Instance.GetTexture("Textures/defenseImage"));
-            armorIcon.Left.Set(16, 0);
-            armorIcon.Top.Set(72, 0);
-            
-            armorText = new UIText("");
-            armorText.Left.Set(32, 0);
-            armorText.Top.Set(72, 0);
-            
             bar.Append(lifeBar);
-            bar.Append(manaBar);
+            /*bar.Append(manaBar);
             bar.Append(experienceBar);
             bar.Append(armorText);
             bar.Append(moveSpeedText);
@@ -143,9 +122,7 @@ namespace TerrariaMoba.UI {
             bar.Append(RPanel);
             bar.Append(CPanel);
             bar.Append(characterIcon);
-            bar.Append(levelText);
-            bar.Append(moveSpeedIcon);
-            bar.Append(armorIcon);
+            bar.Append(levelText);*/
         }
 
         public void SetIcons() {
@@ -162,18 +139,18 @@ namespace TerrariaMoba.UI {
             
             var player = Main.LocalPlayer;
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
-            DrawIcon(ref QCooldown, ref QPanel, mobaPlayer.Hero.SlotOne.CooldownTimer, mobaPlayer.Hero.SlotOne);
+            /*DrawIcon(ref QCooldown, ref QPanel, mobaPlayer.Hero.SlotOne.CooldownTimer, mobaPlayer.Hero.SlotOne);
             DrawIcon(ref ECooldown, ref EPanel, mobaPlayer.Hero.SlotTwo.CooldownTimer, mobaPlayer.Hero.SlotTwo);
             DrawIcon(ref RCooldown, ref RPanel, mobaPlayer.Hero.SlotFour.CooldownTimer, mobaPlayer.Hero.SlotFour);
-            DrawIcon(ref CCooldown, ref CPanel, mobaPlayer.Hero.SlotFive.CooldownTimer, mobaPlayer.Hero.SlotFive);
-            levelText.SetText(mobaPlayer.Hero.Level.ToString(), 0.75f, false);
+            DrawIcon(ref CCooldown, ref CPanel, mobaPlayer.Hero.SlotFive.CooldownTimer, mobaPlayer.Hero.SlotFive);*/ //TODO - Fix icon drawing on bar
+            //levelText.SetText(mobaPlayer.Hero.Level.ToString(), 0.75f, false);
             
             //lifeText.SetText(player.statLife + "/" + player.statLifeMax2 + " (+" + mobaPlayer.lifeRegen + ")", 0.75f, false);
             
             //manaText.SetText(mobaPlayer.currentResource + "/" + mobaPlayer.maxResource + " (+" + mobaPlayer.resourceRegen + ")", 0.75f, false);
 
             //armorText.SetText(mobaPlayer.armor.ToString(), 0.6f, false);
-            moveSpeedText.SetText(((player.maxRunSpeed / 3) * 100).ToString() + "%", 0.6f, false);
+            //moveSpeedText.SetText(((player.maxRunSpeed / 3) * 100).ToString() + "%", 0.6f, false);
 
             if (player.dead) {
                 deathTimer.SetText(Math.Ceiling(player.respawnTimer / 60f).ToString());
@@ -183,7 +160,7 @@ namespace TerrariaMoba.UI {
             }
         }
 
-        public void DrawIcon(ref UIText text,ref UIAbilityIcon icon, int timer, Ability ability) {
+        public void DrawIcon(ref UIText text, ref UIAbilityIcon icon, int timer, Ability ability) {
             if(timer > 0) {
                 if (timer >= 40) {
                     text.SetText(Math.Ceiling(timer / 60f)
@@ -206,23 +183,15 @@ namespace TerrariaMoba.UI {
             ECooldown = null;
             RCooldown = null;
             CCooldown = null;
-            lifeText = null;
-            manaText = null;
-            armorText = null;
-            moveSpeedText = null;
             deathTimer = null;
-            levelText = null;
             bar = null;
             characterIcon = null;
-            moveSpeedIcon = null;
-            armorIcon = null;
             QPanel = null;
             EPanel = null;
             RPanel = null;
             CPanel = null;
             lifeBar = null;
-            manaBar = null;
-            experienceBar = null;
+            resourceBar = null;
         }
     }
 }

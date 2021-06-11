@@ -17,7 +17,6 @@ namespace TerrariaMoba.StatusEffects {
         public int Duration { get; protected set; }
         public int DurationTimer { get; protected set; }
         public bool CanBeCleansed { get; protected set; }
-        public bool NeedSyncing { get; set; }
         protected virtual bool ShowBar {
             get => true;
         }
@@ -31,11 +30,9 @@ namespace TerrariaMoba.StatusEffects {
 
         public virtual void Apply() {
             DurationTimer = Duration;
-            //Main.NewText(DurationTimer);
         }
 
         public virtual void WhileActive() {
-            //Main.NewText(DurationTimer);
             DurationTimer--;
         }
 
@@ -69,6 +66,10 @@ namespace TerrariaMoba.StatusEffects {
             
             return playerLayer;
         }
+
+        public virtual void RefreshDuration() {
+            DurationTimer = Duration;
+        }
         
         /// <summary>
         /// Override this if the status effect contains more information to be synced. Should return base.SendEffectElements(packet).
@@ -86,15 +87,6 @@ namespace TerrariaMoba.StatusEffects {
         public virtual void ReceiveEffectElements(BinaryReader reader) {
             Duration = reader.ReadInt32();
             CanBeCleansed = reader.ReadBoolean();
-        }
-
-        public void CheckSync() {
-            if (NeedSyncing) {
-                int index = User.GetModPlayer<MobaPlayer>().EffectList.IndexOf(this);
-                if (index != -1) {
-                    NetworkHandler.SendSyncEffect(index, User.whoAmI);
-                }
-            }
         }
     }
 }

@@ -15,6 +15,7 @@ namespace TerrariaMoba.Players {
         public int resourceRegenTimer = 0;
 
         public void RegenLife() {
+            /*
             lifeRegenTimer++;
             
             if (lifeRegenTimer == 60) {
@@ -27,9 +28,11 @@ namespace TerrariaMoba.Players {
 
                 lifeRegenTimer = 0;
             }
+            */
         }
 
         public void RegenResource() {
+            /*
             resourceRegenTimer++;
             
             if (resourceRegenTimer == 60) {
@@ -41,6 +44,7 @@ namespace TerrariaMoba.Players {
 
                 resourceRegenTimer = 0;
             }
+            */
         }
     }
 }

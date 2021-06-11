@@ -1,9 +1,5 @@
 ﻿namespace TerrariaMoba.Statistic {
     public class Statistics {
-        public enum Resource {
-            Mana
-        }
-        
         public float MaxHealth { get; set; }
         public float HealthRegen { get; set; }
         

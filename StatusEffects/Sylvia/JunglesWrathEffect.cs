@@ -13,10 +13,17 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         public JunglesWrathEffect(int duration, int stacks) : base(duration, true) {
             Stacks = stacks;
         }
+        
+        public JunglesWrathEffect() {
+            
+        }
 
         public override string DisplayName { get => "Jungle's Wrath"; }
         public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Blank"); }
-        
+        protected override bool ShowBar {
+            get => false;
+        }
+
         public int Stacks { get; set; }
 
         public override void SendEffectElements(ModPacket packet) {
@@ -54,12 +61,13 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
                         return;
                 }
                 
-                Vector2 texturePos = new Vector2(drawPlayer.Top.X - Main.screenPosition.X - (texture.Width/2) - 10,
-                    drawPlayer.Top.Y - Main.screenPosition.Y - 44);
+                Vector2 texturePos = new Vector2(drawPlayer.Top.X - Main.screenPosition.X - (texture.Width/2),
+                    drawPlayer.Top.Y - Main.screenPosition.Y - 40);
                 DrawData data = new DrawData(texture, texturePos, Color.White);
                 Main.playerDrawData.Add(data);
             });
             
+            playerLayers.Add(playerLayer);
             base.GetListOfPlayerLayers(playerLayers);
         }
     }

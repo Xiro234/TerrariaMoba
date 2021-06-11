@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using Terraria.ID;
 using TerrariaMoba.Abilities;
+using TerrariaMoba.Abilities.Sylvia;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Network;
@@ -17,7 +18,6 @@ namespace TerrariaMoba.Players {
     public partial class MobaPlayer : ModPlayer {
         //General
         public int PlayerLastHurt = -1;
-        public bool InProgress = false;
         public int GameTime = 0;
 
         public int ultTimer = -1;
@@ -32,10 +32,10 @@ namespace TerrariaMoba.Players {
         public override void OnEnterWorld(Player player) {
             TerrariaMoba.Instance.MobaBar = null;
             TerrariaMoba.Instance.MobaBar = new MobaBar();
-            TerrariaMoba.Instance.HideBar();
+            //TerrariaMoba.Instance.HideBar();
 
-            TestAbilities.Add(new TestUseItemAbility());
-            TestAbilities.Add(new TestShootAbility());
+            TestAbilities.Add(new EnsnaringVinesAbility());
+            TestAbilities.Add(new JunglesWrathAbility());
         }
 
         public override void OnRespawn(Player player) {
@@ -49,7 +49,7 @@ namespace TerrariaMoba.Players {
 
             AbilityEffectManager.ResetEffects(player);
         }
-
+        
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TerrariaMoba.AbilityOneHotKey.JustPressed) {
                 TestAbilities[0].OnCast();
@@ -165,7 +165,7 @@ namespace TerrariaMoba.Players {
         public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) {
             Texture2D healthBar = TerrariaMoba.Instance.GetTexture("Textures/PlayerHealthBar");
             Vector2 barPos = new Vector2(player.Top.X - Main.screenPosition.X - (healthBar.Width/2),
-                player.Top.Y - Main.screenPosition.Y - 28);
+                player.Top.Y - Main.screenPosition.Y - 20);
             Main.spriteBatch.Draw(healthBar, barPos, Color.White);
 
             float quotient = Utils.Clamp((float) player.statLife / player.statLifeMax2, 0f, 1f);
@@ -280,7 +280,6 @@ namespace TerrariaMoba.Players {
         }
 
         public void StartGame() {
-            InProgress = true;
             TerrariaMoba.Instance.ShowBar();
             TerrariaMoba.Instance.MobaBar.SetIcons();
         }
