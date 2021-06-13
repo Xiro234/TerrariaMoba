@@ -260,15 +260,16 @@ namespace TerrariaMoba.Players {
 
         public void TakePvpDamage(int damage, int killer, bool noBroadcast) {
             if (!player.immune) {
-                int newDamage = (int)(damage * ((100f ) / 100f));
-                player.statLife -= newDamage;
+                
+                AbilityEffectManager.TakePvpDamage(player, ref damage, ref killer);
+                player.statLife -= damage;
 
-                CombatText.NewText(player.Hitbox, Color.OrangeRed, newDamage);
+                CombatText.NewText(player.Hitbox, Color.OrangeRed, damage);
                 
                 Main.NewText(player.whoAmI + " " + killer);
                 
                 if (player.statLife <= 0) {
-                    player.KillMe(PlayerDeathReason.ByPlayer(killer), newDamage, 1, true);
+                    player.KillMe(PlayerDeathReason.ByPlayer(killer), damage, 1, true);
                 }
                 
                 Main.PlaySound(1, player.position);
