@@ -94,13 +94,33 @@ namespace TerrariaMoba.Interfaces {
             List<StatusEffect> effects = GetValidEffects<IResetEffects>(player);
 
             foreach (Ability ability in abilities) {
-                ((IResetEffects) ability).ResetEffects();
+                ((IResetEffects)ability).ResetEffects();
             }
 
             foreach (StatusEffect effect in effects) {
                 ((IResetEffects)effect).ResetEffects();
             }
         }
+
+        /*
+        public static bool PreHurt(Player player, bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, 
+            ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
+            List<Ability> abilities = GetValidAbilities<IPreHurt>(player);
+            List<StatusEffect> effects = GetValidEffects<IPreHurt>(player);
+
+            bool result = true;
+            foreach (Ability ability in abilities) {
+                result &= ((IPreHurt)ability).PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit,
+                    ref customDamage, ref playSound, ref genGore, ref damageSource);
+            }
+            
+            foreach (StatusEffect effect in effects) {
+                result &= ((IPreHurt)effect).PreHurt(pvp, quiet, ref damage, ref hitDirection, ref crit, 
+                    ref customDamage, ref playSound, ref genGore, ref damageSource);
+            }
+
+            return result;
+        } */
         #endregion
         
         

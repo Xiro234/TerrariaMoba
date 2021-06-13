@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using Terraria.ID;
 using TerrariaMoba.Abilities;
+using TerrariaMoba.Abilities.Nocturne;
 using TerrariaMoba.Abilities.Sylvia;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.Interfaces;
@@ -34,8 +35,8 @@ namespace TerrariaMoba.Players {
             TerrariaMoba.Instance.MobaBar = new MobaBar();
             //TerrariaMoba.Instance.HideBar();
 
-            TestAbilities.Add(new EnsnaringVinesAbility());
-            TestAbilities.Add(new JunglesWrathAbility());
+            TestAbilities.Add(new TitaniumGuard());
+            TestAbilities.Add(new IronRush());
         }
 
         public override void OnRespawn(Player player) {
@@ -65,8 +66,10 @@ namespace TerrariaMoba.Players {
                 }
                 */
             }
-            /*
+            
             if (TerrariaMoba.AbilityTwoHotKey.JustPressed) {
+                TestAbilities[1].OnCast();
+                /*
                 if (Main.netMode != NetmodeID.MultiplayerClient) {
                     MyCharacter.HandleAbility(MyCharacter.EAbility);
                 }
@@ -76,8 +79,10 @@ namespace TerrariaMoba.Players {
                         index = MyCharacter.abilities.IndexOf(MyCharacter.EAbility)
                     }.Send();
                 }
+                */
             }
             
+            /*
             if (TerrariaMoba.UltimateHotkey.JustPressed) {
                 if (Main.netMode != NetmodeID.MultiplayerClient) {
                     MyCharacter.HandleAbility(MyCharacter.RAbility);
@@ -123,13 +128,12 @@ namespace TerrariaMoba.Players {
             */
         }
         
+        /*
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage,
             ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
-            if (pvp) {
-                return false;
-            }
-            return true;
-        }
+            return AbilityEffectManager.PreHurt(player, pvp, quiet, ref damage, ref hitDirection, ref crit,
+                    ref customDamage, ref playSound, ref genGore, ref damageSource);
+        } */
         
         public override void PostUpdateRunSpeeds() {
             

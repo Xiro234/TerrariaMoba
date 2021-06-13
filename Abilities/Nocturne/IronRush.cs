@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.SqlServer.Server;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
@@ -10,10 +8,18 @@ namespace TerrariaMoba.Abilities.Nocturne {
     public class IronRush : Ability {
         public IronRush() : base("Iron Rush", 60, 0, AbilityType.Active) { }
 
+        // TODO - Add an animation to make it look like the projectile is moving/running.
+        // TODO - Make sprite alpha scale with Sin/Cos so it pulses in and out.
+        // TODO - Replace control locking with a root near the final product (cant test on SP otherwise).
+        // TODO - If possible, stop the teleport forcing player into blocks (can be used to get out of bounds).
+        // TODO - Implement armor boost effect.
+        // TODO - Implement stun on enemy contact effect.
+        // TODO - Implement damage, resource and scaling stats.
+        
         public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Blank"); }
 
-        public const float DASH_X_VELOCITY = 7f;
-        public const int WAIT_TIME = 120;
+        public const float DASH_X_VELOCITY = 8f;
+        public const int WAIT_TIME = 60;
 
         public Projectile dash = null;
         public int timer;
@@ -23,8 +29,8 @@ namespace TerrariaMoba.Abilities.Nocturne {
             timer = WAIT_TIME;
             
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
-                // get user position, find direction, fire projectile where player facing, teleport to projectile on its death
-                Vector2 position = User.Top;
+                Vector2 position = User.Center;
+                position.Y -= 8f; // ups height of proj to avoid collision
                 int direction = User.direction;
 
                 Vector2 velocity = new Vector2(direction * DASH_X_VELOCITY, 0f);
@@ -37,7 +43,7 @@ namespace TerrariaMoba.Abilities.Nocturne {
 
         public override void WhileActive() {
             timer--;
-
+            
             if (timer > 0) {
                 User.controlLeft = false;
                 User.controlRight = false;
@@ -45,7 +51,7 @@ namespace TerrariaMoba.Abilities.Nocturne {
                 User.controlUp = false;
             }
 
-            if (timer == 0) {
+            if (timer == 0 || !dash.active) {
                 User.controlLeft = true;
                 User.controlRight = true;
                 User.controlJump = true;
