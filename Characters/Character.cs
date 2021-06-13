@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using TerrariaMoba.Abilities;
@@ -21,6 +22,13 @@ namespace TerrariaMoba.Characters {
         public Statistics BaseStatistics { get; private set; }
         public int Level { get; protected set; }
 
+        //Appearance
+        public virtual bool IsMale { get => true; }
+        public virtual int HairID { get => 0; }
+        public virtual Color HairColor { get => Color.Tomato; }
+        public virtual Color SkinColor { get => Color.Tomato; }
+        public virtual Color EyeColor { get => Color.Tomato; }
+
         //Items
         public virtual int PrimaryWeaponID { get => 0; }
         public virtual int HeadVanityID { get => 0; }
@@ -29,7 +37,6 @@ namespace TerrariaMoba.Characters {
         public virtual int BodyDyeID { get => 0; }
         public virtual int LegVanityID { get => 0; }
         public virtual int LegDyeID { get => 0; }
-        public virtual bool IsMale { get => true; }
         
         //Ability Properties
         public Ability SlotOne {

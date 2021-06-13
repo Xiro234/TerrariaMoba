@@ -1,21 +1,41 @@
-﻿/*using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ModLoader;
-using TerrariaMoba.Abilities.Flibnob;
-using TerrariaMoba.Enums;
-using TerrariaMoba.Players;
+using Terraria.ID;
+using TerrariaMoba.Abilities.Sylvia;
+using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Characters {
     public class Flibnob : Character {
-        public override string FullName { get => "Flibnob, the Chieftain of Krommock"; }
-        public override CharacterIdentity identity {
-            get => CharacterIdentity.Flibnob;
+        public Flibnob(Player user) : base(user, new Statistics(2060f, 0f, 500f,
+            0f, Resource.Mana, 75f, 1.5f, 9f), new EnsnaringVinesAbility()) { }
+
+        public override string Name {
+            get => "Flibnob";
         }
+        
         public override Texture2D CharacterIcon {
             get => TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobIcon");
         }
+
+        public override bool IsMale { get => true; }
+        public override int HairID { get => 15; }
+        public override Color HairColor { get => Color.Black; }
+        public override Color SkinColor { get => Color.SaddleBrown; }
+        public override Color EyeColor { get => Color.Red; }
+        public override int PrimaryWeaponID { get => TerrariaMoba.Instance.ItemType("FlibnobAxe"); }
+        public override int HeadVanityID { get => ItemID.OgreMask; }
+        public override int BodyVanityID { get => ItemID.RedsBreastplate; }
+        public override int BodyDyeID { get => ItemID.ReflectiveMetalDye; }
+        public override int LegVanityID { get => ItemID.RedsLeggings; }
+        public override int LegDyeID { get => ItemID.ReflectiveMetalDye; }
+    }
+}
+
+/*
+namespace TerrariaMoba.Characters {
+    public class Flibnob : Character {
+        public override string FullName { get => "Flibnob, the Chieftain of Krommock"; }
 
         public Flibnob(Player player) : base(player) { }
         
@@ -53,78 +73,4 @@ namespace TerrariaMoba.Characters {
             abilities[2] = ultimate;
             #1#
         }
-        /*
-        public override void PreUpdate() {
-            
-        }
-
-        public override void PostUpdateEquips() {
-            /*if (player.GetModPlayer<MobaPlayer>().FlibnobEffects.TitaniumShell) {
-                player.GetModPlayer<MobaPlayer>().percentThorns += 0.25f;
-            }
-        }
-
-        public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
-            ref float knockBack) {
-            return true;
-        }
-
-        public override float UseTimeMultiplier(Item item) {
-            return 1f;
-        }
-
-        public override void ModifyDrawLayers(List<PlayerLayer> layers) {
-
-        }
-
-        public override void PostUpdateRunSpeeds() {
-            /*if (player.GetModPlayer<MobaPlayer>().FlibnobEffects.TitaniumShell) {
-                player.moveSpeed *= 0.5f;
-                player.maxRunSpeed *= 0.5f;
-                player.accRunSpeed *= 0.5f;
-            }
-        }
-        
-        public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-
-        }
-        
-        #1#
-        public override void LevelUp() {
-            level += 1;
-            player.GetModPlayer<MobaPlayer>().FlibnobStats.LevelUp();
-            baseMaxLife = (int)player.GetModPlayer<MobaPlayer>().FlibnobStats.MaxHealth.Value;
-            baseLifeRegen = (baseMaxLife * 0.125f) / 60;
-            baseMaxResource = (int)player.GetModPlayer<MobaPlayer>().FlibnobStats.MaxResource.Value;
-            baseResourceRegen = (baseMaxResource * 0.125f) / 30;
-            TalentSelect();
-        }
-
-        public override void TalentSelect() {
-            switch (level) {
-                case 1:
-                    Main.NewText("We");
-                    Main.NewText("Like");
-                    Main.NewText("Fortnite");
-                    canSelectTalent = true;
-                    break;
-                case 4:
-                    Main.NewText("We");
-                    Main.NewText("Like");
-                    Main.NewText("Fortnite");
-                    canSelectTalent = true;
-                    break;
-                case 7:
-                    break;
-                case 10:
-                    break;
-                case 13:
-                    break;
-                case 16:
-                    break;
-                case 20:
-                    break;
-            }
-        }
-    }
-}*/
+*/

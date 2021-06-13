@@ -1,50 +1,70 @@
-﻿/*using System;
+﻿using Terraria;
+using System;
 using Microsoft.Xna.Framework;
-using Terraria;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
-using TerrariaMoba.Players;
-using static Terraria.ModLoader.ModContent;
+using TerrariaMoba.Enums;
+using TerrariaMoba.Interfaces;
+using TerrariaMoba.Projectiles.Flibnob;
+using TerrariaMoba.StatusEffects;
+using TerrariaMoba.StatusEffects.Sylvia;
 
 namespace TerrariaMoba.Abilities.Flibnob {
-    [Serializable]
-    public class FlameBelch : Ability {
-        public FlameBelch(Player myPlayer) : base(myPlayer) {
-            Name = "Flame Belch";
-            Icon = TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobAbilityOne");
-        }
+    public class FlameBelch : Ability, IModifyHitPvpWithProj {
+        public FlameBelch() : base("Flame Belch", 60, 0, AbilityType.Active) { }
         
+        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobAbilityOne"); }
+
+        public const int FLAME_BASE_DAMAGE = 225;
+        public const int FLAME_BASE_NUMBER = 4;
+        public const int FLAME_BASE_DELAY = 60;
+        
+        public const int BURN_BASE_DURATION = 150;
+        
+        public int timer;
+        public int remainingFlames;
+
         public override void OnCast() {
-            Timer = (3 * 60) + 1;
+            timer = FLAME_BASE_DELAY;
+            remainingFlames = FLAME_BASE_NUMBER;
             IsActive = true;
-            User.AddBuff(BuffType<Buffs.Channeling>(), Timer);
         }
 
         public override void WhileActive() {
-            Timer--;
-            if (Timer % 60 == 0) {
+            timer--;
+            if (timer == 0) {
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
-                    Vector2 position = User.Center;
-                    Vector2 playerToMouse = Main.MouseWorld - position;
+                    Vector2 playerToMouse = Main.MouseWorld - User.Center;
                     double mag = Math.Sqrt(playerToMouse.X * playerToMouse.X + playerToMouse.Y * playerToMouse.Y);
                     float dirX = (float)(playerToMouse.X * (6.0 / mag));
                     float dirY = (float)(playerToMouse.Y * (6.0 / mag));
                     Vector2 vel = new Vector2(dirX, dirY);
                 
                     Main.PlaySound(SoundID.DD2_OgreAttack, User.Center);
-                    Projectile.NewProjectile(position, vel,
-                        TerrariaMoba.Instance.ProjectileType("FlameBelchSpawner"), 
-                        (int)User.GetModPlayer<MobaPlayer>().FlibnobStats.A1FireballDmg.Value, 0, User.whoAmI);
+                    Projectile.NewProjectile(User.Center, vel,
+                        TerrariaMoba.Instance.ProjectileType("FlameBelchSpawner"), FLAME_BASE_DAMAGE, 0, User.whoAmI);
                 }
+                remainingFlames--;
             }
-            if (Timer == 0) {
+            
+            if (remainingFlames == 0) {
                 TimeOut();
             }
         }
-
+        
         public override void TimeOut() {
-            Timer = 0;
+            timer = 0;
+            remainingFlames = 0;
             IsActive = false;
-            cooldownTimer = 10 * 60;
+        }
+
+        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
+            //TODO - Add burning effect.
+            var modProjectile = proj.modProjectile;
+            FlameBelchSpawner trap = modProjectile as FlameBelchSpawner;
+            if (trap != null) {
+                StatusEffectManager.AddEffect(target, new EnsnaringVinesEffect(BURN_BASE_DURATION, true));
+            }
         }
     }
-}*/
+}

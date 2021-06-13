@@ -1,4 +1,18 @@
-﻿/*using System;
+﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.ID;
+using TerrariaMoba.Enums;
+
+namespace TerrariaMoba.Abilities.Marie {
+    public class BlessingOfTheGoddess : Ability {
+        public BlessingOfTheGoddess() : base("Blessing of the Goddess", 60, 0, AbilityType.Active) { }
+
+        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieUltimateOne"); } //not trait anymore just texure name
+    }
+}
+/*using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;

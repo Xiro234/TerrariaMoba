@@ -4,7 +4,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TerrariaMoba.Projectiles.Flibnob {
-    class Earthsplitter : ModProjectile {
+    class SplitEarth : ModProjectile {
+
+        public int EarthDuration { get; set; }
+
         public override void SetStaticDefaults() {
             Main.projFrames[projectile.type] = 6;
         }
@@ -27,7 +30,7 @@ namespace TerrariaMoba.Projectiles.Flibnob {
                 projectile.frame = ++projectile.frame % Main.projFrames[projectile.type];
             }
 
-            if (projectile.ai[0] < 1) {
+            if ((int)projectile.ai[0] == 0) {
                 Main.PlaySound(SoundID.Dig, projectile.position);
                 for (int i = 0; i < 30; i++) {
                     Dust.NewDust(projectile.position, projectile.width, projectile.height, 0, 0, 0, 0, default(Color), 1.2f);
@@ -36,7 +39,7 @@ namespace TerrariaMoba.Projectiles.Flibnob {
             
             projectile.ai[0] += 1f;
 
-            if (projectile.ai[0] >= 15) {
+            if ((int)projectile.ai[0] == EarthDuration) {
                 projectile.Kill();
             }
         }

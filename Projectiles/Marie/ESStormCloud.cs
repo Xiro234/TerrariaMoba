@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Players;
@@ -20,7 +21,6 @@ namespace TerrariaMoba.Projectiles.Marie {
         }
 
         public override void AI() {
-            Player player = Main.player[projectile.owner];
             if (projectile.timeLeft > 20) {
                 projectile.ai[0] += 1f;
                 projectile.ai[1] += 1f;
@@ -33,19 +33,25 @@ namespace TerrariaMoba.Projectiles.Marie {
             
             if (projectile.ai[0] >= 4f) {
                 projectile.ai[0] = 0f;
-                if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
+                if (Main.netMode != NetmodeID.Server && Main.myPlayer == projectile.owner) {
                     int rainX = (int) (projectile.position.X + 14f + Main.rand.Next(projectile.width - 18));
                     int rainY = (int) projectile.position.Y + projectile.height;
-                    //Projectile.NewProjectile(rainX, rainY, 0f, 4.25f, TerrariaMoba.Instance.ProjectileType("ESRain"), (int)player.GetModPlayer<MobaPlayer>().MarieStats.U2RainDmg.Value, 0f, player.whoAmI, 0f, 0f);
+                    Vector2 pos = new Vector2(rainX, rainY);
+                    Vector2 vel = new Vector2(0f, 4.25f);
+                    Projectile.NewProjectile(pos, vel, TerrariaMoba.Instance.ProjectileType("ESRain"), 
+                        0, 0f, projectile.whoAmI);
                 }
             }
 
             if (projectile.ai[1] >= 45f) {
                 projectile.ai[1] = 0f;
-                if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
-                    int rainX = (int) (projectile.position.X + 14f + Main.rand.Next(projectile.width - 18));
-                    int rainY = (int) (projectile.position.Y + projectile.height - 20f);
-                    //Projectile.NewProjectile(rainX, rainY, 0f, 3.5f, TerrariaMoba.Instance.ProjectileType("ESLightning"), (int)player.GetModPlayer<MobaPlayer>().MarieStats.U2LightningDmg.Value, 0f, player.whoAmI, 0f, 0f);
+                if (Main.netMode != NetmodeID.Server && Main.myPlayer == projectile.owner) {
+                    int lightX = (int) (projectile.position.X + 14f + Main.rand.Next(projectile.width - 18));
+                    int lightY = (int) (projectile.position.Y + projectile.height - 20f);
+                    Vector2 pos = new Vector2(lightX, lightY);
+                    Vector2 vel = new Vector2(0f, 3.5f);
+                    Projectile.NewProjectile(pos, vel, TerrariaMoba.Instance.ProjectileType("ESLightning"), 
+                        0, 0f, projectile.whoAmI);
                 }
             }
         }

@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -31,10 +32,9 @@ namespace TerrariaMoba.Projectiles.Marie {
         }
 
         public override void Kill(int timeLeft) {
-            Player player = Main.player[projectile.owner];
-            if (Main.netMode != NetmodeID.Server && Main.myPlayer == player.whoAmI) {
-                Projectile.NewProjectile(projectile.Center.X, projectile.Center.Y, 0f, 0f, 
-                    TerrariaMoba.Instance.ProjectileType("ESStormCloud"), projectile.damage, projectile.knockBack, player.whoAmI, 0f, 0f);
+            if (Main.netMode != NetmodeID.Server && Main.myPlayer == projectile.owner) {
+                Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, 
+                    TerrariaMoba.Instance.ProjectileType("ESStormCloud"), projectile.damage, projectile.knockBack, projectile.whoAmI);
                 Main.PlaySound(SoundID.Item74, projectile.Center);
             }
         }

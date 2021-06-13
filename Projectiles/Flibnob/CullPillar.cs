@@ -2,12 +2,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Abilities.Flibnob;
 
 namespace TerrariaMoba.Projectiles.Flibnob {
     public class CullPillar : ModProjectile {
-        const float hookRange = 25f;
+
+        public float HookRange { get; set; }
 
         public override void SetDefaults() {
             projectile.width = 30;
@@ -15,6 +16,8 @@ namespace TerrariaMoba.Projectiles.Flibnob {
             projectile.friendly = true;
             projectile.hostile = false;
             projectile.timeLeft = 480;
+
+            HookRange = CullTheMeek.HOOK_BASE_RANGE;
         }
 
         public override void AI() {
@@ -25,7 +28,7 @@ namespace TerrariaMoba.Projectiles.Flibnob {
                 projectile.ai[1] = 1;
                 for (int i = 0; i < Main.maxPlayers; i++) {
                     float distToPillar = (Main.player[i].Center - projectile.Center).Length() / 16.0f;
-                    if (distToPillar <= hookRange && distToPillar < closestDist && i != player.whoAmI && Main.player[i].team != player.team) {
+                    if (distToPillar <= HookRange && distToPillar < closestDist && i != player.whoAmI && Main.player[i].team != player.team) {
                         playerID = i;
                         closestDist = distToPillar;
                     }
@@ -38,10 +41,10 @@ namespace TerrariaMoba.Projectiles.Flibnob {
                 if (hookedPlr.active) {
                     float hookedPosX = Math.Abs((hookedPlr.Center.X - projectile.Center.X) / 16.0f);
                     float hookedPosY = Math.Abs((hookedPlr.Center.Y - projectile.Center.Y) / 16.0f);
-                    if (hookedPosX > hookRange) {
+                    if (hookedPosX > HookRange) {
                         hookedPlr.velocity.X = -hookedPlr.velocity.X * 2f;
                     }
-                    if (hookedPosY > hookRange) {
+                    if (hookedPosY > HookRange) {
                         hookedPlr.velocity.Y = -hookedPlr.velocity.Y * 2f;
                     }
                 }

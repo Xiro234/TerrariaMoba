@@ -1,29 +1,42 @@
-﻿/*using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ModLoader;
-using TerrariaMoba.Players;
-using TerrariaMoba.Enums;
-using TerrariaMoba.Abilities.Marie;
+using Terraria.ID;
+using TerrariaMoba.Abilities.Sylvia;
+using TerrariaMoba.Statistic;
 
+namespace TerrariaMoba.Characters {
+    public class Marie : Character {
+        public Marie(Player user) : base(user, new Statistics(1460f, 0f, 500f,
+            0f, Resource.Mana, 75f, 1.5f, 9f), new EnsnaringVinesAbility()) { }
 
+        public override string Name {
+            get => "Marie Tidewrath";
+        }
+        
+        public override Texture2D CharacterIcon {
+            get => TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieIcon");
+        }
+        
+        public override bool IsMale { get => false; }
+        public override int HairID { get => 5; }
+        public override Color HairColor { get => Color.DodgerBlue; }
+        public override Color SkinColor { get => Color.LightSalmon; }
+        public override Color EyeColor { get => Color.Blue; }
+        public override int PrimaryWeaponID { get => TerrariaMoba.Instance.ItemType("MarieStaff"); }
+        public override int HeadVanityID { get => ItemID.BejeweledValkyrieHead; }
+        public override int HeadDyeID { get => ItemID.ReflectiveMetalDye; }
+        public override int BodyVanityID { get => ItemID.FishCostumeShirt; }
+        public override int LegVanityID { get => ItemID.FishCostumeFinskirt; }
+    }
+}
+
+/*
 namespace TerrariaMoba.Characters {
     public class Marie : Character {
         public override string FullName {
             get => "Marie Tidewrath, High Priestess of Lacusia";
         }
-        public override CharacterIdentity identity {
-            get => CharacterIdentity.Marie;
-        }
-        public override Texture2D CharacterIcon {
-            get => TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieIcon");
-        }
-
-        public Marie(Player player) : base(player) { }
-
-        public override void InitializeCharacter() { }
-
         public override void SetPlayer() {
             vanityHead.SetDefaults(3226);
             dyeHead.SetDefaults(1014);
@@ -51,76 +64,4 @@ namespace TerrariaMoba.Characters {
             abilities[2] = ultimate;
             #1#
         }
-        
-        /*
-        public override void PreUpdate() {
-            
-        }
-
-        public override void PostUpdateBuffs() {
-
-        }
-
-        public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
-            ref float knockBack) {
-            return true;
-        }
-
-        public override float UseTimeMultiplier(Item item) {
-            return 1f;
-        }
-
-        public override void ModifyDrawLayers(List<PlayerLayer> layers) {
-
-        }
-        
-        public override void PostUpdateRunSpeeds() {
-            /*if (player.GetModPlayer<MobaPlayer>().MarieEffects.Floodboost) {
-                player.moveSpeed *= 1.33f;
-                player.maxRunSpeed *= 1.33f;
-                player.accRunSpeed *= 1.33f;
-            }
-        }
-        
-        public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-
-        }
-        #1#
-        public override void LevelUp() {
-            level += 1;
-            player.GetModPlayer<MobaPlayer>().MarieStats.LevelUp();
-            baseMaxLife = (int)player.GetModPlayer<MobaPlayer>().MarieStats.MaxHealth.Value;
-            baseLifeRegen = (baseMaxLife * 0.125f) / 60;
-            baseMaxResource = (int)player.GetModPlayer<MobaPlayer>().MarieStats.MaxResource.Value;
-            baseResourceRegen = (baseMaxResource * 0.125f) / 30;
-            TalentSelect();
-        }
-
-        public override void TalentSelect() {
-            switch (level) {
-                case 1:
-                    Main.NewText("We");
-                    Main.NewText("Like");
-                    Main.NewText("Fortnite");
-                    canSelectTalent = true;
-                    break;
-                case 4:
-                    Main.NewText("We");
-                    Main.NewText("Like");
-                    Main.NewText("Fortnite");
-                    canSelectTalent = true;
-                    break;
-                case 7:
-                    break;
-                case 10:
-                    break;
-                case 13:
-                    break;
-                case 16:
-                    break;
-                case 20:
-                    break;
-            }
-        }
-    }
-}*/
+*/

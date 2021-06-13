@@ -1,4 +1,19 @@
-﻿/*using System;
+﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.ID;
+using TerrariaMoba.Enums;
+
+namespace TerrariaMoba.Abilities.Marie {
+    public class Floodboost : Ability {
+        public Floodboost() : base("Floodboost", 60, 0, AbilityType.Active) { }
+
+        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieTrait"); } //not trait anymore just texure name
+    }
+}
+
+/*using System;
 using Terraria;
 using TerrariaMoba.Enums;
 using static Terraria.ModLoader.ModContent;

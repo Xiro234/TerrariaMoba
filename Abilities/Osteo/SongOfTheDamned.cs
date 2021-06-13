@@ -1,4 +1,19 @@
-﻿/*using System;
+﻿using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.ID;
+using TerrariaMoba.Enums;
+
+namespace TerrariaMoba.Abilities.Osteo {
+    public class SongOfTheDamned : Ability {
+        public SongOfTheDamned() : base("Song of the Damned", 60, 0, AbilityType.Active) { }
+
+        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoUltimateOne"); }
+    }
+}
+
+/*using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
