@@ -7,6 +7,8 @@ using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Characters {
     public class Osteo : Character {
+        public Osteo() { }
+        
         public Osteo(Player user) : base(user, new Statistics(1440f, 0f, 500f,
             0f, Resource.Mana, 75f, 1.5f, 9f), new EnsnaringVinesAbility()) { }
 

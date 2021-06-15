@@ -7,6 +7,8 @@ using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Characters {
     public class Nocturne : Character {
+        public Nocturne() { }
+        
         public Nocturne(Player user) : base(user, new Statistics(1825f, 0f, 500f,
             0f, Resource.Mana, 103f, 1.11f, 9f), new EnsnaringVinesAbility()) { }
 

@@ -14,7 +14,6 @@ namespace TerrariaMoba.UI {
         private const int fromEdge = 18;
         private const int spacing = 68;
         private List<CharacterIcon> iconList;
-        private const int numCharacterPortraits = 10;
         private UIImage background;
         private UIImage checkmark;
         
@@ -22,14 +21,12 @@ namespace TerrariaMoba.UI {
             iconList = new List<CharacterIcon>();
             
             List<Type> types = (typeof(Character).Assembly.GetTypes().Where(type => type.IsSubclassOf(typeof(Character)) && !type.IsAbstract)).ToList();
-
+            int numCharacterPortraits = types.Count;
+            
             for (int i = 0; i < numCharacterPortraits; i++) {
-                Character Hero = null;
-                if (i < types.Count) {
-                    var type = types[i];
-                    Hero = (Character)Activator.CreateInstance(type);
-                }
-               
+                Character Hero;
+                var type = types[i];
+                Hero = (Character)Activator.CreateInstance(type);
                 iconList.Add(new CharacterIcon(Hero));
             }
 
@@ -77,6 +74,7 @@ namespace TerrariaMoba.UI {
                     mobaPlayer.player)) {
                     //TODO - Sync Character Selection
                 }*/
+                TerrariaMobaUtils.AssignCharacter(Main.LocalPlayer);
                 Main.PlaySound(SoundID.MenuClose);
                 TerrariaMoba.Instance.HideSelect();
             }

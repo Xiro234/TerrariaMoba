@@ -139,10 +139,10 @@ namespace TerrariaMoba.UI {
             
             var player = Main.LocalPlayer;
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
-            /*DrawIcon(ref QCooldown, ref QPanel, mobaPlayer.Hero.SlotOne.CooldownTimer, mobaPlayer.Hero.SlotOne);
+            DrawIcon(ref QCooldown, ref QPanel, mobaPlayer.Hero.SlotOne.CooldownTimer, mobaPlayer.Hero.SlotOne);
             DrawIcon(ref ECooldown, ref EPanel, mobaPlayer.Hero.SlotTwo.CooldownTimer, mobaPlayer.Hero.SlotTwo);
             DrawIcon(ref RCooldown, ref RPanel, mobaPlayer.Hero.SlotFour.CooldownTimer, mobaPlayer.Hero.SlotFour);
-            DrawIcon(ref CCooldown, ref CPanel, mobaPlayer.Hero.SlotFive.CooldownTimer, mobaPlayer.Hero.SlotFive);*/ //TODO - Fix icon drawing on bar
+            DrawIcon(ref CCooldown, ref CPanel, mobaPlayer.Hero.SlotFive.CooldownTimer, mobaPlayer.Hero.SlotFive); //TODO - Fix icon drawing on bar
             //levelText.SetText(mobaPlayer.Hero.Level.ToString(), 0.75f, false);
             
             //lifeText.SetText(player.statLife + "/" + player.statLifeMax2 + " (+" + mobaPlayer.lifeRegen + ")", 0.75f, false);

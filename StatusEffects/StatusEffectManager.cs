@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Network;
 using TerrariaMoba.Players;
@@ -18,7 +19,7 @@ namespace TerrariaMoba.StatusEffects {
             statusEffect.Apply();
             player.GetModPlayer<MobaPlayer>().EffectList.Add(statusEffect);
 
-            if (!quiet) {
+            if (!quiet && Main.netMode != NetmodeID.SinglePlayer) {
                 NetworkHandler.SendAddEffect(statusEffect, player.whoAmI);
             }
             //TODO - Add error checking for adding effect
