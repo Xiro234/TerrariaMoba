@@ -9,6 +9,7 @@ using Terraria.ID;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.Abilities.Nocturne;
 using TerrariaMoba.Abilities.Sylvia;
+using TerrariaMoba.Characters;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Network;
@@ -31,12 +32,14 @@ namespace TerrariaMoba.Players {
         }
 
         public override void OnEnterWorld(Player player) {
+            player.GetModPlayer<MobaPlayer>().InitCharacter(new Sylvia(player));
             TerrariaMoba.Instance.MobaBar = null;
             TerrariaMoba.Instance.MobaBar = new MobaBar();
+            TerrariaMoba.Instance.MobaBar.SetIcons();
             //TerrariaMoba.Instance.HideBar();
 
-            TestAbilities.Add(new UnrelentingOnslaught());
-            TestAbilities.Add(new UmbralBlade());
+            //TestAbilities.Add(new UnrelentingOnslaught());
+            //TestAbilities.Add(new UmbralBlade());
         }
 
         public override void OnRespawn(Player player) {
@@ -141,6 +144,7 @@ namespace TerrariaMoba.Players {
         }
 
         public override void PostUpdateBuffs() {
+            player.statLifeMax2 = (int) Hero.BaseStatistics.MaxHealth;
             RegenLife();
             RegenResource();
         }

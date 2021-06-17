@@ -25,7 +25,7 @@ namespace TerrariaMoba.UI {
 
         public override void OnInitialize() {
             bar = new UIImage(TerrariaMoba.Instance.GetTexture("Textures/MobaBarBackground"));
-            bar.VAlign = 0.99f;
+            bar.VAlign = 0.95f;
             bar.HAlign = 0.05f;
             Append(bar);
 
@@ -104,8 +104,8 @@ namespace TerrariaMoba.UI {
             levelText.Height.Set(6, 0);*/
 
             characterIcon = new UIImage(TerrariaMoba.Instance.GetTexture("Textures/Lock"));
-            characterIcon.Left.Set(180, 0);
-            characterIcon.Top.Set(50, 0);
+            characterIcon.Left.Set(18, 0);
+            characterIcon.Top.Set(38, 0);
 
             deathTimer = new UIText("");
             deathTimer.VAlign = 0.5f;
@@ -113,6 +113,8 @@ namespace TerrariaMoba.UI {
             characterIcon.Append(deathTimer);
 
             bar.Append(lifeBar);
+            bar.Append(characterIcon);
+            
             /*bar.Append(manaBar);
             bar.Append(experienceBar);
             bar.Append(armorText);

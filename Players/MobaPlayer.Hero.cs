@@ -1,4 +1,5 @@
 ﻿using System;
+using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Characters;
 using TerrariaMoba.Statistic;
@@ -13,6 +14,52 @@ namespace TerrariaMoba.Players {
 
         public int lifeRegenTimer = 0;
         public int resourceRegenTimer = 0;
+
+        public void InitCharacter(Character character) {
+            Hero = character;
+            //Stats = character.BaseStatistics;
+            
+            Item primary = new Item();
+            primary.SetDefaults(Hero.PrimaryWeaponID);
+            Item vanityHead = new Item();
+            vanityHead.SetDefaults(Hero.HeadVanityID);
+            Item vanityBody = new Item();
+            vanityBody.SetDefaults(Hero.BodyVanityID);
+            Item vanityLegs = new Item();
+            vanityLegs.SetDefaults(Hero.LegVanityID);
+            Item dyeHead = new Item();
+            dyeHead.SetDefaults(Hero.HeadDyeID);
+            Item dyeBody = new Item();
+            dyeBody.SetDefaults(Hero.BodyDyeID);
+            Item dyeLegs = new Item();
+            dyeLegs.SetDefaults(Hero.LegDyeID);
+            
+            player.inventory[0] = primary;
+            player.armor[10] = vanityHead;
+            player.armor[11] = vanityBody;
+            player.armor[12] = vanityLegs;
+            player.dye[0] = dyeHead;
+            player.dye[1] = dyeBody;
+            player.dye[2] = dyeLegs;
+
+            player.Male = Hero.IsMale;
+            player.hair = Hero.HairID;
+            player.hairColor = Hero.HairColor;
+            player.eyeColor = Hero.EyeColor;
+            player.skinColor = Hero.SkinColor;
+
+            //player.statLifeMax2 = (int) Hero.BaseStatistics.MaxHealth;
+            //player.statLife = (int) Hero.BaseStatistics.MaxHealth;
+
+            //player.statLifeMax2 = 1370;
+            //player.statLife = 1370;
+            
+            TestAbilities.Add(Hero.SlotOne);
+            TestAbilities.Add(Hero.SlotTwo);
+            TestAbilities.Add(Hero.SlotThree);
+            TestAbilities.Add(Hero.SlotFour);
+            TestAbilities.Add(Hero.SlotFive);
+        }
 
         public void RegenLife() {
             /*
