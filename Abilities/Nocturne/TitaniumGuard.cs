@@ -12,6 +12,9 @@ namespace TerrariaMoba.Abilities.Nocturne {
         public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Blank"); }
 
         public const int GUARD_DURATION = 300;
+        
+        //TODO - Remove effect on hit (if possible)
+        //TODO - Grant MS on hit
 
         public override void OnCast() {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {

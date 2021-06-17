@@ -9,7 +9,7 @@ namespace TerrariaMoba.Abilities.Nocturne {
 
         public override void OnCast() {
             //TODO - Light shines through the titanium on nocturnes armor; changes A1,2,3 and Trait:
-            //Trait = leave behind damaging trail
+            //T = leave behind damaging trail
             //A1 = throws a spear of light that burns enemies with a dot
             //A2 = grants selfshield that gives 40/40 armor/mr, armor/mr decays when shield falls
             //A3 = aoe ally ms buff

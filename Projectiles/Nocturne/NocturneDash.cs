@@ -54,22 +54,5 @@ namespace TerrariaMoba.Projectiles.Nocturne {
                 Dust.NewDust(projectile.position, projectile.width, projectile.height, 8);
             }
         }
-        
-        private int GetYPos() {
-            int posX = (int)projectile.Bottom.X;
-            int posY = (int)projectile.Bottom.Y;
-
-            if (TerrariaMobaUtils.TileIsSolidOrPlatform(posX / 16, posY / 16)) {
-                while (TerrariaMobaUtils.TileIsSolidOrPlatform(posX / 16, posY / 16)) {
-                    posY -= 1;
-                }
-            }
-            else {
-                while (!TerrariaMobaUtils.TileIsSolidOrPlatform(posX / 16, posY / 16)) {
-                    posY += 1;
-                }
-            }
-            return posY;
-        }
     }
 }

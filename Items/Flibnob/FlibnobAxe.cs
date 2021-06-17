@@ -1,9 +1,5 @@
-﻿using System;
-using Terraria;
-using Terraria.ModLoader;
+﻿using Terraria.ModLoader;
 using Terraria.ID;
-using TerrariaMoba.Enums;
-using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Items.Flibnob {
     public class FlibnobAxe : ModItem {

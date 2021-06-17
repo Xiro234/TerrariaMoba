@@ -35,8 +35,8 @@ namespace TerrariaMoba.Players {
             TerrariaMoba.Instance.MobaBar = new MobaBar();
             //TerrariaMoba.Instance.HideBar();
 
-            TestAbilities.Add(new TitaniumGuard());
-            TestAbilities.Add(new IronRush());
+            TestAbilities.Add(new UnrelentingOnslaught());
+            TestAbilities.Add(new UmbralBlade());
         }
 
         public override void OnRespawn(Player player) {
@@ -127,14 +127,15 @@ namespace TerrariaMoba.Players {
             }
             */
         }
-        
-        /*
-        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage,
-            ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
-            return AbilityEffectManager.PreHurt(player, pvp, quiet, ref damage, ref hitDirection, ref crit,
-                    ref customDamage, ref playSound, ref genGore, ref damageSource);
-        } */
-        
+
+        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit,
+            ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
+            if (pvp) {
+                return false;
+            }
+            return true;
+        }
+
         public override void PostUpdateRunSpeeds() {
             
         }
@@ -264,15 +265,16 @@ namespace TerrariaMoba.Players {
 
         public void TakePvpDamage(int damage, int killer, bool noBroadcast) {
             if (!player.immune) {
-                int newDamage = (int)(damage * ((100f ) / 100f));
-                player.statLife -= newDamage;
+                
+                AbilityEffectManager.TakePvpDamage(player, ref damage, ref killer);
+                player.statLife -= damage;
 
-                CombatText.NewText(player.Hitbox, Color.OrangeRed, newDamage);
+                CombatText.NewText(player.Hitbox, Color.OrangeRed, damage);
                 
                 Main.NewText(player.whoAmI + " " + killer);
                 
                 if (player.statLife <= 0) {
-                    player.KillMe(PlayerDeathReason.ByPlayer(killer), newDamage, 1, true);
+                    player.KillMe(PlayerDeathReason.ByPlayer(killer), damage, 1, true);
                 }
                 
                 Main.PlaySound(1, player.position);

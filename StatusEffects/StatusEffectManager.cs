@@ -35,6 +35,11 @@ namespace TerrariaMoba.StatusEffects {
             
             return returnVar;
         }
+        
+        public static bool HasEffect(Player player, StatusEffect effect) {
+            int id = GetIDOfEffect(effect);
+            return player.GetModPlayer<MobaPlayer>().EffectList.Any(x => GetIDOfEffect(x) == id);
+        }
 
         public static bool SyncSingleEffect(Player player, StatusEffect statusEffect) {
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
