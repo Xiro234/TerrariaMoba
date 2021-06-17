@@ -116,16 +116,16 @@ namespace TerrariaMoba.Players {
             if (TerrariaMoba.LevelTalentThreeHotKey.JustPressed) {
                 MyCharacter.LevelTalentThree();
             }
-
+            */
             if (TerrariaMoba.OpenCharacterSelect.JustPressed) {
-                if (TerrariaMoba.Instance.SelectInterface.CurrentState == null && !CharacterPicked) {
+                if (TerrariaMoba.Instance.SelectInterface.CurrentState == null && Hero == null) {
                     TerrariaMoba.Instance.ShowSelect();
                 }
                 else {
                     TerrariaMoba.Instance.HideSelect();
                 }
             }
-            */
+            
         }
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit,

@@ -69,6 +69,8 @@ namespace TerrariaMoba.Characters {
             BaseStatistics = baseStatistics;
             Abilities = abilities.ToList();
         }
+        
+        public Character() { } //For reflection
 
         public virtual void GainExperience(int xp) {
             Experience += xp;

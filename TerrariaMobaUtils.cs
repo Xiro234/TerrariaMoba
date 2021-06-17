@@ -58,25 +58,9 @@ namespace  TerrariaMoba {
                                     (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type] && tile.frameY == 0));
         }
 
-        public static bool AssignCharacter(ref Character MyCharacter, CharacterIdentity character, Player player) {
-            /*
-            switch (character) {
-                case CharacterIdentity.Sylvia:
-                    MyCharacter = new Sylvia(player);
-                    break;
-                case CharacterIdentity.Marie:
-                    MyCharacter = new Marie(player);
-                    break;
-                case CharacterIdentity.Flibnob:
-                    MyCharacter = new Flibnob(player);
-                    break;
-                case CharacterIdentity.Osteo:
-                    MyCharacter = new Osteo(player);
-                    break;
-                default:
-                    return false;
-            }
-            */
+        public static bool AssignCharacter(Player player) {
+            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
+            mobaPlayer.Hero = (Character)Activator.CreateInstance(mobaPlayer.selectedCharacter);
             return true;
         }
 
