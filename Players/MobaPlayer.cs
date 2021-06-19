@@ -31,12 +31,12 @@ namespace TerrariaMoba.Players {
         }
 
         public override void OnEnterWorld(Player player) {
-            TerrariaMoba.Instance.MobaBar = null;
-            TerrariaMoba.Instance.MobaBar = new MobaBar();
+            //TerrariaMoba.Instance.MobaBar = null;
+            //TerrariaMoba.Instance.MobaBar = new MobaBar();
             //TerrariaMoba.Instance.HideBar();
 
-            TestAbilities.Add(new UnrelentingOnslaught());
-            TestAbilities.Add(new UmbralBlade());
+            //TestAbilities.Add(new UnrelentingOnslaught());
+            //TestAbilities.Add(new UmbralBlade());
         }
 
         public override void OnRespawn(Player player) {

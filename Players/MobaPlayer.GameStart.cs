@@ -1,4 +1,5 @@
-﻿using Terraria.ModLoader;
+﻿using Terraria;
+using Terraria.ModLoader;
 
 namespace TerrariaMoba.Players {
     public partial class MobaPlayer : ModPlayer {
@@ -6,6 +7,7 @@ namespace TerrariaMoba.Players {
             TerrariaMobaUtils.AssignCharacter(player);
             TerrariaMoba.Instance.ShowBar();
             TerrariaMoba.Instance.MobaBar.SetIcons();
+            Main.NewText(player.GetModPlayer<MobaPlayer>().Hero.Name);
         }
     }
 }
