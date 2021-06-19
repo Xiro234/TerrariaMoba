@@ -60,6 +60,36 @@ namespace  TerrariaMoba {
         public static bool AssignCharacter(Player player) {
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
             mobaPlayer.Hero = (Character)Activator.CreateInstance(mobaPlayer.selectedCharacter, player);
+            
+            Item primary = new Item();
+            primary.SetDefaults(mobaPlayer.Hero.PrimaryWeaponID);
+            Item vanityHead = new Item();
+            vanityHead.SetDefaults(mobaPlayer.Hero.HeadVanityID);
+            Item vanityBody = new Item();
+            vanityBody.SetDefaults(mobaPlayer.Hero.BodyVanityID);
+            Item vanityLegs = new Item();
+            vanityLegs.SetDefaults(mobaPlayer.Hero.LegVanityID);
+            Item dyeHead = new Item();
+            dyeHead.SetDefaults(mobaPlayer.Hero.HeadDyeID);
+            Item dyeBody = new Item();
+            dyeBody.SetDefaults(mobaPlayer.Hero.BodyDyeID);
+            Item dyeLegs = new Item();
+            dyeLegs.SetDefaults(mobaPlayer.Hero.LegDyeID);
+            
+            player.inventory[0] = primary;
+            player.armor[10] = vanityHead;
+            player.armor[11] = vanityBody;
+            player.armor[12] = vanityLegs;
+            player.dye[0] = dyeHead;
+            player.dye[1] = dyeBody;
+            player.dye[2] = dyeLegs;
+
+            player.Male = mobaPlayer.Hero.IsMale;
+            player.hair = mobaPlayer.Hero.HairID;
+            player.hairColor = mobaPlayer.Hero.HairColor;
+            player.eyeColor = mobaPlayer.Hero.EyeColor;
+            player.skinColor = mobaPlayer.Hero.SkinColor;
+            
             return true;
         }
 

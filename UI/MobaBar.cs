@@ -13,6 +13,7 @@ namespace TerrariaMoba.UI {
         private static UIText SlotTwoCooldown;
         private static UIText SlotThreeCooldown;
         private static UIText SlotFourCooldown;
+        private static UIText SlotFiveCooldown;
         private static UIText deathTimer;
         private static UIImage bar;
         private static UIImage characterIcon;
@@ -20,6 +21,7 @@ namespace TerrariaMoba.UI {
         private static UIAbilityIcon SlotTwoIcon;
         private static UIAbilityIcon SlotThreeIcon;
         private static UIAbilityIcon SlotFourIcon;
+        private static UIAbilityIcon SlotFiveIcon;
         private ResourceBar lifeBar;
         private ResourceBar resourceBar;
 
@@ -66,6 +68,15 @@ namespace TerrariaMoba.UI {
             SlotFourCooldown.VAlign = 0.5f;
             SlotFourCooldown.HAlign = 0.5f;
             SlotFourIcon.Append(SlotFourCooldown);
+            
+            SlotFiveIcon = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"));
+            SlotFiveIcon.Top.Set(48, 0);
+            SlotFiveIcon.Left.Set(346, 0);
+            
+            SlotFiveCooldown = new UIText("");
+            SlotFiveCooldown.VAlign = 0.5f;
+            SlotFiveCooldown.HAlign = 0.5f;
+            SlotFiveIcon.Append(SlotFiveCooldown);
             
             lifeBar = new ResourceBar(Resource.Life);
             lifeBar.Left.Set(146, 0);
@@ -123,10 +134,10 @@ namespace TerrariaMoba.UI {
             bar.Append(moveSpeedText);
             */
             bar.Append(SlotOneIcon);
-            /*bar.Append(SlotTwoIcon);
+            bar.Append(SlotTwoIcon);
             bar.Append(SlotThreeIcon);
             bar.Append(SlotFourIcon);
-            bar.Append(characterIcon);*/
+            bar.Append(SlotFiveIcon);
             //bar.Append(levelText);
         }
 
@@ -134,9 +145,10 @@ namespace TerrariaMoba.UI {
             var mobaPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
             characterIcon.SetImage(mobaPlayer.Hero.CharacterIcon);
             SlotOneIcon.SetAbility(mobaPlayer.Hero.BasicAbilityOne);
-            /*SlotTwoIcon.SetAbility(mobaPlayer.Hero.SlotTwo);
-            SlotThreeIcon.SetAbility(mobaPlayer.Hero.SlotThree);
-            SlotFourIcon.SetAbility(mobaPlayer.Hero.SlotFour);*/
+            SlotTwoIcon.SetAbility(mobaPlayer.Hero.BasicAbilityTwo);
+            SlotThreeIcon.SetAbility(mobaPlayer.Hero.BasicAbilityThree);
+            SlotFourIcon.SetAbility(mobaPlayer.Hero.Ultimate);
+            SlotFiveIcon.SetAbility(mobaPlayer.Hero.Trait);
         }
 
         public override void Update(GameTime gameTime) {

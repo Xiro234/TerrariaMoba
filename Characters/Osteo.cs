@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
-using TerrariaMoba.Abilities.Sylvia;
+using TerrariaMoba.Abilities.Osteo;
 using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Characters {
@@ -10,7 +10,8 @@ namespace TerrariaMoba.Characters {
         public Osteo() { }
         
         public Osteo(Player user) : base(user, new Statistics(1440f, 0f, 500f,
-            0f, Resource.Mana, 75f, 1.5f, 9f), new EnsnaringVinesAbility()) { }
+            0f, Resource.Mana, 75f, 1.5f, 9f), 
+            new RaiseDead(), new LifedrainPulse(), new SpectralBolt(), new SongOfTheDamned(), new SkeletalBond()) { }
 
         public override string Name {
             get => "Osteo Prime";

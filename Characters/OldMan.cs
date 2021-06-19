@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
-using TerrariaMoba.Abilities.Sylvia;
+using TerrariaMoba.Abilities.OldMan;
 using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Characters {
@@ -10,7 +10,8 @@ namespace TerrariaMoba.Characters {
         public OldMan() { }
         
         public OldMan(Player user) : base(user, new Statistics(2000f, 0f, 500f,
-            0f, Resource.Mana, 75f, 1.5f, 9f), new EnsnaringVinesAbility()) { }
+            0f, Resource.Mana, 75f, 1.5f, 9f), 
+            new Frostbite(), new ExplosiveCatch(), new PerfectFillet(), new Riptide(), new WhatsInTheCrate()) { }
 
         public override string Name {
             get => "Balner Gaulish";
@@ -21,9 +22,9 @@ namespace TerrariaMoba.Characters {
         }
 
         public override bool IsMale { get => true; }
-        public override int HairID { get => 3; }
-        public override Color HairColor { get => Color.Gray; }
-        public override Color SkinColor { get => Color.PeachPuff; }
+        public override int HairID { get => 2; }
+        public override Color HairColor { get => Color.LightGray; }
+        public override Color SkinColor { get => Color.DarkSalmon; }
         public override Color EyeColor { get => Color.RoyalBlue; }
         public override int PrimaryWeaponID { get => ItemID.ReinforcedFishingPole; }
         public override int BodyVanityID { get => ItemID.RainCoat; }

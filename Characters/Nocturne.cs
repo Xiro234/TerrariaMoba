@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
-using TerrariaMoba.Abilities.Sylvia;
+using TerrariaMoba.Abilities.Nocturne;
 using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Characters {
@@ -10,7 +10,8 @@ namespace TerrariaMoba.Characters {
         public Nocturne() { }
         
         public Nocturne(Player user) : base(user, new Statistics(1825f, 0f, 500f,
-            0f, Resource.Mana, 103f, 1.11f, 9f), new EnsnaringVinesAbility()) { }
+            0f, Resource.Mana, 103f, 1.11f, 9f), 
+            new UmbralBlade(), new TitaniumGuard(), new IronRush(), new BastionOfTitanium(), new UnrelentingOnslaught()) { }
 
         public override string Name {
             get => "Nocturne Umbra";
@@ -21,11 +22,11 @@ namespace TerrariaMoba.Characters {
         }
 
         public override bool IsMale { get => true; }
-        public override int HairID { get => 21; }
+        public override int HairID { get => 20; }
         public override Color HairColor { get => Color.Brown; }
-        public override Color SkinColor { get => Color.PeachPuff; }
+        public override Color SkinColor { get => Color.DarkSalmon; }
         public override Color EyeColor { get => Color.Firebrick; }
-        public override int PrimaryWeaponID { get => ItemID.TitaniumSword; }
+        public override int PrimaryWeaponID { get => TerrariaMoba.Instance.ItemType("NocturneSword"); }
         public override int HeadVanityID { get => ItemID.GladiatorHelmet; }
         public override int HeadDyeID { get => ItemID.ReflectiveMetalDye; }
         public override int BodyVanityID { get => ItemID.RedsBreastplate; }

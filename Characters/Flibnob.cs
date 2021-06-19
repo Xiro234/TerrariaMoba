@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
-using TerrariaMoba.Abilities.Sylvia;
+using TerrariaMoba.Abilities.Flibnob;
 using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Characters {
@@ -10,7 +10,8 @@ namespace TerrariaMoba.Characters {
         public Flibnob() { }
         
         public Flibnob(Player user) : base(user, new Statistics(2060f, 0f, 500f,
-            0f, Resource.Mana, 75f, 1.5f, 9f), new EnsnaringVinesAbility()) { }
+            0f, Resource.Mana, 75f, 1.5f, 9f), 
+            new FlameBelch(), new TitaniumShell(), new Rockwrecker(), new Earthsplitter(), new BattleHardened()) { }
 
         public override string Name {
             get => "Flibnob";
@@ -26,7 +27,7 @@ namespace TerrariaMoba.Characters {
         public override Color SkinColor { get => Color.SaddleBrown; }
         public override Color EyeColor { get => Color.Red; }
         public override int PrimaryWeaponID { get => TerrariaMoba.Instance.ItemType("FlibnobAxe"); }
-        public override int HeadVanityID { get => ItemID.OgreMask; }
+        public override int HeadVanityID { get => ItemID.BossMaskOgre; }
         public override int BodyVanityID { get => ItemID.RedsBreastplate; }
         public override int BodyDyeID { get => ItemID.ReflectiveMetalDye; }
         public override int LegVanityID { get => ItemID.RedsLeggings; }

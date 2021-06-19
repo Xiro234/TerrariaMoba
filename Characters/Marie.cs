@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
-using TerrariaMoba.Abilities.Sylvia;
+using TerrariaMoba.Abilities.Marie;
 using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Characters {
@@ -10,7 +10,8 @@ namespace TerrariaMoba.Characters {
         public Marie() { }
         
         public Marie(Player user) : base(user, new Statistics(1460f, 0f, 500f,
-            0f, Resource.Mana, 75f, 1.5f, 9f), new EnsnaringVinesAbility()) { }
+            0f, Resource.Mana, 75f, 1.5f, 9f), 
+            new WhirlpoolInABottle(),  new TomeOfLacusia(), new Floodboost(), new EyeOfTheStorm(), new TorrentialPendant()) { }
 
         public override string Name {
             get => "Marie Tidewrath";
@@ -27,7 +28,7 @@ namespace TerrariaMoba.Characters {
         public override Color EyeColor { get => Color.Blue; }
         public override int PrimaryWeaponID { get => TerrariaMoba.Instance.ItemType("MarieStaff"); }
         public override int HeadVanityID { get => ItemID.BejeweledValkyrieHead; }
-        public override int HeadDyeID { get => ItemID.ReflectiveMetalDye; }
+        public override int HeadDyeID { get => ItemID.SkyBlueDye; }
         public override int BodyVanityID { get => ItemID.FishCostumeShirt; }
         public override int LegVanityID { get => ItemID.FishCostumeFinskirt; }
     }

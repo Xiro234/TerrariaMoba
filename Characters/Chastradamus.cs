@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
-using TerrariaMoba.Abilities.Sylvia;
+using TerrariaMoba.Abilities.Chastradamus;
 using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Characters {
@@ -10,7 +10,8 @@ namespace TerrariaMoba.Characters {
         public Chastradamus() { }
 
         public Chastradamus(Player user) : base(user, new Statistics(2000f, 0f, 500f,
-            0f, Resource.Mana, 75f, 1.5f, 9f), new EnsnaringVinesAbility()) { }
+            0f, Resource.Mana, 75f, 1.5f, 9f), 
+            new BrewConcoction(), new Incision(),  new FlaskOfVitality(), new Crowstorm(), new Bloodletting()) { }
 
         public override string Name {
             get => "Chastradamus";

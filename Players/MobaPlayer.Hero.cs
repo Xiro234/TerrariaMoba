@@ -15,10 +15,8 @@ namespace TerrariaMoba.Players {
         public int lifeRegenTimer = 0;
         public int resourceRegenTimer = 0;
 
-        public void InitCharacter(Character character) {
-            Hero = character;
-            //Stats = character.BaseStatistics;
-            
+        /*
+        public void InitCharacter() {
             Item primary = new Item();
             primary.SetDefaults(Hero.PrimaryWeaponID);
             Item vanityHead = new Item();
@@ -47,19 +45,8 @@ namespace TerrariaMoba.Players {
             player.hairColor = Hero.HairColor;
             player.eyeColor = Hero.EyeColor;
             player.skinColor = Hero.SkinColor;
-
-            //player.statLifeMax2 = (int) Hero.BaseStatistics.MaxHealth;
-            //player.statLife = (int) Hero.BaseStatistics.MaxHealth;
-
-            //player.statLifeMax2 = 1370;
-            //player.statLife = 1370;
-            
-            TestAbilities.Add(Hero.SlotOne);
-            TestAbilities.Add(Hero.SlotTwo);
-            TestAbilities.Add(Hero.SlotThree);
-            TestAbilities.Add(Hero.SlotFour);
-            TestAbilities.Add(Hero.SlotFive);
         }
+        */
 
         public void RegenLife() {
             /*
