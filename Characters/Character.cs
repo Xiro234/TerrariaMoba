@@ -92,5 +92,36 @@ namespace TerrariaMoba.Characters {
             float manaRegenFromMax = ((BaseStatistics.MaxResource + mobaPlayer.Stats.MaxResource) * 0.125f / 60f);
             mobaPlayer.CurrentResource += manaRegenFromMax + BaseStatistics.ResourceRegen + mobaPlayer.Stats.ResourceRegen;
         }
+
+        public virtual void InitializePlayer() { 
+            Item primary = new Item();
+            primary.SetDefaults(PrimaryWeaponID);
+            Item vanityHead = new Item();
+            vanityHead.SetDefaults(HeadVanityID);
+            Item vanityBody = new Item();
+            vanityBody.SetDefaults(BodyVanityID);
+            Item vanityLegs = new Item();
+            vanityLegs.SetDefaults(LegVanityID);
+            Item dyeHead = new Item();
+            dyeHead.SetDefaults(HeadDyeID);
+            Item dyeBody = new Item();
+            dyeBody.SetDefaults(BodyDyeID);
+            Item dyeLegs = new Item();
+            dyeLegs.SetDefaults(LegDyeID);
+            
+            User.inventory[0] = primary;
+            User.armor[10] = vanityHead;
+            User.armor[11] = vanityBody;
+            User.armor[12] = vanityLegs;
+            User.dye[0] = dyeHead;
+            User.dye[1] = dyeBody;
+            User.dye[2] = dyeLegs;
+
+            User.Male = IsMale;
+            User.hair = HairID;
+            User.hairColor = HairColor;
+            User.eyeColor = EyeColor;
+            User.skinColor = SkinColor;
+        }
     }
 }
