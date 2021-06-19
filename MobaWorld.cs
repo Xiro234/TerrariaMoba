@@ -12,5 +12,9 @@ namespace TerrariaMoba {
         public override void NetReceive(BinaryReader reader) {
             MatchInProgress = reader.ReadBoolean();
         }
+
+        public static void StartGame() {
+            MatchInProgress = true;
+        }
     }
 }

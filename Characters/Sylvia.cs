@@ -8,7 +8,7 @@ using TerrariaMoba.Statistic;
 namespace TerrariaMoba.Characters {
     public class Sylvia : Character {
         public Sylvia() { }
-        
+
         public Sylvia(Player user) : base(user, new Statistics(1340f, 0f, 500f,
             0f, Resource.Mana, 75f, 1.5f, 9f), 
             new EnsnaringVinesAbility(), new EnsnaringVinesAbility(), new EnsnaringVinesAbility(), new EnsnaringVinesAbility(), new EnsnaringVinesAbility()) { }

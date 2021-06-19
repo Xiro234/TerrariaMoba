@@ -1,11 +1,7 @@
 ﻿using System;
-using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ModLoader;
 using TerrariaMoba.Enums;
-using TerrariaMoba.Players;
-using TerrariaMoba.UI;
 
 namespace TerrariaMoba.Abilities {
     public abstract class Ability {

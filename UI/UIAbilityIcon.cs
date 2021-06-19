@@ -4,32 +4,33 @@ using Terraria;
 using Terraria.GameContent.UI.Elements;
 using System;
 using TerrariaMoba.Abilities;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.UI {
     public class UIAbilityIcon : UIImage {
-        public Ability ability { get; set; }
+        private Ability MyAbility{ get; set; }
 
         public UIAbilityIcon(Texture2D texture) : base(texture) { }
 
         protected override void DrawSelf(SpriteBatch spriteBatch) {
             base.DrawSelf(spriteBatch);
-            SetImage(ability.Icon);
+            SetImage(MyAbility.Icon);
             
             if (IsMouseHovering) {
-                Main.hoverItemName = ability.Name;
+                Main.hoverItemName = MyAbility.Name;
             }
 
             //Cooldown Effect
-            if (ability.CooldownTimer > 0) {
+            if (MyAbility.CooldownTimer > 0) {
                 Rectangle hitbox = GetDimensions().ToRectangle();
 
                 //pixel adjustments so it covers the entirety of the icon
                 int left = hitbox.Left - 1;
                 int right = hitbox.Right - 1;
-                int top = hitbox.Top + 1;
-                int bottom = hitbox.Bottom + 1;
+                int top = hitbox.Top;
+                int bottom = hitbox.Bottom;
                 
-                float rads = (float)(Math.PI * 2) - ((float)(Math.PI * 2) * ((float) ability.CooldownTimer / (float) ability.BaseCooldown));
+                float rads = (float)(Math.PI * 2) - ((float)(Math.PI * 2) * ((float) MyAbility.CooldownTimer / (float) MyAbility.BaseCooldown));
                 
                 for (int i = 0; i < right - left; i++) {
                     for (int j = 0; j < bottom - top; j++) {
@@ -48,6 +49,10 @@ namespace TerrariaMoba.UI {
                     }
                 }
             }
+        }
+
+        public void SetAbility(Ability ability) {
+            MyAbility = ability;
         }
 
         /*public override void Click(UIMouseEvent evt) {
