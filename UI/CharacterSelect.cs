@@ -74,7 +74,6 @@ namespace TerrariaMoba.UI {
                     mobaPlayer.player)) {
                     //TODO - Sync Character Selection
                 }*/
-                TerrariaMobaUtils.AssignCharacter(Main.LocalPlayer);
                 Main.PlaySound(SoundID.MenuClose);
                 TerrariaMoba.Instance.HideSelect();
             }

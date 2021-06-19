@@ -43,6 +43,8 @@ namespace TerrariaMoba.Abilities.Sylvia {
                     spawner.NumberOfTraps = TRAP_BASE_NUMBER;
                     spawner.TileDistance = TRAP_BASE_TILE_DISTANCE;
                 }
+
+                CooldownTimer = BaseCooldown;
             }
         }
 

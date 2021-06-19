@@ -4,7 +4,6 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Terraria.Localization;
 using TerrariaMoba.Network;
-using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Items {
     public class DebugStartGame : ModItem {
@@ -17,8 +16,8 @@ namespace TerrariaMoba.Items {
             item.width = 20;
             item.height = 26;
             item.useStyle = ItemUseStyleID.EatingUsing;
-            item.useAnimation = 10;
-            item.useTime = 10;
+            item.useAnimation = 1;
+            item.useTime = 1;
             item.useTurn = true;
             item.UseSound = SoundID.Item3;
             item.maxStack = 30;
@@ -38,7 +37,7 @@ namespace TerrariaMoba.Items {
             }
 
             if (Main.netMode == NetmodeID.SinglePlayer) {
-                MobaWorld.MatchInProgress = true;
+                TerrariaMobaUtils.StartGame();
             }
 
             if (Main.netMode == NetmodeID.MultiplayerClient && player.whoAmI == Main.myPlayer) {

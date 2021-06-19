@@ -5,19 +5,18 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
+using TerrariaMoba.Abilities;
 using TerrariaMoba.Network;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.UI;
 
 namespace TerrariaMoba {
 	public class TerrariaMoba : Mod {
-		public static ModHotKey AbilityOneHotKey;
-		public static ModHotKey AbilityTwoHotKey;
+		public static ModHotKey AbilityOneHotkey;
+		public static ModHotKey AbilityTwoHotkey;
+		public static ModHotKey AbilityThreeHotkey;
+ 		public static ModHotKey UltimateHotkey;
 		public static ModHotKey TraitHotkey;
-		public static ModHotKey LevelTalentOneHotKey;
-		public static ModHotKey LevelTalentTwoHotKey;
-		public static ModHotKey LevelTalentThreeHotKey;
-		public static ModHotKey UltimateHotkey;
 		public static ModHotKey OpenCharacterSelect;
 		public static TerrariaMoba Instance { get; private set; }
 
@@ -35,16 +34,17 @@ namespace TerrariaMoba {
 		public override void Load() {
 			On.Terraria.Main.DamageVar += (orig, dmg) => (int)Math.Round(dmg);
 			
-			AbilityOneHotKey = RegisterHotKey("Ability One", "Q");
-			AbilityTwoHotKey = RegisterHotKey("Ability Two", "F");
-			TraitHotkey = RegisterHotKey("Trait", "C");
+			AbilityOneHotkey = RegisterHotKey("Basic Ability One", "Q");
+			AbilityTwoHotkey = RegisterHotKey("Basic Ability Two", "E");
+			AbilityThreeHotkey = RegisterHotKey("Basic Ability Three", "F");
 			UltimateHotkey = RegisterHotKey("Ultimate", "R");
+			TraitHotkey = RegisterHotKey("Trait", "C");
 			OpenCharacterSelect = RegisterHotKey("Open Character Select", "P");
 
 			if (!Main.dedServ) {
 				MobaBar = new MobaBar();
 				BarInterface = new UserInterface();
-				BarInterface.SetState(MobaBar);
+				BarInterface.SetState(null);
 				
 				CharacterSelect = new CharacterSelect();
 				SelectInterface = new UserInterface();
@@ -81,12 +81,11 @@ namespace TerrariaMoba {
 		}
 
 		public override void Unload() {
-			AbilityOneHotKey = null;
-			AbilityTwoHotKey = null;
+			AbilityOneHotkey = null;
+			AbilityTwoHotkey = null;
+			AbilityThreeHotkey = null;
 			UltimateHotkey = null;
-			LevelTalentOneHotKey = null;
-			LevelTalentTwoHotKey = null;
-			LevelTalentThreeHotKey = null;
+			TraitHotkey = null;
 
 			Instance = null;
 			MobaBar.UnLoad();

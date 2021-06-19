@@ -11,14 +11,13 @@ namespace TerrariaMoba.Characters {
     public abstract class Character {
         public abstract string Name { get; }
         public Player User { get; private set; }
-        public string CharacterName { get; protected set; }
         public abstract Texture2D CharacterIcon { get; }
 
         //TODO - Change the way talents work. public bool[,] TalentArray { get; protected set; }
         
         public const int XP_PER_LEVEL = 100;
         public int Experience { get; protected set; }
-        public List<Ability> Abilities { get; protected set; }
+        public Ability[] Abilities { get; protected set; }
         public Statistics BaseStatistics { get; private set; }
         public int Level { get; protected set; }
 
@@ -39,27 +38,27 @@ namespace TerrariaMoba.Characters {
         public virtual int LegDyeID { get => 0; }
         
         //Ability Properties
-        public Ability SlotOne {
+        public Ability BasicAbilityOne {
             get { return Abilities[0]; }
             protected set { Abilities[0] = value; }
         }
         
-        public Ability SlotTwo {
+        public Ability BasicAbilityTwo {
             get { return Abilities[1]; }
             protected set { Abilities[1] = value; }
         }
         
-        public Ability SlotThree {
+        public Ability BasicAbilityThree {
             get { return Abilities[2]; }
             protected set { Abilities[2] = value; }
         }
         
-        public Ability SlotFour {
+        public Ability Ultimate {
             get { return Abilities[3]; }
             protected set { Abilities[3] = value; }
         }
         
-        public Ability SlotFive {
+        public Ability Trait {
             get { return Abilities[4]; }
             protected set { Abilities[4] = value; }
         }
@@ -67,7 +66,10 @@ namespace TerrariaMoba.Characters {
         public Character(Player user, Statistics baseStatistics, params Ability[] abilities) {
             User = user;
             BaseStatistics = baseStatistics;
-            Abilities = abilities.ToList();
+            Abilities = new Ability[5];
+            for (int i = 0; i < abilities.Length; i++) {
+                Abilities[i] = abilities[i];
+            }
         }
         
         public Character() { } //For reflection

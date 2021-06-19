@@ -9,61 +9,63 @@ using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.UI {
     public class MobaBar : UIState {
-        private static UIText QCooldown;
-        private static UIText ECooldown;
-        private static UIText RCooldown;
-        private static UIText CCooldown;
+        private static UIText SlotOneCooldown;
+        private static UIText SlotTwoCooldown;
+        private static UIText SlotThreeCooldown;
+        private static UIText SlotFourCooldown;
         private static UIText deathTimer;
         private static UIImage bar;
         private static UIImage characterIcon;
-        private static UIAbilityIcon QPanel;
-        private static UIAbilityIcon EPanel;
-        private static UIAbilityIcon RPanel;
-        private static UIAbilityIcon CPanel;
+        private static UIAbilityIcon SlotOneIcon;
+        private static UIAbilityIcon SlotTwoIcon;
+        private static UIAbilityIcon SlotThreeIcon;
+        private static UIAbilityIcon SlotFourIcon;
         private ResourceBar lifeBar;
         private ResourceBar resourceBar;
 
         public override void OnInitialize() {
+            var mobaPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
+            
             bar = new UIImage(TerrariaMoba.Instance.GetTexture("Textures/MobaBarBackground"));
             bar.VAlign = 0.99f;
             bar.HAlign = 0.05f;
             Append(bar);
 
-            QPanel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"));
-            QPanel.Top.Set(50, 0);
-            QPanel.Left.Set(268, 0);
+            SlotOneIcon = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"));
+            SlotOneIcon.Top.Set(48, 0);
+            SlotOneIcon.Left.Set(98, 0);
             
-            QCooldown = new UIText("");
-            QCooldown.VAlign = 0.5f;
-            QCooldown.HAlign = 0.5f;
-            QPanel.Append(QCooldown);
+            SlotOneCooldown = new UIText("");
+            SlotOneCooldown.VAlign = 0.5f;
+            SlotOneCooldown.HAlign = 0.5f;
+            SlotOneIcon.Append(SlotOneCooldown);
 
-            EPanel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"));
-            EPanel.Top.Set(50, 0);
-            EPanel.Left.Set(338, 0);
+            SlotTwoIcon = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"));
+            SlotTwoIcon.Top.Set(48, 0);
+            SlotTwoIcon.Left.Set(160, 0);
             
-            ECooldown = new UIText("");
-            ECooldown.VAlign = 0.5f;
-            ECooldown.HAlign = 0.5f;
-            EPanel.Append(ECooldown);
+            SlotTwoCooldown = new UIText("");
+            SlotTwoCooldown.VAlign = 0.5f;
+            SlotTwoCooldown.HAlign = 0.5f;
+            SlotTwoIcon.Append(SlotTwoCooldown);
             
-            RPanel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"));
-            RPanel.Top.Set(50, 0);
-            RPanel.Left.Set(408, 0);
+            SlotThreeIcon = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"));
+            SlotThreeIcon.Top.Set(48, 0);
+            SlotThreeIcon.Left.Set(222, 0);
             
-            RCooldown = new UIText("");
-            RCooldown.VAlign = 0.5f;
-            RCooldown.HAlign = 0.5f;
-            RPanel.Append(RCooldown);
+            SlotThreeCooldown = new UIText("");
+            SlotThreeCooldown.VAlign = 0.5f;
+            SlotThreeCooldown.HAlign = 0.5f;
+            SlotThreeIcon.Append(SlotThreeCooldown);
             
-            CPanel = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"));
-            CPanel.Top.Set(50, 0);
-            CPanel.Left.Set(478, 0);
+            SlotFourIcon = new UIAbilityIcon(TerrariaMoba.Instance.GetTexture("Textures/Lock"));
+            SlotFourIcon.Top.Set(48, 0);
+            SlotFourIcon.Left.Set(284, 0);
             
-            CCooldown = new UIText("");
-            CCooldown.VAlign = 0.5f;
-            CCooldown.HAlign = 0.5f;
-            CPanel.Append(CCooldown);
+            SlotFourCooldown = new UIText("");
+            SlotFourCooldown.VAlign = 0.5f;
+            SlotFourCooldown.HAlign = 0.5f;
+            SlotFourIcon.Append(SlotFourCooldown);
             
             lifeBar = new ResourceBar(Resource.Life);
             lifeBar.Left.Set(146, 0);
@@ -117,32 +119,39 @@ namespace TerrariaMoba.UI {
             bar.Append(experienceBar);
             bar.Append(armorText);
             bar.Append(moveSpeedText);
-            bar.Append(QPanel);
-            bar.Append(EPanel);
-            bar.Append(RPanel);
-            bar.Append(CPanel);
-            bar.Append(characterIcon);
-            bar.Append(levelText);*/
+            */
+            bar.Append(SlotOneIcon);
+            /*bar.Append(SlotTwoIcon);
+            bar.Append(SlotThreeIcon);
+            bar.Append(SlotFourIcon);
+            bar.Append(characterIcon);*/
+            //bar.Append(levelText);
         }
 
         public void SetIcons() {
             var mobaPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
-
             characterIcon.SetImage(mobaPlayer.Hero.CharacterIcon);
+            SlotOneIcon.SetAbility(mobaPlayer.Hero.BasicAbilityOne);
+            /*SlotTwoIcon.SetAbility(mobaPlayer.Hero.SlotTwo);
+            SlotThreeIcon.SetAbility(mobaPlayer.Hero.SlotThree);
+            SlotFourIcon.SetAbility(mobaPlayer.Hero.SlotFour);*/
         }
 
         public override void Update(GameTime gameTime) {
             base.Update(gameTime);
+            
             if (bar.ContainsPoint(Main.MouseScreen)) {
                 Main.LocalPlayer.mouseInterface = true;
             }
             
             var player = Main.LocalPlayer;
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
-            DrawIcon(ref QCooldown, ref QPanel, mobaPlayer.Hero.SlotOne.CooldownTimer, mobaPlayer.Hero.SlotOne);
+            
+            /*DrawIcon(ref QCooldown, ref QPanel, mobaPlayer.Hero.SlotOne.CooldownTimer, mobaPlayer.Hero.SlotOne);
             DrawIcon(ref ECooldown, ref EPanel, mobaPlayer.Hero.SlotTwo.CooldownTimer, mobaPlayer.Hero.SlotTwo);
             DrawIcon(ref RCooldown, ref RPanel, mobaPlayer.Hero.SlotFour.CooldownTimer, mobaPlayer.Hero.SlotFour);
             DrawIcon(ref CCooldown, ref CPanel, mobaPlayer.Hero.SlotFive.CooldownTimer, mobaPlayer.Hero.SlotFive); //TODO - Fix icon drawing on bar
+            */
             //levelText.SetText(mobaPlayer.Hero.Level.ToString(), 0.75f, false);
             
             //lifeText.SetText(player.statLife + "/" + player.statLifeMax2 + " (+" + mobaPlayer.lifeRegen + ")", 0.75f, false);
@@ -174,22 +183,20 @@ namespace TerrariaMoba.UI {
             else {
                 text.SetText("");
             }
-
-            icon.ability = ability;
         }
 
         public void UnLoad() {
-            QCooldown = null;
-            ECooldown = null;
-            RCooldown = null;
-            CCooldown = null;
+            SlotOneCooldown = null;
+            SlotTwoCooldown = null;
+            SlotThreeCooldown = null;
+            SlotFourCooldown = null;
             deathTimer = null;
             bar = null;
             characterIcon = null;
-            QPanel = null;
-            EPanel = null;
-            RPanel = null;
-            CPanel = null;
+            SlotOneIcon = null;
+            SlotTwoIcon = null;
+            SlotThreeIcon = null;
+            SlotFourIcon = null;
             lifeBar = null;
             resourceBar = null;
         }

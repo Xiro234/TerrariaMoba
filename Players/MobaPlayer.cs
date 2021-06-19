@@ -52,9 +52,8 @@ namespace TerrariaMoba.Players {
         }
         
         public override void ProcessTriggers(TriggersSet triggersSet) {
-            if (TerrariaMoba.AbilityOneHotKey.JustPressed) {
-                TestAbilities[0].OnCast();
-                
+            if (TerrariaMoba.AbilityOneHotkey.JustPressed) {
+                Hero?.BasicAbilityOne.OnCast();
                 /*
                 if (Main.netMode != NetmodeID.MultiplayerClient) {
                     MyCharacter.HandleAbility(MyCharacter.QAbility);
@@ -67,8 +66,8 @@ namespace TerrariaMoba.Players {
                 */
             }
             
-            if (TerrariaMoba.AbilityTwoHotKey.JustPressed) {
-                TestAbilities[1].OnCast();
+            if (TerrariaMoba.AbilityTwoHotkey.JustPressed) {
+                Hero?.BasicAbilityTwo.OnCast();
                 /*
                 if (Main.netMode != NetmodeID.MultiplayerClient) {
                     MyCharacter.HandleAbility(MyCharacter.EAbility);
@@ -80,6 +79,18 @@ namespace TerrariaMoba.Players {
                     }.Send();
                 }
                 */
+            }
+
+            if (TerrariaMoba.AbilityThreeHotkey.JustPressed) {
+                Hero?.BasicAbilityThree.OnCast();
+            }
+
+            if (TerrariaMoba.UltimateHotkey.JustPressed) {
+                Hero?.Ultimate.OnCast();
+            }
+
+            if (TerrariaMoba.TraitHotkey.JustPressed) {
+                Hero?.Trait.OnCast();
             }
             
             /*
@@ -285,13 +296,7 @@ namespace TerrariaMoba.Players {
             }
         }
 
-        public void StartGame() {
-            TerrariaMoba.Instance.ShowBar();
-            TerrariaMoba.Instance.MobaBar.SetIcons();
-        }
-
         public void HealMe(int amount, bool doText) {
-            //MyCharacter.HealMe(ref amount);
             if(doText) {
                 CombatText.NewText(player.Hitbox, CombatText.HealLife, amount, false);
             }
