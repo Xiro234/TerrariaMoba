@@ -41,6 +41,7 @@ namespace TerrariaMoba.Items {
             }
 
             if (Main.netMode == NetmodeID.MultiplayerClient && player.whoAmI == Main.myPlayer) {
+                TerrariaMobaUtils.StartGame();
                 NetworkHandler.SendStartGame();
             }
 

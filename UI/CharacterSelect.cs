@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using TerrariaMoba.Characters;
+using TerrariaMoba.Network;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.UI {
@@ -20,23 +21,16 @@ namespace TerrariaMoba.UI {
         public override void OnInitialize() {
             iconList = new List<CharacterIcon>();
             
-            List<Type> types = (typeof(Character).Assembly.GetTypes().Where(type => type.IsSubclassOf(typeof(Character)) && !type.IsAbstract)).ToList();
-            int numCharacterPortraits = types.Count;
-            
-            for (int i = 0; i < numCharacterPortraits; i++) {
-                Character Hero;
-                var type = types[i];
-                Hero = (Character)Activator.CreateInstance(type);
-                iconList.Add(new CharacterIcon(Hero));
+            foreach (var heroType in CharacterManager.CharacterTypesList) {
+                iconList.Add(new CharacterIcon((Character)Activator.CreateInstance(heroType)));
             }
-
-
+            
             background = new UIImage(TerrariaMoba.Instance.GetTexture("Textures/CharacterSelect"));
             background.VAlign = 0.5f;
             background.HAlign = 0.5f;
             Append(background);
 
-            for (int i = 0; i < numCharacterPortraits; i++) {
+            for (int i = 0; i < iconList.Count; i++) {
                 iconList[i].Left.Set(fromEdge + (spacing * (i % 5)), 0);
                 iconList[i].Top.Set(fromEdge + (spacing * (i / 5)), 0);
                 background.Append(iconList[i]);
@@ -70,10 +64,7 @@ namespace TerrariaMoba.UI {
         public void OnCheckClick(UIMouseEvent evt, UIElement listeningElement) {
             var mobaPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
             if (mobaPlayer.selectedCharacter != null) {
-                /*if (TerrariaMobaUtils.AssignCharacter(ref mobaPlayer.Hero, mobaPlayer.selectedCharacter,
-                    mobaPlayer.player)) {
-                    //TODO - Sync Character Selection
-                }*/
+                NetworkHandler.SendAssignCharacter(Main.LocalPlayer.whoAmI);
                 Main.PlaySound(SoundID.MenuClose);
                 TerrariaMoba.Instance.HideSelect();
             }

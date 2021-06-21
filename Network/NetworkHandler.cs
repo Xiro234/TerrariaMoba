@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Characters;
 using TerrariaMoba.Players;
 using TerrariaMoba.StatusEffects;
 
@@ -12,7 +13,8 @@ namespace TerrariaMoba.Network {
             ADD_STATUS_EFFECT,
             SYNC_STATUS_EFFECT,
             SYNC_EFFECT_LIST,
-            START_GAME
+            START_GAME,
+            ASSIGN_CHARACTER
         }
         
         public static void HandlePacket(BinaryReader reader, int sender) {
@@ -32,6 +34,9 @@ namespace TerrariaMoba.Network {
                     break;
                 case NetTag.START_GAME:
                     ReceiveStartGame(reader, sender);
+                    break;
+                case NetTag.ASSIGN_CHARACTER:
+                    RecieveAssignCharacter(reader, sender);
                     break;
                 default:
                     //TODO - Add error logging
@@ -138,16 +143,42 @@ namespace TerrariaMoba.Network {
         #endregion
 
         #region START_GAME
-        public static void SendStartGame() {
+        public static void SendStartGame(int ignore = -1) {
             ModPacket modPacket = TerrariaMoba.Instance.GetPacket();
             modPacket.Write((byte)NetTag.START_GAME);
-            modPacket.Send();
+            modPacket.Send(ignoreClient: ignore);
         }
 
         public static void ReceiveStartGame(BinaryReader reader, int sender) {
-            MobaWorld.MatchInProgress = true;
+            TerrariaMobaUtils.StartGame();
             if (Main.netMode == NetmodeID.Server) {
+                MobaWorld.MatchInProgress = true;
                 NetMessage.SendData(MessageID.WorldData);
+                SendStartGame(sender);
+            }
+        }
+        #endregion
+
+        #region ASSIGN_CHARACTER
+
+        public static void SendAssignCharacter(int target, int ignore = -1) {
+            var mobaPlayer = Main.player[target].GetModPlayer<MobaPlayer>();
+            ModPacket modPacket = TerrariaMoba.Instance.GetPacket();
+            modPacket.Write((byte) NetTag.ASSIGN_CHARACTER);
+            modPacket.Write(target);
+            int ID = CharacterManager.CharacterDict[mobaPlayer.selectedCharacter];
+            modPacket.Write(ID);
+            modPacket.Send(ignoreClient: ignore);
+        }
+
+        public static void RecieveAssignCharacter(BinaryReader reader, int sender) {
+            int whoAmI = reader.ReadInt32();
+            var target = Main.player[whoAmI].GetModPlayer<MobaPlayer>();
+            int ID = reader.ReadInt32();
+            target.selectedCharacter = CharacterManager.CharacterTypesList[ID];
+            Main.NewText(ID);
+            if (Main.netMode == NetmodeID.Server) {
+                SendAssignCharacter(target.player.whoAmI, sender);
             }
         }
         #endregion

@@ -57,8 +57,6 @@ namespace TerrariaMoba.StatusEffects {
         #endregion
         
         public static StatusEffect GetNewEffectInstance(int ID) {
-            TerrariaMoba.Instance.Logger.Info(ID);
-
             return (StatusEffect)Activator.CreateInstance(StatusEffectTypesList[ID]);
         }
 
