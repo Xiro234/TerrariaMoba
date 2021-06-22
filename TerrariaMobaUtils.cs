@@ -60,7 +60,7 @@ namespace  TerrariaMoba {
         public static bool AssignCharacter(Player player) {
             var mobaPlayer = player.GetModPlayer<MobaPlayer>();
             mobaPlayer.Hero = (Character)Activator.CreateInstance(mobaPlayer.selectedCharacter, player);
-            
+            mobaPlayer.Hero.InitializePlayer();
             return true;
         }
 
