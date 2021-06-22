@@ -64,7 +64,10 @@ namespace TerrariaMoba.UI {
         public void OnCheckClick(UIMouseEvent evt, UIElement listeningElement) {
             var mobaPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
             if (mobaPlayer.selectedCharacter != null) {
-                NetworkHandler.SendAssignCharacter(Main.LocalPlayer.whoAmI);
+                if (Main.netMode != NetmodeID.SinglePlayer) {
+                    NetworkHandler.SendAssignCharacter(Main.LocalPlayer.whoAmI);
+                }
+
                 Main.PlaySound(SoundID.MenuClose);
                 TerrariaMoba.Instance.HideSelect();
             }

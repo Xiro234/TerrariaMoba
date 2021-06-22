@@ -18,7 +18,7 @@ namespace TerrariaMoba.Abilities.Jorm {
         public override void OnCast() {
             //TODO - 4 hammers spin around him, damage and daze on hit (they break on collide).
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
-                Vector2 spawnSpeed = new Vector2(-HAMMER_SPAWN_SPEED + User.velocity.X, -HAMMER_SPAWN_SPEED + User.velocity.Y);
+                /*Vector2 spawnSpeed = new Vector2(-HAMMER_SPAWN_SPEED + User.velocity.X, -HAMMER_SPAWN_SPEED + User.velocity.Y);
                 Projectile proj1 = Projectile.NewProjectileDirect(User.Center, spawnSpeed,
                     TerrariaMoba.Instance.ProjectileType("SpinningHammer"), 0, 0, User.whoAmI);
                 
@@ -52,6 +52,21 @@ namespace TerrariaMoba.Abilities.Jorm {
                 SpinningHammer hammer4 = proj4.modProjectile as SpinningHammer;
                 if (hammer4 != null) {
                     hammer4.SpinRadius = HAMMER_SPIN_RADIUS;
+                }*/
+
+                for (int i = 0; i < 4; i++) {
+                    Vector2 direction = new Vector2(1, 1);
+                    direction.Normalize();
+
+                    Vector2 velocity = direction.RotatedBy(i * Math.PI / 2) * HAMMER_SPAWN_SPEED;
+                    
+                    Projectile projectile = Projectile.NewProjectileDirect(User.Center, velocity,
+                        TerrariaMoba.Instance.ProjectileType("SpinningHammer"), 0, 0, User.whoAmI);
+                    
+                    SpinningHammer hammer = projectile.modProjectile as SpinningHammer;
+                    if (hammer != null) {
+                        hammer.SpinRadius = HAMMER_SPIN_RADIUS;
+                    }
                 }
 
                 Main.PlaySound(SoundID.Item1, User.Center);
