@@ -1,13 +1,10 @@
 ﻿using System;
-using TerrariaMoba.Characters;
 using Microsoft.Xna.Framework;
 using System.IO;
 using BaseMod;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
 using TerrariaMoba.Players;
-using TerrariaMoba.Enums;
 using TerrariaMoba.NPCs;
 
 namespace  TerrariaMoba {
