@@ -5,6 +5,7 @@ using System.IO;
 using BaseMod;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using TerrariaMoba.Players;
 using TerrariaMoba.Enums;
 using TerrariaMoba.NPCs;
@@ -55,13 +56,6 @@ namespace  TerrariaMoba {
         public static bool TileIsSolidOrPlatform(int x, int y) {
             Tile tile = Main.tile[x, y];
             return tile != null && (tile.nactive() && (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type] && tile.frameY == 0));
-        }
-
-        public static bool AssignCharacter(Player player) {
-            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
-            mobaPlayer.Hero = (Character)Activator.CreateInstance(mobaPlayer.selectedCharacter, player);
-            mobaPlayer.Hero.InitializePlayer();
-            return true;
         }
 
         public static string GetHoverText(Texture2D texture) {
@@ -124,10 +118,13 @@ namespace  TerrariaMoba {
         }
 
         public static void StartGame() {
-            var mobaPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
+            foreach (var player in Main.player) {
+                if(player != null && player.active){
+                    player.GetModPlayer<MobaPlayer>().StartGame();
+                }
+            }
             
             MobaWorld.StartGame();
-            mobaPlayer.StartGame();
         }
     }
 }

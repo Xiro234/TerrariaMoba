@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI;
 using TerrariaMoba.Abilities;
+using TerrariaMoba.Characters;
 using TerrariaMoba.Network;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.UI;
@@ -52,6 +53,7 @@ namespace TerrariaMoba {
 			}
 			
 			StatusEffectManager.Load();
+			CharacterManager.Load();
 		}
 
 		public override void UpdateUI(GameTime gameTime) {
