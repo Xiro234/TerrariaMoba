@@ -45,26 +45,30 @@ namespace TerrariaMoba.Network {
         }
 
         #region PVP_HIT
-        public static void SendPvpHit(int damage, int target, int killer) {
+        public static void SendPvpHit(int physicalDamage, int magicalDamage, int trueDamage, int target, int killer) {
             ModPacket modPacket = TerrariaMoba.Instance.GetPacket();
             modPacket.Write((byte)NetTag.PVP_HIT);
-            modPacket.Write(damage);
+            modPacket.Write(physicalDamage);
+            modPacket.Write(magicalDamage);
+            modPacket.Write(trueDamage);
             modPacket.Write((byte)target);
             modPacket.Write((byte)killer);
             modPacket.Send(ignoreClient: killer);
         }
 
         public static void ReceivePvpHit(BinaryReader reader, int sender) {
-            int damage = reader.ReadInt32();
+            int physicalDamage = reader.ReadInt32();
+            int magicalDamage = reader.ReadInt32();
+            int trueDamage = reader.ReadInt32();
             int target = reader.ReadByte();
             int killer = reader.ReadByte();
             
             if (killer != Main.myPlayer) {
-                Main.player[target].GetModPlayer<MobaPlayer>().TakePvpDamage(damage, killer, true);
+                Main.player[target].GetModPlayer<MobaPlayer>().TakePvpDamage(physicalDamage, magicalDamage, trueDamage, killer, true);
             }
 
             if (Main.netMode == NetmodeID.Server) {
-                SendPvpHit(damage, target, killer);
+                SendPvpHit(physicalDamage, magicalDamage, trueDamage, target, killer);
             }
         }
         #endregion

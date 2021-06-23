@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Terraria.ModLoader;
 using Terraria;
 using Terraria.GameInput;
@@ -7,13 +8,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
 using Terraria.ID;
 using TerrariaMoba.Abilities;
-using TerrariaMoba.Abilities.Nocturne;
-using TerrariaMoba.Abilities.Sylvia;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Network;
+using TerrariaMoba.Projectiles;
 using TerrariaMoba.Statistic;
-using TerrariaMoba.UI;
 
 namespace TerrariaMoba.Players {
     public partial class MobaPlayer : ModPlayer {
@@ -44,7 +43,7 @@ namespace TerrariaMoba.Players {
         }
 
         public override void ResetEffects() {
-            Stats.ResetStats();
+            ResetStats();
             TickStatusEffects();
             TickAbilities();
 
@@ -152,8 +151,11 @@ namespace TerrariaMoba.Players {
         }
 
         public override void PostUpdateBuffs() {
-            RegenLife();
-            RegenResource();
+            if (MobaWorld.MatchInProgress) {
+                RegenLife();
+                RegenResource();
+                ResetStats();
+            }
         }
 
         public override void NaturalLifeRegen(ref float regen) {
@@ -164,18 +166,27 @@ namespace TerrariaMoba.Players {
             if (Main.netMode == NetmodeID.MultiplayerClient && pvp) {
             }
             else {
-                //TerrariaMobaUtils.MobaKill(PlayerLastHurt, player.whoAmI);
                 AbilityEffectManager.Kill(player, damage, hitDirection, pvp, damageSource);
             }
         }
 
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
+            var damageTypeProj = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
+            int physicalDamage = damageTypeProj.PhysicalDamage;
+            int magicalDamage = damageTypeProj.MagicalDamage;
+            int trueDamage = damageTypeProj.TrueDamage;
+            
+            if (physicalDamage == 0 && magicalDamage == 0 && trueDamage == 0) {
+                Main.NewText(proj.Name + " has not set any damage types! Please contact developers immediately.", Color.Red);
+            }
+            
             AbilityEffectManager.ModifyHitPvpWithProj(player, proj, target, ref damage, ref crit);
-            target.GetModPlayer<MobaPlayer>().TakePvpDamage(damage, player.whoAmI, false);
+
+            target.GetModPlayer<MobaPlayer>().TakePvpDamage(physicalDamage, magicalDamage, trueDamage, player.whoAmI, false);
         }
 
         public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit) {
-            target.GetModPlayer<MobaPlayer>().TakePvpDamage(damage, player.whoAmI, false);
+            target.GetModPlayer<MobaPlayer>().TakePvpDamage(damage, 0, 0, player.whoAmI, false);
         }
 
         public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) {
@@ -274,24 +285,35 @@ namespace TerrariaMoba.Players {
         }
         
 
-        public void TakePvpDamage(int damage, int killer, bool noBroadcast) {
+        public void TakePvpDamage(int physicalDamage, int magicalDamage, int trueDamage, int killer, bool noBroadcast) {
             if (!player.immune) {
+                AbilityEffectManager.TakePvpDamage(player, ref physicalDamage, ref magicalDamage, ref trueDamage, ref killer);
+                int mitigatedPhysical = (int)Math.Ceiling(physicalDamage - physicalDamage * Stats.PhysicalArmor * 0.01f);
+                int mitigatedMagical = (int)Math.Ceiling(magicalDamage - magicalDamage * Stats.MagicalArmor * 0.01f);
                 
-                AbilityEffectManager.TakePvpDamage(player, ref damage, ref killer);
-                player.statLife -= damage;
+                if (mitigatedPhysical > 0) {
+                    CombatText.NewText(player.Hitbox, Color.Maroon, mitigatedPhysical);
+                }
 
-                CombatText.NewText(player.Hitbox, Color.OrangeRed, damage);
-                
-                Main.NewText(player.whoAmI + " " + killer);
+                if (mitigatedMagical > 0) {
+                    CombatText.NewText(player.Hitbox, Color.DodgerBlue, mitigatedMagical);
+                }
+
+                if (trueDamage > 0) {
+                    CombatText.NewText(player.Hitbox, Color.Goldenrod, trueDamage);
+                }
+
+                int dealtDamage = mitigatedPhysical + mitigatedMagical + trueDamage;
+                player.statLife -= dealtDamage;
                 
                 if (player.statLife <= 0) {
-                    player.KillMe(PlayerDeathReason.ByPlayer(killer), damage, 1, true);
+                    player.KillMe(PlayerDeathReason.ByPlayer(killer), dealtDamage, 1, true);
                 }
                 
                 Main.PlaySound(1, player.position);
 
                 if (!noBroadcast) {
-                    NetworkHandler.SendPvpHit(damage, player.whoAmI, killer);
+                    NetworkHandler.SendPvpHit(physicalDamage, magicalDamage, trueDamage, player.whoAmI, killer);
                 }
             }
         }

@@ -65,7 +65,7 @@ namespace TerrariaMoba.UI {
             var mobaPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
             if (mobaPlayer.selectedCharacter != null) {
                 
-                if (Main.netMode != NetmodeID.Server) {
+                if (Main.netMode != NetmodeID.SinglePlayer) {
                     NetworkHandler.SendAssignCharacter(Main.LocalPlayer.whoAmI);
                 }
                 
