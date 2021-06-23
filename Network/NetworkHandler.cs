@@ -160,7 +160,6 @@ namespace TerrariaMoba.Network {
         #endregion
 
         #region ASSIGN_CHARACTER
-
         public static void SendAssignCharacter(int target, int ignore = -1) {
             var mobaPlayer = Main.player[target].GetModPlayer<MobaPlayer>();
             ModPacket modPacket = TerrariaMoba.Instance.GetPacket();
