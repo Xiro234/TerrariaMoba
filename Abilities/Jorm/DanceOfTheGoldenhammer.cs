@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
@@ -55,10 +54,10 @@ namespace TerrariaMoba.Abilities.Jorm {
                 }*/
 
                 for (int i = 0; i < 4; i++) {
-                    Vector2 direction = new Vector2(1, 1);
-                    direction.Normalize();
+                    Vector2 direction = Vector2.UnitX;
 
-                    Vector2 velocity = direction.RotatedBy(i * Math.PI / 2) * HAMMER_SPAWN_SPEED;
+                    Vector2 velocity = direction.RotatedBy(MathHelper.ToRadians(i * 90 + 45)) * HAMMER_SPAWN_SPEED;
+                    velocity += User.velocity;
                     
                     Projectile projectile = Projectile.NewProjectileDirect(User.Center, velocity,
                         TerrariaMoba.Instance.ProjectileType("SpinningHammer"), 0, 0, User.whoAmI);
