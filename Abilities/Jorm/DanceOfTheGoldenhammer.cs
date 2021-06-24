@@ -17,48 +17,11 @@ namespace TerrariaMoba.Abilities.Jorm {
         public override void OnCast() {
             //TODO - 4 hammers spin around him, damage and daze on hit (they break on collide).
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
-                /*Vector2 spawnSpeed = new Vector2(-HAMMER_SPAWN_SPEED + User.velocity.X, -HAMMER_SPAWN_SPEED + User.velocity.Y);
-                Projectile proj1 = Projectile.NewProjectileDirect(User.Center, spawnSpeed,
-                    TerrariaMoba.Instance.ProjectileType("SpinningHammer"), 0, 0, User.whoAmI);
-                
-                SpinningHammer hammer1 = proj1.modProjectile as SpinningHammer;
-                if (hammer1 != null) {
-                    hammer1.SpinRadius = HAMMER_SPIN_RADIUS;
-                }
-                
-                spawnSpeed = new Vector2(-HAMMER_SPAWN_SPEED + User.velocity.X, HAMMER_SPAWN_SPEED + User.velocity.Y);
-                Projectile proj2 = Projectile.NewProjectileDirect(User.Center, spawnSpeed,
-                    TerrariaMoba.Instance.ProjectileType("SpinningHammer"), 0, 0, User.whoAmI);
-                
-                SpinningHammer hammer2 = proj2.modProjectile as SpinningHammer;
-                if (hammer2 != null) {
-                    hammer2.SpinRadius = HAMMER_SPIN_RADIUS;
-                }
-                
-                spawnSpeed = new Vector2(HAMMER_SPAWN_SPEED + User.velocity.X, -HAMMER_SPAWN_SPEED + User.velocity.Y);
-                Projectile proj3 = Projectile.NewProjectileDirect(User.Center, spawnSpeed,
-                    TerrariaMoba.Instance.ProjectileType("SpinningHammer"), 0, 0, User.whoAmI);
-                
-                SpinningHammer hammer3 = proj3.modProjectile as SpinningHammer;
-                if (hammer3 != null) {
-                    hammer3.SpinRadius = HAMMER_SPIN_RADIUS;
-                }
-                
-                spawnSpeed = new Vector2(HAMMER_SPAWN_SPEED + User.velocity.X, HAMMER_SPAWN_SPEED + User.velocity.Y);
-                Projectile proj4 = Projectile.NewProjectileDirect(User.Center, spawnSpeed,
-                    TerrariaMoba.Instance.ProjectileType("SpinningHammer"), 0, 0, User.whoAmI);
-                
-                SpinningHammer hammer4 = proj4.modProjectile as SpinningHammer;
-                if (hammer4 != null) {
-                    hammer4.SpinRadius = HAMMER_SPIN_RADIUS;
-                }*/
-
                 for (int i = 0; i < 4; i++) {
                     Vector2 direction = Vector2.UnitX;
 
-                    Vector2 velocity = direction.RotatedBy(MathHelper.ToRadians(i * 90 + 45)) * HAMMER_SPAWN_SPEED;
-                    velocity += User.velocity;
-                    
+                    Vector2 velocity = direction.RotatedBy(MathHelper.ToRadians(i * 90 + 45));
+
                     Projectile projectile = Projectile.NewProjectileDirect(User.Center, velocity,
                         TerrariaMoba.Instance.ProjectileType("SpinningHammer"), 0, 0, User.whoAmI);
                     
