@@ -84,8 +84,11 @@ namespace TerrariaMoba.Characters {
         }
         
         public virtual void LevelUp() { }
-        
-        public virtual void StartGame() { }
+
+        public virtual void StartGame() {
+            User.statLifeMax2 = (int)BaseStatistics.MaxHealth;
+            User.statLife = User.statLifeMax2;
+        }
 
         public virtual void RegenResource() { //Base is mana
             var mobaPlayer = User.GetModPlayer<MobaPlayer>();

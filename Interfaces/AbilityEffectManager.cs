@@ -102,16 +102,16 @@ namespace TerrariaMoba.Interfaces {
             }
         }
 
-        public static void TakePvpDamage(Player player, ref int damage, ref int killer) {
+        public static void TakePvpDamage(Player player, ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {
             List<Ability> abilities = GetValidAbilities<ITakePvpDamage>(player);
             List<StatusEffect> effects = GetValidEffects<ITakePvpDamage>(player);
             //TODO - Add some sort of system to make sure multiple effects will always make a consistent outcome (I.E, 2x damage + 2x damage + flat damage vs., 2x damage + flat damage + 2x damage)
             foreach (Ability ability in abilities) {
-                ((ITakePvpDamage) ability).TakePvpDamage(ref damage, ref killer);
+                ((ITakePvpDamage) ability).TakePvpDamage(ref physicalDamage, ref magicalDamage, ref trueDamage, ref killer);
             }
 
             foreach (StatusEffect effect in effects) {
-                ((ITakePvpDamage)effect).TakePvpDamage(ref damage, ref killer);
+                ((ITakePvpDamage)effect).TakePvpDamage(ref physicalDamage, ref magicalDamage, ref trueDamage, ref killer);
             }
         }
         #endregion

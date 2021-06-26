@@ -7,6 +7,7 @@ namespace TerrariaMoba.Players {
     public partial class MobaPlayer : ModPlayer {
         public void StartGame() {
             AssignCharacter();
+            Hero.StartGame();
             if (Main.LocalPlayer == player) {
                 TerrariaMoba.Instance.ShowBar();
                 TerrariaMoba.Instance.MobaBar.SetIcons();
