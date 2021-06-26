@@ -11,7 +11,7 @@ namespace TerrariaMoba.Characters {
         
         public Jorm(Player user) : base(user, new Statistics(2150f, 0f, 500f,
             0f, Resource.Mana, 99f, 0.91f, 9f), 
-            new DanceOfTheGoldenhammer(), new Consecration(), new SealOfHephaesta(), new VexillumImmortalis(), new PaladinsResolve()) { }
+            new DanceOfTheGoldenhammer(), new Consecration(), new SealOfHephaesta(), new Hammerfall(), new PaladinsResolve()) { }
 
         public override string Name {
             get => "Jorm Goldenhammer";
@@ -33,7 +33,14 @@ namespace TerrariaMoba.Characters {
         public override int BodyDyeID { get => ItemID.YellowandSilverDye; }
         public override int LegVanityID { get => ItemID.PalladiumLeggings; }
         public override int LegDyeID { get => ItemID.YellowandSilverDye; }
-        
-        //TODO - Paladin's Shield slot
     }
+    
+    //TODO - [Texture] Ability icons
+    //TODO - [Char] Paladin's Shield slot
+    //TODO - [Trait] Implement trait entirely.
+    //TODO - [Trait] Implement bonuses for A1-3.
+    //TODO - [A1] Possibly a special effect that overlays the player if they are dazed by Jorm.
+    //TODO - [A2] Implement effects; allies = increased heal effect, enemies = reduced heal effect, purified effect
+    //TODO - [U2] Implement effect for 100% phys damage immunity. 
+    
 }

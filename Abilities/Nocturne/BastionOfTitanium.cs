@@ -10,8 +10,9 @@ namespace TerrariaMoba.Abilities.Nocturne {
         public override void OnCast() {
             //TODO - Titanium on armor expands; changes A1,2,3 and Trait:
             //T = An aura of Armor (if A2 is active, this also grants MR)
-            //A1 = Creates an illusion of titanium behind all enemies that deal damage and slow on hit.
-            //A2 = Parry attacks for 1 second. If hit, increase physical damage by 15% for 5 seconds, and auto-attacks inflict armor break.
+            //A1 = Creates an illusion of titanium behind all enemies. Max HP = 25% of enemy Max HP. Damage dealt = BAttack Damage of enemy.
+            //    Inflicts .
+            //A2 = Parry attacks for 2.5 seconds. Slowed by 25%. If hit, after 2.5s, Trait aura Silences enemies in radius.
             //A3 = "evil" consecration like jorm; if allies effected they get bonuses
         }
     }

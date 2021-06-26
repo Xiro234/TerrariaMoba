@@ -16,7 +16,7 @@ namespace TerrariaMoba.Projectiles.Jorm {
             projectile.width = 38;
             projectile.height = 38;
             projectile.timeLeft = 360;
-            projectile.penetrate = -1;
+            projectile.penetrate = 1;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
 
@@ -52,10 +52,12 @@ namespace TerrariaMoba.Projectiles.Jorm {
 
         public override void SendExtraAI(BinaryWriter writer) {
             writer.Write(SpinRadius);
+            writer.Write(SpawnSpeed);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader) {
             SpinRadius = reader.ReadSingle();
+            SpawnSpeed = reader.ReadSingle();
         }
     }
 }
