@@ -1,6 +1,9 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Players;
+using TerrariaMoba.StatusEffects;
+using TerrariaMoba.StatusEffects.Jorm;
 
 namespace TerrariaMoba.NPCs {
     public class JormBanner : ModNPC {
@@ -22,12 +25,11 @@ namespace TerrariaMoba.NPCs {
             for (int i = 0; i < Main.maxPlayers; i++) {
                 Player plr = Main.player[i];
                 float distToBanner = (Main.player[i].Center - npc.Center).Length() / 16.0f;
-                if (plr.active) {
-                    if (plr.team == Main.player[npc.GetGlobalNPC<MobaGlobalNPC>().owner].team && distToBanner < npc.ai[0]) {
-                        Main.NewText("In range, buffing player.");
-                    }
-                    else {
-                        Main.NewText("Out of range!");
+                if (plr.active && plr.team == Main.player[npc.GetGlobalNPC<MobaGlobalNPC>().owner].team) {
+                    if (distToBanner < npc.ai[0]) {
+                        StatusEffectManager.AddEffect(plr, new VexillumImmortalisEffect());
+                    } else {
+                        // needs to be tested
                     }
                 }
             }

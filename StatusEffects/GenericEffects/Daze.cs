@@ -9,18 +9,19 @@ using TerrariaMoba.Players;
 
 namespace TerrariaMoba.StatusEffects.GenericEffects {
     public abstract class Daze : StatusEffect, IResetEffects {
+        
+        private float modifier;
+        
         public Daze() { }
 
         public Daze(float magnitude, int duration, bool canBeCleansed) : base(duration, canBeCleansed) {
             modifier = magnitude;
         }
-
-        private float modifier;
         
         public void ResetEffects() {
-            //User.GetModPlayer<MobaPlayer>().Stats.AttackSpeed *= 1-(modifier/100f);
-            //User.GetModPlayer<MobaPlayer>().Stats.MoveSpeed *= 1-(modifier/100f);
-            //User.GetModPlayer<MobaPlayer>().Stats.JumpSpeed *= 1-(modifier/100f);
+            //User.GetModPlayer<MobaPlayer>().Stats.AttackSpeed *= 1-modifier;
+            //User.GetModPlayer<MobaPlayer>().Stats.MoveSpeed *= 1-modifier;
+            //User.GetModPlayer<MobaPlayer>().Stats.JumpSpeed *= 1-modifier;
         }
         
         public override void GetListOfPlayerLayers(List<PlayerLayer> playerLayers) {

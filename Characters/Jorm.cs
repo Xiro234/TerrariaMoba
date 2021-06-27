@@ -26,7 +26,7 @@ namespace TerrariaMoba.Characters {
         public override Color HairColor { get => Color.Gold; }
         public override Color SkinColor { get => Color.DarkSalmon; }
         public override Color EyeColor { get => Color.Goldenrod; }
-        public override int PrimaryWeaponID { get => ItemID.PaladinsHammer; }
+        public override int PrimaryWeaponID { get => TerrariaMoba.Instance.ItemType("JormHammer"); }
         public override int HeadVanityID { get => ItemID.PalladiumHelmet; }
         public override int HeadDyeID { get => ItemID.YellowandSilverDye; }
         public override int BodyVanityID { get => ItemID.PalladiumBreastplate; }
@@ -41,6 +41,5 @@ namespace TerrariaMoba.Characters {
     //TODO - [Trait] Implement bonuses for A1-3.
     //TODO - [A1] Possibly a special effect that overlays the player if they are dazed by Jorm.
     //TODO - [A2] Implement effects; allies = increased heal effect, enemies = reduced heal effect, purified effect
-    //TODO - [U2] Implement effect for 100% phys damage immunity. 
     
 }
