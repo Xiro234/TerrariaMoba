@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -92,8 +93,11 @@ namespace TerrariaMoba.Characters {
 
         public virtual void RegenResource() { //Base is mana
             var mobaPlayer = User.GetModPlayer<MobaPlayer>();
-            float manaRegenFromMax = ((BaseStatistics.MaxResource + mobaPlayer.Stats.MaxResource) * 0.125f / 60f);
-            mobaPlayer.CurrentResource += manaRegenFromMax + BaseStatistics.ResourceRegen + mobaPlayer.Stats.ResourceRegen;
+            
+            int maxResource = (int)Math.Ceiling((BaseStatistics.MaxResource + mobaPlayer.FlatStats.MaxResource) * (1 + mobaPlayer.MultiplicativeStats.MaxResource));
+            if (mobaPlayer.CurrentResource > maxResource) {
+                mobaPlayer.CurrentResource = maxResource;
+            }
         }
 
         public virtual void InitializePlayer() { 

@@ -26,7 +26,8 @@ namespace TerrariaMoba.Players {
         public override void Initialize() {
             EffectList = new List<StatusEffect>();
             TestAbilities = new List<Ability>();
-            Stats = new Statistics();
+            FlatStats = new Statistics();
+            MultiplicativeStats = new Statistics();
         }
 
         public override void OnEnterWorld(Player player) {
@@ -48,8 +49,12 @@ namespace TerrariaMoba.Players {
             TickAbilities();
 
             AbilityEffectManager.ResetEffects(player);
+            SetPlayerStats();
+
+            //player.maxRunSpeed = 0.5f;
+            //player.moveSpeed /= 2f;
         }
-        
+
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TerrariaMoba.AbilityOneHotkey.JustPressed) {
                 Hero?.BasicAbilityOne.OnCast();
@@ -144,10 +149,6 @@ namespace TerrariaMoba.Players {
                 return false;
             }
             return true;
-        }
-
-        public override void PostUpdateRunSpeeds() {
-            
         }
 
         public override void PostUpdateBuffs() {
@@ -288,8 +289,8 @@ namespace TerrariaMoba.Players {
         public void TakePvpDamage(int physicalDamage, int magicalDamage, int trueDamage, int killer, bool noBroadcast) {
             if (!player.immune) {
                 AbilityEffectManager.TakePvpDamage(player, ref physicalDamage, ref magicalDamage, ref trueDamage, ref killer);
-                int mitigatedPhysical = (int)Math.Ceiling(physicalDamage - physicalDamage * Stats.PhysicalArmor * 0.01f);
-                int mitigatedMagical = (int)Math.Ceiling(magicalDamage - magicalDamage * Stats.MagicalArmor * 0.01f);
+                int mitigatedPhysical = (int)Math.Ceiling(physicalDamage - physicalDamage * FlatStats.PhysicalArmor * 0.01f);
+                int mitigatedMagical = (int)Math.Ceiling(magicalDamage - magicalDamage * FlatStats.MagicalArmor * 0.01f);
                 
                 if (mitigatedPhysical > 0) {
                     CombatText.NewText(player.Hitbox, Color.Maroon, mitigatedPhysical);
