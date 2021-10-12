@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -10,7 +11,6 @@ namespace TerrariaMoba.Projectiles.Marie {
             Projectile.height = 10;
             Projectile.aiStyle = 29;
             Projectile.alpha = 255;
-            Projectile.magic = true;
             Projectile.penetrate = 1;
             Projectile.friendly = true;
         }

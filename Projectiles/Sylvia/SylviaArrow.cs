@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -15,10 +16,9 @@ namespace TerrariaMoba.Projectiles.Sylvia {
             Projectile.width = 8;
             Projectile.height = 8;
             Projectile.tileCollide = true;
-            Projectile.ranged = true;
             Projectile.aiStyle = 1;
-            drawOffsetX = -6;
-            aiType = ProjectileID.WoodenArrowFriendly;
+            DrawOffsetX = -6;
+            AIType = ProjectileID.WoodenArrowFriendly;
         }
 
         public override void Kill(int timeLeft) {

@@ -16,7 +16,7 @@ namespace TerrariaMoba.Projectiles.Osteo {
             Projectile.width = 16;
             Projectile.height = 16;
             Projectile.aiStyle = 0;
-            drawOffsetX = -24;
+            DrawOffsetX = -24;
             Projectile.hide = true;
             Projectile.tileCollide = true;
             Projectile.alpha = 255;
@@ -37,7 +37,7 @@ namespace TerrariaMoba.Projectiles.Osteo {
         }
 
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs,
-            List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI) {
+            List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverPlayers, List<int> drawCacheProjsOverWiresUI) {
             drawCacheProjsBehindNPCsAndTiles.Add(index);
         }
 

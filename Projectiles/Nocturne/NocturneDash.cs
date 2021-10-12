@@ -2,6 +2,8 @@
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 
 namespace TerrariaMoba.Projectiles.Nocturne {
@@ -32,15 +34,15 @@ namespace TerrariaMoba.Projectiles.Nocturne {
             }
         }
         
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
-            Texture2D texture = Main.ProjectileTexture[Projectile.type];
+        public override bool PreDraw(ref Color lightColor) {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) {
                 if (Main.player[Projectile.owner].direction == 1) {
-                    spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.Tan,
+                    Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.Tan,
                         Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale, 
                         SpriteEffects.FlipHorizontally, 0);
                 } else {
-                    spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.Tan,
+                    Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.Tan,
                         Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale, 
                         0, 0);
                 }

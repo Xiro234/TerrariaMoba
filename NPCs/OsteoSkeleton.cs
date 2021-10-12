@@ -16,7 +16,7 @@ namespace TerrariaMoba.NPCs {
             NPC.width = 18;
             NPC.height = 40;
             NPC.aiStyle = -1;
-            animationType = NPCID.Skeleton;
+            AnimationType = NPCID.Skeleton;
             NPC.lifeMax = 20;
             NPC.damage = 10;
             NPC.defense = 0;
@@ -31,17 +31,18 @@ namespace TerrariaMoba.NPCs {
         private bool doEffect = false;
 
         public override void AI() {
+            //TODO - Fix BaseAI code for Osteo's skeletons.
             if (groundTimer > groundTime) {
                 if (!NPC.HasValidTarget) {
                     TargetClosestEnemy(NPC);
                 }
                 else {
-                    BaseAI.SetTarget(NPC, NPC.target);
+                    //BaseAI.SetTarget(NPC, NPC.target);
                     NPC.FaceTarget();
                 }
 
-                BaseAI.AIZombie(NPC, ref NPC.ai, false, false, 0, 0.07f, 3f, 8, 4, 60,
-                    false);
+                //BaseAI.AIZombie(NPC, ref NPC.ai, false, false, 0, 0.07f, 3f, 8, 4, 60,
+                    //false);
                 NPC.dontTakeDamage = false;
                 NPC.knockBackResist = 0f;
             }

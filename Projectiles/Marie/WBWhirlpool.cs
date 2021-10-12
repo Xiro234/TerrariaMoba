@@ -17,7 +17,6 @@ namespace TerrariaMoba.Projectiles.Marie {
             Projectile.tileCollide = false;
             Projectile.friendly = true;
             Projectile.ignoreWater = true;
-            Projectile.magic = true;
             Projectile.penetrate = -1;
             Projectile.timeLeft = 180;
         }

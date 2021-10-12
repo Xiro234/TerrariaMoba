@@ -13,7 +13,6 @@ namespace TerrariaMoba.Projectiles.Flibnob {
             Projectile.alpha = 255;
             Projectile.penetrate = -1;
             Projectile.extraUpdates = 2;
-            Projectile.ranged = true;
         }
 
         public override void AI() {

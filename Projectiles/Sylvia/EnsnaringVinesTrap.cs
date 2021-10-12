@@ -1,6 +1,7 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using Terraria.Audio;
 using Terraria.ID;
 
 namespace TerrariaMoba.Projectiles.Sylvia {

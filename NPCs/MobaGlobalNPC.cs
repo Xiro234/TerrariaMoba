@@ -90,9 +90,9 @@ namespace TerrariaMoba.NPCs {
                 int i = 0;
                 for (i = 0; i < steps; i++) {
                     float percent = (float) i / (right - left);
-                    Main.EntitySpriteDraw(TextureAssets.MagicPixel, new Vector2(barPos.X + i + 2, barPos.Y + 2),
-                        new Rectangle(0, 0, 1, 4),
-                        Color.Lerp(gradA, gradB, percent));
+                    Rectangle? rect = new Rectangle(0, 0, 1, 4);
+                    Main.EntitySpriteDraw(TextureAssets.MagicPixel.Value, new Vector2(barPos.X + i + 2, barPos.Y + 2),
+                        rect, Color.Lerp(gradA, gradB, percent), 0f, NPC.position, 1f, SpriteEffects.None, 69);
                 }
             }
         }

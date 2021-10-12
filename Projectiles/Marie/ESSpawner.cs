@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -33,13 +34,13 @@ namespace TerrariaMoba.Projectiles.Marie {
 
         public override void Kill(int timeLeft) {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) {
-                Projectile proj = Projectile.NewProjectileDirect(Projectile.Center, Vector2.Zero, 
-                    ModContent.ProjectileType<ESStormCloud"), Projectile.damage, Projectile.knockBack, Projectile.whoAmI);
+                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Vector2.Zero, 
+                    ModContent.ProjectileType<ESStormCloud>(), Projectile.damage, Projectile.knockBack, Projectile.whoAmI);
                 SoundEngine.PlaySound(SoundID.Item74, Projectile.Center);
             }
         }
 
-        public override bool CanDamage() {
+        public override bool? CanDamage() {
             return false;
         }
     }

@@ -30,7 +30,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
             TileDistance = EnsnaringVinesAbility.TRAP_BASE_TILE_DISTANCE;
         }
 
-        public override bool CanDamage() {
+        public override bool? CanDamage() {
             return false;
         }
 
@@ -39,7 +39,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
             if (((int)Projectile.ai[0] % timeBetween) == 0){
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) {
                     Vector2 newPos = new Vector2(Projectile.position.X, GetYPos());
-                    Projectile proj = Projectile.NewProjectileDirect(newPos, Vector2.Zero, ModContent.ProjectileType<EnsnaringVinesTrap"),
+                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), newPos, Vector2.Zero, ModContent.ProjectileType<EnsnaringVinesTrap>(),
                         TrapDamage, 0, Projectile.whoAmI);
                     
                     EnsnaringVinesTrap trap = proj.ModProjectile as EnsnaringVinesTrap;

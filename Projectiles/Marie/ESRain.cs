@@ -11,7 +11,6 @@ namespace TerrariaMoba.Projectiles.Marie {
             Projectile.timeLeft = 300;
             Projectile.scale = 1.1f;
             Projectile.alpha = 60;
-            Projectile.magic = true;
             Projectile.extraUpdates = 1;
         }
     }

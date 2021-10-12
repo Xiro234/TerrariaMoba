@@ -21,7 +21,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
             Projectile.width = 20;
             Projectile.height = 20;
             Projectile.aiStyle = 0;
-            drawOffsetX = -46;
+            DrawOffsetX = -46;
 
             SporeDamage = PlanterasLastWill.SPORE_BASE_DAMAGE;
             NumberOfSpores = PlanterasLastWill.SPORE_BASE_NUMBER;
