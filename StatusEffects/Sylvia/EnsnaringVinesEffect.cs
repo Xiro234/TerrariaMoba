@@ -16,8 +16,8 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
 
         public EnsnaringVinesEffect(int duration, bool canBeCleansed) : base(duration, canBeCleansed) { }
 
-        public override void GetListOfPlayerLayers(List<PlayerLayer> playerLayers) {
-            var playerLayer = new PlayerLayer("TerrariaMoba", DisplayName, PlayerLayer.MiscEffectsFront, delegate(PlayerDrawSet drawInfo) {
+        public override void GetListOfPlayerDrawLayers(List<PlayerDrawLayer> playerLayers) {
+            var playerLayer = new PlayerDrawLayer("TerrariaMoba", DisplayName, PlayerDrawLayer.MiscEffectsFront, delegate(PlayerDrawSet drawInfo) {
                 Texture2D texture = ModContent.Request<Texture2D>("Textures/Sylvia/EnsnaringVines").Value;
                 Player drawPlayer = drawInfo.drawPlayer;
 
@@ -28,7 +28,7 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
             });
             
             playerLayers.Add(playerLayer);
-            base.GetListOfPlayerLayers(playerLayers);
+            base.GetListOfPlayerDrawLayers(playerLayers);
         }
     }
 }
