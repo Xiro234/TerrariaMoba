@@ -43,7 +43,7 @@ namespace TerrariaMoba.Characters {
     public class Flibnob : Character {
         public override string FullName { get => "Flibnob, the Chieftain of Krommock"; }
 
-        public Flibnob(Player player) : base(player) { }
+        public Flibnob(Player Player) : base(Player) { }
         
         public override void InitializeCharacter() { }
         
@@ -55,11 +55,11 @@ namespace TerrariaMoba.Characters {
             dyeLeg.SetDefaults(3555);
             primary.SetDefaults(ModContent.ItemType<FlibnobAxe"));
 
-            player.Male = true;
-            player.hair = 15;
-            player.hairColor = new Color(0, 0, 0);
-            player.skinColor = new Color(120, 63, 4);
-            player.eyeColor = new Color(255, 0, 0);
+            Player.Male = true;
+            Player.hair = 15;
+            Player.hairColor = new Color(0, 0, 0);
+            Player.skinColor = new Color(120, 63, 4);
+            Player.eyeColor = new Color(255, 0, 0);
         }
 
         public override void SetStats() {
@@ -69,13 +69,13 @@ namespace TerrariaMoba.Characters {
             baseResourceRegen = (baseMaxResource * 0.125f) / 30;
             baseArmor = 0;
 
-            QAbility = new FlameBelch(player);
-            EAbility = new TitaniumShell(player);
-            RAbility = new Earthsplitter(player);
-            CAbility = new BattleHardened(player);
+            QAbility = new FlameBelch(Player);
+            EAbility = new TitaniumShell(Player);
+            RAbility = new Earthsplitter(Player);
+            CAbility = new BattleHardened(Player);
 
             /*
-            CullTheMeek ultimate = new CullTheMeek(player);
+            CullTheMeek ultimate = new CullTheMeek(Player);
             abilities[2] = ultimate;
             #1#
         }

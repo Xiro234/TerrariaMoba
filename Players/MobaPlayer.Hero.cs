@@ -18,13 +18,13 @@ namespace TerrariaMoba.Players {
             lifeRegenTimer++;
             
             if (lifeRegenTimer == 60) {
-                float healthRegenFromMax = (player.statLifeMax2 * 0.125f / 60f);
+                float healthRegenFromMax = (Player.statLifeMax2 * 0.125f / 60f);
 
                 float healthRegen = (healthRegenFromMax + Hero.BaseStatistics.HealthRegen + FlatStats.HealthRegen) * (1 + MultiplicativeStats.HealthRegen);
-                player.statLife += (int)Math.Ceiling(healthRegen);
+                Player.statLife += (int)Math.Ceiling(healthRegen);
 
-                if (player.statLife > player.statLifeMax2) {
-                    player.statLife = player.statLifeMax2;
+                if (Player.statLife > Player.statLifeMax2) {
+                    Player.statLife = Player.statLifeMax2;
                 }
 
                 lifeRegenTimer = 0;
@@ -46,7 +46,7 @@ namespace TerrariaMoba.Players {
         }
 
         public void SetPlayerStats() {
-            player.statLifeMax2 = (int)Math.Ceiling(((Hero?.BaseStatistics.MaxHealth ?? 100f) + FlatStats.MaxHealth) * (1 + MultiplicativeStats.MaxHealth));
+            Player.statLifeMax2 = (int)Math.Ceiling(((Hero?.BaseStatistics.MaxHealth ?? 100f) + FlatStats.MaxHealth) * (1 + MultiplicativeStats.MaxHealth));
         }
     }
 }

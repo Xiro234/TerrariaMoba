@@ -18,7 +18,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
 
         public override void AI() {
             if (Projectile.ai[0] == 0) {
-                Player player = Main.player[Projectile.owner];
+                Player Player = Main.player[Projectile.owner];
                 SoundEngine.PlaySound(6, Projectile.position);
                 for (int i = 0; i < 20; i++) {
                     Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 57, 0,

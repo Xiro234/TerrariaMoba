@@ -34,7 +34,7 @@ namespace TerrariaMoba.Projectiles.Marie {
         }
 
         public override void Kill(int timeLeft) {
-            Player player = Main.player[Projectile.owner];
+            Player Player = Main.player[Projectile.owner];
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) { 
                 Projectile proj = Projectile.NewProjectileDirect(Projectile.Center, Vector2.Zero, 
                     ModContent.ProjectileType<WBWhirlpool"), PoolDamage, 0, Projectile.whoAmI);

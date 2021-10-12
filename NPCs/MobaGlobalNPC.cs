@@ -38,16 +38,16 @@ namespace TerrariaMoba.NPCs {
             return base.CanHitPlayer(NPC, target, ref cooldownSlot);
         }
 
-        public override bool? CanBeHitByItem(NPC NPC, Player player, Item item) {
+        public override bool? CanBeHitByItem(NPC NPC, Player Player, Item item) {
             if (owner < 0 || owner > 255) {
-                return base.CanBeHitByItem(NPC, player, item);
+                return base.CanBeHitByItem(NPC, Player, item);
             }
             
-            if (player.team == Main.player[owner].team) {
+            if (Player.team == Main.player[owner].team) {
                 return false;
             }
 
-            return CanBeHitByItem(NPC, player, item);
+            return CanBeHitByItem(NPC, Player, item);
         }
 
         public override bool? CanBeHitByProjectile(NPC NPC, Projectile projectile) {

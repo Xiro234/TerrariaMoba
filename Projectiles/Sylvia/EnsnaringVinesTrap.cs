@@ -30,9 +30,9 @@ namespace TerrariaMoba.Projectiles.Sylvia {
             Projectile.ai[0] += 1f;
             
             /*
-            var player = Main.player[Projectile.owner].GetModPlayer<MobaPlayer>();
+            var Player = Main.player[Projectile.owner].GetModPlayer<MobaPlayer>();
             //Venus Flytrap
-            if (player.MyCharacter.talentArray[2, 2]) {
+            if (Player.MyCharacter.talentArray[2, 2]) {
                 if (Projectile.ai[0] >= 540) {
                     Projectile.Kill();
                 }

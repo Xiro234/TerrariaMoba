@@ -160,8 +160,8 @@ namespace TerrariaMoba.UI {
                 Main.LocalPlayer.mouseInterface = true;
             }
             
-            var player = Main.LocalPlayer;
-            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
+            var Player = Main.LocalPlayer;
+            var mobaPlayer = Player.GetModPlayer<MobaPlayer>();
             
             /*DrawIcon(ref QCooldown, ref QPanel, mobaPlayer.Hero.SlotOne.CooldownTimer, mobaPlayer.Hero.SlotOne);
             DrawIcon(ref ECooldown, ref EPanel, mobaPlayer.Hero.SlotTwo.CooldownTimer, mobaPlayer.Hero.SlotTwo);
@@ -170,15 +170,15 @@ namespace TerrariaMoba.UI {
             */
             //levelText.SetText(mobaPlayer.Hero.Level.ToString(), 0.75f, false);
             
-            //lifeText.SetText(player.statLife + "/" + player.statLifeMax2 + " (+" + mobaPlayer.lifeRegen + ")", 0.75f, false);
+            //lifeText.SetText(Player.statLife + "/" + Player.statLifeMax2 + " (+" + mobaPlayer.lifeRegen + ")", 0.75f, false);
             
             //manaText.SetText(mobaPlayer.currentResource + "/" + mobaPlayer.maxResource + " (+" + mobaPlayer.resourceRegen + ")", 0.75f, false);
 
             //armorText.SetText(mobaPlayer.armor.ToString(), 0.6f, false);
-            //moveSpeedText.SetText(((player.maxRunSpeed / 3) * 100).ToString() + "%", 0.6f, false);
+            //moveSpeedText.SetText(((Player.maxRunSpeed / 3) * 100).ToString() + "%", 0.6f, false);
 
-            if (player.dead) {
-                deathTimer.SetText(Math.Ceiling(player.respawnTimer / 60f).ToString());
+            if (Player.dead) {
+                deathTimer.SetText(Math.Ceiling(Player.respawnTimer / 60f).ToString());
             }
             else {
                 deathTimer.SetText("");

@@ -48,24 +48,24 @@ namespace TerrariaMoba.Characters {
             vanityLeg.SetDefaults(2500);
             primary.SetDefaults(ModContent.ItemType<MarieStaff"));
 
-            player.Male = false;
-            player.hair = 5;
-            player.hairColor = new Color(0, 133, 255);
-            player.skinColor = new Color(235, 159, 125);
-            player.eyeColor = new Color(0, 0, 255);
+            Player.Male = false;
+            Player.hair = 5;
+            Player.hairColor = new Color(0, 133, 255);
+            Player.skinColor = new Color(235, 159, 125);
+            Player.eyeColor = new Color(0, 0, 255);
             baseMaxLife = 1460;
             baseLifeRegen = (baseMaxLife * 0.125f) / 60;
             baseMaxResource = 500;
             baseResourceRegen = (baseMaxResource * 0.125f) / 30;
             baseArmor = 0;
             
-            QAbility = new WhirlpoolInABottle(player);
-            EAbility = new TomeOfLacusia(player);
-            RAbility = new EyeOfTheStorm(player);
-            CAbility = new Floodboost(player);
+            QAbility = new WhirlpoolInABottle(Player);
+            EAbility = new TomeOfLacusia(Player);
+            RAbility = new EyeOfTheStorm(Player);
+            CAbility = new Floodboost(Player);
             
             /*
-            FountainOfTheGoddess ultimate = new FountainOfTheGoddess(player);
+            FountainOfTheGoddess ultimate = new FountainOfTheGoddess(Player);
             abilities[2] = ultimate;
             #1#
         }

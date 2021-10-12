@@ -35,7 +35,7 @@ namespace TerrariaMoba.Abilities.Osteo {
             if ((User.GetModPlayer<MobaPlayer>().MyCharacter as Characters.Osteo).skeleList.Count > 0) {
                 float distance = Single.MaxValue;
                 Player newTargetPlayer = null;
-                foreach(Player targetPlayer in Main.player){
+                foreach(Player targetPlayer in Main.Player){
                     if (targetPlayer.active && targetPlayer != null) {
                         if (targetPlayer.team != User.team && !targetPlayer.dead) {
                             float tempDistance = Vector2.Distance(targetPlayer.Center, User.Center);

@@ -35,7 +35,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
         }
 
         public override void OnCast() {
-            //player.AddBuff(BuffType<Buffs.VerdantFuryBuff>(), 60 * 4);
+            //Player.AddBuff(BuffType<Buffs.VerdantFuryBuff>(), 60 * 4);
             if (Main.LocalPlayer == User) {
                 User.GetModPlayer<MobaPlayer>().AddEffect(new Slow(360, User.whoAmI,0.3f));
             }

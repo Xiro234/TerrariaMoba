@@ -10,9 +10,9 @@ using TerrariaMoba.Players;
 namespace TerrariaMoba.Interfaces {
     public class AbilityEffectManager {
         #region Hooks
-        public static void Kill(Player player, double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
-            List<Ability> abilities = GetValidAbilities<IKill>(player);
-            List<StatusEffect> effects = GetValidEffects<IKill>(player);
+        public static void Kill(Player Player, double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
+            List<Ability> abilities = GetValidAbilities<IKill>(Player);
+            List<StatusEffect> effects = GetValidEffects<IKill>(Player);
             
             foreach (Ability ability in abilities) {
                 if (ability.CanCastAbility()) {
@@ -25,10 +25,10 @@ namespace TerrariaMoba.Interfaces {
             }
         }
 
-        public static bool Shoot(Player player, Item item, ref Vector2 position, ref float speedX, ref float speedY,
+        public static bool Shoot(Player Player, Item item, ref Vector2 position, ref float speedX, ref float speedY,
             ref int type, ref int damage, ref float knockBack) {
-            List<Ability> abilities = GetValidAbilities<IShoot>(player);
-            List<StatusEffect> effects = GetValidEffects<IShoot>(player);
+            List<Ability> abilities = GetValidAbilities<IShoot>(Player);
+            List<StatusEffect> effects = GetValidEffects<IShoot>(Player);
 
             bool result = true;
             foreach (Ability ability in abilities) {
@@ -44,9 +44,9 @@ namespace TerrariaMoba.Interfaces {
             return result;
         }
 
-        public static void SetControls(Player player) {
-            List<Ability> abilities = GetValidAbilities<ISetControls>(player);
-            List<StatusEffect> effects = GetValidEffects<ISetControls>(player);
+        public static void SetControls(Player Player) {
+            List<Ability> abilities = GetValidAbilities<ISetControls>(Player);
+            List<StatusEffect> effects = GetValidEffects<ISetControls>(Player);
 
             bool result = true;
             foreach (Ability ability in abilities) {
@@ -60,10 +60,10 @@ namespace TerrariaMoba.Interfaces {
             }
         }
 
-        public static void DrawEffects(Player player, PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a,
+        public static void DrawEffects(Player Player, PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a,
             ref bool fullBright) {
-            List<Ability> abilities = GetValidAbilities<IDrawEffects>(player);
-            List<StatusEffect> effects = GetValidEffects<IDrawEffects>(player);
+            List<Ability> abilities = GetValidAbilities<IDrawEffects>(Player);
+            List<StatusEffect> effects = GetValidEffects<IDrawEffects>(Player);
 
             foreach (Ability ability in abilities) {
                 if (ability.CanCastAbility()) {
@@ -76,9 +76,9 @@ namespace TerrariaMoba.Interfaces {
             }
         }
 
-        public static void ModifyHitPvpWithProj(Player player, Projectile proj, Player target, ref int damage, ref bool crit) {
-            List<Ability> abilities = GetValidAbilities<IModifyHitPvpWithProj>(player);
-            List<StatusEffect> effects = GetValidEffects<IModifyHitPvpWithProj>(player);
+        public static void ModifyHitPvpWithProj(Player Player, Projectile proj, Player target, ref int damage, ref bool crit) {
+            List<Ability> abilities = GetValidAbilities<IModifyHitPvpWithProj>(Player);
+            List<StatusEffect> effects = GetValidEffects<IModifyHitPvpWithProj>(Player);
 
             foreach (Ability ability in abilities) {
                 ((IModifyHitPvpWithProj)ability).ModifyHitPvpWithProj(proj, target, ref damage, ref crit);
@@ -89,9 +89,9 @@ namespace TerrariaMoba.Interfaces {
             }
         }
 
-        public static void ResetEffects(Player player) {
-            List<Ability> abilities = GetValidAbilities<IResetEffects>(player);
-            List<StatusEffect> effects = GetValidEffects<IResetEffects>(player);
+        public static void ResetEffects(Player Player) {
+            List<Ability> abilities = GetValidAbilities<IResetEffects>(Player);
+            List<StatusEffect> effects = GetValidEffects<IResetEffects>(Player);
 
             foreach (Ability ability in abilities) {
                 ((IResetEffects) ability).ResetEffects();
@@ -102,9 +102,9 @@ namespace TerrariaMoba.Interfaces {
             }
         }
 
-        public static void TakePvpDamage(Player player, ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {
-            List<Ability> abilities = GetValidAbilities<ITakePvpDamage>(player);
-            List<StatusEffect> effects = GetValidEffects<ITakePvpDamage>(player);
+        public static void TakePvpDamage(Player Player, ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {
+            List<Ability> abilities = GetValidAbilities<ITakePvpDamage>(Player);
+            List<StatusEffect> effects = GetValidEffects<ITakePvpDamage>(Player);
             //TODO - Add some sort of system to make sure multiple effects will always make a consistent outcome (I.E, 2x damage + 2x damage + flat damage vs., 2x damage + flat damage + 2x damage)
             foreach (Ability ability in abilities) {
                 ((ITakePvpDamage) ability).TakePvpDamage(ref physicalDamage, ref magicalDamage, ref trueDamage, ref killer);
@@ -117,8 +117,8 @@ namespace TerrariaMoba.Interfaces {
         #endregion
         
         
-        public static List<Ability> GetValidAbilities<T>(Player player) {
-            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
+        public static List<Ability> GetValidAbilities<T>(Player Player) {
+            var mobaPlayer = Player.GetModPlayer<MobaPlayer>();
             List<Ability> abilities = new List<Ability>();
 
             for(int i = 0; i < mobaPlayer.TestAbilities.Count; i++) {
@@ -130,8 +130,8 @@ namespace TerrariaMoba.Interfaces {
             return abilities;
         }
 
-        public static List<StatusEffect> GetValidEffects<T>(Player player) {
-            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
+        public static List<StatusEffect> GetValidEffects<T>(Player Player) {
+            var mobaPlayer = Player.GetModPlayer<MobaPlayer>();
             List<StatusEffect> effects = new List<StatusEffect>();
 
             for(int i = 0; i < mobaPlayer.EffectList.Count; i++) {

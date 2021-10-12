@@ -21,14 +21,14 @@ namespace TerrariaMoba.Projectiles.Flibnob {
         }
 
         public override void AI() {
-            Player player = Main.player[Projectile.owner];
+            Player Player = Main.player[Projectile.owner];
             int playerID = -1;
             float closestDist = 30f;
             if (Projectile.ai[1] <= 0) {
                 Projectile.ai[1] = 1;
                 for (int i = 0; i < Main.maxPlayers; i++) {
                     float distToPillar = (Main.player[i].Center - Projectile.Center).Length() / 16.0f;
-                    if (distToPillar <= HookRange && distToPillar < closestDist && i != player.whoAmI && Main.player[i].team != player.team) {
+                    if (distToPillar <= HookRange && distToPillar < closestDist && i != Player.whoAmI && Main.player[i].team != Player.team) {
                         playerID = i;
                         closestDist = distToPillar;
                     }

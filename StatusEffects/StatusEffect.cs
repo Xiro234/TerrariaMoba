@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ModLoader;
 using TerrariaMoba.Network;
 using TerrariaMoba.Players;
@@ -38,8 +39,8 @@ namespace TerrariaMoba.StatusEffects {
 
         public virtual void FallOff() { }
 
-        public void SetPlayer(Player player) {
-            User = player;
+        public void SetPlayer(Player Player) {
+            User = Player;
         }
 
         public virtual void GetListOfPlayerLayers(List<PlayerLayer> playerLayers) { }
@@ -52,7 +53,7 @@ namespace TerrariaMoba.StatusEffects {
                     Player drawPlayer = drawInfo.drawPlayer;
                     Mod mod = ModLoader.GetMod("TerrariaMoba");
                     MobaPlayer mobaPlayer = drawPlayer.GetModPlayer<MobaPlayer>();
-                    Texture2D texture = TextureAssets.MagicPixel;
+                    Texture2D texture = TextureAssets.MagicPixel.Value;
                     Vector2 texturePos = new Vector2(drawPlayer.Top.X - Main.screenPosition.X - 46, 
                         drawPlayer.Top.Y - Main.screenPosition.Y - 10);
 

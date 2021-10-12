@@ -21,14 +21,14 @@ namespace TerrariaMoba.UI {
             base.DrawSelf(spriteBatch);
             
             float quotient;
-            var player = Main.LocalPlayer;
-            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
-            if (player != null) {
+            var Player = Main.LocalPlayer;
+            var mobaPlayer = Player.GetModPlayer<MobaPlayer>();
+            if (Player != null) {
                 string text = "";
 
                 if (resource == Resource.Life) {
-                    quotient = (float) player.statLife / player.statLifeMax2;
-                    text = player.statLife + "/" + player.statLifeMax2;
+                    quotient = (float) Player.statLife / Player.statLifeMax2;
+                    text = Player.statLife + "/" + Player.statLifeMax2;
                 }
                 else if (resource == Resource.Experience) {
                     quotient = (float) mobaPlayer.Hero.Experience / Character.XP_PER_LEVEL;

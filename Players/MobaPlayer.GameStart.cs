@@ -8,16 +8,16 @@ namespace TerrariaMoba.Players {
         public void StartGame() {
             AssignCharacter();
             Hero.StartGame();
-            if (Main.LocalPlayer == player) {
+            if (Main.LocalPlayer == Player) {
                 TerrariaMoba.Instance.ShowBar();
                 TerrariaMoba.Instance.MobaBar.SetIcons();
-                Main.NewText(player.GetModPlayer<MobaPlayer>().Hero.Name);
+                Main.NewText(Player.GetModPlayer<MobaPlayer>().Hero.Name);
             }
         }
         
         public bool AssignCharacter() {
-            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
-            mobaPlayer.Hero = (Character)Activator.CreateInstance(mobaPlayer.selectedCharacter, player);
+            var mobaPlayer = Player.GetModPlayer<MobaPlayer>();
+            mobaPlayer.Hero = (Character)Activator.CreateInstance(mobaPlayer.selectedCharacter, Player);
 
             return true;
         }

@@ -14,7 +14,7 @@ namespace TerrariaMoba.Abilities.Nocturne {
         // TODO - Add an animation to make it look like the projectile is moving/running.
         // TODO - Make sprite alpha scale with Sin/Cos so it pulses in and out.
         // TODO - Replace control locking with a root near the final product (cant test on SP otherwise).
-        // TODO - If possible, stop the teleport forcing player into blocks (can be used to get out of bounds).
+        // TODO - If possible, stop the teleport forcing Player into blocks (can be used to get out of bounds).
         // TODO - Implement armor boost effect.
         // TODO - Implement stun on enemy contact effect.
         // TODO - Implement damage, resource and scaling stats.

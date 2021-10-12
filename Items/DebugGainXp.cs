@@ -28,8 +28,8 @@ namespace TerrariaMoba.Items {
         
         public override string Texture => "Terraria/Item_" + ItemID.CrimsonKey;
         
-        public override bool? UseItem(Player player) {
-            player.GetModPlayer<MobaPlayer>().Hero.GainExperience(10);
+        public override bool? UseItem(Player Player) {
+            Player.GetModPlayer<MobaPlayer>().Hero.GainExperience(10);
             return true;
         }
     }

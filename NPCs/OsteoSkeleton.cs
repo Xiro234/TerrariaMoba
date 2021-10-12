@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static TerrariaMoba.TerrariaMobaUtils;
 using Microsoft.Xna.Framework;
+using Terraria.Audio;
 
 namespace TerrariaMoba.NPCs {
     public class OsteoSkeleton : ModNPC {

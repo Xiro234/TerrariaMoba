@@ -29,7 +29,7 @@ namespace TerrariaMoba.Items {
         
         public override string Texture => "Terraria/Item_" + ItemID.Abeemination;
 
-        public override bool? UseItem(Player player) {
+        public override bool? UseItem(Player Player) {
             if (Main.netMode == NetmodeID.Server) {
                 ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Match Started!"), Color.Aqua);
             }
@@ -41,7 +41,7 @@ namespace TerrariaMoba.Items {
                 TerrariaMobaUtils.StartGame();
             }
 
-            if (Main.netMode == NetmodeID.MultiplayerClient && player.whoAmI == Main.myPlayer) {
+            if (Main.netMode == NetmodeID.MultiplayerClient && Player.whoAmI == Main.myPlayer) {
                 TerrariaMobaUtils.StartGame();
                 NetworkHandler.SendStartGame();
             }

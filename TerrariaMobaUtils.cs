@@ -114,9 +114,9 @@ namespace  TerrariaMoba {
         }
 
         public static void StartGame() {
-            foreach (var player in Main.player) {
-                if(player != null && player.active){
-                    player.GetModPlayer<MobaPlayer>().StartGame();
+            foreach (var Player in Main.Player) {
+                if(Player != null && Player.active){
+                    Player.GetModPlayer<MobaPlayer>().StartGame();
                 }
             }
             
