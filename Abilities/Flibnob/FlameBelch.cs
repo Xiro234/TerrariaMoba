@@ -15,54 +15,56 @@ namespace TerrariaMoba.Abilities.Flibnob {
         
         public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobAbilityOne"); }
 
-        public const int FLAME_BASE_DAMAGE = 225;
-        public const int FLAME_BASE_NUMBER = 4;
-        public const int FLAME_BASE_DELAY = 60;
+        public const int FIREBALL_BASE_DAMAGE = 216;
+        public const int FIREBALL_BASE_NUMBER = 4;
+        public const int FIREBALL_BASE_DELAY = 75;
+        public const int FIREBALL_BASE_DURATION = 120;
         
-        public const int BURN_BASE_DURATION = 150;
+        public const int BURN_BASE_DURATION = 120;
         
-        public int timer;
-        public int remainingFlames;
+        private int Timer;
+        private int RemainingFlames;
 
         public override void OnCast() {
-            timer = FLAME_BASE_DELAY;
-            remainingFlames = FLAME_BASE_NUMBER;
+            Timer = FIREBALL_BASE_DELAY;
+            RemainingFlames = FIREBALL_BASE_NUMBER;
             IsActive = true;
         }
 
         public override void WhileActive() {
-            timer--;
-            if (timer == 0) {
+            Timer--;
+            if (Timer == 0) {
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
                     Vector2 playerToMouse = Main.MouseWorld - User.Center;
                     double mag = Math.Sqrt(playerToMouse.X * playerToMouse.X + playerToMouse.Y * playerToMouse.Y);
-                    float dirX = (float)(playerToMouse.X * (6.0 / mag));
-                    float dirY = (float)(playerToMouse.Y * (6.0 / mag));
+                    float dirX = (float)(playerToMouse.X * (7.0 / mag));
+                    float dirY = (float)(playerToMouse.Y * (7.0 / mag));
                     Vector2 vel = new Vector2(dirX, dirY);
                 
                     Main.PlaySound(SoundID.DD2_OgreAttack, User.Center);
                     Projectile.NewProjectile(User.Center, vel,
-                        TerrariaMoba.Instance.ProjectileType("FlameBelchSpawner"), FLAME_BASE_DAMAGE, 0, User.whoAmI);
+                        TerrariaMoba.Instance.ProjectileType("FlameBelchProj"), FIREBALL_BASE_DAMAGE, 0, User.whoAmI);
                 }
-                remainingFlames--;
+                RemainingFlames--;
+                Timer = FIREBALL_BASE_DELAY;
             }
             
-            if (remainingFlames == 0) {
+            if (RemainingFlames == 0) {
                 TimeOut();
             }
         }
         
         public override void TimeOut() {
-            timer = 0;
-            remainingFlames = 0;
+            Timer = 0;
+            RemainingFlames = 0;
             IsActive = false;
         }
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            //TODO - Add burning effect.
             var modProjectile = proj.modProjectile;
-            FlameBelchSpawner trap = modProjectile as FlameBelchSpawner;
-            if (trap != null) {
+            FlameBelchProj fireball = modProjectile as FlameBelchProj;
+            if (fireball != null) {
+                //TODO - Add burning effect.
                 StatusEffectManager.AddEffect(target, new EnsnaringVinesEffect(BURN_BASE_DURATION, true));
             }
         }

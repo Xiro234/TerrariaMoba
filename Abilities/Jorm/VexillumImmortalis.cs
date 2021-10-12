@@ -2,6 +2,7 @@
 using Terraria;
 using TerrariaMoba.Enums;
 using TerrariaMoba.NPCs;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Jorm {
     public class VexillumImmortalis : Ability {
@@ -16,6 +17,9 @@ namespace TerrariaMoba.Abilities.Jorm {
             
             Main.npc[npc].GetGlobalNPC<MobaGlobalNPC>().owner = User.whoAmI;
             Main.npc[npc].direction = User.direction;
+            
+            PaladinsResolve pr = User.GetModPlayer<MobaPlayer>().Hero.Trait as PaladinsResolve;
+            if(pr != null) pr.AddStack();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -14,7 +15,6 @@ namespace TerrariaMoba.Projectiles.Flibnob {
             projectile.width = 30;
             projectile.height = 48;
             projectile.friendly = true;
-            projectile.hostile = false;
             projectile.timeLeft = 480;
 
             HookRange = CullTheMeek.HOOK_BASE_RANGE;
@@ -52,6 +52,7 @@ namespace TerrariaMoba.Projectiles.Flibnob {
         }
 
         public override bool PreDrawExtras(SpriteBatch spriteBatch) {
+            // Code to create a line between the pillar and the hooked player. Originally used to draw the lines for fishing rods.
             Lighting.AddLight(projectile.Center, 0.9f, 0.4f, 0.4f);
 
             if (projectile.ai[0] >= 0) {
@@ -148,6 +149,14 @@ namespace TerrariaMoba.Projectiles.Flibnob {
             } else {
                 return true;
             }
+        }
+        
+        public override void SendExtraAI(BinaryWriter writer) {
+            writer.Write(HookRange);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader) {
+            HookRange = reader.ReadSingle();
         }
     }
 }

@@ -3,8 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Players;
 
-namespace TerrariaMoba.Abilities.Jorm {
+ namespace TerrariaMoba.Abilities.Jorm {
     public class Consecration : Ability {
         public Consecration() : base("Consecration", 60, 0, AbilityType.Active) { }
 
@@ -25,6 +26,8 @@ namespace TerrariaMoba.Abilities.Jorm {
                     consec.ConsecDuration = CONSEC_DURATION;
                 }
             }
+            PaladinsResolve pr = User.GetModPlayer<MobaPlayer>().Hero.Trait as PaladinsResolve;
+            if(pr != null) pr.AddStack();
         }
     }
 }

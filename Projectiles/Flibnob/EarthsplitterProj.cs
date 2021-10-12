@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.IO;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TerrariaMoba.Projectiles.Flibnob {
-    class SplitEarth : ModProjectile {
+    class EarthsplitterProj : ModProjectile {
 
         public int EarthDuration { get; set; }
 
@@ -49,6 +50,14 @@ namespace TerrariaMoba.Projectiles.Flibnob {
             for (int i = 0; i < 20; i++) {
                 Dust.NewDust(projectile.position, projectile.width, projectile.height, 0, 0, 0, 0, default(Color), 1.2f);
             }
+        }
+        
+        public override void SendExtraAI(BinaryWriter writer) {
+            writer.Write(EarthDuration);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader) {
+            EarthDuration = reader.ReadInt32();
         }
     }
 }

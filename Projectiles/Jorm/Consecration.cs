@@ -1,4 +1,5 @@
-﻿﻿using Terraria;
+﻿﻿using System.IO;
+ using Terraria;
 using Terraria.ModLoader;
 
 namespace TerrariaMoba.Projectiles.Jorm {
@@ -53,6 +54,16 @@ namespace TerrariaMoba.Projectiles.Jorm {
                 }
             }
             return posY;
+        }
+        
+        public override void SendExtraAI(BinaryWriter writer) {
+            writer.Write(ConsecSpread);
+            writer.Write(ConsecDuration);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader) {
+            ConsecSpread = reader.ReadSingle();
+            ConsecDuration = reader.ReadSingle();
         }
     }
 }

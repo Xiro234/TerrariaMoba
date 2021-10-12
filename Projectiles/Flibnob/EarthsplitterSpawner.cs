@@ -36,10 +36,10 @@ namespace TerrariaMoba.Projectiles.Flibnob {
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == projectile.owner) {
                     Vector2 newPos = new Vector2(projectile.position.X, GetYPos());
                     newPos.Y -= 8f;
-                    Projectile proj = Projectile.NewProjectileDirect(newPos, Vector2.Zero, TerrariaMoba.Instance.ProjectileType("SplitEarth"),
+                    Projectile proj = Projectile.NewProjectileDirect(newPos, Vector2.Zero, TerrariaMoba.Instance.ProjectileType("EarthsplitterProj"),
                         EarthDamage, 0, projectile.whoAmI);
                     
-                    SplitEarth earth = proj.modProjectile as SplitEarth;
+                    EarthsplitterProj earth = proj.modProjectile as EarthsplitterProj;
 
                     if (earth != null) {
                         earth.EarthDuration = EarthDuration;
@@ -52,24 +52,6 @@ namespace TerrariaMoba.Projectiles.Flibnob {
             if ((int)projectile.ai[0] == (NumberOfEarths * timeBetween)) {
                 projectile.Kill();
             }
-        }
-
-        public override bool CanDamage() {
-            return false;
-        }
-        
-        public override void SendExtraAI(BinaryWriter writer) {
-            writer.Write(EarthDamage);
-            writer.Write(EarthDuration);
-            writer.Write(NumberOfEarths);
-            writer.Write(EarthDistance);
-        }
-
-        public override void ReceiveExtraAI(BinaryReader reader) {
-            EarthDamage = reader.ReadInt32();
-            EarthDuration = reader.ReadInt32();
-            NumberOfEarths = reader.ReadInt32();
-            EarthDistance = reader.ReadInt32();
         }
 
         public int GetYPos() {
@@ -86,6 +68,24 @@ namespace TerrariaMoba.Projectiles.Flibnob {
                 }
             }
             return posY;
+        }
+
+        public override bool CanDamage() {
+            return false;
+        }
+
+        public override void SendExtraAI(BinaryWriter writer) {
+            writer.Write(EarthDamage);
+            writer.Write(EarthDuration);
+            writer.Write(NumberOfEarths);
+            writer.Write(EarthDistance);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader) {
+            EarthDamage = reader.ReadInt32();
+            EarthDuration = reader.ReadInt32();
+            NumberOfEarths = reader.ReadInt32();
+            EarthDistance = reader.ReadInt32();
         }
     }
 }

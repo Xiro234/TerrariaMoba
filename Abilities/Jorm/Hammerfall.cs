@@ -5,6 +5,7 @@ using Terraria.ID;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Projectiles.Jorm;
 using TerrariaMoba.StatusEffects;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Jorm {
     public class Hammerfall : Ability {
@@ -28,6 +29,8 @@ namespace TerrariaMoba.Abilities.Jorm {
 
                 Main.PlaySound(SoundID.Item1, User.Center);
             }
+            PaladinsResolve pr = User.GetModPlayer<MobaPlayer>().Hero.Trait as PaladinsResolve;
+            if(pr != null) pr.AddStack();
         }
         
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {

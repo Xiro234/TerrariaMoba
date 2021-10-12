@@ -1,11 +1,15 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.IO;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using TerrariaMoba.Players;
+using TerrariaMoba.Abilities.Flibnob;
 
 namespace TerrariaMoba.Projectiles.Flibnob {
-    public class FlameBelchSpawner : ModProjectile {
+    public class FlameBelchProj : ModProjectile {
+
+        public int FireballDuration { get; set; }
+
         public override void SetDefaults() {
             projectile.width = 14;
             projectile.height = 14;
@@ -13,14 +17,17 @@ namespace TerrariaMoba.Projectiles.Flibnob {
             projectile.alpha = 255;
             projectile.penetrate = -1;
             projectile.extraUpdates = 2;
-            projectile.ranged = true;
+            projectile.timeLeft = 1000;
+
+            FireballDuration = FlameBelch.FIREBALL_BASE_DURATION;
         }
 
         public override void AI() {
             // Flamethrower AI modified
-            if (projectile.timeLeft > 60) {
-                projectile.timeLeft = 60;
+            if (projectile.timeLeft == 1000) {
+                projectile.timeLeft = FireballDuration;
             }
+            
             if (projectile.ai[0] > 2f) {
                 var num297 = 1f;
                 if (projectile.ai[0] == 8f) {
@@ -80,11 +87,16 @@ namespace TerrariaMoba.Projectiles.Flibnob {
             } else {
                 projectile.ai[0] += 1f;
             }
+            
             projectile.rotation += 0.3f * projectile.direction;
         }
+        
+        public override void SendExtraAI(BinaryWriter writer) {
+            writer.Write(FireballDuration);
+        }
 
-        public override void OnHitPvp(Player target, int damage, bool crit) {
-            target.AddBuff(BuffID.OnFire, 105, false);
+        public override void ReceiveExtraAI(BinaryReader reader) {
+            FireballDuration = reader.ReadInt32();
         }
     }
 }
