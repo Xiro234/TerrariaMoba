@@ -2,7 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Abilities.Flibnob;
+using TerrariaMoba.Items.Flibnob;
 using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Characters {
@@ -18,7 +20,8 @@ namespace TerrariaMoba.Characters {
         }
         
         public override Texture2D CharacterIcon {
-            get => TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobIcon");
+            get => ModContent.Request<Texture2D>("Textures/Flibnob/FlibnobIcon").Value;
+            
         }
 
         public override bool IsMale { get => true; }
@@ -26,7 +29,7 @@ namespace TerrariaMoba.Characters {
         public override Color HairColor { get => Color.Black; }
         public override Color SkinColor { get => Color.SaddleBrown; }
         public override Color EyeColor { get => Color.Red; }
-        public override int PrimaryWeaponID { get => TerrariaMoba.Instance.ItemType("FlibnobAxe"); }
+        public override int PrimaryWeaponID { get => ModContent.ItemType<FlibnobAxe>(); }
         public override int HeadVanityID { get => ItemID.BossMaskOgre; }
         public override int BodyVanityID { get => ItemID.RedsBreastplate; }
         public override int BodyDyeID { get => ItemID.ReflectiveMetalDye; }
@@ -50,7 +53,7 @@ namespace TerrariaMoba.Characters {
             dyeBody.SetDefaults(3555);
             vanityLeg.SetDefaults(668);
             dyeLeg.SetDefaults(3555);
-            primary.SetDefaults(TerrariaMoba.Instance.ItemType("FlibnobAxe"));
+            primary.SetDefaults(ModContent.ItemType<FlibnobAxe"));
 
             player.Male = true;
             player.hair = 15;

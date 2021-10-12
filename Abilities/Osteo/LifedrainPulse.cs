@@ -3,13 +3,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.Osteo {
     public class LifedrainPulse : Ability {
         public LifedrainPulse() : base("Lifedrain Pulse", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoAbilityTwo"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Osteo/OsteoAbilityTwo").Value; }
     }
 }
 
@@ -24,7 +25,7 @@ namespace TerrariaMoba.Abilities.Osteo {
     public class LifedrainPulse : Ability {
         public LifedrainPulse(Player myPlayer) : base(myPlayer) {
             Name = "Lifedrain Pulse";
-            Icon = TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoAbilityTwo");
+            Icon = ModContent.Request<Texture2D>("Textures/Osteo/OsteoAbilityTwo").Value;
         }
 
         public override void OnCast() {
@@ -42,8 +43,8 @@ namespace TerrariaMoba.Abilities.Osteo {
                         Vector2 direction = new Vector2((float) x, (float) y);
                         Vector2 position = User.Center + direction * 16;
                         Vector2 velocity = direction * 6.25f;
-                        var proj = Projectile.NewProjectileDirect(position, velocity,
-                            TerrariaMoba.Instance.ProjectileType("LifedrainPulse"), (int)User.GetModPlayer<MobaPlayer>().OsteoStats.A2Dmg.Value, 0, User.whoAmI);
+                        var proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),position, velocity,
+                            ModContent.ProjectileType<LifedrainPulse"), (int)User.GetModPlayer<MobaPlayer>().OsteoStats.A2Dmg.Value, 0, User.whoAmI);
 
                         proj.timeLeft = 90;
                     }
@@ -57,8 +58,8 @@ namespace TerrariaMoba.Abilities.Osteo {
                         Vector2 direction = new Vector2((float) x, (float) y);
                         Vector2 position = User.Center + direction * 16;
                         Vector2 velocity = direction * 6.25f;
-                        var proj = Projectile.NewProjectileDirect(position, velocity,
-                            TerrariaMoba.Instance.ProjectileType("LifedrainPulseThird"), (int)(User.GetModPlayer<MobaPlayer>().OsteoStats.A2Dmg.Value * 1.66f), 0, User.whoAmI);
+                        var proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),position, velocity,
+                            ModContent.ProjectileType<LifedrainPulseThird"), (int)(User.GetModPlayer<MobaPlayer>().OsteoStats.A2Dmg.Value * 1.66f), 0, User.whoAmI);
                         proj.timeLeft = 90;
                     }
                 }

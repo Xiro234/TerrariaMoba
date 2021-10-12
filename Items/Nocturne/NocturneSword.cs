@@ -1,5 +1,6 @@
 ﻿using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Projectiles.Nocturne;
 
 namespace TerrariaMoba.Items.Nocturne {
     public class NocturneSword : ModItem {
@@ -9,22 +10,22 @@ namespace TerrariaMoba.Items.Nocturne {
         }
         
         public override void SetDefaults() {
-            item.width = 48;
-            item.height = 48;
-            item.damage = 100;
-            item.knockBack = 0;
-            item.melee = true;
-            item.noMelee = true;
-            item.shoot = mod.ProjectileType("UmbralBlade");
-            item.shootSpeed = 6f;
-            item.useTime = 60;
-            item.useAnimation = 60;
-            item.UseSound = SoundID.Item1;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.value = 10000;
-            item.rare = ItemRarityID.Orange;
-            item.autoReuse = false;
-            item.noUseGraphic = true;
+            Item.width = 48;
+            Item.height = 48;
+            Item.damage = 100;
+            Item.knockBack = 0;
+            Item.DamageType = DamageClass.Melee;
+            Item.noMelee = true;
+            Item.shoot = ModContent.ProjectileType<UmbralBlade>();
+            Item.shootSpeed = 6f;
+            Item.useTime = 60;
+            Item.useAnimation = 60;
+            Item.UseSound = SoundID.Item1;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.value = 10000;
+            Item.rare = ItemRarityID.Orange;
+            Item.autoReuse = false;
+            Item.noUseGraphic = true;
         }
     }
 }

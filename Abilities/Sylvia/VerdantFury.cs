@@ -1,6 +1,7 @@
 ﻿using Terraria;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Sylvia;
@@ -9,7 +10,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
     public class VerdantFury : Ability {
         public VerdantFury() : base("Verdant Fury", 60, 0, AbilityType.Active) { }
         
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaAbilityTwo"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Sylvia/SylviaAbilityTwo").Value; }
         
         public const float BUFF_ATKSPD_MODIFIER = 1.3f;
         public const float BUFF_ATKVEL_MODIFIER = 1.3f;
@@ -30,7 +31,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
     public class VerdantFury : Ability {
         public VerdantFury(Player myPlayer) : base(myPlayer) {
             Name = "Verdant Fury";
-            Icon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaAbilityTwo");
+            Icon = ModContent.Request<Texture2D>("Textures/Sylvia/SylviaAbilityTwo").Value;
         }
 
         public override void OnCast() {

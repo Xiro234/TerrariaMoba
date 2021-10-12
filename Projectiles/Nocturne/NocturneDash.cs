@@ -11,37 +11,37 @@ namespace TerrariaMoba.Projectiles.Nocturne {
         }
         
         public override void SetDefaults() {
-            projectile.height = 58;
-            projectile.width = 32;
-            projectile.friendly = true;
-            projectile.aiStyle = 0;
-            projectile.tileCollide = true;
-            projectile.alpha = 128;
+            Projectile.height = 58;
+            Projectile.width = 32;
+            Projectile.friendly = true;
+            Projectile.aiStyle = 0;
+            Projectile.tileCollide = true;
+            Projectile.alpha = 128;
         }
 
         public override void AI() {
-            if(projectile.alpha > 0) {
-                projectile.alpha -= 2;
+            if(Projectile.alpha > 0) {
+                Projectile.alpha -= 2;
             } else {
-                projectile.alpha = 0;
+                Projectile.alpha = 0;
             }
 
             for (int i = 0; i < 5; i++) {
-                Dust.NewDust(projectile.position, projectile.width, projectile.height, 8, 0,
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 8, 0,
                     0, 100);
             }
         }
         
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
-            Texture2D texture = Main.projectileTexture[projectile.type];
-            if (Main.netMode != NetmodeID.Server && Main.myPlayer == projectile.owner) {
-                if (Main.player[projectile.owner].direction == 1) {
-                    spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, Color.Tan,
-                        projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), projectile.scale, 
+            Texture2D texture = Main.ProjectileTexture[Projectile.type];
+            if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) {
+                if (Main.player[Projectile.owner].direction == 1) {
+                    spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.Tan,
+                        Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale, 
                         SpriteEffects.FlipHorizontally, 0);
                 } else {
-                    spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, null, Color.Tan,
-                        projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), projectile.scale, 
+                    spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.Tan,
+                        Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale, 
                         0, 0);
                 }
             }
@@ -49,9 +49,9 @@ namespace TerrariaMoba.Projectiles.Nocturne {
         }
         
         public override void Kill(int timeLeft) {
-            Main.PlaySound(0, projectile.position);
+            SoundEngine.PlaySound(0, Projectile.position);
             for (int i = 0; i < 20; i++) {
-                Dust.NewDust(projectile.position, projectile.width, projectile.height, 8);
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 8);
             }
         }
     }

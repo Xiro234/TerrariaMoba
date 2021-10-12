@@ -1,13 +1,9 @@
 ﻿using System;
-using TerrariaMoba.Characters;
 using Microsoft.Xna.Framework;
 using System.IO;
-using BaseMod;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
 using TerrariaMoba.Players;
-using TerrariaMoba.Enums;
 using TerrariaMoba.NPCs;
 
 namespace  TerrariaMoba {
@@ -55,7 +51,7 @@ namespace  TerrariaMoba {
         
         public static bool TileIsSolidOrPlatform(int x, int y) {
             Tile tile = Main.tile[x, y];
-            return tile != null && (tile.nactive() && (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type] && tile.frameY == 0));
+            return tile != null && (tile.IsActive && (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type] && tile.frameY == 0));
         }
 
         public static string GetHoverText(Texture2D texture) {
@@ -90,7 +86,7 @@ namespace  TerrariaMoba {
             }
 
             if (target >= 0 && target <= 255) {
-                BaseAI.SetTarget(npc, target);
+                //BaseAI.SetTarget(npc, target);
                 return true;
             }
             else {
@@ -100,16 +96,16 @@ namespace  TerrariaMoba {
 
 
         public static void ClearInventory(MobaPlayer mobaPlayer) {
-            for (int i = 0; i < mobaPlayer.player.inventory.Length; i++) {
-                mobaPlayer.player.inventory[i] = new Item();
+            for (int i = 0; i < mobaPlayer.Player.inventory.Length; i++) {
+                mobaPlayer.Player.inventory[i] = new Item();
             }
 
-            for (int i = 0; i < mobaPlayer.player.armor.Length; i++) {
-                mobaPlayer.player.armor[i] = new Item();
+            for (int i = 0; i < mobaPlayer.Player.armor.Length; i++) {
+                mobaPlayer.Player.armor[i] = new Item();
             }
 
-            for (int i = 0; i < mobaPlayer.player.dye.Length; i++) {
-                mobaPlayer.player.armor[i] = new Item();
+            for (int i = 0; i < mobaPlayer.Player.dye.Length; i++) {
+                mobaPlayer.Player.armor[i] = new Item();
             }
         }
 

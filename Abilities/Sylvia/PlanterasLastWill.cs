@@ -3,8 +3,10 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Interfaces;
+using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Sylvia;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Sylvia;
@@ -13,7 +15,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
     public class PlanterasLastWill : Ability, IModifyHitPvpWithProj {
         public PlanterasLastWill() : base("Plantera's Last Will", 60, 0, AbilityType.Active) { }
         
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaUltimateTwo"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Sylvia/SylviaUltimateTwo").Value; }
 
         public const int HEAD_BASE_DAMAGE = 680;
         public const int SPORE_BASE_DAMAGE = 160;
@@ -31,10 +33,10 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 Vector2 position = User.Center + playerToMouse * 20;
                 Vector2 velocity = playerToMouse * 7;
 
-                Projectile proj = Projectile.NewProjectileDirect(position, velocity, TerrariaMoba.Instance.ProjectileType("SylviaUlt2"), 
+                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),position, velocity, ModContent.ProjectileType<SylviaUlt2>(), 
                     HEAD_BASE_DAMAGE, 1, User.whoAmI);
                 
-                SylviaUlt2 head = proj.modProjectile as SylviaUlt2;
+                SylviaUlt2 head = proj.ModProjectile as SylviaUlt2;
                 
                 if (head != null) {
                     head.SporeDamage = SPORE_BASE_DAMAGE;
@@ -45,13 +47,13 @@ namespace TerrariaMoba.Abilities.Sylvia {
         }
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            var modProjectile = proj.modProjectile;
-            SylviaUlt2 head = modProjectile as SylviaUlt2;
+            var ModProjectile = proj.ModProjectile;
+            SylviaUlt2 head = ModProjectile as SylviaUlt2;
             if (head != null) {
                 StatusEffectManager.AddEffect(target, new PlanteraStunEffect(STUN_BASE_DURATION, true));
             }
             
-            SylviaSpores spore = modProjectile as SylviaSpores;
+            SylviaSpores spore = ModProjectile as SylviaSpores;
             if (spore != null) {
                 //TODO - Add code for spores reducing healing effectiveness.
             }
@@ -69,7 +71,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
     public class PlanterasLastWill : Ability {
         public PlanterasLastWill(Player myPlayer) : base(myPlayer) {
             Name = "Plantera's Last Will";
-            Icon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaUltimateTwo");
+            Icon = ModContent.Request<Texture2D>("Textures/Sylvia/SylviaUltimateTwo").Value;
         }
         
         public override void OnCast() {
@@ -82,7 +84,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 Vector2 velocity = playerToMouse * 7;
 
                 Projectile proj = Main.projectile[Projectile.NewProjectile(position, velocity,
-                    TerrariaMoba.Instance.ProjectileType("SylviaUlt2"), 
+                    ModContent.ProjectileType<SylviaUlt2"), 
                     (int)User.GetModPlayer<MobaPlayer>().SylviaStats.U2HeadDmg.Value, 0, User.whoAmI)];
             }
             

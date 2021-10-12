@@ -13,22 +13,22 @@ namespace TerrariaMoba.Items {
         }
 
         public override void SetDefaults() {
-            item.width = 20;
-            item.height = 26;
-            item.useStyle = ItemUseStyleID.EatingUsing;
-            item.useAnimation = 15;
-            item.useTime = 15;
-            item.useTurn = true;
-            item.UseSound = SoundID.Item3;
-            item.maxStack = 30;
-            item.consumable = false;
-            item.rare = 3;
-            item.color = Color.MediumVioletRed;
+            Item.width = 20;
+            Item.height = 26;
+            Item.useStyle = ItemUseStyleID.EatFood;
+            Item.useAnimation = 15;
+            Item.useTime = 15;
+            Item.useTurn = true;
+            Item.UseSound = SoundID.Item3;
+            Item.maxStack = 30;
+            Item.consumable = false;
+            Item.rare = 3;
+            Item.color = Color.MediumVioletRed;
         }
         
         public override string Texture => "Terraria/Item_" + ItemID.CrimsonKey;
         
-        public override bool UseItem(Player player) {
+        public override bool? UseItem(Player player) {
             player.GetModPlayer<MobaPlayer>().Hero.GainExperience(10);
             return true;
         }

@@ -2,7 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Abilities.Sylvia;
+using TerrariaMoba.Items.Sylvia;
 using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Characters {
@@ -18,7 +20,7 @@ namespace TerrariaMoba.Characters {
         }
         
         public override Texture2D CharacterIcon {
-            get => TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaIcon");
+            get => ModContent.Request<Texture2D>("Textures/Sylvia/SylviaIcon").Value;
         }
 
         public override bool IsMale { get => false; }
@@ -26,7 +28,7 @@ namespace TerrariaMoba.Characters {
         public override Color HairColor { get => Color.ForestGreen; }
         public override Color SkinColor { get => Color.Peru; }
         public override Color EyeColor { get => Color.Sienna; }
-        public override int PrimaryWeaponID { get => TerrariaMoba.Instance.ItemType("SylviaBow"); }
+        public override int PrimaryWeaponID { get => ModContent.ItemType<SylviaBow>(); }
         public override int HeadVanityID { get => ItemID.JungleRose; }
         public override int BodyVanityID { get => ItemID.DryadCoverings; }
         public override int LegVanityID { get => ItemID.DryadLoincloth; }

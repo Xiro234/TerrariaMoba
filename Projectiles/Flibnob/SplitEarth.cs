@@ -9,45 +9,45 @@ namespace TerrariaMoba.Projectiles.Flibnob {
         public int EarthDuration { get; set; }
 
         public override void SetStaticDefaults() {
-            Main.projFrames[projectile.type] = 6;
+            Main.projFrames[Projectile.type] = 6;
         }
 
         public override void SetDefaults() {
-            projectile.Name = "Split Earth";
-            projectile.width = 158;
-            projectile.height = 42;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.tileCollide = false;
-            projectile.ignoreWater = true;
-            projectile.penetrate = -1;
-            projectile.timeLeft = 40;
+            Projectile.Name = "Split Earth";
+            Projectile.width = 158;
+            Projectile.height = 42;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.penetrate = -1;
+            Projectile.timeLeft = 40;
         }
 
         public override void AI() {
-            if (++projectile.frameCounter >= 5) {
-                projectile.frameCounter = 0;
-                projectile.frame = ++projectile.frame % Main.projFrames[projectile.type];
+            if (++Projectile.frameCounter >= 5) {
+                Projectile.frameCounter = 0;
+                Projectile.frame = ++Projectile.frame % Main.projFrames[Projectile.type];
             }
 
-            if ((int)projectile.ai[0] == 0) {
-                Main.PlaySound(SoundID.Dig, projectile.position);
+            if ((int)Projectile.ai[0] == 0) {
+                SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
                 for (int i = 0; i < 30; i++) {
-                    Dust.NewDust(projectile.position, projectile.width, projectile.height, 0, 0, 0, 0, default(Color), 1.2f);
+                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 0, 0, 0, 0, default(Color), 1.2f);
                 }
             }
             
-            projectile.ai[0] += 1f;
+            Projectile.ai[0] += 1f;
 
-            if ((int)projectile.ai[0] == EarthDuration) {
-                projectile.Kill();
+            if ((int)Projectile.ai[0] == EarthDuration) {
+                Projectile.Kill();
             }
         }
 
         public override void Kill(int timeLeft) {
-            Main.PlaySound(SoundID.Tink, projectile.position);
+            SoundEngine.PlaySound(SoundID.Tink, Projectile.position);
             for (int i = 0; i < 20; i++) {
-                Dust.NewDust(projectile.position, projectile.width, projectile.height, 0, 0, 0, 0, default(Color), 1.2f);
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 0, 0, 0, 0, default(Color), 1.2f);
             }
         }
     }

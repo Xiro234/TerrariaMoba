@@ -1,11 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
 
 namespace TerrariaMoba.StatusEffects.Nocturne {
     public class TitaniumGuardEffect: StatusEffect, ITakePvpDamage {
         public override string DisplayName { get => "Titanium Guard"; }
 
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Blank"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
         
         public TitaniumGuardEffect() { }
         

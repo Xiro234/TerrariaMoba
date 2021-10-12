@@ -11,36 +11,36 @@ namespace TerrariaMoba.Projectiles.Flibnob {
         public float HookRange { get; set; }
 
         public override void SetDefaults() {
-            projectile.width = 30;
-            projectile.height = 48;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.timeLeft = 480;
+            Projectile.width = 30;
+            Projectile.height = 48;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.timeLeft = 480;
 
             HookRange = CullTheMeek.HOOK_BASE_RANGE;
         }
 
         public override void AI() {
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             int playerID = -1;
             float closestDist = 30f;
-            if (projectile.ai[1] <= 0) {
-                projectile.ai[1] = 1;
+            if (Projectile.ai[1] <= 0) {
+                Projectile.ai[1] = 1;
                 for (int i = 0; i < Main.maxPlayers; i++) {
-                    float distToPillar = (Main.player[i].Center - projectile.Center).Length() / 16.0f;
+                    float distToPillar = (Main.player[i].Center - Projectile.Center).Length() / 16.0f;
                     if (distToPillar <= HookRange && distToPillar < closestDist && i != player.whoAmI && Main.player[i].team != player.team) {
                         playerID = i;
                         closestDist = distToPillar;
                     }
                 }
-                projectile.ai[0] = playerID;
+                Projectile.ai[0] = playerID;
             }
 
-            if (projectile.ai[0] >= 0) {
-                Player hookedPlr = Main.player[(int)projectile.ai[0]];
+            if (Projectile.ai[0] >= 0) {
+                Player hookedPlr = Main.player[(int)Projectile.ai[0]];
                 if (hookedPlr.active) {
-                    float hookedPosX = Math.Abs((hookedPlr.Center.X - projectile.Center.X) / 16.0f);
-                    float hookedPosY = Math.Abs((hookedPlr.Center.Y - projectile.Center.Y) / 16.0f);
+                    float hookedPosX = Math.Abs((hookedPlr.Center.X - Projectile.Center.X) / 16.0f);
+                    float hookedPosY = Math.Abs((hookedPlr.Center.Y - Projectile.Center.Y) / 16.0f);
                     if (hookedPosX > HookRange) {
                         hookedPlr.velocity.X = -hookedPlr.velocity.X * 2f;
                     }
@@ -52,10 +52,10 @@ namespace TerrariaMoba.Projectiles.Flibnob {
         }
 
         public override bool PreDrawExtras(SpriteBatch spriteBatch) {
-            Lighting.AddLight(projectile.Center, 0.9f, 0.4f, 0.4f);
+            Lighting.AddLight(Projectile.Center, 0.9f, 0.4f, 0.4f);
 
-            if (projectile.ai[0] >= 0) {
-                Player hookedPlr = Main.player[(int)projectile.ai[0]];
+            if (Projectile.ai[0] >= 0) {
+                Player hookedPlr = Main.player[(int)Projectile.ai[0]];
                 if (!hookedPlr.active) return true;
                 float pPosX = hookedPlr.Center.X;
                 float pPosY = hookedPlr.Center.Y;
@@ -64,8 +64,8 @@ namespace TerrariaMoba.Projectiles.Flibnob {
 
                 Vector2 value = new Vector2(pPosX, pPosY);
                 value = hookedPlr.RotatedRelativePoint(value + new Vector2(8f), true) - new Vector2(8f);
-                float projPosX = projectile.position.X + projectile.width * 0.5f - value.X;
-                float projPosY = projectile.position.Y + projectile.height * 0.5f - value.Y;
+                float projPosX = Projectile.position.X + Projectile.width * 0.5f - value.X;
+                float projPosY = Projectile.position.Y + Projectile.height * 0.5f - value.Y;
                 float rotation2 = (float)Math.Atan2(projPosY, projPosX) - 1.57f;
                 bool flag2 = true;
 
@@ -78,8 +78,8 @@ namespace TerrariaMoba.Projectiles.Flibnob {
                     projPosY *= projPosXY;
                     value.X -= projPosX;
                     value.Y -= projPosY;
-                    projPosX = projectile.position.X + projectile.width * 0.5f - value.X;
-                    projPosY = projectile.position.Y + projectile.height * 0.5f - value.Y;
+                    projPosX = Projectile.position.X + Projectile.width * 0.5f - value.X;
+                    projPosY = Projectile.position.Y + Projectile.height * 0.5f - value.Y;
                 }
 
                 while (flag2) {
@@ -99,11 +99,11 @@ namespace TerrariaMoba.Projectiles.Flibnob {
                         projPosY *= num2;
                         value.X += projPosX;
                         value.Y += projPosY;
-                        projPosX = projectile.position.X + projectile.width * 0.5f - value.X;
-                        projPosY = projectile.position.Y + projectile.height * 0.1f - value.Y;
+                        projPosX = Projectile.position.X + Projectile.width * 0.5f - value.X;
+                        projPosY = Projectile.position.Y + Projectile.height * 0.1f - value.Y;
                         if (num3 > 12f) {
                             float num4 = 0.3f;
-                            float num5 = Math.Abs(projectile.velocity.X) + Math.Abs(projectile.velocity.Y);
+                            float num5 = Math.Abs(Projectile.velocity.X) + Math.Abs(Projectile.velocity.Y);
                             if (num5 > 16f) {
                                 num5 = 16f;
                             }
@@ -117,13 +117,13 @@ namespace TerrariaMoba.Projectiles.Flibnob {
                             if (num4 < 0f) {
                                 num4 = 0f;
                             }
-                            num5 = 1f - projectile.localAI[0] / 100f;
+                            num5 = 1f - Projectile.localAI[0] / 100f;
                             num4 *= num5;
                             if (projPosY > 0f) {
                                 projPosY *= 1f + num4;
                                 projPosX *= 1f - num4;
                             } else {
-                                num5 = Math.Abs(projectile.velocity.X) / 3f;
+                                num5 = Math.Abs(Projectile.velocity.X) / 3f;
                                 if (num5 > 1f) {
                                     num5 = 1f;
                                 }

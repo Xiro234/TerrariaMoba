@@ -13,42 +13,42 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         public int TrapDuration { get; set; }
 
         public override void SetDefaults() {
-            projectile.friendly = true;
-            projectile.width = 34;
-            projectile.height = 26;
-            projectile.tileCollide = false;
+            Projectile.friendly = true;
+            Projectile.width = 34;
+            Projectile.height = 26;
+            Projectile.tileCollide = false;
         }
         
         public override void AI() {
-            if ((int)projectile.ai[0] == 0) {
-                Main.PlaySound(SoundID.Grass, projectile.position);
+            if ((int)Projectile.ai[0] == 0) {
+                SoundEngine.PlaySound(SoundID.Grass, Projectile.position);
                 for (int i = 0; i < 20; i++) {
-                    Dust.NewDust(projectile.position, projectile.width, projectile.height, 57, 0,
+                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 57, 0,
                         0, 150, Color.LightGreen, 0.7f);
                 }
             }
-            projectile.ai[0] += 1f;
+            Projectile.ai[0] += 1f;
             
             /*
-            var player = Main.player[projectile.owner].GetModPlayer<MobaPlayer>();
+            var player = Main.player[Projectile.owner].GetModPlayer<MobaPlayer>();
             //Venus Flytrap
             if (player.MyCharacter.talentArray[2, 2]) {
-                if (projectile.ai[0] >= 540) {
-                    projectile.Kill();
+                if (Projectile.ai[0] >= 540) {
+                    Projectile.Kill();
                 }
             }
             else {
             */
             
-            if ((int)projectile.ai[0] == TrapDuration) {
-                projectile.Kill();
+            if ((int)Projectile.ai[0] == TrapDuration) {
+                Projectile.Kill();
             }
         }
 
         public override void Kill(int timeLeft) {
-            Main.PlaySound(SoundID.Grass, projectile.position);
+            SoundEngine.PlaySound(SoundID.Grass, Projectile.position);
             for (int i = 0; i < 20; i++) {
-                Dust.NewDust(projectile.position, projectile.width, projectile.height, 57, 0,
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 57, 0,
                     0, 150, Color.LightGreen, 0.7f);
             }
         }

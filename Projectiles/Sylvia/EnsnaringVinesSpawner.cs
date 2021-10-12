@@ -18,11 +18,11 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         }
 
         public override void SetDefaults() {
-            projectile.friendly = true;
-            projectile.width = 0;
-            projectile.height = 0;
-            projectile.alpha = 255;
-            projectile.tileCollide = false;
+            Projectile.friendly = true;
+            Projectile.width = 0;
+            Projectile.height = 0;
+            Projectile.alpha = 255;
+            Projectile.tileCollide = false;
 
             TrapDamage = EnsnaringVinesAbility.TRAP_BASE_DAMAGE;
             TrapDuration = EnsnaringVinesAbility.TRAP_BASE_DURATION;
@@ -35,14 +35,14 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         }
 
         public override void AI() {
-            int timeBetween = (int) ((TileDistance * 16) / projectile.velocity.Length());
-            if (((int)projectile.ai[0] % timeBetween) == 0){
-                if (Main.netMode != NetmodeID.Server && Main.myPlayer == projectile.owner) {
-                    Vector2 newPos = new Vector2(projectile.position.X, GetYPos());
-                    Projectile proj = Projectile.NewProjectileDirect(newPos, Vector2.Zero, TerrariaMoba.Instance.ProjectileType("EnsnaringVinesTrap"),
-                        TrapDamage, 0, projectile.whoAmI);
+            int timeBetween = (int) ((TileDistance * 16) / Projectile.velocity.Length());
+            if (((int)Projectile.ai[0] % timeBetween) == 0){
+                if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) {
+                    Vector2 newPos = new Vector2(Projectile.position.X, GetYPos());
+                    Projectile proj = Projectile.NewProjectileDirect(newPos, Vector2.Zero, ModContent.ProjectileType<EnsnaringVinesTrap"),
+                        TrapDamage, 0, Projectile.whoAmI);
                     
-                    EnsnaringVinesTrap trap = proj.modProjectile as EnsnaringVinesTrap;
+                    EnsnaringVinesTrap trap = proj.ModProjectile as EnsnaringVinesTrap;
 
                     if (trap != null) {
                         trap.TrapDuration = TrapDuration;
@@ -50,10 +50,10 @@ namespace TerrariaMoba.Projectiles.Sylvia {
                 }
             }
 
-            projectile.ai[0] += 1f;
+            Projectile.ai[0] += 1f;
 
-            if ((int)projectile.ai[0] == (NumberOfTraps * timeBetween)) {
-                projectile.Kill();
+            if ((int)Projectile.ai[0] == (NumberOfTraps * timeBetween)) {
+                Projectile.Kill();
             }
         }
 
@@ -72,8 +72,8 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         }
 
         private int GetYPos() {
-            int posX = (int)projectile.Bottom.X;
-            int posY = (int)projectile.Bottom.Y;
+            int posX = (int)Projectile.Bottom.X;
+            int posY = (int)Projectile.Bottom.Y;
 
             if (TerrariaMobaUtils.TileIsSolidOrPlatform(posX / 16, posY / 16)) {
                 while (TerrariaMobaUtils.TileIsSolidOrPlatform(posX / 16, posY / 16)) {

@@ -10,15 +10,15 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
     public class EnsnaringVinesEffect : Root {
         public override string DisplayName { get => "Ensnaring Vines"; }
 
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Blank"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 
         public EnsnaringVinesEffect() { }
 
         public EnsnaringVinesEffect(int duration, bool canBeCleansed) : base(duration, canBeCleansed) { }
 
         public override void GetListOfPlayerLayers(List<PlayerLayer> playerLayers) {
-            var playerLayer = new PlayerLayer("TerrariaMoba", DisplayName, PlayerLayer.MiscEffectsFront, delegate(PlayerDrawInfo drawInfo) {
-                Texture2D texture = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/EnsnaringVines");
+            var playerLayer = new PlayerLayer("TerrariaMoba", DisplayName, PlayerLayer.MiscEffectsFront, delegate(PlayerDrawSet drawInfo) {
+                Texture2D texture = ModContent.Request<Texture2D>("Textures/Sylvia/EnsnaringVines").Value;
                 Player drawPlayer = drawInfo.drawPlayer;
 
                 int drawX = (int)(drawInfo.position.X + drawPlayer.width / 2f - Main.screenPosition.X);

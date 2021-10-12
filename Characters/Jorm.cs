@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Abilities.Jorm;
 using TerrariaMoba.Statistic;
 
@@ -18,7 +19,7 @@ namespace TerrariaMoba.Characters {
         }
         
         public override Texture2D CharacterIcon {
-            get => TerrariaMoba.Instance.GetTexture("Textures/Jorm/JormIcon");
+            get => ModContent.Request<Texture2D>("Textures/Jorm/JormIcon").Value;
         }
 
         public override bool IsMale { get => true; }

@@ -1,9 +1,6 @@
-﻿using System;
-using Terraria;
-using Terraria.ModLoader;
+﻿using Terraria.ModLoader;
 using Terraria.ID;
-using TerrariaMoba.Enums;
-using TerrariaMoba.Players;
+using TerrariaMoba.Projectiles.Osteo;
 
 namespace TerrariaMoba.Items.Osteo {
     public class OsteoTome : ModItem {
@@ -13,21 +10,21 @@ namespace TerrariaMoba.Items.Osteo {
         }
 
         public override void SetDefaults() {
-            item.width = 20;
-            item.height = 12;
-            item.damage = 83;
-            item.ranged = true;
-            item.noMelee = true;
-            item.shoot = mod.ProjectileType("OsteoSkull");
-            item.UseSound = SoundID.Item104.WithVolume(0.3f).WithPitchVariance(0.5f);
-            item.useTime = 57;
-            item.useAnimation = 57;
-            item.shootSpeed = 7.66f;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.knockBack = 0;
-            item.value = 10000;
-            item.rare = ItemRarityID.Blue;
-            item.autoReuse = false;
+            Item.width = 20;
+            Item.height = 12;
+            Item.damage = 83;
+            Item.DamageType = DamageClass.Ranged;
+            Item.noMelee = true;
+            Item.shoot = ModContent.ProjectileType<OsteoSkull>();
+            Item.UseSound = SoundID.Item104.WithVolume(0.3f).WithPitchVariance(0.5f);
+            Item.useTime = 57;
+            Item.useAnimation = 57;
+            Item.shootSpeed = 7.66f;
+            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.knockBack = 0;
+            Item.value = 10000;
+            Item.rare = ItemRarityID.Blue;
+            Item.autoReuse = false;
         }
     }
 }

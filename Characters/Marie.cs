@@ -2,7 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Abilities.Marie;
+using TerrariaMoba.Items.Marie;
 using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Characters {
@@ -18,7 +20,7 @@ namespace TerrariaMoba.Characters {
         }
         
         public override Texture2D CharacterIcon {
-            get => TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieIcon");
+            get => ModContent.Request<Texture2D>("Textures/Marie/MarieIcon").Value;
         }
         
         public override bool IsMale { get => false; }
@@ -26,7 +28,7 @@ namespace TerrariaMoba.Characters {
         public override Color HairColor { get => Color.DodgerBlue; }
         public override Color SkinColor { get => Color.LightSalmon; }
         public override Color EyeColor { get => Color.Blue; }
-        public override int PrimaryWeaponID { get => TerrariaMoba.Instance.ItemType("MarieStaff"); }
+        public override int PrimaryWeaponID { get => ModContent.ItemType<MarieStaff>(); }
         public override int HeadVanityID { get => ItemID.BejeweledValkyrieHead; }
         public override int HeadDyeID { get => ItemID.SkyBlueDye; }
         public override int BodyVanityID { get => ItemID.FishCostumeShirt; }
@@ -44,7 +46,7 @@ namespace TerrariaMoba.Characters {
             vanityHead.SetDefaults(3226);
             dyeHead.SetDefaults(1014);
             vanityLeg.SetDefaults(2500);
-            primary.SetDefaults(TerrariaMoba.Instance.ItemType("MarieStaff"));
+            primary.SetDefaults(ModContent.ItemType<MarieStaff"));
 
             player.Male = false;
             player.hair = 5;

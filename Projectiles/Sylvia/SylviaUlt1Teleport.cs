@@ -9,40 +9,40 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         }
         
         public override void SetDefaults() {
-            projectile.height = 48;
-            projectile.width = 30;
-            projectile.friendly = true;
-            projectile.alpha = 255;
-            projectile.tileCollide = true;
+            Projectile.height = 48;
+            Projectile.width = 30;
+            Projectile.friendly = true;
+            Projectile.alpha = 255;
+            Projectile.tileCollide = true;
         }
 
         public override void AI() {
-            if (projectile.ai[0] == 0) {
-                Player player = Main.player[projectile.owner];
-                Main.PlaySound(6, projectile.position);
+            if (Projectile.ai[0] == 0) {
+                Player player = Main.player[Projectile.owner];
+                SoundEngine.PlaySound(6, Projectile.position);
                 for (int i = 0; i < 20; i++) {
-                    Dust.NewDust(projectile.position, projectile.width, projectile.height, 57, 0,
+                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 57, 0,
                         0, 150, Color.LightGreen, 0.7f);
                 }
             }
 
-            projectile.ai[0] += 1;
+            Projectile.ai[0] += 1;
 
-            if (projectile.ai[0] == 20) {
-                projectile.Kill();
+            if (Projectile.ai[0] == 20) {
+                Projectile.Kill();
             }
         }
 
         public override void Kill(int timeLeft) {
-            Main.PlaySound(6, projectile.position);
+            SoundEngine.PlaySound(6, Projectile.position);
             for (int i = 0; i < 20; i++) {
-                Dust.NewDust(projectile.position, projectile.width, projectile.height, 57, 0,
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 57, 0,
                     0, 150, Color.LightGreen, 0.7f);
             }
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity) {
-            projectile.velocity = Vector2.Zero;
+            Projectile.velocity = Vector2.Zero;
             return true;
         }
 

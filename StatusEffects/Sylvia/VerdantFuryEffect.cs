@@ -1,13 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
 
 namespace TerrariaMoba.StatusEffects.Sylvia {
     public class VerdantFuryEffect : StatusEffect, IShoot {
         public override string DisplayName { get => "Verdant Fury"; }
 
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Blank"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 
         private float attackSpeed;
         private float attackVelocity;

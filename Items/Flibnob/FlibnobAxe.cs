@@ -9,18 +9,18 @@ namespace TerrariaMoba.Items.Flibnob {
         }
         
         public override void SetDefaults() {
-            item.width = 56;
-            item.height = 56;
-            item.damage = 137;
-            item.knockBack = 0;
-            item.melee = true;
-            item.useTime = 70;
-            item.useAnimation = 70;
-            item.UseSound = SoundID.Item1;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.value = 10000;
-            item.rare = ItemRarityID.Orange;
-            item.autoReuse = false;
+            Item.width = 56;
+            Item.height = 56;
+            Item.damage = 137;
+            Item.knockBack = 0;
+            Item.DamageType = DamageClass.Melee;
+            Item.useTime = 70;
+            Item.useAnimation = 70;
+            Item.UseSound = SoundID.Item1;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.value = 10000;
+            Item.rare = ItemRarityID.Orange;
+            Item.autoReuse = false;
         }
     }
 }

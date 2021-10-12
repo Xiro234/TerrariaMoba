@@ -2,7 +2,10 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Projectiles;
+using TerrariaMoba.Projectiles.Nocturne;
 
 namespace TerrariaMoba.Abilities.Nocturne {
     public class IronRush : Ability {
@@ -16,7 +19,7 @@ namespace TerrariaMoba.Abilities.Nocturne {
         // TODO - Implement stun on enemy contact effect.
         // TODO - Implement damage, resource and scaling stats.
         
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Blank"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 
         public const float DASH_X_VELOCITY = 8f;
         public const int WAIT_TIME = 60;
@@ -35,8 +38,8 @@ namespace TerrariaMoba.Abilities.Nocturne {
 
                 Vector2 velocity = new Vector2(direction * DASH_X_VELOCITY, 0f);
 
-                dash = Main.projectile[Projectile.NewProjectile(position, velocity,
-                    TerrariaMoba.Instance.ProjectileType("NocturneDash"),
+                dash = Main.projectile[Projectile.NewProjectile(new ProjectileSource_Ability(User, this), position, velocity,
+                    ModContent.ProjectileType<NocturneDash>(),
                     0, 0, User.whoAmI)];
             }
         }

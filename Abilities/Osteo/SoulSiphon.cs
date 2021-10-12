@@ -3,13 +3,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.Osteo {
     public class SoulSiphon : Ability {
         public SoulSiphon() : base("Soul Siphon", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoUltimateTwo"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Osteo/OsteoUltimateTwo").Value; }
     }
 }
 
@@ -31,7 +32,7 @@ namespace TerrariaMoba.Abilities.Osteo {
 
         public SoulSiphon(Player myPlayer) : base(myPlayer) {
             Name = "Soul Siphon";
-            Icon = TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoUltimateTwo");
+            Icon = ModContent.Request<Texture2D>("Textures/Osteo/OsteoUltimateTwo").Value;
             soulList = new List<Projectile>();
             soulPositions = new List<Vector2>();
         }
@@ -40,8 +41,8 @@ namespace TerrariaMoba.Abilities.Osteo {
         public override void OnCast() {
             if (soulList.Count == 0) {
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
-                    var proj = Projectile.NewProjectileDirect(User.Center, Vector2.Zero,
-                        TerrariaMoba.Instance.ProjectileType("OsteoSoul"), 0, 0, User.whoAmI);
+                    var proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),User.Center, Vector2.Zero,
+                        ModContent.ProjectileType<OsteoSoul"), 0, 0, User.whoAmI);
                     soulList.Add(proj);
                 }
                 soulPositions.Add(User.Center);

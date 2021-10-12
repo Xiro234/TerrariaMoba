@@ -8,26 +8,26 @@ namespace TerrariaMoba.Projectiles.Nocturne {
         }
         
         public override void SetDefaults() {
-            projectile.height = 136;
-            projectile.width = 38;
-            projectile.friendly = true;
-            projectile.aiStyle = 1;
-            projectile.tileCollide = false;
-            projectile.timeLeft = 240;
-            projectile.penetrate = -1;
+            Projectile.height = 136;
+            Projectile.width = 38;
+            Projectile.friendly = true;
+            Projectile.aiStyle = 1;
+            Projectile.tileCollide = false;
+            Projectile.timeLeft = 240;
+            Projectile.penetrate = -1;
         }
 
         public override void AI() {
             for (int i = 0; i < 5; i++) {
-                Dust.NewDust(projectile.position, projectile.width, projectile.height, 36, 0,
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 36, 0,
                     0, 100);
             }
         }
         
         public override void Kill(int timeLeft) {
-            Main.PlaySound(0, projectile.position);
+            SoundEngine.PlaySound(0, Projectile.position);
             for (int i = 0; i < 40; i++) {
-                Dust.NewDust(projectile.position, projectile.width, projectile.height, 36);
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 36);
             }
         }
     }

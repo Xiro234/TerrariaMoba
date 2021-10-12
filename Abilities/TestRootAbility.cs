@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.StatusEffects;
 
 namespace TerrariaMoba.Abilities {
     public class TestRootAbility : Ability {
-        public override Texture2D Icon { get { return TerrariaMoba.Instance.GetTexture("Textures/Blank");} }
+        public override Texture2D Icon { get { return ModContent.Request<Texture2D>("Textures/Blank").Value;} }
         private const int ROOT_DURATION = 120;
         
         public TestRootAbility() : base("TestRootAbility", 60, 0, AbilityType.Active) {

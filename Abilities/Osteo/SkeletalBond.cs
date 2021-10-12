@@ -3,13 +3,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.Osteo {
     public class SkeletalBond: Ability {
         public SkeletalBond() : base("Skeletal Bond", 10, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoTrait"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Osteo/OsteoTrait").Value; }
     }
 }
 
@@ -27,7 +28,7 @@ namespace TerrariaMoba.Abilities.Osteo {
             AbilityType = Enums.AbilityType.Active;
             Name = "Skeletal Bond";
             IsActive = true;
-            Icon = TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoTrait");
+            Icon = ModContent.Request<Texture2D>("Textures/Osteo/OsteoTrait").Value;
         }
 
         public override void Cast() {

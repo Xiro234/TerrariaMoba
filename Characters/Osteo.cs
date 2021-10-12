@@ -2,7 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Abilities.Osteo;
+using TerrariaMoba.Items.Osteo;
 using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Characters {
@@ -18,7 +20,7 @@ namespace TerrariaMoba.Characters {
         }
         
         public override Texture2D CharacterIcon {
-            get => TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoIcon");
+            get => ModContent.Request<Texture2D>("Textures/Osteo/OsteoIcon").Value;
         }
 
         public override bool IsMale { get => true; }
@@ -26,7 +28,7 @@ namespace TerrariaMoba.Characters {
         public override Color HairColor { get => Color.Black; }
         public override Color SkinColor { get => Color.WhiteSmoke; }
         public override Color EyeColor { get => Color.Red; }
-        public override int PrimaryWeaponID { get => TerrariaMoba.Instance.ItemType("OsteoTome"); }
+        public override int PrimaryWeaponID { get => ModContent.ItemType<OsteoTome>(); }
         public override int HeadVanityID { get => ItemID.SkeletronPrimeMask; }
         public override int BodyVanityID { get => ItemID.ApprenticeAltShirt; }
         public override int LegVanityID { get => ItemID.ApprenticeAltPants; }
@@ -50,7 +52,7 @@ namespace TerrariaMoba.Characters {
             vanityHead.SetDefaults(ItemID.SkeletronPrimeMask);
             vanityBody.SetDefaults(3875);
             vanityLeg.SetDefaults(3876);
-            primary.SetDefaults(TerrariaMoba.Instance.ItemType("OsteoTome"));
+            primary.SetDefaults(ModContent.ItemType<OsteoTome"));
 
             player.Male = true;
             player.hair = 15;
@@ -101,14 +103,14 @@ namespace TerrariaMoba.Characters {
         }
 
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            if (proj.type == TerrariaMoba.Instance.ProjectileType("LifedrainPulseThird")) {
+            if (proj.type == ModContent.ProjectileType<LifedrainPulseThird")) {
                 player.GetModPlayer<MobaPlayer>().HealMe(20, true);
             }
         }
 
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit,
             ref int hitDirection) {
-            if (proj.type == TerrariaMoba.Instance.ProjectileType("LifedrainPulseThird")) {
+            if (proj.type == ModContent.ProjectileType<LifedrainPulseThird")) {
                 player.GetModPlayer<MobaPlayer>().HealMe(20, true);
             }
         }
@@ -151,7 +153,7 @@ namespace TerrariaMoba.Characters {
                 var soulSiphon = ability as SoulSiphon;
                 if (soulSiphon != null) {
                     Projectile.NewProjectile(deadPlayer.position, Vector2.One,
-                        TerrariaMoba.Instance.ProjectileType("OsteoSoul"), 0, 0, player.whoAmI);
+                        ModContent.ProjectileType<OsteoSoul"), 0, 0, player.whoAmI);
                 }
             }
         }

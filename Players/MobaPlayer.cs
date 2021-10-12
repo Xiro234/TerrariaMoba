@@ -190,8 +190,8 @@ namespace TerrariaMoba.Players {
             target.GetModPlayer<MobaPlayer>().TakePvpDamage(damage, 0, 0, player.whoAmI, false);
         }
 
-        public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) {
-            Texture2D healthBar = TerrariaMoba.Instance.GetTexture("Textures/PlayerHealthBar");
+        public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) {
+            Texture2D healthBar = ModContent.Request<Texture2D>("Textures/PlayerHealthBar").Value;
             Vector2 barPos = new Vector2(player.Top.X - Main.screenPosition.X - (healthBar.Width/2),
                 player.Top.Y - Main.screenPosition.Y - 20);
             Main.spriteBatch.Draw(healthBar, barPos, Color.White);
@@ -213,19 +213,19 @@ namespace TerrariaMoba.Players {
             
             for (int i = 0; i < steps; i++) {
                 float percent = (float) i / (right - left);
-                Main.spriteBatch.Draw(Main.magicPixel, new Vector2(barPos.X + i + 6, barPos.Y + 2),
+                Main.spriteBatch.Draw(TextureAssets.MagicPixel, new Vector2(barPos.X + i + 6, barPos.Y + 2),
                     new Rectangle(0, 0, 1, 6),
                     Color.Lerp(gradA, gradB, percent));
 
                 /*if (i % stepsPerHundred == 0 && i != 0) {
                     countPerBar++;
                     if (countPerBar % 10 == 0) {
-                        Main.spriteBatch.Draw(Main.magicPixel, new Vector2(barPos.X + i + 6, barPos.Y + 2),
+                        Main.spriteBatch.Draw(TextureAssets.MagicPixel, new Vector2(barPos.X + i + 6, barPos.Y + 2),
                             new Rectangle(0, 0, 1, 6),
                             Color.Black);
                     }
                     else {
-                        Main.spriteBatch.Draw(Main.magicPixel, new Vector2(barPos.X + i + 6, barPos.Y + 2),
+                        Main.spriteBatch.Draw(TextureAssets.MagicPixel, new Vector2(barPos.X + i + 6, barPos.Y + 2),
                             new Rectangle(0, 0, 1, 4),
                             Color.Black);
                     }
@@ -242,13 +242,13 @@ namespace TerrariaMoba.Players {
 
         // For use later when I rework Marie's ultimate.
         /*
-        public static readonly PlayerLayer MiscEffectsBack = new PlayerLayer("TerrariaMoba", "MiscEffectsBack", PlayerLayer.MiscEffectsBack, delegate(PlayerDrawInfo drawInfo) {
+        public static readonly PlayerLayer MiscEffectsBack = new PlayerLayer("TerrariaMoba", "MiscEffectsBack", PlayerLayer.MiscEffectsBack, delegate(PlayerDrawSet drawInfo) {
             Player drawPlayer = drawInfo.drawPlayer;
             Mod mod = ModLoader.GetMod("TerrariaMoba");
             MobaPlayer modPlayer = drawPlayer.GetModPlayer<MobaPlayer>();
             
             if (modPlayer.MarieEffects.LacusianBlessing) {
-                Texture2D texture = mod.GetTexture("Textures/Marie/GoddessOfLacusia");
+                Texture2D texture = Mod.Assets.Request<Texture2D>("Textures/Marie/GoddessOfLacusia").Value;
                 SpriteEffects effects;
 
                 if (drawPlayer.direction == 1) {
@@ -311,7 +311,7 @@ namespace TerrariaMoba.Players {
                     player.KillMe(PlayerDeathReason.ByPlayer(killer), dealtDamage, 1, true);
                 }
                 
-                Main.PlaySound(1, player.position);
+                SoundEngine.PlaySound(1, player.position);
 
                 if (!noBroadcast) {
                     NetworkHandler.SendPvpHit(physicalDamage, magicalDamage, trueDamage, player.whoAmI, killer);

@@ -48,11 +48,11 @@ namespace TerrariaMoba.StatusEffects {
             PlayerLayer playerLayer = null;
             if (ShowBar) {
                 playerLayer = new PlayerLayer("TerrariaMoba", "EffectBar", PlayerLayer.MiscEffectsFront,
-                    delegate(PlayerDrawInfo drawInfo) {
+                    delegate(PlayerDrawSet drawInfo) {
                     Player drawPlayer = drawInfo.drawPlayer;
                     Mod mod = ModLoader.GetMod("TerrariaMoba");
                     MobaPlayer mobaPlayer = drawPlayer.GetModPlayer<MobaPlayer>();
-                    Texture2D texture = Main.magicPixel;
+                    Texture2D texture = TextureAssets.MagicPixel;
                     Vector2 texturePos = new Vector2(drawPlayer.Top.X - Main.screenPosition.X - 46, 
                         drawPlayer.Top.Y - Main.screenPosition.Y - 10);
 

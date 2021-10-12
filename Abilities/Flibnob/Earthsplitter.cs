@@ -2,15 +2,17 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Interfaces;
+using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Flibnob;
 
 namespace TerrariaMoba.Abilities.Flibnob {
     public class Earthsplitter : Ability, IModifyHitPvpWithProj {
         public Earthsplitter() : base("Earthsplitter", 60, 0, AbilityType.Active) { }
         
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobUltimateOne"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Flibnob/FlibnobUltimateOne").Value; }
 
         public const float LEAP_BASE_HEIGHT = -14.6f;
 
@@ -36,10 +38,10 @@ namespace TerrariaMoba.Abilities.Flibnob {
                     }
                     Vector2 velocity = new Vector2(User.direction * 10f, 0);
 
-                    Projectile proj = Projectile.NewProjectileDirect(position, velocity, 
-                        TerrariaMoba.Instance.ProjectileType("EarthsplitterSpawner"), 0, 0, User.whoAmI);
+                    Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), position, velocity, 
+                        ModContent.ProjectileType<EarthsplitterSpawner>(), 0, 0, User.whoAmI);
                     
-                    EarthsplitterSpawner spawner = proj.modProjectile as EarthsplitterSpawner;
+                    EarthsplitterSpawner spawner = proj.ModProjectile as EarthsplitterSpawner;
 
                     if (spawner != null) {
                         spawner.EarthDamage = EARTH_BASE_DAMAGE;

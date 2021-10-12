@@ -19,7 +19,7 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         }
 
         public override string DisplayName { get => "Jungle's Wrath"; }
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Blank"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
         protected override bool ShowBar {
             get => false;
         }
@@ -37,7 +37,7 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         }
 
         public override void GetListOfPlayerLayers(List<PlayerLayer> playerLayers) {
-            var playerLayer = new PlayerLayer("TerrariaMoba", DisplayName, PlayerLayer.MiscEffectsFront, delegate(PlayerDrawInfo drawInfo) {
+            var playerLayer = new PlayerLayer("TerrariaMoba", DisplayName, PlayerLayer.MiscEffectsFront, delegate(PlayerDrawSet drawInfo) {
                 Player drawPlayer = drawInfo.drawPlayer;
                 Mod mod = ModLoader.GetMod("TerrariaMoba");
                 MobaPlayer mobaPlayer = drawPlayer.GetModPlayer<MobaPlayer>();
@@ -45,16 +45,16 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
                 Texture2D texture = null;
                 switch (Stacks) {
                     case 1:
-                        texture = mod.GetTexture("Textures/Sylvia/JunglesWrath/JunglesWrath1");
+                        texture = Mod.Assets.Request<Texture2D>("Textures/Sylvia/JunglesWrath/JunglesWrath1").Value;
                         break;
                     case 2:
-                        texture = mod.GetTexture("Textures/Sylvia/JunglesWrath/JunglesWrath2");
+                        texture = Mod.Assets.Request<Texture2D>("Textures/Sylvia/JunglesWrath/JunglesWrath2").Value;
                         break;
                     case 3:
-                        texture = mod.GetTexture("Textures/Sylvia/JunglesWrath/JunglesWrath3");
+                        texture = Mod.Assets.Request<Texture2D>("Textures/Sylvia/JunglesWrath/JunglesWrath3").Value;
                         break;
                     case 4:
-                        texture = mod.GetTexture("Textures/Sylvia/JunglesWrath/JunglesWrath4");
+                        texture = Mod.Assets.Request<Texture2D>("Textures/Sylvia/JunglesWrath/JunglesWrath4").Value;
                         break;
                     default:
                         base.GetListOfPlayerLayers(playerLayers);

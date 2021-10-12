@@ -1,12 +1,13 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Interfaces;
 
 namespace TerrariaMoba.Abilities {
     public sealed class TestKillAbility : Ability, IKill {
-        public override Texture2D Icon { get { return TerrariaMoba.Instance.GetTexture("Textures/Blank");} }
+        public override Texture2D Icon { get { return ModContent.Request<Texture2D>("Textures/Blank").Value;} }
 
         public void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
         }

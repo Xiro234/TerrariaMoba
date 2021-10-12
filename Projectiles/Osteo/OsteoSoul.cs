@@ -7,10 +7,10 @@ namespace TerrariaMoba.Projectiles.Osteo {
         }
 
         public override void SetDefaults() {
-            projectile.friendly = true;
-            projectile.width = 20;
-            projectile.height = 32;
-            projectile.aiStyle = 0;
+            Projectile.friendly = true;
+            Projectile.width = 20;
+            Projectile.height = 32;
+            Projectile.aiStyle = 0;
         }
 
         public override void Kill(int timeLeft) {

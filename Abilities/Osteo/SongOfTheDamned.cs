@@ -3,13 +3,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.Osteo {
     public class SongOfTheDamned : Ability {
         public SongOfTheDamned() : base("Song of the Damned", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoUltimateOne"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Osteo/OsteoUltimateOne").Value; }
     }
 }
 
@@ -25,7 +26,7 @@ namespace TerrariaMoba.Abilities.Osteo {
     public class SongOfTheDamned : Ability {
         public SongOfTheDamned(Player myPlayer) : base(myPlayer) {
             Name = "Song of the Damned";
-            Icon = TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoUltimateOne");
+            Icon = ModContent.Request<Texture2D>("Textures/Osteo/OsteoUltimateOne").Value;
         }
 
         public override void OnCast() {
@@ -74,7 +75,7 @@ namespace TerrariaMoba.Abilities.Osteo {
                         var modPlayer = Main.player[i].GetModPlayer<MobaPlayer>();
                         if (!Main.player[i].dead) {
                             modPlayer.DamageOverride((int)User.GetModPlayer<MobaPlayer>().OsteoStats.U1Dmg.Value, Main.player[i], User.whoAmI, true);
-                            Main.PlaySound(SoundID.Item71, Main.player[i].position);
+                            SoundEngine.PlaySound(SoundID.Item71, Main.player[i].position);
                         }
                         modPlayer.ultTimer = -1;
                     }

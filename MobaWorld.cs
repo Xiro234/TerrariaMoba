@@ -1,9 +1,19 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
+using Microsoft.Xna.Framework;
 using Terraria.ModLoader;
+using Terraria.UI;
+using Terraria;
+using TerrariaMoba.UI;
 
 namespace TerrariaMoba {
-    public class MobaWorld : ModWorld {
+    public class MobaWorld : ModSystem {
         public static bool MatchInProgress = false;
+        
+        internal MobaBar MobaBar;
+        internal CharacterSelect CharacterSelect;
+        internal UserInterface BarInterface;
+        internal UserInterface SelectInterface;
 
         public override void NetSend(BinaryWriter writer) {
             writer.Write(MatchInProgress);
@@ -15,6 +25,64 @@ namespace TerrariaMoba {
 
         public static void StartGame() {
             MatchInProgress = true;
+        }
+
+        public override void Load() {
+            if (!Main.dedServ) {
+                MobaBar = new MobaBar();
+                BarInterface = new UserInterface();
+                BarInterface.SetState(null);
+				
+                CharacterSelect = new CharacterSelect();
+                SelectInterface = new UserInterface();
+                SelectInterface.SetState(null);
+            }
+        }
+
+        public override void Unload() {
+            MobaBar.UnLoad();
+        }
+
+        public override void UpdateUI(GameTime gameTime) {
+            BarInterface?.Update(gameTime);
+            SelectInterface?.Update(gameTime);
+        }
+		
+        public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
+            int LayerIndex;
+            //LayerIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Resource Bars"));
+            //layers.RemoveAt(LayerIndex);
+            LayerIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Death Text"));
+            layers.RemoveAt(LayerIndex);
+
+            int mouseTextIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Mouse Text"));
+            if (mouseTextIndex != -1) {
+                layers.Insert(mouseTextIndex, new LegacyGameInterfaceLayer(
+                    "TerrariaMoba: A Description",
+                    delegate {
+                        BarInterface.Draw(Main.spriteBatch, new GameTime());
+                        SelectInterface.Draw(Main.spriteBatch, new GameTime());
+                        return true;
+                    },
+                    InterfaceScaleType.UI)
+                );
+            }
+        }
+        
+        internal void ShowBar() {
+            BarInterface?.SetState(MobaBar);
+        }
+
+        internal void HideBar() {
+            BarInterface?.SetState(null);
+        }
+
+        internal void ShowSelect() {
+            SelectInterface?.SetState(CharacterSelect);
+        }
+
+        internal void HideSelect() {
+            SelectInterface?.SetState(null);
         }
     }
 }

@@ -45,7 +45,7 @@ namespace TerrariaMoba.UI {
                             color.A = 180;
                         }
                         
-                        spriteBatch.Draw(Main.magicPixel, new Rectangle(right - i, top + j, 1, 1), color); //Top + j makes it go clockwise
+                        spriteBatch.Draw(TextureAssets.MagicPixel, new Rectangle(right - i, top + j, 1, 1), color); //Top + j makes it go clockwise
                     }
                 }
             }

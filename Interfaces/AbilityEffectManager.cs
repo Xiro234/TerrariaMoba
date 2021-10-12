@@ -60,7 +60,7 @@ namespace TerrariaMoba.Interfaces {
             }
         }
 
-        public static void DrawEffects(Player player, PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a,
+        public static void DrawEffects(Player player, PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a,
             ref bool fullBright) {
             List<Ability> abilities = GetValidAbilities<IDrawEffects>(player);
             List<StatusEffect> effects = GetValidEffects<IDrawEffects>(player);

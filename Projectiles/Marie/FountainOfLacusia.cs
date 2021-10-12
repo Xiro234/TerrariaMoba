@@ -1,30 +1,30 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 
 namespace TerrariaMoba.Projectiles.Marie {
     public class FountainOfLacusia : ModProjectile {
         public override void SetStaticDefaults() {
-            Main.projFrames[projectile.type] = 6;
+            Main.projFrames[Projectile.type] = 6;
         }
 
         public override void SetDefaults() {
-            projectile.Name = "Fountain of Lacusia";
-            projectile.width = 32;
-            projectile.height = 64;
-            //projectile.scale = 2f;
-            projectile.timeLeft = 360;
+            Projectile.Name = "Fountain of Lacusia";
+            Projectile.width = 32;
+            Projectile.height = 64;
+            //Projectile.scale = 2f;
+            Projectile.timeLeft = 360;
         }
 
         public override void AI() {
-            projectile.ai[0] += 1f;
-            if ((int)projectile.ai[0] % 30 == 0) {
-                Vector2 fountainPos = projectile.Center;
+            Projectile.ai[0] += 1f;
+            if ((int)Projectile.ai[0] % 30 == 0) {
+                Vector2 fountainPos = Projectile.Center;
                 float radius = 20 * 16.0f;
-                Main.PlaySound(SoundID.Item4, projectile.Center);
+                SoundEngine.PlaySound(SoundID.Item4, Projectile.Center);
 
                 for (int a = 0; a < 360; a++) {
                     int xPos = (int)(fountainPos.X + radius * Math.Cos(TerrariaMobaUtils.Conv2Rad(a)));
@@ -35,16 +35,16 @@ namespace TerrariaMoba.Projectiles.Marie {
                 }
             }
 
-            if (++projectile.frameCounter >= 5) {
-                projectile.frameCounter = 0;
-                projectile.frame = ++projectile.frame % Main.projFrames[projectile.type];
+            if (++Projectile.frameCounter >= 5) {
+                Projectile.frameCounter = 0;
+                Projectile.frame = ++Projectile.frame % Main.projFrames[Projectile.type];
             }
 
             for (int i = 0; i < Main.maxPlayers; i++) {
                 Player plr = Main.player[i];
                 if (plr.active && plr != null) {
-                    if (plr.team == Main.player[projectile.owner].team) {
-                        float dist = (plr.Center - projectile.Center).Length() / 16.0f;
+                    if (plr.team == Main.player[Projectile.owner].team) {
+                        float dist = (plr.Center - Projectile.Center).Length() / 16.0f;
                         if (dist <= 20) {
                         }
                     }
