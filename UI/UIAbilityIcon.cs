@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using System;
+using Terraria.GameContent;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.Players;
 
@@ -45,7 +46,7 @@ namespace TerrariaMoba.UI {
                             color.A = 180;
                         }
                         
-                        spriteBatch.Draw(TextureAssets.MagicPixel, new Rectangle(right - i, top + j, 1, 1), color); //Top + j makes it go clockwise
+                        spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(right - i, top + j, 1, 1), color); //Top + j makes it go clockwise
                     }
                 }
             }

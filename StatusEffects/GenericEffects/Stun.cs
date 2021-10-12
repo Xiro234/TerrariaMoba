@@ -25,8 +25,8 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
             return false;
         }
 
-        public override void GetListOfPlayerLayers(List<PlayerLayer> playerLayers) {
-            var playerLayer = new PlayerLayer("TerrariaMoba", DisplayName, PlayerLayer.MiscEffectsFront, delegate(PlayerDrawSet drawInfo) {
+        public override void GetListOfPlayerDrawLayers(List<PlayerDrawLayer> playerLayers) {
+            var playerLayer = new PlayerDrawLayer("TerrariaMoba", DisplayName, PlayerDrawLayer.MiscEffectsFront, delegate(PlayerDrawSet drawInfo) {
                 Player drawPlayer = drawInfo.drawPlayer;
                 Mod mod = ModLoader.GetMod("TerrariaMoba");
                 MobaPlayer mobaPlayer = drawPlayer.GetModPlayer<MobaPlayer>();

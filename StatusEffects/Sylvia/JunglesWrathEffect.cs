@@ -36,8 +36,8 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
             Stacks = reader.ReadInt32();
         }
 
-        public override void GetListOfPlayerLayers(List<PlayerLayer> playerLayers) {
-            var playerLayer = new PlayerLayer("TerrariaMoba", DisplayName, PlayerLayer.MiscEffectsFront, delegate(PlayerDrawSet drawInfo) {
+        public override void GetListOfPlayerDrawLayers(List<PlayerDrawLayer> playerLayers) {
+            var playerLayer = new PlayerDrawLayer("TerrariaMoba", DisplayName, PlayerDrawLayer.MiscEffectsFront, delegate(PlayerDrawSet drawInfo) {
                 Player drawPlayer = drawInfo.drawPlayer;
                 Mod mod = ModLoader.GetMod("TerrariaMoba");
                 MobaPlayer mobaPlayer = drawPlayer.GetModPlayer<MobaPlayer>();
@@ -57,7 +57,7 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
                         texture = Mod.Assets.Request<Texture2D>("Textures/Sylvia/JunglesWrath/JunglesWrath4").Value;
                         break;
                     default:
-                        base.GetListOfPlayerLayers(playerLayers);
+                        base.GetListOfPlayerDrawLayers(playerLayers);
                         return;
                 }
                 
@@ -68,7 +68,7 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
             });
             
             playerLayers.Add(playerLayer);
-            base.GetListOfPlayerLayers(playerLayers);
+            base.GetListOfPlayerDrawLayers(playerLayers);
         }
     }
 }

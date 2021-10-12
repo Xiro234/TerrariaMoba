@@ -214,19 +214,19 @@ namespace TerrariaMoba.Players {
             
             for (int i = 0; i < steps; i++) {
                 float percent = (float) i / (right - left);
-                Main.spriteBatch.Draw(TextureAssets.MagicPixel, new Vector2(barPos.X + i + 6, barPos.Y + 2),
+                Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Vector2(barPos.X + i + 6, barPos.Y + 2),
                     new Rectangle(0, 0, 1, 6),
                     Color.Lerp(gradA, gradB, percent));
 
                 /*if (i % stepsPerHundred == 0 && i != 0) {
                     countPerBar++;
                     if (countPerBar % 10 == 0) {
-                        Main.spriteBatch.Draw(TextureAssets.MagicPixel, new Vector2(barPos.X + i + 6, barPos.Y + 2),
+                        Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Vector2(barPos.X + i + 6, barPos.Y + 2),
                             new Rectangle(0, 0, 1, 6),
                             Color.Black);
                     }
                     else {
-                        Main.spriteBatch.Draw(TextureAssets.MagicPixel, new Vector2(barPos.X + i + 6, barPos.Y + 2),
+                        Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Vector2(barPos.X + i + 6, barPos.Y + 2),
                             new Rectangle(0, 0, 1, 4),
                             Color.Black);
                     }
@@ -235,15 +235,15 @@ namespace TerrariaMoba.Players {
             AbilityEffectManager.DrawEffects(Player, drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
         }
 
-        public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
-            ref float knockBack) {
+        public override bool Shoot(Item item, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage,
+            float knockback) {
             return AbilityEffectManager.Shoot(Player, item, ref position, ref speedX, ref speedY, ref type, ref damage,
                 ref knockBack);
         }
 
         // For use later when I rework Marie's ultimate.
         /*
-        public static readonly PlayerLayer MiscEffectsBack = new PlayerLayer("TerrariaMoba", "MiscEffectsBack", PlayerLayer.MiscEffectsBack, delegate(PlayerDrawSet drawInfo) {
+        public static readonly PlayerDrawLayer MiscEffectsBack = new PlayerDrawLayer("TerrariaMoba", "MiscEffectsBack", PlayerDrawLayer.MiscEffectsBack, delegate(PlayerDrawSet drawInfo) {
             Player drawPlayer = drawInfo.drawPlayer;
             Mod mod = ModLoader.GetMod("TerrariaMoba");
             MobaPlayer modPlayer = drawPlayer.GetModPlayer<MobaPlayer>();
@@ -267,10 +267,12 @@ namespace TerrariaMoba.Players {
             }
         });
         */
-        public override void ModifyDrawLayers(List<PlayerLayer> layers) {
+
+        /*public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {
+
             foreach (var effect in EffectList) {
-                List<PlayerLayer> playerLayers = new List<PlayerLayer>();
-                effect.GetListOfPlayerLayers(playerLayers);
+                List<PlayerDrawLayer> playerLayers = new List<PlayerDrawLayer>();
+                effect.GetListOfPlayerDrawLayers(playerLayers);
                 foreach (var effectLayer in playerLayers) {
                     if (effectLayer != null) {
                         effectLayer.visible = true;
@@ -279,8 +281,10 @@ namespace TerrariaMoba.Players {
                     }
                 }
                 //TODO - Add checking for invisiblity and add constants somewhere for where elements should be
+                //TODO - Work in new player-layer system
             }
-        }
+        }*/
+        
         
         public override void SetControls() {
            AbilityEffectManager.SetControls(Player);

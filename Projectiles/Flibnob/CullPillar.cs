@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ModLoader;
 using TerrariaMoba.Abilities.Flibnob;
 
@@ -138,7 +139,7 @@ namespace TerrariaMoba.Projectiles.Flibnob {
                         }
 
                         rotation2 = (float)Math.Atan2(projPosY, projPosX) - 1.57f;
-
+                        
                         Color color2 = Lighting.GetColor((int)value.X / 16, (int)(value.Y / 16f), new Color(114, 115, 116, 100));
                         Main.spriteBatch.Draw(Main.fishingLineTexture, new Vector2(value.X - Main.screenPosition.X + Main.fishingLineTexture.Width * 0.5f, value.Y - Main.screenPosition.Y + Main.fishingLineTexture.Height * 0.5f), new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Main.fishingLineTexture.Width, (int)num)), color2, rotation2, new Vector2(Main.fishingLineTexture.Width * 0.5f, 0f), 1f, SpriteEffects.None, 0f);
                     }

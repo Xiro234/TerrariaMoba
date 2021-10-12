@@ -32,13 +32,13 @@ namespace TerrariaMoba.UI {
                     int right = hitbox.Right;
                     int top = hitbox.Top;
                     int bottom = hitbox.Bottom;
-                    spriteBatch.Draw(TextureAssets.MagicPixel, new Rectangle(left - 2, top - 2, right - left + 4, 2),
+                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(left - 2, top - 2, right - left + 4, 2),
                         Color.Yellow); //Top rect
-                    spriteBatch.Draw(TextureAssets.MagicPixel, new Rectangle(right, top - 2, 2, bottom - top + 4),
+                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(right, top - 2, 2, bottom - top + 4),
                         Color.Yellow); //Right rect
-                    spriteBatch.Draw(TextureAssets.MagicPixel, new Rectangle(left - 2, bottom, right - left + 4, 2),
+                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(left - 2, bottom, right - left + 4, 2),
                         Color.Yellow); //Bottom Rect
-                    spriteBatch.Draw(TextureAssets.MagicPixel, new Rectangle(left - 2, top - 2, 2, bottom - top + 4),
+                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(left - 2, top - 2, 2, bottom - top + 4),
                         Color.Yellow); //Left Rect
                 }
             }
