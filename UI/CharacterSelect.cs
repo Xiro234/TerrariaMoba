@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria.UI;
 using Terraria;
 using Terraria.Audio;
@@ -27,7 +28,7 @@ namespace TerrariaMoba.UI {
                 iconList.Add(new CharacterIcon((Character)Activator.CreateInstance(heroType)));
             }
             
-            background = new UIImage(ModContent.Request<Texture2D>("TerrariaMoba/Textures/CharacterSelect"));
+            background = new UIImage(ModContent.Request<Texture2D>("TerrariaMoba/Textures/CharacterSelect", AssetRequestMode.ImmediateLoad));
             background.VAlign = 0.5f;
             background.HAlign = 0.5f;
             Append(background);
@@ -40,7 +41,7 @@ namespace TerrariaMoba.UI {
                 Main.NewText("CharacterIcon " + i + " appended.");
             }
             
-            checkmark = new UIImage(ModContent.Request<Texture2D>("TerrariaMoba/Textures/CheckMarkUnselected"));
+            checkmark = new UIImage(ModContent.Request<Texture2D>("TerrariaMoba/Textures/CheckMarkUnselected", AssetRequestMode.ImmediateLoad));
             checkmark.Left.Set(306, 0);
             checkmark.Top.Set(156, 0);
             checkmark.OnClick += OnCheckClick;
@@ -59,10 +60,10 @@ namespace TerrariaMoba.UI {
             }
 
             if (mobaPlayer.selectedCharacter == null) {
-                checkmark.SetImage(ModContent.Request<Texture2D>("TerrariaMoba/Textures/CheckMarkUnselected"));
+                checkmark.SetImage(ModContent.Request<Texture2D>("TerrariaMoba/Textures/CheckMarkUnselected", AssetRequestMode.ImmediateLoad));
             }
             else {
-                checkmark.SetImage(ModContent.Request<Texture2D>("TerrariaMoba/Textures/CheckMarkSelected"));
+                checkmark.SetImage(ModContent.Request<Texture2D>("TerrariaMoba/Textures/CheckMarkSelected", AssetRequestMode.ImmediateLoad));
             }
         }
 

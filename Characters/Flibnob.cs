@@ -21,7 +21,7 @@ namespace TerrariaMoba.Characters {
         }
         
         public override Asset<Texture2D> CharacterIcon {
-            get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobIcon");
+            get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobIcon", AssetRequestMode.ImmediateLoad);
             
         }
 
