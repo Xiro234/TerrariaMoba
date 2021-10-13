@@ -19,7 +19,7 @@ namespace TerrariaMoba.Characters {
         }
         
         public override Texture2D CharacterIcon {
-            get => ModContent.Request<Texture2D>("Textures/Chastradamus/ChastradamusIcon").Value;
+            get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Chastradamus/ChastradamusIcon").Value;
         }
 
         public override bool IsMale { get => true; }

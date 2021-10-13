@@ -20,7 +20,7 @@ namespace TerrariaMoba.Characters {
         }
         
         public override Texture2D CharacterIcon {
-            get => ModContent.Request<Texture2D>("Textures/Flibnob/FlibnobIcon").Value;
+            get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobIcon").Value;
             
         }
 

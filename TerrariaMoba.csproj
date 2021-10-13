@@ -3,7 +3,7 @@
   <Import Project="../tModLoader.targets" />
   <PropertyGroup>
     <AssemblyName>TerrariaMoba</AssemblyName>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>

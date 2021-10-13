@@ -1,6 +1,5 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
-using TerrariaMoba;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
 using TerrariaMoba.Players;
@@ -25,8 +24,8 @@ namespace TerrariaMoba.Items {
             Item.rare = 3;
             Item.color = Color.MediumVioletRed;
         }
-        
-        public override string Texture => "Terraria/Item_" + ItemID.CrimsonKey;
+
+        public override string Texture => "Terraria/Images/Item_" + ItemID.CrimsonKey;
         
         public override bool? UseItem(Player Player) {
             Player.GetModPlayer<MobaPlayer>().Hero.GainExperience(10);

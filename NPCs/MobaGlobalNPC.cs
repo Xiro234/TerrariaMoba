@@ -75,7 +75,7 @@ namespace TerrariaMoba.NPCs {
                     gradB = Color.Lime;
                 }
 
-                Texture2D healthBar = ModContent.Request<Texture2D>("Textures/NpcHealthBar").Value;
+                Texture2D healthBar = ModContent.Request<Texture2D>("TerrariaMoba/Textures/NpcHealthBar").Value;
                 Vector2 barPos = new Vector2(NPC.Top.X - Main.screenPosition.X - 31,
                     NPC.Top.Y - screenPos.Y - 28);
                 spriteBatch.Draw(healthBar, barPos, drawColor);

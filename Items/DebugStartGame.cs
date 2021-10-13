@@ -27,7 +27,7 @@ namespace TerrariaMoba.Items {
             Item.color = Color.Yellow;
         }
         
-        public override string Texture => "Terraria/Item_" + ItemID.Abeemination;
+        public override string Texture => "Terraria/Images/Item_" + ItemID.Abeemination;
 
         public override bool? UseItem(Player Player) {
             if (Main.netMode == NetmodeID.Server) {

@@ -20,7 +20,7 @@ namespace TerrariaMoba.Characters {
         }
         
         public override Texture2D CharacterIcon {
-            get => ModContent.Request<Texture2D>("Textures/Marie/MarieIcon").Value;
+            get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieIcon").Value;
         }
         
         public override bool IsMale { get => false; }
