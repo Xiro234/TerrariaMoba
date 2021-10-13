@@ -7,13 +7,13 @@ using Terraria;
 using TerrariaMoba.UI;
 
 namespace TerrariaMoba {
-    public class MobaWorld : ModSystem {
+    public class MobaSystem : ModSystem {
         public static bool MatchInProgress = false;
         
-        internal MobaBar MobaBar;
-        internal CharacterSelect CharacterSelect;
-        internal UserInterface BarInterface;
-        internal UserInterface SelectInterface;
+        static internal MobaBar MobaBar;
+        static internal CharacterSelect CharacterSelect;
+        static internal UserInterface BarInterface;
+        static internal UserInterface SelectInterface;
 
         public override void NetSend(BinaryWriter writer) {
             writer.Write(MatchInProgress);
@@ -69,19 +69,19 @@ namespace TerrariaMoba {
             }
         }
         
-        internal void ShowBar() {
+        static internal void ShowBar() {
             BarInterface?.SetState(MobaBar);
         }
 
-        internal void HideBar() {
+        static internal void HideBar() {
             BarInterface?.SetState(null);
         }
 
-        internal void ShowSelect() {
+        static internal void ShowSelect() {
             SelectInterface?.SetState(CharacterSelect);
         }
 
-        internal void HideSelect() {
+        static internal void HideSelect() {
             SelectInterface?.SetState(null);
         }
     }

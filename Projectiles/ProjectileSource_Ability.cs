@@ -7,8 +7,8 @@ namespace TerrariaMoba.Projectiles {
         public readonly Player Player;
         public readonly Ability Ability;
 
-        public ProjectileSource_Ability(Player Player, Ability ability) {
-            Player = Player;
+        public ProjectileSource_Ability(Player player, Ability ability) {
+            Player = player;
             Ability = ability;
         }
     }

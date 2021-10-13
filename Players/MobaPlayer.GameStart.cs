@@ -9,8 +9,8 @@ namespace TerrariaMoba.Players {
             AssignCharacter();
             Hero.StartGame();
             if (Main.LocalPlayer == Player) {
-                TerrariaMoba.Instance.ShowBar();
-                TerrariaMoba.Instance.MobaBar.SetIcons();
+                MobaSystem.ShowBar();
+                MobaSystem.MobaBar.SetIcons();
                 Main.NewText(Player.GetModPlayer<MobaPlayer>().Hero.Name);
             }
         }

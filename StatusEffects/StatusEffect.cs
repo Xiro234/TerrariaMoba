@@ -45,29 +45,6 @@ namespace TerrariaMoba.StatusEffects {
 
         public virtual void GetListOfPlayerDrawLayers(List<PlayerDrawLayer> playerLayers) { }
 
-        public PlayerDrawLayer GetEffectBar() {
-            PlayerDrawLayer playerLayer = null;
-            if (ShowBar) {
-                playerLayer = new PlayerDrawLayer("TerrariaMoba", "EffectBar", PlayerDrawLayer.MiscEffectsFront,
-                    delegate(PlayerDrawSet drawInfo) {
-                    Player drawPlayer = drawInfo.drawPlayer;
-                    Mod mod = ModLoader.GetMod("TerrariaMoba");
-                    MobaPlayer mobaPlayer = drawPlayer.GetModPlayer<MobaPlayer>();
-                    Texture2D texture = TextureAssets.MagicPixel.Value.Value;
-                    Vector2 texturePos = new Vector2(drawPlayer.Top.X - Main.screenPosition.X - 46, 
-                        drawPlayer.Top.Y - Main.screenPosition.Y - 10);
-
-                    float ratio = (float) DurationTimer / (float) Duration;
-                    int length = (int)(92f * ratio);
-
-                    DrawData data = new DrawData(texture, texturePos, new Rectangle(0, 0, length, 2), Color.White);
-                    Main.playerDrawData.Add(data);
-                });
-            }
-            
-            return playerLayer;
-        }
-
         public virtual void RefreshDuration() {
             DurationTimer = Duration;
         }

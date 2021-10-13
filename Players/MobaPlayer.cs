@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.GameInput;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -134,11 +135,11 @@ namespace TerrariaMoba.Players {
             }
             */
             if (TerrariaMoba.OpenCharacterSelect.JustPressed) {
-                if (TerrariaMoba.Instance.SelectInterface.CurrentState == null && Hero == null) {
-                    TerrariaMoba.Instance.ShowSelect();
+                if (MobaSystem.SelectInterface.CurrentState == null && Hero == null) {
+                    MobaSystem.ShowSelect();
                 }
                 else {
-                    MobaWorld.HideSelect();
+                    MobaSystem.HideSelect();
                 }
             }
             
@@ -153,7 +154,7 @@ namespace TerrariaMoba.Players {
         }
 
         public override void PostUpdateBuffs() {
-            if (MobaWorld.MatchInProgress) {
+            if (MobaSystem.MatchInProgress) {
                 RegenLife();
                 RegenResource();
                 ResetStats();
@@ -237,8 +238,7 @@ namespace TerrariaMoba.Players {
 
         public override bool Shoot(Item item, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage,
             float knockback) {
-            return AbilityEffectManager.Shoot(Player, item, ref position, ref speedX, ref speedY, ref type, ref damage,
-                ref knockBack);
+            return AbilityEffectManager.Shoot(Player, ref item, ref source, ref position, ref velocity, ref type, ref damage, ref knockback);
         }
 
         // For use later when I rework Marie's ultimate.

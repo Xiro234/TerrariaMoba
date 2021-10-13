@@ -64,6 +64,11 @@ namespace TerrariaMoba.StatusEffects {
             return StatusEffectDict[effect.GetType()];
         }
 
+        public static bool PlayerHasEffectType<T>(Player player) {
+            MobaPlayer mobaPlayer = player.GetModPlayer<MobaPlayer>();
+            return mobaPlayer.EffectList.OfType<T>().Any();
+        }
+
         public static void Load() {
             StatusEffectDict = new Dictionary<Type, int>();
             StatusEffectTypesList = new List<Type>();

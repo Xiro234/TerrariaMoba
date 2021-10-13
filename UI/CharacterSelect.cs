@@ -73,7 +73,7 @@ namespace TerrariaMoba.UI {
                 }
                 
                 SoundEngine.PlaySound(SoundID.MenuClose);
-                TerrariaMoba.Instance.HideSelect();
+                MobaSystem.HideSelect();
             }
         }
 

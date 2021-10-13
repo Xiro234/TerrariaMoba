@@ -120,7 +120,7 @@ namespace  TerrariaMoba {
                 }
             }
             
-            MobaWorld.StartGame();
+            MobaSystem.StartGame();
         }
     }
 }

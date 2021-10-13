@@ -25,20 +25,20 @@ namespace TerrariaMoba.Interfaces {
             }
         }
 
-        public static bool Shoot(Player Player, Item item, ref Vector2 position, ref float speedX, ref float speedY,
-            ref int type, ref int damage, ref float knockBack) {
+        public static bool Shoot(Player Player, ref Item item, ref ProjectileSource_Item_WithAmmo source, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage,
+            ref float knockback) {
             List<Ability> abilities = GetValidAbilities<IShoot>(Player);
             List<StatusEffect> effects = GetValidEffects<IShoot>(Player);
 
             bool result = true;
             foreach (Ability ability in abilities) {
                 if (ability.CanCastAbility()) {
-                    result &= ((IShoot)ability).Shoot(item, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
+                    result &= ((IShoot)ability).Shoot(ref item, ref source, ref position, ref velocity, ref type, ref damage, ref knockback);
                 }
             }
             
             foreach (StatusEffect effect in effects) {
-                result &= ((IShoot)effect).Shoot(item, ref position, ref speedX, ref speedY, ref type, ref damage, ref knockBack);
+                result &= ((IShoot)effect).Shoot(ref item, ref source, ref position, ref velocity, ref type, ref damage, ref knockback);
             }
 
             return result;

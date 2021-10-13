@@ -19,22 +19,24 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
             User.controlUp = false;
             User.controlDown = false;
         }
-        
-        public override void GetListOfPlayerDrawLayers(List<PlayerDrawLayer> playerLayers) {
-            var playerLayer = new PlayerDrawLayer("TerrariaMoba", DisplayName, PlayerDrawLayer.MiscEffectsFront, delegate(PlayerDrawSet drawInfo) {
-                Player drawPlayer = drawInfo.drawPlayer;
-                Mod mod = ModLoader.GetMod("TerrariaMoba");
-                MobaPlayer mobaPlayer = drawPlayer.GetModPlayer<MobaPlayer>();
-                
-                Texture2D texture = Mod.Assets.Request<Texture2D>("Textures/RootedSprite").Value;
-                Vector2 texturePos = new Vector2(drawPlayer.Top.X - Main.screenPosition.X - (texture.Width/2) - 10,
-                    drawPlayer.Top.Y - Main.screenPosition.Y - 44);
-                DrawData data = new DrawData(texture, texturePos, Color.White);
-                Main.playerDrawData.Add(data);
-            });
+    }
 
-            playerLayers.Add(playerLayer);
-            base.GetListOfPlayerDrawLayers(playerLayers);
+    public class RootDrawLayer : PlayerDrawLayer {
+        public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) {
+            return StatusEffectManager.PlayerHasEffectType<Root>(drawInfo.drawPlayer);
+        }
+        
+        public override Position GetDefaultPosition() => new Between(PlayerDrawLayers.ProjectileOverArm,
+            PlayerDrawLayers.FrozenOrWebbedDebuff);
+
+        protected override void Draw(ref PlayerDrawSet drawInfo) {
+            Player drawPlayer = drawInfo.drawPlayer;
+                
+            Texture2D texture = Mod.Assets.Request<Texture2D>("Textures/RootedSprite").Value;
+            Vector2 texturePos = new Vector2(drawPlayer.Top.X - Main.screenPosition.X - (texture.Width / 2) - 10,
+                drawPlayer.Top.Y - Main.screenPosition.Y - 44);
+            DrawData data = new DrawData(texture, texturePos, Color.White);
+            drawInfo.DrawDataCache.Add(data);
         }
     }
 }
