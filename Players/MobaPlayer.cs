@@ -193,7 +193,7 @@ namespace TerrariaMoba.Players {
         }
 
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) {
-            Texture2D healthBar = ModContent.Request<Texture2D>("Textures/PlayerHealthBar").Value;
+            Texture2D healthBar = ModContent.Request<Texture2D>("TerrariaMoba/Textures/PlayerHealthBar").Value;
             Vector2 barPos = new Vector2(Player.Top.X - Main.screenPosition.X - (healthBar.Width/2),
                 Player.Top.Y - Main.screenPosition.Y - 20);
             Main.spriteBatch.Draw(healthBar, barPos, Color.White);

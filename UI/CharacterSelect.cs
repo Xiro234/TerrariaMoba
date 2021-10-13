@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.UI;
@@ -28,24 +27,27 @@ namespace TerrariaMoba.UI {
                 iconList.Add(new CharacterIcon((Character)Activator.CreateInstance(heroType)));
             }
             
-            background = new UIImage(ModContent.Request<Texture2D>("Textures/CharacterSelect").Value);
+            background = new UIImage(ModContent.Request<Texture2D>("TerrariaMoba/Textures/CharacterSelect").Value);
             background.VAlign = 0.5f;
             background.HAlign = 0.5f;
             Append(background);
+            Main.NewText("CharacterSelect.png appended.");
 
             for (int i = 0; i < iconList.Count; i++) {
                 iconList[i].Left.Set(fromEdge + (spacing * (i % 5)), 0);
                 iconList[i].Top.Set(fromEdge + (spacing * (i / 5)), 0);
                 background.Append(iconList[i]);
+                Main.NewText("CharacterIcon " + i + " appended.");
             }
 
-            checkmark = new UIImage(ModContent.Request<Texture2D>("Textures/CheckMarkUnselected").Value);
+            checkmark = new UIImage(ModContent.Request<Texture2D>("TerrariaMoba/Textures/CheckMarkUnselected").Value);
             checkmark.Left.Set(306, 0);
             checkmark.Top.Set(156, 0);
             checkmark.OnClick += OnCheckClick;
             checkmark.OnMouseOver += OnCheckMouseOver;
 
             background.Append(checkmark);
+            Main.NewText("Checkmark appended.");
         }
 
         public override void Update(GameTime gameTime) {
@@ -57,10 +59,10 @@ namespace TerrariaMoba.UI {
             }
 
             if (mobaPlayer.selectedCharacter == null) {
-                checkmark.SetImage(ModContent.Request<Texture2D>("Textures/CheckMarkUnselected").Value);
+                checkmark.SetImage(ModContent.Request<Texture2D>("TerrariaMoba/Textures/CheckMarkUnselected").Value);
             }
             else {
-                checkmark.SetImage(ModContent.Request<Texture2D>("Textures/CheckMarkSelected").Value);
+                checkmark.SetImage(ModContent.Request<Texture2D>("TerrariaMoba/Textures/CheckMarkSelected").Value);
             }
         }
 
@@ -79,6 +81,7 @@ namespace TerrariaMoba.UI {
 
         public void OnCheckMouseOver(UIMouseEvent evt, UIElement listeningElement) {
             SoundEngine.PlaySound(SoundID.MenuTick);
+            Main.NewText("if this appears OnCheckMouseOver works i think");
         }
     }
 }

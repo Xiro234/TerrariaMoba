@@ -26,7 +26,7 @@ namespace TerrariaMoba.Items {
             Item.color = Color.Yellow;
         }
         
-        public override string Texture => "Terraria/Item_" + ItemID.Ebonkoi;
+        public override string Texture => "Terraria/Images/Item_" + ItemID.Ebonkoi;
         
         public override bool? UseItem(Player Player) {
             Player.GetModPlayer<MobaPlayer>().Hero.LevelUp();
