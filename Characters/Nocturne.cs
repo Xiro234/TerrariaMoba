@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -19,8 +20,8 @@ namespace TerrariaMoba.Characters {
             get => "Nocturne Umbra";
         }
         
-        public override Texture2D CharacterIcon {
-            get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Nocturne/NocturneIcon").Value;
+        public override Asset<Texture2D> CharacterIcon {
+            get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Nocturne/NocturneIcon");
         }
 
         public override bool IsMale { get => true; }

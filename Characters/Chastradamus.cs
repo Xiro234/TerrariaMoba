@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,8 +19,8 @@ namespace TerrariaMoba.Characters {
             get => "Chastradamus";
         }
         
-        public override Texture2D CharacterIcon {
-            get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Chastradamus/ChastradamusIcon").Value;
+        public override Asset<Texture2D> CharacterIcon {
+            get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Chastradamus/ChastradamusIcon");
         }
 
         public override bool IsMale { get => true; }

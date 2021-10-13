@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.Players;
@@ -12,7 +11,7 @@ namespace TerrariaMoba.Characters {
     public abstract class Character {
         public abstract string Name { get; }
         public Player User { get; private set; }
-        public abstract Texture2D CharacterIcon { get; }
+        public abstract Asset<Texture2D> CharacterIcon { get; }
 
         //TODO - Change the way talents work. public bool[,] TalentArray { get; protected set; }
         
