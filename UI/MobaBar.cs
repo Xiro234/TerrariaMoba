@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria.UI;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
@@ -30,12 +31,12 @@ namespace TerrariaMoba.UI {
         public override void OnInitialize() {
             var mobaPlayer = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
             
-            bar = new UIImage(ModContent.Request<Texture2D>("Textures/MobaBarBackground").Value);
+            bar = new UIImage(ModContent.Request<Texture2D>("TerrariaMoba/Textures/MobaBarBackground", AssetRequestMode.ImmediateLoad));
             bar.VAlign = 0.95f;
             bar.HAlign = 0.05f;
             Append(bar);
 
-            SlotOneIcon = new UIAbilityIcon(ModContent.Request<Texture2D>("Textures/Lock").Value);
+            SlotOneIcon = new UIAbilityIcon(ModContent.Request<Texture2D>("TerrariaMoba/Textures/Lock", AssetRequestMode.ImmediateLoad).Value);
             SlotOneIcon.Top.Set(48, 0);
             SlotOneIcon.Left.Set(98, 0);
             
@@ -44,7 +45,7 @@ namespace TerrariaMoba.UI {
             SlotOneCooldown.HAlign = 0.5f;
             SlotOneIcon.Append(SlotOneCooldown);
 
-            SlotTwoIcon = new UIAbilityIcon(ModContent.Request<Texture2D>("Textures/Lock").Value);
+            SlotTwoIcon = new UIAbilityIcon(ModContent.Request<Texture2D>("TerrariaMoba/Textures/Lock", AssetRequestMode.ImmediateLoad).Value);
             SlotTwoIcon.Top.Set(48, 0);
             SlotTwoIcon.Left.Set(160, 0);
             
@@ -53,7 +54,7 @@ namespace TerrariaMoba.UI {
             SlotTwoCooldown.HAlign = 0.5f;
             SlotTwoIcon.Append(SlotTwoCooldown);
             
-            SlotThreeIcon = new UIAbilityIcon(ModContent.Request<Texture2D>("Textures/Lock").Value);
+            SlotThreeIcon = new UIAbilityIcon(ModContent.Request<Texture2D>("TerrariaMoba/Textures/Lock", AssetRequestMode.ImmediateLoad).Value);
             SlotThreeIcon.Top.Set(48, 0);
             SlotThreeIcon.Left.Set(222, 0);
             
@@ -62,7 +63,7 @@ namespace TerrariaMoba.UI {
             SlotThreeCooldown.HAlign = 0.5f;
             SlotThreeIcon.Append(SlotThreeCooldown);
             
-            SlotFourIcon = new UIAbilityIcon(ModContent.Request<Texture2D>("Textures/Lock").Value);
+            SlotFourIcon = new UIAbilityIcon(ModContent.Request<Texture2D>("TerrariaMoba/Textures/Lock", AssetRequestMode.ImmediateLoad).Value);
             SlotFourIcon.Top.Set(48, 0);
             SlotFourIcon.Left.Set(284, 0);
             
@@ -71,7 +72,7 @@ namespace TerrariaMoba.UI {
             SlotFourCooldown.HAlign = 0.5f;
             SlotFourIcon.Append(SlotFourCooldown);
             
-            SlotFiveIcon = new UIAbilityIcon(ModContent.Request<Texture2D>("Textures/Lock").Value);
+            SlotFiveIcon = new UIAbilityIcon(ModContent.Request<Texture2D>("TerrariaMoba/Textures/Lock", AssetRequestMode.ImmediateLoad).Value);
             SlotFiveIcon.Top.Set(48, 0);
             SlotFiveIcon.Left.Set(346, 0);
             
@@ -118,7 +119,7 @@ namespace TerrariaMoba.UI {
             levelText.Width.Set(6, 0);
             levelText.Height.Set(6, 0);*/
 
-            characterIcon = new UIImage(ModContent.Request<Texture2D>("Textures/Lock").Value);
+            characterIcon = new UIImage(ModContent.Request<Texture2D>("TerrariaMoba/Textures/Lock", AssetRequestMode.ImmediateLoad));
             characterIcon.Left.Set(18, 0);
             characterIcon.Top.Set(38, 0);
 

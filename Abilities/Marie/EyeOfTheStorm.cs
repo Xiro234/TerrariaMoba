@@ -13,7 +13,7 @@ namespace TerrariaMoba.Abilities.Marie {
     public class EyeOfTheStorm : Ability {
         public EyeOfTheStorm() : base("Eye of the Storm", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Marie/MarieAbilityTwo").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieAbilityTwo").Value; }
 
         public const int LIGHTNING_BASE_DAMAGE = 400;
         public const int RAIN_BASE_DAMAGE = 400;

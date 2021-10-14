@@ -15,7 +15,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
     public class PlanterasLastWill : Ability, IModifyHitPvpWithProj {
         public PlanterasLastWill() : base("Plantera's Last Will", 60, 0, AbilityType.Active) { }
         
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Sylvia/SylviaUltimateTwo").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaUltimateTwo").Value; }
 
         public const int HEAD_BASE_DAMAGE = 680;
         public const int SPORE_BASE_DAMAGE = 160;

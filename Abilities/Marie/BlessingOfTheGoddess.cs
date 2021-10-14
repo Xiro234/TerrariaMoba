@@ -10,7 +10,7 @@ namespace TerrariaMoba.Abilities.Marie {
     public class BlessingOfTheGoddess : Ability {
         public BlessingOfTheGoddess() : base("Blessing of the Goddess", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Marie/MarieUltimateOne").Value; } //not trait anymore just texure name
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieUltimateOne").Value; } //not trait anymore just texure name
     }
 }
 /*using System;

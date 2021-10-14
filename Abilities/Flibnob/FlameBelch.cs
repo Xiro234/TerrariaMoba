@@ -16,7 +16,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
     public class FlameBelch : Ability, IModifyHitPvpWithProj {
         public FlameBelch() : base("Flame Belch", 60, 0, AbilityType.Active) { }
         
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Flibnob/FlibnobAbilityOne").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobAbilityOne").Value; }
 
         public const int FLAME_BASE_DAMAGE = 225;
         public const int FLAME_BASE_NUMBER = 4;

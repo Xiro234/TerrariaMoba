@@ -10,7 +10,7 @@ namespace TerrariaMoba.Abilities.Marie {
     public class Floodboost : Ability {
         public Floodboost() : base("Floodboost", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Marie/MarieTrait").Value; } //not trait anymore just texure name
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieTrait").Value; } //not trait anymore just texure name
     }
 }
 

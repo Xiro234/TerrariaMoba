@@ -14,7 +14,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
         }
 
         public override Texture2D Icon {
-            get => ModContent.Request<Texture2D>("Textures/Sylvia/SylviaAbilityOne").Value;
+            get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaUltimateOne").Value;
         }
 
         public const int JAVELIN_BASE_DAMAGE = 400;

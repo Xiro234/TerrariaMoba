@@ -10,7 +10,7 @@ namespace TerrariaMoba.Abilities.Osteo {
     public class LifedrainPulse : Ability {
         public LifedrainPulse() : base("Lifedrain Pulse", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Osteo/OsteoAbilityTwo").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Osteo/OsteoAbilityTwo").Value; }
     }
 }
 

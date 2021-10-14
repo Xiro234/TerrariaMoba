@@ -12,7 +12,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
     public class Earthsplitter : Ability, IModifyHitPvpWithProj {
         public Earthsplitter() : base("Earthsplitter", 60, 0, AbilityType.Active) { }
         
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Flibnob/FlibnobUltimateOne").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobUltimateOne").Value; }
 
         public const float LEAP_BASE_HEIGHT = -14.6f;
 

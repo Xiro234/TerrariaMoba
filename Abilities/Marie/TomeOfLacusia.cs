@@ -10,7 +10,7 @@ namespace TerrariaMoba.Abilities.Marie {
     public class TomeOfLacusia : Ability {
         public TomeOfLacusia() : base("Tome of Lacusia", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Marie/MarieAbilityTwo").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieAbilityTwo").Value; }
 
         public const int TOME_BASE_HEAL = 400;
         public const int TOME_BASE_CAST_TIME = 150;

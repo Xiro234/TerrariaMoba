@@ -15,7 +15,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
     public class EnsnaringVinesAbility : Ability, IModifyHitPvpWithProj {
         public EnsnaringVinesAbility() : base("Ensnaring Vines", 60, 0, AbilityType.Active) { }
         
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Sylvia/SylviaAbilityOne").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaAbilityOne").Value; }
         
         public const int TRAP_BASE_DAMAGE = 225;
         public const int TRAP_BASE_DURATION = 90;

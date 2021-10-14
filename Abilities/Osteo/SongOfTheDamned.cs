@@ -10,7 +10,7 @@ namespace TerrariaMoba.Abilities.Osteo {
     public class SongOfTheDamned : Ability {
         public SongOfTheDamned() : base("Song of the Damned", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Osteo/OsteoUltimateOne").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Osteo/OsteoUltimateOne").Value; }
     }
 }
 

@@ -10,7 +10,7 @@ namespace TerrariaMoba.Abilities.Osteo {
     public class RaiseDead : Ability {
         public RaiseDead() : base("Raise Dead", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Osteo/OsteoAbilityOne").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Osteo/OsteoAbilityOne").Value; }
     }
 }
 

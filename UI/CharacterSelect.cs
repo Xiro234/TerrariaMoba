@@ -32,13 +32,11 @@ namespace TerrariaMoba.UI {
             background.VAlign = 0.5f;
             background.HAlign = 0.5f;
             Append(background);
-            Main.NewText("CharacterSelect.png appended.");
 
             for (int i = 0; i < iconList.Count; i++) {
                 iconList[i].Left.Set(fromEdge + (spacing * (i % 5)), 0);
                 iconList[i].Top.Set(fromEdge + (spacing * (i / 5)), 0);
                 background.Append(iconList[i]);
-                Main.NewText("CharacterIcon " + i + " appended.");
             }
             
             checkmark = new UIImage(ModContent.Request<Texture2D>("TerrariaMoba/Textures/CheckMarkUnselected", AssetRequestMode.ImmediateLoad));
@@ -48,7 +46,6 @@ namespace TerrariaMoba.UI {
             checkmark.OnMouseOver += OnCheckMouseOver;
 
             background.Append(checkmark);
-            Main.NewText("Checkmark appended.");
         }
 
         public override void Update(GameTime gameTime) {
@@ -82,7 +79,6 @@ namespace TerrariaMoba.UI {
 
         public void OnCheckMouseOver(UIMouseEvent evt, UIElement listeningElement) {
             SoundEngine.PlaySound(SoundID.MenuTick);
-            Main.NewText("if this appears OnCheckMouseOver works i think");
         }
     }
 }

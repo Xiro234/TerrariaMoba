@@ -13,7 +13,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
     public class JunglesWrathAbility : Ability, IModifyHitPvpWithProj  {
         public JunglesWrathAbility() : base("Jungles Wrath", 0, 0, AbilityType.Passive) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Sylvia/SylviaTrait").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaTrait").Value; }
 
         public const int EFFECT_DURATION = 2000;
         public const float DAMAGE_PERCENT = 0.04f;

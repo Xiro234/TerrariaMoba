@@ -10,7 +10,7 @@ namespace TerrariaMoba.Abilities.Osteo {
     public class SoulSiphon : Ability {
         public SoulSiphon() : base("Soul Siphon", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Osteo/OsteoUltimateTwo").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Osteo/OsteoUltimateTwo").Value; }
     }
 }
 

@@ -16,7 +16,7 @@ namespace TerrariaMoba.Abilities.Marie {
     public class WhirlpoolInABottle : Ability, IModifyHitPvpWithProj {
         public WhirlpoolInABottle() : base("Whirlpool in a Bottle", 60, 0, AbilityType.Active) { }
         
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Marie/MarieAbilityOne").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieAbilityOne").Value; }
 
         public const int BOTTLE_BASE_DAMAGE = 500;
         public const int POOL_BASE_DAMAGE = 200;

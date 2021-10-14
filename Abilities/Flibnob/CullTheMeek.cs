@@ -12,7 +12,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
     public class CullTheMeek : Ability, IModifyHitPvpWithProj {
         public CullTheMeek() : base("Cull The Meek", 60, 0, AbilityType.Active) { }
         
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Flibnob/FlibnobUltimateTwo").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobUltimateTwo").Value; }
 
         public const float HOOK_BASE_RANGE = 25f;
 
