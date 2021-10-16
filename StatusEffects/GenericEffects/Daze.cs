@@ -24,6 +24,7 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
             //User.GetModPlayer<MobaPlayer>().Stats.JumpSpeed *= 1-modifier;
         }
         
+        /*
         public override void GetListOfPlayerLayers(List<PlayerLayer> playerLayers) {
             var playerLayer = new PlayerLayer("TerrariaMoba", DisplayName, PlayerLayer.MiscEffectsFront, delegate(PlayerDrawInfo drawInfo) {
                 Player drawPlayer = drawInfo.drawPlayer;
@@ -39,5 +40,6 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
 
             playerLayers.Add(playerLayer);
         }
+        */
     }
 }

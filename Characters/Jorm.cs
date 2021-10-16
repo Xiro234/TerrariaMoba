@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Abilities.Jorm;
+using TerrariaMoba.Items.Jorm;
 using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Characters {
@@ -28,7 +29,7 @@ namespace TerrariaMoba.Characters {
         public override Color HairColor { get => Color.Gold; }
         public override Color SkinColor { get => Color.DarkSalmon; }
         public override Color EyeColor { get => Color.Goldenrod; }
-        public override int PrimaryWeaponID { get => TerrariaMoba.Instance.ItemType("JormHammer"); }
+        public override int PrimaryWeaponID { get => ModContent.ItemType<JormHammer>(); }
         public override int HeadVanityID { get => ItemID.PalladiumHelmet; }
         public override int HeadDyeID { get => ItemID.YellowandSilverDye; }
         public override int BodyVanityID { get => ItemID.PalladiumBreastplate; }
