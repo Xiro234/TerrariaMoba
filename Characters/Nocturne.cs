@@ -1,8 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Abilities.Nocturne;
+using TerrariaMoba.Items.Nocturne;
 using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Characters {
@@ -17,8 +20,8 @@ namespace TerrariaMoba.Characters {
             get => "Nocturne Umbra";
         }
         
-        public override Texture2D CharacterIcon {
-            get => TerrariaMoba.Instance.GetTexture("Textures/Nocturne/NocturneIcon");
+        public override Asset<Texture2D> CharacterIcon {
+            get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Nocturne/NocturneIcon", AssetRequestMode.ImmediateLoad);
         }
 
         public override bool IsMale { get => true; }
@@ -26,7 +29,7 @@ namespace TerrariaMoba.Characters {
         public override Color HairColor { get => Color.Brown; }
         public override Color SkinColor { get => Color.DarkSalmon; }
         public override Color EyeColor { get => Color.Firebrick; }
-        public override int PrimaryWeaponID { get => TerrariaMoba.Instance.ItemType("NocturneSword"); }
+        public override int PrimaryWeaponID { get => ModContent.ItemType<NocturneSword>(); }
         public override int HeadVanityID { get => ItemID.GladiatorHelmet; }
         public override int HeadDyeID { get => ItemID.ReflectiveMetalDye; }
         public override int BodyVanityID { get => ItemID.RedsBreastplate; }

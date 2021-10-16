@@ -3,13 +3,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.Marie {
     public class Floodboost : Ability {
         public Floodboost() : base("Floodboost", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieTrait"); } //not trait anymore just texure name
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieTrait").Value; } //not trait anymore just texure name
     }
 }
 
@@ -27,7 +28,7 @@ namespace TerrariaMoba.Abilities.Marie {
             Name = "Floodboost";
             IsActive = true;
             Timer = FloodboostTimer;
-            Icon = TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieTrait");
+            Icon = ModContent.Request<Texture2D>("Textures/Marie/MarieTrait").Value;
         }
 
         public override void WhileActive() {

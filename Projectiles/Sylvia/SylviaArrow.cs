@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -10,21 +11,20 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         }
 
         public override void SetDefaults() {
-            projectile.friendly = true;
-            projectile.arrow = true;
-            projectile.width = 8;
-            projectile.height = 8;
-            projectile.tileCollide = true;
-            projectile.ranged = true;
-            projectile.aiStyle = 1;
-            drawOffsetX = -6;
-            aiType = ProjectileID.WoodenArrowFriendly;
+            Projectile.friendly = true;
+            Projectile.arrow = true;
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.tileCollide = true;
+            Projectile.aiStyle = 1;
+            DrawOffsetX = -6;
+            AIType = ProjectileID.WoodenArrowFriendly;
         }
 
         public override void Kill(int timeLeft) {
-            Main.PlaySound(0, (int) projectile.position.X, (int) projectile.position.Y);
+            SoundEngine.PlaySound(0, (int) Projectile.position.X, (int) Projectile.position.Y);
             for (int i = 0; i < 10; i++) {
-                Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, 7, 0f, 0f, 0, Color.Red, 1f);
+                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 7, 0f, 0f, 0, Color.Red, 1f);
             }
         }
     }

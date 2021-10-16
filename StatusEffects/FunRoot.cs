@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Terraria.ModLoader;
 using TerrariaMoba.StatusEffects.GenericEffects;
 
 namespace TerrariaMoba.StatusEffects {
     public class FunRoot : Root {
         public override string DisplayName { get => "FunRoot"; }
-        public override Texture2D Icon { get { return TerrariaMoba.Instance.GetTexture("Textures/Blank");} }
+        public override Texture2D Icon { get { return ModContent.Request<Texture2D>("Textures/Blank").Value;} }
         
         public FunRoot() { }
         public FunRoot(int duration, bool canBeCleansed) : base(duration, canBeCleansed) { }

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ModLoader;
 
 namespace TerrariaMoba.Projectiles.Osteo {
@@ -10,25 +11,25 @@ namespace TerrariaMoba.Projectiles.Osteo {
         }
 
         public override void SetDefaults() {
-            projectile.friendly = true;
-            projectile.width = 24;
-            projectile.height = 30;
-            projectile.aiStyle = 0;
-            projectile.tileCollide = true;
-            projectile.penetrate = -1;
+            Projectile.friendly = true;
+            Projectile.width = 24;
+            Projectile.height = 30;
+            Projectile.aiStyle = 0;
+            Projectile.tileCollide = true;
+            Projectile.penetrate = -1;
         }
 
         public override void AI() {
-            projectile.spriteDirection = projectile.direction;
-            if (projectile.direction < 0) {
-                projectile.rotation = (float)Math.Atan2((double)(0f - projectile.velocity.Y), (double)(0f - projectile.velocity.X));
+            Projectile.spriteDirection = Projectile.direction;
+            if (Projectile.direction < 0) {
+                Projectile.rotation = (float)Math.Atan2((double)(0f - Projectile.velocity.Y), (double)(0f - Projectile.velocity.X));
             }
             else {
-                projectile.rotation = (float)Math.Atan2((double)projectile.velocity.Y, (double)projectile.velocity.X);
+                Projectile.rotation = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X);
             }
 
             for (int i = 0; i < 5; i++) {
-                var dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 15, 0f, 0f, 0,
+                var dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 15, 0f, 0f, 0,
                     Color.SteelBlue, 1f);
 
                 dust.noGravity = true;
@@ -38,20 +39,20 @@ namespace TerrariaMoba.Projectiles.Osteo {
 
         public override void Kill(int timeLeft) {
             for (int i = 0; i < 5; i++) {
-                var dust1 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 15, 0f, 0f, 0,
+                var dust1 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 15, 0f, 0f, 0,
                     Color.SteelBlue, 1f);
 
                 dust1.noGravity = true;
                 dust1.noLight = true;
                 
-                var dust2 = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, 84, 0f, 0f, 0,
+                var dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 84, 0f, 0f, 0,
                     Color.Gray, 1.2f);
                 
                 dust2.noGravity = true;
                 dust2.noLight = true;
             }
 
-            Main.PlaySound(0, projectile.position);
+            SoundEngine.PlaySound(0, Projectile.position);
         }
     }
 }

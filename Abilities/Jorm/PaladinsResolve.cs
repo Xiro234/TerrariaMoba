@@ -1,14 +1,45 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.Jorm {
     public class PaladinsResolve : Ability {
-        public PaladinsResolve() : base("Paladin's Resolve", 0, 0, AbilityType.Passive) { }
+        public PaladinsResolve() : base("Paladin's Resolve", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Blank"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
+
+        private int CurrentStacks;
+        private bool OnCourage = false;
+        private bool OnWisdom = false;
+
+        public override void OnCast() {
+            if (!OnCourage && !OnWisdom) {
+                OnCourage = true;
+            }
+
+            if (OnCourage) {
+                OnCourage = false;
+                //clear courage buff
+                OnWisdom = true;
+            }
+
+            if (OnWisdom) {
+                OnWisdom = false;
+                //clear wisdom buff
+                OnCourage = true;
+            }
+            
+            CooldownTimer = BaseCooldown;
+        }
 
         public override void WhileActive() {
-            //TODO - hephaestan might, 4 stacks = empowered ability | 10 armor, if nearest ally is below 25%hp, take 15% of damage they take.
+            /*
+             * on ability cast, CurrentStacks++ [this might be on each ability but not sure]
+             * if(OnCourage)
+             *      give player courage with current CurrentStacks
+             * elseif(OnWisdom)
+             *      give player wisdom with current CurrentStacks
+             */
         }
     }
 }

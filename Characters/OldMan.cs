@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Abilities.OldMan;
 using TerrariaMoba.Statistic;
 
@@ -17,8 +19,8 @@ namespace TerrariaMoba.Characters {
             get => "Balner Gaulish";
         }
         
-        public override Texture2D CharacterIcon {
-            get => TerrariaMoba.Instance.GetTexture("Textures/OldMan/OldManIcon");
+        public override Asset<Texture2D> CharacterIcon {
+            get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/OldMan/OldManIcon", AssetRequestMode.ImmediateLoad);
         }
 
         public override bool IsMale { get => true; }

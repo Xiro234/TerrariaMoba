@@ -30,11 +30,11 @@ namespace TerrariaMoba.Abilities {
             SetPlayer(Main.LocalPlayer);
         }
 
-        public void SetPlayer(Player player) {
-            User = player;
+        public void SetPlayer(Player Player) {
+            User = Player;
         }
 
-        /*public static Ability CreateAbility(Player player) { //, Type type) {
+        /*public static Ability CreateAbility(Player Player) { //, Type type) {
             
         }*/
 
@@ -54,7 +54,7 @@ namespace TerrariaMoba.Abilities {
         public virtual void TimeOut() { }
 
         /// <summary>
-        /// Override this if there are ability/player based conditions.
+        /// Override this if there are ability/Player based conditions.
         /// </summary>
         /// <returns></returns>
         public virtual bool CanCastAbility() {

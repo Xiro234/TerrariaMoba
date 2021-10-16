@@ -156,7 +156,7 @@ namespace TerrariaMoba.Network {
         public static void ReceiveStartGame(BinaryReader reader, int sender) {
             TerrariaMobaUtils.StartGame();
             if (Main.netMode == NetmodeID.Server) {
-                MobaWorld.MatchInProgress = true;
+                MobaSystem.MatchInProgress = true;
                 NetMessage.SendData(MessageID.WorldData);
                 SendStartGame(sender);
             }
@@ -181,7 +181,7 @@ namespace TerrariaMoba.Network {
             target.selectedCharacter = CharacterManager.CharacterTypesList[ID];
             Main.NewText(ID);
             if (Main.netMode == NetmodeID.Server) {
-                SendAssignCharacter(target.player.whoAmI, sender);
+                SendAssignCharacter(target.Player.whoAmI, sender);
             }
         }
         #endregion

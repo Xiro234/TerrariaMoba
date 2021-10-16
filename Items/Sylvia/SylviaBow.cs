@@ -1,10 +1,7 @@
-﻿using System;
-using Terraria;
-using Terraria.ModLoader;
+﻿using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework;
-using TerrariaMoba.Players;
-using TerrariaMoba.Enums;
+using TerrariaMoba.Projectiles.Sylvia;
 
 namespace TerrariaMoba.Items.Sylvia {
     public class SylviaBow : ModItem {
@@ -14,21 +11,21 @@ namespace TerrariaMoba.Items.Sylvia {
         }
 
         public override void SetDefaults() {
-            item.damage = 10;
-            item.ranged = true;
-            item.noMelee = true;
-            item.shoot = mod.ProjectileType("SylviaArrow");
-            item.width = 20;
-            item.height = 12;
-            item.useTime = 40;
-            item.useAnimation = 40;
-            item.UseSound = SoundID.Item5;
-            item.shootSpeed = 9f;
-            item.useStyle = ItemUseStyleID.HoldingOut;
-            item.knockBack = 0;
-            item.value = 10000;
-            item.rare = ItemRarityID.Green;
-            item.autoReuse = false;
+            Item.damage = 10;
+            Item.DamageType = DamageClass.Ranged;
+            Item.noMelee = true;
+            Item.shoot = ModContent.ProjectileType<SylviaArrow>();
+            Item.width = 20;
+            Item.height = 12;
+            Item.useTime = 40;
+            Item.useAnimation = 40;
+            Item.UseSound = SoundID.Item5;
+            Item.shootSpeed = 9f;
+            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.knockBack = 0;
+            Item.value = 10000;
+            Item.rare = ItemRarityID.Green;
+            Item.autoReuse = false;
         }
         
         public override Vector2? HoldoutOffset() {

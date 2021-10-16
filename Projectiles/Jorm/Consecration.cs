@@ -1,4 +1,4 @@
-﻿﻿using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
 
 namespace TerrariaMoba.Projectiles.Jorm {
@@ -7,40 +7,40 @@ namespace TerrariaMoba.Projectiles.Jorm {
         public float ConsecDuration { get; set; }
 
         public override void SetDefaults() {
-            projectile.width = 20;
-            projectile.height = 20;
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.timeLeft = 1000;
-            projectile.tileCollide = false;
-            projectile.alpha = 255;
-            projectile.penetrate = -1;
+            Projectile.width = 20;
+            Projectile.height = 20;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.timeLeft = 1000;
+            Projectile.tileCollide = false;
+            Projectile.alpha = 255;
+            Projectile.penetrate = -1;
 
             ConsecSpread = Abilities.Jorm.Consecration.CONSEC_SPREAD_RANGE;
             ConsecDuration = Abilities.Jorm.Consecration.CONSEC_DURATION;
         }
 
         public override void AI() {
-            if (projectile.timeLeft == 1000) {
-                projectile.timeLeft = (int) ConsecDuration;
+            if (Projectile.timeLeft == 1000) {
+                Projectile.timeLeft = (int) ConsecDuration;
             }
 
-            projectile.position.Y = GetYPos() - 2;
+            Projectile.position.Y = GetYPos() - 2;
             
-            if (projectile.width < ConsecSpread) {
-                projectile.width += 5;
-                projectile.position.X -= 2.5f;
+            if (Projectile.width < ConsecSpread) {
+                Projectile.width += 5;
+                Projectile.position.X -= 2.5f;
             }
 
             for (int d = 0; d < 20; d++) {
-                Dust.NewDust(projectile.position, projectile.width, projectile.height, 269, 0, 0, 50);
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 269, 0, 0, 50);
             }
 
         }
         
         private int GetYPos() {
-            int posX = (int)projectile.Bottom.X;
-            int posY = (int)projectile.Bottom.Y;
+            int posX = (int)Projectile.Bottom.X;
+            int posY = (int)Projectile.Bottom.Y;
 
             if (TerrariaMobaUtils.TileIsSolidOrPlatform(posX / 16, posY / 16)) {
                 while (TerrariaMobaUtils.TileIsSolidOrPlatform(posX / 16, posY / 16)) {

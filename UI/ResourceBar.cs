@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.UI;
 using TerrariaMoba.Characters;
 using TerrariaMoba.Players;
@@ -21,21 +22,21 @@ namespace TerrariaMoba.UI {
             base.DrawSelf(spriteBatch);
             
             float quotient;
-            var player = Main.LocalPlayer;
-            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
-            if (player != null) {
+            var Player = Main.LocalPlayer;
+            var mobaPlayer = Player.GetModPlayer<MobaPlayer>();
+            if (Player != null) {
                 string text = "";
 
                 if (resource == Resource.Life) {
-                    quotient = (float) player.statLife / player.statLifeMax2;
-                    text = player.statLife + "/" + player.statLifeMax2;
+                    quotient = (float) Player.statLife / Player.statLifeMax2;
+                    text = Player.statLife + "/" + Player.statLifeMax2;
                 }
                 else if (resource == Resource.Experience) {
                     quotient = (float) mobaPlayer.Hero.Experience / Character.XP_PER_LEVEL;
                     text = mobaPlayer.Hero.Experience + "/" + Character.XP_PER_LEVEL;
                 }
                 else {
-                    float maxResource = mobaPlayer.Stats.MaxResource + mobaPlayer.Hero.BaseStatistics.MaxResource;
+                    float maxResource = mobaPlayer.FlatStats.MaxResource + mobaPlayer.Hero.BaseStatistics.MaxResource;
                     float currentResource = mobaPlayer.CurrentResource;
                     quotient = currentResource / maxResource;
                     text = currentResource + "/" + maxResource;
@@ -47,8 +48,8 @@ namespace TerrariaMoba.UI {
                 float scale = 0.6f;
                 spriteBatch.Draw(bar, rectangle.Center(), new Rectangle(0, 0, (int)(bar.Width * quotient), bar.Height), Color.White);
                 Vector2 stringPos = rectangle.Center() + new Vector2(bar.Width / 2f, bar.Height / 2f);
-                stringPos -= (new Vector2(Main.fontMouseText.MeasureString(text).X / 2f,Main.fontMouseText.MeasureString(text).Y / 3f)) * scale;
-                spriteBatch.DrawString(Main.fontMouseText, text, stringPos, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+                stringPos -= (new Vector2(FontAssets.MouseText.Value.MeasureString(text).X / 2f,FontAssets.MouseText.Value.MeasureString(text).Y / 3f)) * scale;
+                spriteBatch.DrawString(FontAssets.MouseText.Value, text, stringPos, Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
             }
         }
     }

@@ -3,7 +3,10 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Projectiles;
+using TerrariaMoba.Projectiles.Sylvia;
 
 namespace TerrariaMoba.Abilities.Sylvia {
     public class Flourish : Ability {
@@ -11,7 +14,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
         }
 
         public override Texture2D Icon {
-            get => TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaAbilityOne");
+            get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaUltimateOne").Value;
         }
 
         public const int JAVELIN_BASE_DAMAGE = 400;
@@ -34,8 +37,8 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 Vector2 velocity = new Vector2(direction * 0.5f, -0.866f); //Unit vector in specific direction
                 velocity *= 12;
 
-                teleport = Main.projectile[Projectile.NewProjectile(position, velocity,
-                    TerrariaMoba.Instance.ProjectileType("SylviaUlt1Teleport"),
+                teleport = Main.projectile[Projectile.NewProjectile(new ProjectileSource_Ability(User, this), position, velocity,
+                    ModContent.ProjectileType<SylviaUlt1Teleport>(),
                     0, 0, User.whoAmI)];
             }
         }
@@ -97,7 +100,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
 
         public Flourish(Player myPlayer) : base(myPlayer) {
             Name = "Flourish";
-            Icon = TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaUltimateOne");
+            Icon = ModContent.Request<Texture2D>("Textures/Sylvia/SylviaUltimateOne").Value;
         }
 
         public override void OnCast() {
@@ -115,7 +118,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 velocity *= 12;
 
                 teleport = Main.projectile[Projectile.NewProjectile(position, velocity,
-                    TerrariaMoba.Instance.ProjectileType("SylviaUlt1Teleport"),
+                    ModContent.ProjectileType<SylviaUlt1Teleport"),
                     0, 0, User.whoAmI)];
             }
         }

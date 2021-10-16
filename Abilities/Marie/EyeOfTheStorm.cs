@@ -2,14 +2,18 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Projectiles;
+using TerrariaMoba.Projectiles.Marie;
 
 namespace TerrariaMoba.Abilities.Marie {
     public class EyeOfTheStorm : Ability {
         public EyeOfTheStorm() : base("Eye of the Storm", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieAbilityTwo"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieAbilityTwo").Value; }
 
         public const int LIGHTNING_BASE_DAMAGE = 400;
         public const int RAIN_BASE_DAMAGE = 400;
@@ -33,9 +37,9 @@ namespace TerrariaMoba.Abilities.Marie {
                 }
                 Vector2 velocity = new Vector2(dirX, dirY);
 
-                Projectile proj = Projectile.NewProjectileDirect(User.Center, velocity, TerrariaMoba.Instance.ProjectileType("ESSpawner"), 
+                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),User.Center, velocity, ModContent.ProjectileType<ESSpawner>(), 
                     0, 0, User.whoAmI);
-                Main.PlaySound(SoundID.Item66, User.Center);
+                SoundEngine.PlaySound(SoundID.Item66, User.Center);
 
                 if (proj != null) {
                     

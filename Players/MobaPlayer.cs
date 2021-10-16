@@ -5,7 +5,9 @@ using Terraria;
 using Terraria.GameInput;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.StatusEffects;
@@ -26,10 +28,11 @@ namespace TerrariaMoba.Players {
         public override void Initialize() {
             EffectList = new List<StatusEffect>();
             TestAbilities = new List<Ability>();
-            Stats = new Statistics();
+            FlatStats = new Statistics();
+            MultiplicativeStats = new Statistics();
         }
 
-        public override void OnEnterWorld(Player player) {
+        public override void OnEnterWorld(Player Player) {
             //TerrariaMoba.Instance.MobaBar = null;
             //TerrariaMoba.Instance.MobaBar = new MobaBar();
             //TerrariaMoba.Instance.HideBar();
@@ -38,8 +41,8 @@ namespace TerrariaMoba.Players {
             //TestAbilities.Add(new UmbralBlade());
         }
 
-        public override void OnRespawn(Player player) {
-            player.statLife = player.statLifeMax;
+        public override void OnRespawn(Player Player) {
+            Player.statLife = Player.statLifeMax;
         }
 
         public override void ResetEffects() {
@@ -47,9 +50,13 @@ namespace TerrariaMoba.Players {
             TickStatusEffects();
             TickAbilities();
 
-            AbilityEffectManager.ResetEffects(player);
+            AbilityEffectManager.ResetEffects(Player);
+            SetPlayerStats();
+
+            //Player.maxRunSpeed = 0.5f;
+            //Player.moveSpeed /= 2f;
         }
-        
+
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TerrariaMoba.AbilityOneHotkey.JustPressed) {
                 Hero?.BasicAbilityOne.OnCast();
@@ -128,11 +135,11 @@ namespace TerrariaMoba.Players {
             }
             */
             if (TerrariaMoba.OpenCharacterSelect.JustPressed) {
-                if (TerrariaMoba.Instance.SelectInterface.CurrentState == null && Hero == null) {
-                    TerrariaMoba.Instance.ShowSelect();
+                if (MobaSystem.SelectInterface.CurrentState == null && Hero == null) {
+                    MobaSystem.ShowSelect();
                 }
                 else {
-                    TerrariaMoba.Instance.HideSelect();
+                    MobaSystem.HideSelect();
                 }
             }
             
@@ -146,12 +153,8 @@ namespace TerrariaMoba.Players {
             return true;
         }
 
-        public override void PostUpdateRunSpeeds() {
-            
-        }
-
         public override void PostUpdateBuffs() {
-            if (MobaWorld.MatchInProgress) {
+            if (MobaSystem.MatchInProgress) {
                 RegenLife();
                 RegenResource();
                 ResetStats();
@@ -166,7 +169,7 @@ namespace TerrariaMoba.Players {
             if (Main.netMode == NetmodeID.MultiplayerClient && pvp) {
             }
             else {
-                AbilityEffectManager.Kill(player, damage, hitDirection, pvp, damageSource);
+                AbilityEffectManager.Kill(Player, damage, hitDirection, pvp, damageSource);
             }
         }
 
@@ -180,22 +183,22 @@ namespace TerrariaMoba.Players {
                 Main.NewText(proj.Name + " has not set any damage types! Please contact developers immediately.", Color.Red);
             }
             
-            AbilityEffectManager.ModifyHitPvpWithProj(player, proj, target, ref damage, ref crit);
+            AbilityEffectManager.ModifyHitPvpWithProj(Player, proj, target, ref damage, ref crit);
 
-            target.GetModPlayer<MobaPlayer>().TakePvpDamage(physicalDamage, magicalDamage, trueDamage, player.whoAmI, false);
+            target.GetModPlayer<MobaPlayer>().TakePvpDamage(physicalDamage, magicalDamage, trueDamage, Player.whoAmI, false);
         }
 
         public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit) {
-            target.GetModPlayer<MobaPlayer>().TakePvpDamage(damage, 0, 0, player.whoAmI, false);
+            target.GetModPlayer<MobaPlayer>().TakePvpDamage(damage, 0, 0, Player.whoAmI, false);
         }
 
-        public override void DrawEffects(PlayerDrawInfo drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) {
-            Texture2D healthBar = TerrariaMoba.Instance.GetTexture("Textures/PlayerHealthBar");
-            Vector2 barPos = new Vector2(player.Top.X - Main.screenPosition.X - (healthBar.Width/2),
-                player.Top.Y - Main.screenPosition.Y - 20);
+        public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) {
+            Texture2D healthBar = ModContent.Request<Texture2D>("TerrariaMoba/Textures/PlayerHealthBar").Value;
+            Vector2 barPos = new Vector2(Player.Top.X - Main.screenPosition.X - (healthBar.Width/2),
+                Player.Top.Y - Main.screenPosition.Y - 20);
             Main.spriteBatch.Draw(healthBar, barPos, Color.White);
 
-            float quotient = Utils.Clamp((float) player.statLife / player.statLifeMax2, 0f, 1f);
+            float quotient = Utils.Clamp((float) Player.statLife / Player.statLifeMax2, 0f, 1f);
 
             int left = 0;
             int right = healthBar.Width;
@@ -207,47 +210,46 @@ namespace TerrariaMoba.Players {
             gradA = Color.DarkGreen;
             gradB = Color.Lime;
             
-            int stepsPerHundred = (int)(steps / (player.statLifeMax2 / 100f));
+            int stepsPerHundred = (int)(steps / (Player.statLifeMax2 / 100f));
             int countPerBar = 0;
             
             for (int i = 0; i < steps; i++) {
                 float percent = (float) i / (right - left);
-                Main.spriteBatch.Draw(Main.magicPixel, new Vector2(barPos.X + i + 6, barPos.Y + 2),
+                Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Vector2(barPos.X + i + 6, barPos.Y + 2),
                     new Rectangle(0, 0, 1, 6),
                     Color.Lerp(gradA, gradB, percent));
 
                 /*if (i % stepsPerHundred == 0 && i != 0) {
                     countPerBar++;
                     if (countPerBar % 10 == 0) {
-                        Main.spriteBatch.Draw(Main.magicPixel, new Vector2(barPos.X + i + 6, barPos.Y + 2),
+                        Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Vector2(barPos.X + i + 6, barPos.Y + 2),
                             new Rectangle(0, 0, 1, 6),
                             Color.Black);
                     }
                     else {
-                        Main.spriteBatch.Draw(Main.magicPixel, new Vector2(barPos.X + i + 6, barPos.Y + 2),
+                        Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Vector2(barPos.X + i + 6, barPos.Y + 2),
                             new Rectangle(0, 0, 1, 4),
                             Color.Black);
                     }
                 }*/
             }
-            AbilityEffectManager.DrawEffects(player, drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
+            AbilityEffectManager.DrawEffects(Player, drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
         }
 
-        public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage,
-            ref float knockBack) {
-            return AbilityEffectManager.Shoot(player, item, ref position, ref speedX, ref speedY, ref type, ref damage,
-                ref knockBack);
+        public override bool Shoot(Item item, ProjectileSource_Item_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage,
+            float knockback) {
+            return AbilityEffectManager.Shoot(Player, ref item, ref source, ref position, ref velocity, ref type, ref damage, ref knockback);
         }
 
         // For use later when I rework Marie's ultimate.
         /*
-        public static readonly PlayerLayer MiscEffectsBack = new PlayerLayer("TerrariaMoba", "MiscEffectsBack", PlayerLayer.MiscEffectsBack, delegate(PlayerDrawInfo drawInfo) {
+        public static readonly PlayerDrawLayer MiscEffectsBack = new PlayerDrawLayer("TerrariaMoba", "MiscEffectsBack", PlayerDrawLayer.MiscEffectsBack, delegate(PlayerDrawSet drawInfo) {
             Player drawPlayer = drawInfo.drawPlayer;
             Mod mod = ModLoader.GetMod("TerrariaMoba");
             MobaPlayer modPlayer = drawPlayer.GetModPlayer<MobaPlayer>();
             
             if (modPlayer.MarieEffects.LacusianBlessing) {
-                Texture2D texture = mod.GetTexture("Textures/Marie/GoddessOfLacusia");
+                Texture2D texture = Mod.Assets.Request<Texture2D>("Textures/Marie/GoddessOfLacusia").Value;
                 SpriteEffects effects;
 
                 if (drawPlayer.direction == 1) {
@@ -265,10 +267,12 @@ namespace TerrariaMoba.Players {
             }
         });
         */
-        public override void ModifyDrawLayers(List<PlayerLayer> layers) {
+
+        /*public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {
+
             foreach (var effect in EffectList) {
-                List<PlayerLayer> playerLayers = new List<PlayerLayer>();
-                effect.GetListOfPlayerLayers(playerLayers);
+                List<PlayerDrawLayer> playerLayers = new List<PlayerDrawLayer>();
+                effect.GetListOfPlayerDrawLayers(playerLayers);
                 foreach (var effectLayer in playerLayers) {
                     if (effectLayer != null) {
                         effectLayer.visible = true;
@@ -277,54 +281,56 @@ namespace TerrariaMoba.Players {
                     }
                 }
                 //TODO - Add checking for invisiblity and add constants somewhere for where elements should be
+                //TODO - Work in new player-layer system
             }
-        }
+        }*/
+        
         
         public override void SetControls() {
-           AbilityEffectManager.SetControls(player);
+           AbilityEffectManager.SetControls(Player);
         }
         
 
         public void TakePvpDamage(int physicalDamage, int magicalDamage, int trueDamage, int killer, bool noBroadcast) {
-            if (!player.immune) {
-                AbilityEffectManager.TakePvpDamage(player, ref physicalDamage, ref magicalDamage, ref trueDamage, ref killer);
-                int mitigatedPhysical = (int)Math.Ceiling(physicalDamage - physicalDamage * Stats.PhysicalArmor * 0.01f);
-                int mitigatedMagical = (int)Math.Ceiling(magicalDamage - magicalDamage * Stats.MagicalArmor * 0.01f);
+            if (!Player.immune) {
+                AbilityEffectManager.TakePvpDamage(Player, ref physicalDamage, ref magicalDamage, ref trueDamage, ref killer);
+                int mitigatedPhysical = (int)Math.Ceiling(physicalDamage - physicalDamage * FlatStats.PhysicalArmor * 0.01f);
+                int mitigatedMagical = (int)Math.Ceiling(magicalDamage - magicalDamage * FlatStats.MagicalArmor * 0.01f);
                 
                 if (mitigatedPhysical > 0) {
-                    CombatText.NewText(player.Hitbox, Color.Maroon, mitigatedPhysical);
+                    CombatText.NewText(Player.Hitbox, Color.Maroon, mitigatedPhysical);
                 }
 
                 if (mitigatedMagical > 0) {
-                    CombatText.NewText(player.Hitbox, Color.DodgerBlue, mitigatedMagical);
+                    CombatText.NewText(Player.Hitbox, Color.DodgerBlue, mitigatedMagical);
                 }
 
                 if (trueDamage > 0) {
-                    CombatText.NewText(player.Hitbox, Color.Goldenrod, trueDamage);
+                    CombatText.NewText(Player.Hitbox, Color.Goldenrod, trueDamage);
                 }
 
                 int dealtDamage = mitigatedPhysical + mitigatedMagical + trueDamage;
-                player.statLife -= dealtDamage;
+                Player.statLife -= dealtDamage;
                 
-                if (player.statLife <= 0) {
-                    player.KillMe(PlayerDeathReason.ByPlayer(killer), dealtDamage, 1, true);
+                if (Player.statLife <= 0) {
+                    Player.KillMe(PlayerDeathReason.ByPlayer(killer), dealtDamage, 1, true);
                 }
                 
-                Main.PlaySound(1, player.position);
+                SoundEngine.PlaySound(1, Player.position);
 
                 if (!noBroadcast) {
-                    NetworkHandler.SendPvpHit(physicalDamage, magicalDamage, trueDamage, player.whoAmI, killer);
+                    NetworkHandler.SendPvpHit(physicalDamage, magicalDamage, trueDamage, Player.whoAmI, killer);
                 }
             }
         }
 
         public void HealMe(int amount, bool doText) {
             if(doText) {
-                CombatText.NewText(player.Hitbox, CombatText.HealLife, amount, false);
+                CombatText.NewText(Player.Hitbox, CombatText.HealLife, amount, false);
             }
-            player.statLife += amount;
-            if (player.statLife > player.statLifeMax2) {
-                player.statLife = player.statLifeMax2;
+            Player.statLife += amount;
+            if (Player.statLife > Player.statLifeMax2) {
+                Player.statLife = Player.statLifeMax2;
             }
         }
     }

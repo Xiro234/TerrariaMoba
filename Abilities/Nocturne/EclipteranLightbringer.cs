@@ -1,11 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.Nocturne {
     public class EclipteranLightbringer : Ability {
         public EclipteranLightbringer() : base("Eclipteran Lightbringer", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Blank"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 
         public override void OnCast() {
             //TODO - Light shines through the titanium on nocturnes armor; changes A1,2,3 and Trait:

@@ -9,7 +9,7 @@ namespace TerrariaMoba.Packets.General {
             if (Main.netMode != NetmodeID.Server) {
                 var plr = Main.player[target].GetModPlayer<MobaPlayer>();
                 if (plr.CharacterPicked != true) {
-                    AssignCharacter(ref plr.MyCharacter, character, plr.player);
+                    AssignCharacter(ref plr.MyCharacter, character, plr.Player);
                     plr.CharacterPicked = true;
                 }
             }

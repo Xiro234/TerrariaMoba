@@ -13,6 +13,9 @@
         public float AttackDamage { get; set; }
         public float AttackSpeed { get; set; }
         public float AttackVelocity { get; set; }
+        
+        public float MovementSpeed { get; set; }
+        public float JumpSpeed { get; set; }
 
         public Statistics(float maxHealth, float healthRegen, float maxResource, float resourceRegen, Resource resourceType, float attackDamage, float attackSpeed, float attackVelocity) {
             MaxHealth = maxHealth;

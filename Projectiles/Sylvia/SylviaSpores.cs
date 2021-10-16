@@ -6,45 +6,45 @@ namespace TerrariaMoba.Projectiles.Sylvia {
     public class SylviaSpores : ModProjectile {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("SylviaSpores");
-            Main.projFrames[projectile.type] = 5;
+            Main.projFrames[Projectile.type] = 5;
         }
         
         public override void SetDefaults() {
-            projectile.friendly = true;
-            projectile.tileCollide = false;
-            projectile.penetrate = -1;
-            projectile.width = 20;
-            projectile.height = 20;
-            projectile.aiStyle = 0;
+            Projectile.friendly = true;
+            Projectile.tileCollide = false;
+            Projectile.penetrate = -1;
+            Projectile.width = 20;
+            Projectile.height = 20;
+            Projectile.aiStyle = 0;
         }
 
         public override void AI() {
-            projectile.ai[0] += 1f;
+            Projectile.ai[0] += 1f;
             
-            if (projectile.velocity.Length() > 0) {
-                Vector2 direction = Vector2.Normalize(projectile.velocity);
+            if (Projectile.velocity.Length() > 0) {
+                Vector2 direction = Vector2.Normalize(Projectile.velocity);
                 direction *= 0.1f;
 
-                if (projectile.velocity.Length() < direction.Length()) {
-                    projectile.velocity = Vector2.Zero;
+                if (Projectile.velocity.Length() < direction.Length()) {
+                    Projectile.velocity = Vector2.Zero;
                 }
                 else {
-                    projectile.velocity -= direction;
+                    Projectile.velocity -= direction;
                 }
             }
 
 
-            if (++projectile.frameCounter >= 5) {
-                projectile.frameCounter = 0;
-                projectile.frame = ++projectile.frame % Main.projFrames[projectile.type];
+            if (++Projectile.frameCounter >= 5) {
+                Projectile.frameCounter = 0;
+                Projectile.frame = ++Projectile.frame % Main.projFrames[Projectile.type];
             }
 
-            if (projectile.ai[0] > 300) {
-                projectile.alpha += (255 / 60);
+            if (Projectile.ai[0] > 300) {
+                Projectile.alpha += (255 / 60);
             }
             
-            if (projectile.ai[0] > 360) {
-                projectile.Kill();
+            if (Projectile.ai[0] > 360) {
+                Projectile.Kill();
             }
         }
     }

@@ -14,40 +14,40 @@ namespace TerrariaMoba.StatusEffects {
         private static List<Type> StatusEffectTypesList { get; set; }
         
         #region NETWORK
-        public static bool AddEffect(Player player, StatusEffect statusEffect, bool quiet = false) {
-            statusEffect.SetPlayer(player);
+        public static bool AddEffect(Player Player, StatusEffect statusEffect, bool quiet = false) {
+            statusEffect.SetPlayer(Player);
             statusEffect.Apply();
-            player.GetModPlayer<MobaPlayer>().EffectList.Add(statusEffect);
+            Player.GetModPlayer<MobaPlayer>().EffectList.Add(statusEffect);
 
             if (!quiet && Main.netMode != NetmodeID.SinglePlayer) {
-                NetworkHandler.SendAddEffect(statusEffect, player.whoAmI);
+                NetworkHandler.SendAddEffect(statusEffect, Player.whoAmI);
             }
             //TODO - Add error checking for adding effect
             return true;
         }
 
-        public static bool RemoveEffect(Player player, StatusEffect statusEffect, bool quiet = false) {
-            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
+        public static bool RemoveEffect(Player Player, StatusEffect statusEffect, bool quiet = false) {
+            var mobaPlayer = Player.GetModPlayer<MobaPlayer>();
             bool returnVar = mobaPlayer.EffectList.Remove(statusEffect);
 
             if (returnVar && !quiet) {
-                NetworkHandler.SendSyncEffectList(player.whoAmI, player.whoAmI);
+                NetworkHandler.SendSyncEffectList(Player.whoAmI, Player.whoAmI);
             }
             
             return returnVar;
         }
         
-        public static bool HasEffect(Player player, StatusEffect effect) {
+        public static bool HasEffect(Player Player, StatusEffect effect) {
             int id = GetIDOfEffect(effect);
-            return player.GetModPlayer<MobaPlayer>().EffectList.Any(x => GetIDOfEffect(x) == id);
+            return Player.GetModPlayer<MobaPlayer>().EffectList.Any(x => GetIDOfEffect(x) == id);
         }
 
-        public static bool SyncSingleEffect(Player player, StatusEffect statusEffect) {
-            var mobaPlayer = player.GetModPlayer<MobaPlayer>();
+        public static bool SyncSingleEffect(Player Player, StatusEffect statusEffect) {
+            var mobaPlayer = Player.GetModPlayer<MobaPlayer>();
             int index = mobaPlayer.EffectList.IndexOf(statusEffect);
 
             if (index >= 0) {
-                NetworkHandler.SendSyncEffect(index, player.whoAmI, Main.myPlayer);
+                NetworkHandler.SendSyncEffect(index, Player.whoAmI, Main.myPlayer);
                 return true;
             }
             else {
@@ -62,6 +62,11 @@ namespace TerrariaMoba.StatusEffects {
 
         public static int GetIDOfEffect(StatusEffect effect) {
             return StatusEffectDict[effect.GetType()];
+        }
+
+        public static bool PlayerHasEffectType<T>(Player player) {
+            MobaPlayer mobaPlayer = player.GetModPlayer<MobaPlayer>();
+            return mobaPlayer.EffectList.OfType<T>().Any();
         }
 
         public static void Load() {

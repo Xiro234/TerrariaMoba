@@ -1,45 +1,46 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TerrariaMoba.Projectiles.Marie {
     public class ESSpawner : ModProjectile {
         public override void SetStaticDefaults() {
-            Main.projFrames[projectile.type] = 4;
+            Main.projFrames[Projectile.type] = 4;
         }
 
         public override void SetDefaults() {
-            projectile.Name = "Storm Spawner";
-            projectile.netImportant = true;
-            projectile.width = 28; 
-            projectile.height = 28; 
-            projectile.timeLeft = 100;
-            projectile.penetrate = -1;
-            projectile.alpha = 255;
-            projectile.ignoreWater = true;
+            Projectile.Name = "Storm Spawner";
+            Projectile.netImportant = true;
+            Projectile.width = 28; 
+            Projectile.height = 28; 
+            Projectile.timeLeft = 100;
+            Projectile.penetrate = -1;
+            Projectile.alpha = 255;
+            Projectile.ignoreWater = true;
         }
 
         public override void AI() {
-            if (projectile.alpha > 0) {
-                projectile.alpha -= 8;
+            if (Projectile.alpha > 0) {
+                Projectile.alpha -= 8;
             }
 
-            if (++projectile.frameCounter >= 5) {
-                projectile.frameCounter = 0;
-                projectile.frame = ++projectile.frame % Main.projFrames[projectile.type];
+            if (++Projectile.frameCounter >= 5) {
+                Projectile.frameCounter = 0;
+                Projectile.frame = ++Projectile.frame % Main.projFrames[Projectile.type];
             }
         }
 
         public override void Kill(int timeLeft) {
-            if (Main.netMode != NetmodeID.Server && Main.myPlayer == projectile.owner) {
-                Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, 
-                    TerrariaMoba.Instance.ProjectileType("ESStormCloud"), projectile.damage, projectile.knockBack, projectile.whoAmI);
-                Main.PlaySound(SoundID.Item74, projectile.Center);
+            if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) {
+                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Vector2.Zero, 
+                    ModContent.ProjectileType<ESStormCloud>(), Projectile.damage, Projectile.knockBack, Projectile.whoAmI);
+                SoundEngine.PlaySound(SoundID.Item74, Projectile.Center);
             }
         }
 
-        public override bool CanDamage() {
+        public override bool? CanDamage() {
             return false;
         }
     }

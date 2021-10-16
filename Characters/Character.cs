@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
+using Terraria.ID;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.Players;
 using TerrariaMoba.Statistic;
@@ -11,7 +12,7 @@ namespace TerrariaMoba.Characters {
     public abstract class Character {
         public abstract string Name { get; }
         public Player User { get; private set; }
-        public abstract Texture2D CharacterIcon { get; }
+        public abstract Asset<Texture2D> CharacterIcon { get; }
 
         //TODO - Change the way talents work. public bool[,] TalentArray { get; protected set; }
         
@@ -92,8 +93,11 @@ namespace TerrariaMoba.Characters {
 
         public virtual void RegenResource() { //Base is mana
             var mobaPlayer = User.GetModPlayer<MobaPlayer>();
-            float manaRegenFromMax = ((BaseStatistics.MaxResource + mobaPlayer.Stats.MaxResource) * 0.125f / 60f);
-            mobaPlayer.CurrentResource += manaRegenFromMax + BaseStatistics.ResourceRegen + mobaPlayer.Stats.ResourceRegen;
+            
+            int maxResource = (int)Math.Ceiling((BaseStatistics.MaxResource + mobaPlayer.FlatStats.MaxResource) * (1 + mobaPlayer.MultiplicativeStats.MaxResource));
+            if (mobaPlayer.CurrentResource > maxResource) {
+                mobaPlayer.CurrentResource = maxResource;
+            }
         }
 
         public virtual void InitializePlayer() { 

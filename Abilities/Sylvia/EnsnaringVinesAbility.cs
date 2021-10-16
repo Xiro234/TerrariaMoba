@@ -3,8 +3,10 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Interfaces;
+using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Sylvia;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Sylvia;
@@ -13,7 +15,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
     public class EnsnaringVinesAbility : Ability, IModifyHitPvpWithProj {
         public EnsnaringVinesAbility() : base("Ensnaring Vines", 60, 0, AbilityType.Active) { }
         
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Sylvia/SylviaAbilityOne"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaAbilityOne").Value; }
         
         public const int TRAP_BASE_DAMAGE = 225;
         public const int TRAP_BASE_DURATION = 90;
@@ -32,10 +34,10 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 Vector2 directionVector = Vector2.UnitX * direction;
                 Vector2 position = User.Center + directionVector * TRAP_BASE_TILE_DISTANCE * 16;
 
-                Projectile proj = Projectile.NewProjectileDirect(position, velocity, TerrariaMoba.Instance.ProjectileType("EnsnaringVinesSpawner"), 
+                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),position, velocity, ModContent.ProjectileType<EnsnaringVinesSpawner>(), 
                     0, 0, User.whoAmI);
                 
-                EnsnaringVinesSpawner spawner = proj.modProjectile as EnsnaringVinesSpawner;
+                EnsnaringVinesSpawner spawner = proj.ModProjectile as EnsnaringVinesSpawner;
                 
                 if (spawner != null) {
                     spawner.TrapDamage = TRAP_BASE_DAMAGE;
@@ -49,8 +51,8 @@ namespace TerrariaMoba.Abilities.Sylvia {
         }
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            var modProjectile = proj.modProjectile;
-            EnsnaringVinesTrap trap = modProjectile as EnsnaringVinesTrap;
+            var ModProjectile = proj.ModProjectile;
+            EnsnaringVinesTrap trap = ModProjectile as EnsnaringVinesTrap;
             if (trap != null) {
                 StatusEffectManager.AddEffect(target, new EnsnaringVinesEffect(ROOT_BASE_DURATION, true));
             }

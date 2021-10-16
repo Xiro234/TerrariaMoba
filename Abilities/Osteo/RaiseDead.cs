@@ -3,13 +3,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.Osteo {
     public class RaiseDead : Ability {
         public RaiseDead() : base("Raise Dead", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoAbilityOne"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Osteo/OsteoAbilityOne").Value; }
     }
 }
 
@@ -33,7 +34,7 @@ namespace TerrariaMoba.Abilities.Osteo {
         
         public RaiseDead(Player myPlayer) : base(myPlayer) {
             Name = "Raise Dead";
-            Icon = TerrariaMoba.Instance.GetTexture("Textures/Osteo/OsteoAbilityOne");
+            Icon = ModContent.Request<Texture2D>("Textures/Osteo/OsteoAbilityOne").Value;
         }
 
         public override void OnCast() {

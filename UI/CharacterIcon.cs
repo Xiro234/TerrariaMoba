@@ -1,10 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 using TerrariaMoba.Characters;
 using TerrariaMoba.Players;
+using Terraria.Audio;
 
 namespace TerrariaMoba.UI {
     public class CharacterIcon : UIImage {
@@ -30,13 +32,13 @@ namespace TerrariaMoba.UI {
                     int right = hitbox.Right;
                     int top = hitbox.Top;
                     int bottom = hitbox.Bottom;
-                    spriteBatch.Draw(Main.magicPixel, new Rectangle(left - 2, top - 2, right - left + 4, 2),
+                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(left - 2, top - 2, right - left + 4, 2),
                         Color.Yellow); //Top rect
-                    spriteBatch.Draw(Main.magicPixel, new Rectangle(right, top - 2, 2, bottom - top + 4),
+                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(right, top - 2, 2, bottom - top + 4),
                         Color.Yellow); //Right rect
-                    spriteBatch.Draw(Main.magicPixel, new Rectangle(left - 2, bottom, right - left + 4, 2),
+                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(left - 2, bottom, right - left + 4, 2),
                         Color.Yellow); //Bottom Rect
-                    spriteBatch.Draw(Main.magicPixel, new Rectangle(left - 2, top - 2, 2, bottom - top + 4),
+                    spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(left - 2, top - 2, 2, bottom - top + 4),
                         Color.Yellow); //Left Rect
                 }
             }
@@ -48,12 +50,12 @@ namespace TerrariaMoba.UI {
                 modPlayer.selectedCharacter = Hero.GetType();
             }
 
-            Main.PlaySound(10);
+            SoundEngine.PlaySound(10);
         }
 
         public override void MouseOver(UIMouseEvent evt) {
             base.MouseOver(evt);
-            Main.PlaySound(12);
+            SoundEngine.PlaySound(12);
         }
     }
 }

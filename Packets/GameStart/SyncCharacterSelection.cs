@@ -15,9 +15,9 @@ namespace TerrariaMoba.Packets.GameStart {
         }
 
         protected override bool PostReceive(BinaryReader reader, int fromWho) {
-            if (Main.LocalPlayer != ModPlayer.player) {
+            if (Main.LocalPlayer != ModPlayer.Player) {
                 TerrariaMobaUtils.AssignCharacter(ref ModPlayer.MyCharacter, ModPlayer.selectedCharacter,
-                    ModPlayer.player);
+                    ModPlayer.Player);
             }
             return true;
         }

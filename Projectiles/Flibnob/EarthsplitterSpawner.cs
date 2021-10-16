@@ -18,11 +18,11 @@ namespace TerrariaMoba.Projectiles.Flibnob {
         }
 
         public override void SetDefaults() {
-            projectile.friendly = true;
-            projectile.width = 0;
-            projectile.height = 0;
-            projectile.alpha = 255;
-            projectile.tileCollide = false;
+            Projectile.friendly = true;
+            Projectile.width = 0;
+            Projectile.height = 0;
+            Projectile.alpha = 255;
+            Projectile.tileCollide = false;
 
             EarthDamage = Earthsplitter.EARTH_BASE_DAMAGE;
             EarthDuration = Earthsplitter.EARTH_BASE_DURATION;
@@ -31,15 +31,15 @@ namespace TerrariaMoba.Projectiles.Flibnob {
         }
 
         public override void AI() {
-            int timeBetween = (int) ((EarthDistance * 16) / projectile.velocity.Length());
-            if (((int)projectile.ai[0] % timeBetween) == 0){
-                if (Main.netMode != NetmodeID.Server && Main.myPlayer == projectile.owner) {
-                    Vector2 newPos = new Vector2(projectile.position.X, GetYPos());
+            int timeBetween = (int) ((EarthDistance * 16) / Projectile.velocity.Length());
+            if (((int)Projectile.ai[0] % timeBetween) == 0){
+                if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) {
+                    Vector2 newPos = new Vector2(Projectile.position.X, GetYPos());
                     newPos.Y -= 8f;
-                    Projectile proj = Projectile.NewProjectileDirect(newPos, Vector2.Zero, TerrariaMoba.Instance.ProjectileType("SplitEarth"),
-                        EarthDamage, 0, projectile.whoAmI);
+                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), newPos, Vector2.Zero, ModContent.ProjectileType<SplitEarth>(),
+                        EarthDamage, 0, Projectile.whoAmI);
                     
-                    SplitEarth earth = proj.modProjectile as SplitEarth;
+                    SplitEarth earth = proj.ModProjectile as SplitEarth;
 
                     if (earth != null) {
                         earth.EarthDuration = EarthDuration;
@@ -47,14 +47,14 @@ namespace TerrariaMoba.Projectiles.Flibnob {
                 }
             }
 
-            projectile.ai[0] += 1f;
+            Projectile.ai[0] += 1f;
 
-            if ((int)projectile.ai[0] == (NumberOfEarths * timeBetween)) {
-                projectile.Kill();
+            if ((int)Projectile.ai[0] == (NumberOfEarths * timeBetween)) {
+                Projectile.Kill();
             }
         }
 
-        public override bool CanDamage() {
+        public override bool? CanDamage() {
             return false;
         }
         
@@ -73,8 +73,8 @@ namespace TerrariaMoba.Projectiles.Flibnob {
         }
 
         public int GetYPos() {
-            int posX = (int)projectile.Bottom.X;
-            int posY = (int)projectile.Bottom.Y;
+            int posX = (int)Projectile.Bottom.X;
+            int posY = (int)Projectile.Bottom.Y;
 
             if (TerrariaMobaUtils.TileIsSolidOrPlatform(posX / 16, posY / 16)) {
                 while (TerrariaMobaUtils.TileIsSolidOrPlatform(posX / 16, posY / 16)) {

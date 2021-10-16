@@ -1,11 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.Flibnob {
     public class BattleHardened : Ability {
         public BattleHardened() : base("Battle Hardened", 0, 0, AbilityType.Passive) { }
 
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Flibnob/FlibnobTrait"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobTrait").Value; }
 
         public const int BASE_ARMOR_GAIN = 1;
         public const int BASE_MR_GAIN = 0;

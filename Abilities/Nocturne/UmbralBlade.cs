@@ -3,13 +3,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Projectiles;
 
 namespace TerrariaMoba.Abilities.Nocturne {
     public class UmbralBlade : Ability {
         public UmbralBlade() : base("Umbral Blade", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Blank"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 
         public const int BLADE_BASE_DAMAGE = 500;
         public const int VISION_BASE_DURATION = 60;
@@ -30,8 +32,8 @@ namespace TerrariaMoba.Abilities.Nocturne {
                 }
                 Vector2 velocity = new Vector2(dirX, dirY);
                 
-                Projectile.NewProjectile(User.Center, velocity, 
-                    TerrariaMoba.Instance.ProjectileType("UmbralBlade"), BLADE_BASE_DAMAGE, 0, User.whoAmI);
+                Projectile.NewProjectile(new ProjectileSource_Ability(User, this), User.Center, velocity, 
+                    ModContent.ProjectileType<Projectiles.Nocturne.UmbralBlade>(), BLADE_BASE_DAMAGE, 0, User.whoAmI);
             }
         }
     }

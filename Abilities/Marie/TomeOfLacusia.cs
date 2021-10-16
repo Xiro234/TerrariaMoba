@@ -1,14 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.Marie {
     public class TomeOfLacusia : Ability {
         public TomeOfLacusia() : base("Tome of Lacusia", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieAbilityTwo"); }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieAbilityTwo").Value; }
 
         public const int TOME_BASE_HEAL = 400;
         public const int TOME_BASE_CAST_TIME = 150;
@@ -35,7 +37,7 @@ namespace TerrariaMoba.Abilities.Marie {
                     if (plr.team == User.team) {
                         plr.statLife += TOME_BASE_HEAL;
                         CombatText.NewText(plr.Hitbox, Color.CornflowerBlue, TOME_BASE_HEAL, true);
-                        Main.PlaySound(SoundID.Item4, plr.Center);
+                        SoundEngine.PlaySound(SoundID.Item4, plr.Center);
                         for (int d = 0; d < 40; d++) {
                             Dust.NewDust(plr.position, plr.width, plr.height, 41, 0f, 0f, 150, default(Color), 1.5f);
                         }
@@ -58,7 +60,7 @@ namespace TerrariaMoba.Abilities.Marie {
     public class TomeOfLacusia : Ability {
         public TomeOfLacusia(Player myPlayer) : base(myPlayer) {
             Name = "Tome of Lacusia";
-            Icon = TerrariaMoba.Instance.GetTexture("Textures/Marie/MarieAbilityTwo");
+            Icon = ModContent.Request<Texture2D>("Textures/Marie/MarieAbilityTwo").Value;
         }
 
         public override void OnCast() {
@@ -83,7 +85,7 @@ namespace TerrariaMoba.Abilities.Marie {
                     if (plr.team == User.team) {
                         plr.statLife += (int)User.GetModPlayer<MobaPlayer>().MarieStats.A2Heal.Value;
                         CombatText.NewText(plr.Hitbox, Color.CornflowerBlue, (int)User.GetModPlayer<MobaPlayer>().MarieStats.A2Heal.Value, true);
-                        Main.PlaySound(SoundID.Item4, plr.Center);
+                        SoundEngine.PlaySound(SoundID.Item4, plr.Center);
                         for (int d = 0; d < 40; d++) {
                             Dust.NewDust(plr.position, plr.width, plr.height, 41, 0f, 0f, 150, default(Color), 1.5f);
                         }
