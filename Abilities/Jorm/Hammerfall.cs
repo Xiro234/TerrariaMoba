@@ -21,6 +21,7 @@ namespace TerrariaMoba.Abilities.Jorm {
         public const int STUN_DURATION = 150;
 
         public override void OnCast() {
+            //TODO - spawn more in a row (sylvia vine spawner type thing)
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
                 int dir = User.direction;
                 Vector2 velocity = dir < 0 ? new Vector2(-BIGHAMMER_SPEED, BIGHAMMER_SPEED) : new Vector2(BIGHAMMER_SPEED);

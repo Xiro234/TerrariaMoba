@@ -16,7 +16,7 @@ namespace TerrariaMoba.Abilities.Jorm {
         public const int CONSEC_DURATION = 300;
 
         public override void OnCast() {
-            //TODO - consecrate ground in ~ radius, +healeff of allies, -healeff of enemies on top.
+            //TODO - ally in contact = +HPR / enemy in contact = -HPR
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
                 Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), User.Center, Vector2.Zero,
                     ModContent.ProjectileType<Projectiles.Jorm.Consecration>(), 0, 0, User.whoAmI);

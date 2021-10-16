@@ -57,5 +57,7 @@ namespace TerrariaMoba.Abilities.Jorm {
                 Main.NewText("Could not find a player in range to heal!");
             }
         }
+        
+        //TODO - refactor to give allies jorms armor/mr and jorm takes 25% of all premitigated dmg / is an effect
     }
 }
