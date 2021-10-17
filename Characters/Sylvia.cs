@@ -13,7 +13,7 @@ namespace TerrariaMoba.Characters {
         public Sylvia() { }
 
         public Sylvia(Player user) : base(user, new Statistics(1340f, 0f, 500f,
-            0f, Resource.Mana, 75f, 1.5f, 9f), 
+            0f, Resource.Mana, 0f, 0f, 75f, 1.5f, 9f), 
             new EnsnaringVinesAbility(), new GracefulLeap(), new VerdantFury(), new Flourish(), new JunglesWrathAbility()) { }
 
         public override string Name {

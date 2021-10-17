@@ -13,7 +13,7 @@ namespace TerrariaMoba.Characters {
         public Marie() { }
         
         public Marie(Player user) : base(user, new Statistics(1460f, 0f, 500f,
-            0f, Resource.Mana, 75f, 1.5f, 9f), 
+            0f, Resource.Mana, 0f, 0f, 75f, 1.5f, 9f), 
             new WhirlpoolInABottle(),  new TomeOfLacusia(), new Floodboost(), new EyeOfTheStorm(), new TorrentialPendant()) { }
 
         public override string Name {

@@ -5,6 +5,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Players;
 using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Jorm;
 using TerrariaMoba.StatusEffects;
@@ -18,17 +19,34 @@ namespace TerrariaMoba.Abilities.Jorm {
         public const float BIGHAMMER_SPEED = 7f;
         public const float BIGHAMMER_DAMAGE = 700f;
         public const float BIGHAMMER_HEIGHT = -400f;
+        public const int BIGHAMMER_NUMBER = 4;
+        public const int BIGHAMMER_TILE_DISTANCE = 30;
         public const int STUN_DURATION = 150;
 
         public override void OnCast() {
-            //TODO - spawn more in a row (sylvia vine spawner type thing)
+            //TODO - spawn in a row vertically (new sprite), after delay they drop down
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
+                PaladinsResolve pr = User.GetModPlayer<MobaPlayer>().Hero.Trait as PaladinsResolve;
+                if (pr != null) {
+                    pr.AddStack();
+                }
+                
                 int dir = User.direction;
-                Vector2 velocity = dir < 0 ? new Vector2(-BIGHAMMER_SPEED, BIGHAMMER_SPEED) : new Vector2(BIGHAMMER_SPEED);
+                //Vector2 velocity = dir < 0 ? new Vector2(-BIGHAMMER_SPEED, BIGHAMMER_SPEED) : new Vector2(BIGHAMMER_SPEED);
+                Vector2 velocity = new Vector2(dir * 15, 0);
                 Vector2 spawnLoc = new Vector2(User.Top.X, User.Top.Y + BIGHAMMER_HEIGHT);
                 
-                Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), spawnLoc, velocity, 
-                    ModContent.ProjectileType<HammerfallProj>(), (int)BIGHAMMER_DAMAGE, 0, User.whoAmI, dir);
+                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), spawnLoc, velocity, 
+                    ModContent.ProjectileType<HammerfallProjSpawner>(), 0, 0, User.whoAmI, 0, dir);
+
+                HammerfallProjSpawner spawner = proj.ModProjectile as HammerfallProjSpawner;
+                
+                if (spawner != null) {
+                    spawner.HammerDamage = BIGHAMMER_DAMAGE;
+                    spawner.HammerSpeed = BIGHAMMER_SPEED;
+                    spawner.NumberOfHammers = BIGHAMMER_NUMBER;
+                    spawner.TileDistance = BIGHAMMER_TILE_DISTANCE;
+                }
 
                 SoundEngine.PlaySound(SoundID.Item1, User.Center);
             }
@@ -36,8 +54,8 @@ namespace TerrariaMoba.Abilities.Jorm {
         
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
             var modProjectile = proj.ModProjectile;
-            HammerfallProj trap = modProjectile as HammerfallProj;
-            if (trap != null) {
+            HammerfallProj hammer = modProjectile as HammerfallProj;
+            if (hammer != null) {
                 StatusEffectManager.AddEffect(target, new FunStun(STUN_DURATION, true));
             }
         }

@@ -13,7 +13,7 @@ namespace TerrariaMoba.Characters {
         public Flibnob() { }
         
         public Flibnob(Player user) : base(user, new Statistics(2060f, 0f, 500f,
-            0f, Resource.Mana, 75f, 1.5f, 9f), 
+            0f, Resource.Mana, 0f, 0f, 75f, 1.5f, 9f), 
             new FlameBelch(), new TitaniumShell(), new Rockwrecker(), new Earthsplitter(), new BattleHardened()) { }
 
         public override string Name {

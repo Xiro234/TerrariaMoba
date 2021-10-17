@@ -17,12 +17,15 @@
         public float MovementSpeed { get; set; }
         public float JumpSpeed { get; set; }
 
-        public Statistics(float maxHealth, float healthRegen, float maxResource, float resourceRegen, Resource resourceType, float attackDamage, float attackSpeed, float attackVelocity) {
+        public Statistics(float maxHealth, float healthRegen, float maxResource, float resourceRegen, Resource resourceType, 
+            float physicalArmor, float magicalArmor, float attackDamage, float attackSpeed, float attackVelocity) {
             MaxHealth = maxHealth;
             HealthRegen = healthRegen;
             MaxResource = maxResource;
             ResourceRegen = resourceRegen;
             ResourceType = resourceType;
+            PhysicalArmor = physicalArmor;
+            MagicalArmor = magicalArmor;
             AttackDamage = attackDamage;
             AttackSpeed = attackSpeed;
             AttackVelocity = attackVelocity;

@@ -15,7 +15,7 @@ namespace TerrariaMoba.Projectiles.Jorm {
         }
 
         public override void AI() {
-            if (Projectile.ai[0] > 0) {
+            if (Projectile.ai[1] > 0) {
                 Projectile.rotation = MathHelper.ToRadians(-90);
             }
 

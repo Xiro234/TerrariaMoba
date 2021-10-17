@@ -12,7 +12,7 @@ namespace TerrariaMoba.Characters {
         public OldMan() { }
         
         public OldMan(Player user) : base(user, new Statistics(2000f, 0f, 500f,
-            0f, Resource.Mana, 75f, 1.5f, 9f), 
+            0f, Resource.Mana, 0f, 0f, 75f, 1.5f, 9f), 
             new Frostbite(), new ExplosiveCatch(), new PerfectFillet(), new Riptide(), new WhatsInTheCrate()) { }
 
         public override string Name {

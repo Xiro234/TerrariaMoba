@@ -12,7 +12,7 @@ namespace TerrariaMoba.Characters {
         public Chastradamus() { }
 
         public Chastradamus(Player user) : base(user, new Statistics(2000f, 0f, 500f,
-            0f, Resource.Mana, 75f, 1.5f, 9f), 
+            0f, Resource.Mana, 0f, 0f, 75f, 1.5f, 9f), 
             new BrewConcoction(), new Incision(),  new FlaskOfVitality(), new Crowstorm(), new Bloodletting()) { }
 
         public override string Name {

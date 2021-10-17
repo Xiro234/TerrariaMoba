@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Players;
 using TerrariaMoba.Projectiles;
 
 namespace TerrariaMoba.Abilities.Jorm {
@@ -18,6 +19,11 @@ namespace TerrariaMoba.Abilities.Jorm {
         public override void OnCast() {
             //TODO - ally in contact = +HPR / enemy in contact = -HPR
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
+                PaladinsResolve pr = User.GetModPlayer<MobaPlayer>().Hero.Trait as PaladinsResolve;
+                if (pr != null) {
+                    pr.AddStack();
+                }
+                
                 Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), User.Center, Vector2.Zero,
                     ModContent.ProjectileType<Projectiles.Jorm.Consecration>(), 0, 0, User.whoAmI);
 

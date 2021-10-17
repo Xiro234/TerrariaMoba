@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Players;
 using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Jorm;
 using TerrariaMoba.StatusEffects;
@@ -23,6 +24,11 @@ namespace TerrariaMoba.Abilities.Jorm {
         
         public override void OnCast() {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
+                PaladinsResolve pr = User.GetModPlayer<MobaPlayer>().Hero.Trait as PaladinsResolve;
+                if (pr != null) {
+                    pr.AddStack();
+                }
+
                 for (int i = 0; i < 4; i++) {
                     Vector2 direction = Vector2.UnitX;
 

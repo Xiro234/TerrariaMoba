@@ -1,6 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Players;
+using TerrariaMoba.StatusEffects;
+using TerrariaMoba.StatusEffects.Jorm;
 
 namespace TerrariaMoba.Abilities.Jorm {
     public class PaladinsResolve : Ability {
@@ -8,38 +12,69 @@ namespace TerrariaMoba.Abilities.Jorm {
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
 
-        private int CurrentStacks;
-        private bool OnCourage = false;
-        private bool OnWisdom = false;
+        public const int RESOLVE_CAP = 5;
+        public const int STACK_TIMER = 120;
+        public const int COURAGE_DURATION = 180;
+        public const int WISDOM_DURATION = 180;
+        
+        private int currentStacks;
+        private int stackDecayTimer;
+        private bool abilityCasted;
+        private bool onCourage;
+        private bool onWisdom;
+
+        public void AddStack() {
+            if (currentStacks != RESOLVE_CAP) {
+                currentStacks++;
+            }
+            abilityCasted = true;
+        }
 
         public override void OnCast() {
-            if (!OnCourage && !OnWisdom) {
-                OnCourage = true;
-            }
-
-            if (OnCourage) {
-                OnCourage = false;
+            if (!onCourage && !onWisdom) {
+                onCourage = true;
+            } else if (onCourage) {
+                onCourage = false;
                 //clear courage buff
-                OnWisdom = true;
+                currentStacks = 0;
+                onWisdom = true;
+            } else if (onWisdom) {
+                onWisdom = false;
+                //clear wisdom buff
+                currentStacks = 0;
+                onCourage = true;
             }
 
-            if (OnWisdom) {
-                OnWisdom = false;
-                //clear wisdom buff
-                OnCourage = true;
+            if (!IsActive) {
+                IsActive = true;
             }
-            
+
             CooldownTimer = BaseCooldown;
         }
 
         public override void WhileActive() {
-            /*
-             * on ability cast, CurrentStacks++ [this might be on each ability but not sure]
-             * if(OnCourage)
-             *      give player courage with current CurrentStacks
-             * elseif(OnWisdom)
-             *      give player wisdom with current CurrentStacks
-             */
+            if (currentStacks > 0 && abilityCasted) {
+                stackDecayTimer = STACK_TIMER;
+            }
+
+            if (stackDecayTimer > 0) {
+                stackDecayTimer--;
+                if (stackDecayTimer == 0 && currentStacks > 0) {
+                    currentStacks--;
+                    stackDecayTimer = STACK_TIMER;
+                    Main.NewText("Stack decayed!");
+                }
+            }
+
+            if (onCourage && abilityCasted) {
+                StatusEffectManager.AddEffect(User, new ResolveCourage(currentStacks, COURAGE_DURATION, true));
+                Main.NewText("Courage @ " + currentStacks + " Stacks.\nCurrent HPR: " + User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics.HealthRegen + "\nCurrent Armor: " + User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics.PhysicalArmor);
+            } else if (onWisdom && abilityCasted) {
+                StatusEffectManager.AddEffect(User, new ResolveWisdom(currentStacks, WISDOM_DURATION, true));
+                Main.NewText("Wisdom @ " + currentStacks + " Stacks.\nCurrent MPR: " + User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics.ResourceRegen + "\nCurrent MR: " + User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics.MagicalArmor);
+            }
+
+            abilityCasted = false;
         }
     }
 }

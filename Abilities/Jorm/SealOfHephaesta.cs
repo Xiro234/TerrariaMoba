@@ -5,6 +5,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Jorm {
     public class SealOfHephaesta : Ability {
@@ -20,6 +21,10 @@ namespace TerrariaMoba.Abilities.Jorm {
         public override void OnCast() {
             timer = INTERNAL_CAST_TIME;
             IsActive = true;
+            PaladinsResolve pr = User.GetModPlayer<MobaPlayer>().Hero.Trait as PaladinsResolve;
+            if (pr != null) {
+                pr.AddStack();
+            }
         }
 
         public override void WhileActive() {
