@@ -9,6 +9,7 @@ using TerrariaMoba.Players;
 using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Jorm;
 using TerrariaMoba.StatusEffects;
+using TerrariaMoba.StatusEffects.Jorm;
 
 namespace TerrariaMoba.Abilities.Jorm {
     public class DanceOfTheGoldenhammer : Ability {
@@ -19,7 +20,7 @@ namespace TerrariaMoba.Abilities.Jorm {
         public const float HAMMER_DAMAGE = 200f;
         public const float HAMMER_SPIN_RADIUS = 135f;
         public const float HAMMER_SPAWN_SPEED = 5f;
-        public const float DAZE_MAGNITUDE = 20f;
+        public const float DAZE_MAGNITUDE = 0.2f;
         public const int DAZE_BASE_DURATION = 90;
         
         public override void OnCast() {
@@ -52,7 +53,7 @@ namespace TerrariaMoba.Abilities.Jorm {
             var modProjectile = proj.ModProjectile;
             SpinningHammer trap = modProjectile as SpinningHammer;
             if (trap != null) {
-                //StatusEffectManager.AddEffect(target, new GoldenhammerDanceEffect(DAZE_MAGNITUDE, DAZE_BASE_DURATION, true));
+                StatusEffectManager.AddEffect(target, new GoldenhammerDanceEffect(DAZE_MAGNITUDE, DAZE_BASE_DURATION, true));
             }
         }
     }

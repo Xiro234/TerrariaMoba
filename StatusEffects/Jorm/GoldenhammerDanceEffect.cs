@@ -3,7 +3,7 @@ using Terraria.ModLoader;
 using TerrariaMoba.StatusEffects.GenericEffects;
 
 namespace TerrariaMoba.StatusEffects.Jorm {
-    /*
+    
     public class GoldenhammerDanceEffect : Daze {
         public override string DisplayName { get => "Dance of the Goldenhammer"; }
 
@@ -12,5 +12,5 @@ namespace TerrariaMoba.StatusEffects.Jorm {
         public GoldenhammerDanceEffect() { }
 
         public GoldenhammerDanceEffect(float magnitude, int duration, bool canBeCleansed) : base(magnitude, duration, canBeCleansed) { }
-    } */
+    }
 }
