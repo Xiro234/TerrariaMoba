@@ -40,8 +40,7 @@ namespace TerrariaMoba.Projectiles.Jorm {
             if (IsOrbiting) {
                 Projectile.Center = player.Center + new Vector2(0f, -SpinRadius).RotatedBy(MathHelper.ToRadians(Projectile.ai[0]));
                 Projectile.ai[0] += 1f;
-            }
-            else {
+            } else {
                 Projectile.Center = player.Center + Projectile.velocity * Projectile.ai[1];
             }
 

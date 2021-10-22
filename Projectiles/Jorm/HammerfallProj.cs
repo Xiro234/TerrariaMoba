@@ -5,8 +5,8 @@ using Terraria.ModLoader;
 namespace TerrariaMoba.Projectiles.Jorm {
     public class HammerfallProj : ModProjectile {
         public override void SetDefaults() {
-            Projectile.width = 72;
-            Projectile.height = 74;
+            Projectile.width = 114;
+            Projectile.height = 132;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
@@ -15,8 +15,10 @@ namespace TerrariaMoba.Projectiles.Jorm {
         }
 
         public override void AI() {
-            if (Projectile.ai[1] > 0) {
-                Projectile.rotation = MathHelper.ToRadians(-90);
+            if (Projectile.timeLeft > 360) {
+                Projectile.velocity = Vector2.Zero;
+            } else {
+                Projectile.velocity = new Vector2(0, Projectile.ai[0]);
             }
 
             for (int d = 0; d < 8; d++) {

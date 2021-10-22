@@ -16,11 +16,11 @@ namespace TerrariaMoba.Abilities.Jorm {
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
 
-        public const float BIGHAMMER_SPEED = 7f;
+        public const float BIGHAMMER_SPEED = 8f;
         public const float BIGHAMMER_DAMAGE = 700f;
-        public const float BIGHAMMER_HEIGHT = -400f;
+        public const float BIGHAMMER_HEIGHT = -600f;
         public const int BIGHAMMER_NUMBER = 4;
-        public const int BIGHAMMER_TILE_DISTANCE = 30;
+        public const int BIGHAMMER_TILE_DISTANCE = 18;
         public const int STUN_DURATION = 150;
 
         public override void OnCast() {
@@ -32,12 +32,11 @@ namespace TerrariaMoba.Abilities.Jorm {
                 }
                 
                 int dir = User.direction;
-                //Vector2 velocity = dir < 0 ? new Vector2(-BIGHAMMER_SPEED, BIGHAMMER_SPEED) : new Vector2(BIGHAMMER_SPEED);
                 Vector2 velocity = new Vector2(dir * 15, 0);
                 Vector2 spawnLoc = new Vector2(User.Top.X, User.Top.Y + BIGHAMMER_HEIGHT);
                 
                 Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), spawnLoc, velocity, 
-                    ModContent.ProjectileType<HammerfallProjSpawner>(), 0, 0, User.whoAmI, 0, dir);
+                    ModContent.ProjectileType<HammerfallProjSpawner>(), 0, 0, User.whoAmI, 1);
 
                 HammerfallProjSpawner spawner = proj.ModProjectile as HammerfallProjSpawner;
                 
