@@ -1,16 +1,15 @@
 ﻿using System;
+using System.Linq;
 using Terraria.ModLoader;
 using TerrariaMoba.Characters;
 using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Players {
     public partial class MobaPlayer : ModPlayer {
-        public Statistics FlatStats { get; set; }
-        public Statistics MultiplicativeStats { get; set; }
         public int CurrentResource { get; set; }
         public Character Hero { get; set; }
         public Type selectedCharacter;
-        
+        //TODO - STATISTACTS
         public int lifeRegenTimer = 0;
         public int resourceRegenTimer = 0;
 
@@ -47,6 +46,16 @@ namespace TerrariaMoba.Players {
 
         public void SetPlayerStats() {
             Player.statLifeMax2 = (int)Math.Ceiling(((Hero?.BaseStatistics.MaxHealth ?? 100f) + FlatStats.MaxHealth) * (1 + MultiplicativeStats.MaxHealth));
+        }
+
+        public float GetCurrentAttributeValue(AttributeType attribute) {
+            float value;
+            Hero.BaseAttributes.TryGetValue(attribute, out value);
+
+            value += EffectList.Where(effect => effect.FlatAttributes.ContainsKey(attribute)).Sum(effect => effect.FlatAttributes[attribute]);
+            float mult = EffectList.Where(effect => effect.MultAttributes.ContainsKey(attribute)).Sum(effect => effect.MultAttributes[attribute]);
+
+            return value * mult;
         }
     }
 }

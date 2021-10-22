@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
@@ -7,10 +8,19 @@ using Terraria.ModLoader;
 using TerrariaMoba.Abilities.Sylvia;
 using TerrariaMoba.Items.Sylvia;
 using TerrariaMoba.Statistic;
+using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.Characters {
     public class Sylvia : Character {
         public Sylvia() { }
+
+        public override Dictionary<AttributeType, float> BaseAttributes => new Dictionary<AttributeType, float>() {
+            { MAX_HEALTH, 1340f },
+            { MAX_MANA, 500f },
+            { ATTACK_DAMAGE, 75f },
+            { ATTACK_SPEED, 1.5f },
+            { ATTACK_VELOCITY, 9f }
+        };
 
         public Sylvia(Player user) : base(user, new Statistics(1340f, 0f, 500f,
             0f, Resource.Mana, 0f, 0f, 75f, 1.5f, 9f), 

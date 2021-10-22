@@ -18,6 +18,11 @@ namespace TerrariaMoba.NPCs {
             }
         }
 
+        public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns) {
+            spawnRate = 0;
+            maxSpawns = 0;
+        }
+
         public override bool PreKill(NPC NPC) {
             return false;
         }

@@ -179,7 +179,7 @@ namespace TerrariaMoba.Network {
             var target = Main.player[whoAmI].GetModPlayer<MobaPlayer>();
             int ID = reader.ReadInt32();
             target.selectedCharacter = CharacterManager.CharacterTypesList[ID];
-            Main.NewText(ID);
+            //Main.NewText("woo");
             if (Main.netMode == NetmodeID.Server) {
                 SendAssignCharacter(target.Player.whoAmI, sender);
             }

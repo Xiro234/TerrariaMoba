@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -7,6 +8,7 @@ using Terraria.ID;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.Players;
 using TerrariaMoba.Statistic;
+using Attribute = TerrariaMoba.Statistic.Attribute;
 
 namespace TerrariaMoba.Characters {
     public abstract class Character {
@@ -18,8 +20,8 @@ namespace TerrariaMoba.Characters {
         
         public const int XP_PER_LEVEL = 100;
         public int Experience { get; protected set; }
-        public Ability[] Abilities { get; protected set; }
-        public Statistics BaseStatistics { get; private set; }
+        public abstract Ability[] Abilities { get; protected set; }
+        public abstract Dictionary<AttributeType, float> BaseAttributes { get; }
         public int Level { get; protected set; }
 
         //Appearance

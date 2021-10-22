@@ -1,13 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ModLoader;
-using TerrariaMoba.Network;
-using TerrariaMoba.Players;
+using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.StatusEffects {
     public abstract class StatusEffect {
@@ -18,6 +14,8 @@ namespace TerrariaMoba.StatusEffects {
         public int Duration { get; protected set; }
         public int DurationTimer { get; protected set; }
         public bool CanBeCleansed { get; protected set; }
+        public virtual Dictionary<AttributeType, float> FlatAttributes { get; }
+        public virtual Dictionary<AttributeType, float> MultAttributes { get; }
         protected virtual bool ShowBar {
             get => true;
         }

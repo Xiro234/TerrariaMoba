@@ -28,8 +28,6 @@ namespace TerrariaMoba.Players {
         public override void Initialize() {
             EffectList = new List<StatusEffect>();
             TestAbilities = new List<Ability>();
-            FlatStats = new Statistics();
-            MultiplicativeStats = new Statistics();
         }
 
         public override void OnEnterWorld(Player Player) {
