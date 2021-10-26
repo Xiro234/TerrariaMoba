@@ -58,7 +58,7 @@ namespace TerrariaMoba.Abilities.Jorm {
 
             if (closestPlayerID != -1) {
                 Player plr = Main.player[closestPlayerID];
-                StatusEffectManager.AddEffect(plr, new HolyBarrier(jorm.PhysicalArmor, jorm.MagicalArmor, ABSORB_MAGNITUDE, BARRIER_DURATION, true));
+                StatusEffectManager.AddEffect(plr, new HolyBarrier(jorm.PhysicalArmor, jorm.MagicalArmor, ABSORB_MAGNITUDE, User.whoAmI, BARRIER_DURATION, true));
                 /*
                 plr.statLife += SEAL_HEAL_AMOUNT;
                 CombatText.NewText(Main.player[closestPlayerID].Hitbox, Color.Goldenrod, SEAL_HEAL_AMOUNT, true);

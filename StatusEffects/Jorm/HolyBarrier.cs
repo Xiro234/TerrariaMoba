@@ -12,11 +12,12 @@ namespace TerrariaMoba.StatusEffects.Jorm {
         private float jormArmor;
         private float jormMagRes;
         private float dmgAbsorbMag;
-
-        public HolyBarrier(float armor, float magres, float magnitude, int duration, bool canBeCleansed) : base(duration, canBeCleansed) {
+        private float jormPlayerId;
+        public HolyBarrier(float armor, float magres, float magnitude, int id, int duration, bool canBeCleansed) : base(duration, canBeCleansed) {
             jormArmor = armor;
             jormMagRes = magres;
             dmgAbsorbMag = magnitude;
+            jormPlayerId = id;
         }
         
         public void ResetEffects() {
@@ -31,6 +32,7 @@ namespace TerrariaMoba.StatusEffects.Jorm {
              * reduce mag dmg by *% and that *% jorm takes
              * reduce true dmg by *% and you know the drill
              * dmgAbsorbMag determines actual percentage
+             * TakeDamage(id, phys, mag, true)
              */
         }
     }

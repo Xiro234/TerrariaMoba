@@ -53,8 +53,8 @@ namespace TerrariaMoba.Abilities.Jorm {
         
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
             var modProjectile = proj.ModProjectile;
-            SpinningHammer trap = modProjectile as SpinningHammer;
-            if (trap != null) {
+            SpinningHammer hammer = modProjectile as SpinningHammer;
+            if (hammer != null) {
                 StatusEffectManager.AddEffect(target, new GoldenhammerDanceEffect(DAZE_MAGNITUDE, DAZE_BASE_DURATION, true));
             }
         }
