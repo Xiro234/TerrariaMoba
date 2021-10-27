@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Players;
+using TerrariaMoba.Statistic;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Jorm;
 
@@ -68,10 +69,10 @@ namespace TerrariaMoba.Abilities.Jorm {
 
             if (onCourage && abilityCasted) {
                 StatusEffectManager.AddEffect(User, new ResolveCourage(currentStacks, COURAGE_DURATION, true));
-                Main.NewText("Courage @ " + currentStacks + " Stacks.\nCurrent HPR: " + User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics.HealthRegen + "\nCurrent Armor: " + User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics.PhysicalArmor);
+                Main.NewText("Courage @ " + currentStacks + " Stacks.\nCurrent HPR: " + User.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.HEALTH_REGEN) + "\nCurrent Armor: " + User.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.PHYSICAL_ARMOR));
             } else if (onWisdom && abilityCasted) {
                 StatusEffectManager.AddEffect(User, new ResolveWisdom(currentStacks, WISDOM_DURATION, true));
-                Main.NewText("Wisdom @ " + currentStacks + " Stacks.\nCurrent MPR: " + User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics.ResourceRegen + "\nCurrent MR: " + User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics.MagicalArmor);
+                Main.NewText("Wisdom @ " + currentStacks + " Stacks.\nCurrent MPR: " + User.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.MANA_REGEN) + "\nCurrent MR: " + User.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.MAGICAL_ARMOR));
             }
 
             abilityCasted = false;

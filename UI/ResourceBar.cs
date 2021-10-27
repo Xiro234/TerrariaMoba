@@ -36,7 +36,7 @@ namespace TerrariaMoba.UI {
                     text = mobaPlayer.Hero.Experience + "/" + Character.XP_PER_LEVEL;
                 }
                 else {
-                    float maxResource = mobaPlayer.FlatStats.MaxResource + mobaPlayer.Hero.BaseStatistics.MaxResource;
+                    float maxResource = mobaPlayer.GetCurrentAttributeValue(AttributeType.MAX_MANA);
                     float currentResource = mobaPlayer.CurrentResource;
                     quotient = currentResource / maxResource;
                     text = currentResource + "/" + maxResource;

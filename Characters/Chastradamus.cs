@@ -1,19 +1,36 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Abilities;
 using TerrariaMoba.Abilities.Chastradamus;
 using TerrariaMoba.Statistic;
+using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.Characters {
     public class Chastradamus : Character {
         public Chastradamus() { }
 
-        public Chastradamus(Player user) : base(user, new Statistics(2000f, 0f, 500f,
-            0f, Resource.Mana, 0f, 0f, 75f, 1.5f, 9f), 
-            new BrewConcoction(), new Incision(),  new FlaskOfVitality(), new Crowstorm(), new Bloodletting()) { }
+        public Chastradamus(Player user) : base(user) { }
+        
+        public override Dictionary<AttributeType, float> BaseAttributes => new Dictionary<AttributeType, float>() {
+            { MAX_HEALTH, 1340f },
+            { MAX_MANA, 500f },
+            { ATTACK_DAMAGE, 75f },
+            { ATTACK_SPEED, 1.5f },
+            { ATTACK_VELOCITY, 9f }
+        };
+
+        public override Ability[] Skills => new Ability[] {
+            new BrewConcoction(),
+            new Incision(),
+            new FlaskOfVitality(),
+            new Crowstorm(),
+            new Bloodletting()
+        };
 
         public override string Name {
             get => "Chastradamus";

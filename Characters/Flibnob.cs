@@ -1,20 +1,37 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Abilities;
 using TerrariaMoba.Abilities.Flibnob;
 using TerrariaMoba.Items.Flibnob;
 using TerrariaMoba.Statistic;
+using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.Characters {
     public class Flibnob : Character {
         public Flibnob() { }
+
+        public Flibnob(Player user) : base(user) { }
         
-        public Flibnob(Player user) : base(user, new Statistics(2060f, 0f, 500f,
-            0f, Resource.Mana, 0f, 0f, 75f, 1.5f, 9f), 
-            new FlameBelch(), new TitaniumShell(), new Rockwrecker(), new Earthsplitter(), new BattleHardened()) { }
+        public override Dictionary<AttributeType, float> BaseAttributes => new Dictionary<AttributeType, float>() {
+            { MAX_HEALTH, 1340f },
+            { MAX_MANA, 500f },
+            { ATTACK_DAMAGE, 75f },
+            { ATTACK_SPEED, 1.5f },
+            { ATTACK_VELOCITY, 9f }
+        };
+
+        public override Ability[] Skills => new Ability[] {
+            new FlameBelch(),
+            new TitaniumShell(),
+            new Rockwrecker(),
+            new Earthsplitter(),
+            new BattleHardened()
+        };
 
         public override string Name {
             get => "Flibnob";

@@ -44,12 +44,11 @@ namespace TerrariaMoba.Players {
         }
 
         public override void ResetEffects() {
-            ResetStats();
             TickStatusEffects();
             TickAbilities();
 
             AbilityEffectManager.ResetEffects(Player);
-            SetPlayerStats();
+            SetPlayerHealth();
 
             //Player.maxRunSpeed = 0.5f;
             //Player.moveSpeed /= 2f;
@@ -155,7 +154,6 @@ namespace TerrariaMoba.Players {
             if (MobaSystem.MatchInProgress) {
                 RegenLife();
                 RegenResource();
-                ResetStats();
             }
         }
 
@@ -292,8 +290,8 @@ namespace TerrariaMoba.Players {
         public void TakePvpDamage(int physicalDamage, int magicalDamage, int trueDamage, int killer, bool noBroadcast) {
             if (!Player.immune) {
                 AbilityEffectManager.TakePvpDamage(Player, ref physicalDamage, ref magicalDamage, ref trueDamage, ref killer);
-                int mitigatedPhysical = (int)Math.Ceiling(physicalDamage - physicalDamage * FlatStats.PhysicalArmor * 0.01f);
-                int mitigatedMagical = (int)Math.Ceiling(magicalDamage - magicalDamage * FlatStats.MagicalArmor * 0.01f);
+                int mitigatedPhysical = (int)Math.Ceiling(physicalDamage - physicalDamage * GetCurrentAttributeValue(AttributeType.PHYSICAL_ARMOR) * 0.01f);
+                int mitigatedMagical = (int)Math.Ceiling(magicalDamage - magicalDamage * GetCurrentAttributeValue(AttributeType.MAGICAL_ARMOR) * 0.01f);
                 
                 if (mitigatedPhysical > 0) {
                     CombatText.NewText(Player.Hitbox, Color.Maroon, mitigatedPhysical);

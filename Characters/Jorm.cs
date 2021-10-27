@@ -1,20 +1,38 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Abilities;
 using TerrariaMoba.Abilities.Jorm;
 using TerrariaMoba.Items.Jorm;
 using TerrariaMoba.Statistic;
+using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.Characters {
     public class Jorm : Character {
         public Jorm() { }
         
-        public Jorm(Player user) : base(user, new Statistics(2150f, 0f, 500f,
-            0f, Resource.Mana, 10f, 0f, 99f, 0.91f, 9f), 
-            new DanceOfTheGoldenhammer(), new Consecration(), new SealOfHephaesta(), new Hammerfall(), new PaladinsResolve()) { }
+        public Jorm(Player user) : base(user) { }
+        
+        public override Dictionary<AttributeType, float> BaseAttributes => new Dictionary<AttributeType, float>() {
+            { MAX_HEALTH, 1340f },
+            { MAX_MANA, 500f },
+            { ATTACK_DAMAGE, 75f },
+            { ATTACK_SPEED, 1.5f },
+            { ATTACK_VELOCITY, 9f }
+        };
+
+        public override Ability[] Skills => new Ability[] {
+            new DanceOfTheGoldenhammer(),
+            new Consecration(),
+            new SealOfHephaesta(),
+            new Hammerfall(),
+            new PaladinsResolve()
+        };
+        
 
         public override string Name {
             get => "Jorm Goldenhammer";

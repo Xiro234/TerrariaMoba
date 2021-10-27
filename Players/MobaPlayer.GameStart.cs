@@ -13,6 +13,9 @@ namespace TerrariaMoba.Players {
                 MobaSystem.MobaBar.SetIcons();
                 Main.NewText(Player.GetModPlayer<MobaPlayer>().Hero.Name);
             }
+            
+            SetPlayerHealth();
+            Player.statLife = Player.statLifeMax2;
         }
         
         public bool AssignCharacter() {

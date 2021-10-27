@@ -1,13 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
-using TerrariaMoba.Interfaces;
-using TerrariaMoba.Players;
+using TerrariaMoba.Statistic;
+using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.StatusEffects.GenericEffects {
-    public abstract class Daze : StatusEffect, IResetEffects {
+    public abstract class Daze : StatusEffect {
         
         private float modifier;
         
@@ -16,13 +17,13 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
         public Daze(float magnitude, int duration, bool canBeCleansed) : base(duration, canBeCleansed) {
             modifier = magnitude;
         }
-        
-        public void ResetEffects() {
-            User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics.AttackSpeed *= 1-modifier;
-            User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics.MovementSpeed *= 1-modifier;
-            User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics.JumpSpeed *= 1-modifier;
-        }
-        
+
+        public override Dictionary<AttributeType, float> MultAttributes => new Dictionary<AttributeType, float>() {
+            { MOVEMENT_SPEED, 1 - modifier },
+            { ATTACK_SPEED, 1 - modifier },
+            { JUMP_SPEED, 1 - modifier },
+        };
+
         public class DazeDrawLayer : PlayerDrawLayer {
             public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) {
                 return StatusEffectManager.PlayerHasEffectType<Daze>(drawInfo.drawPlayer);

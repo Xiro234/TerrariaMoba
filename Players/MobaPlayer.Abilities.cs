@@ -5,7 +5,7 @@ namespace TerrariaMoba.Players {
     public partial class MobaPlayer : ModPlayer {
         public void TickAbilities() {
             if (Hero != null) {
-                foreach (var ability in Hero.Abilities) {
+                foreach (var ability in Hero.Skills) {
                     if (ability == null) {
                         continue;
                     }

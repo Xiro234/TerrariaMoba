@@ -4,11 +4,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
-using Terraria.ID;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.Players;
 using TerrariaMoba.Statistic;
-using Attribute = TerrariaMoba.Statistic.Attribute;
 
 namespace TerrariaMoba.Characters {
     public abstract class Character {
@@ -20,7 +18,7 @@ namespace TerrariaMoba.Characters {
         
         public const int XP_PER_LEVEL = 100;
         public int Experience { get; protected set; }
-        public abstract Ability[] Abilities { get; protected set; }
+        public abstract Ability[] Skills { get; }
         public abstract Dictionary<AttributeType, float> BaseAttributes { get; }
         public int Level { get; protected set; }
 
@@ -42,37 +40,32 @@ namespace TerrariaMoba.Characters {
         
         //Ability Properties
         public Ability BasicAbilityOne {
-            get { return Abilities[0]; }
-            protected set { Abilities[0] = value; }
+            get { return Skills[0]; }
+            protected set { Skills[0] = value; }
         }
         
         public Ability BasicAbilityTwo {
-            get { return Abilities[1]; }
-            protected set { Abilities[1] = value; }
+            get { return Skills[1]; }
+            protected set { Skills[1] = value; }
         }
         
         public Ability BasicAbilityThree {
-            get { return Abilities[2]; }
-            protected set { Abilities[2] = value; }
+            get { return Skills[2]; }
+            protected set { Skills[2] = value; }
         }
         
         public Ability Ultimate {
-            get { return Abilities[3]; }
-            protected set { Abilities[3] = value; }
+            get { return Skills[3]; }
+            protected set { Skills[3] = value; }
         }
         
         public Ability Trait {
-            get { return Abilities[4]; }
-            protected set { Abilities[4] = value; }
+            get { return Skills[4]; }
+            protected set { Skills[4] = value; }
         }
 
-        public Character(Player user, Statistics baseStatistics, params Ability[] abilities) {
+        public Character(Player user) {
             User = user;
-            BaseStatistics = baseStatistics;
-            Abilities = new Ability[5];
-            for (int i = 0; i < abilities.Length; i++) {
-                Abilities[i] = abilities[i];
-            }
         }
         
         public Character() { } //For reflection
@@ -88,17 +81,13 @@ namespace TerrariaMoba.Characters {
         
         public virtual void LevelUp() { }
 
-        public virtual void StartGame() {
-            User.statLifeMax2 = (int)BaseStatistics.MaxHealth;
-            User.statLife = User.statLifeMax2;
-        }
+        public virtual void StartGame() { }
 
-        public virtual void RegenResource() { //Base is mana
+        public virtual void RegenResource(float maxMana) { //Base is mana
             var mobaPlayer = User.GetModPlayer<MobaPlayer>();
             
-            int maxResource = (int)Math.Ceiling((BaseStatistics.MaxResource + mobaPlayer.FlatStats.MaxResource) * (1 + mobaPlayer.MultiplicativeStats.MaxResource));
-            if (mobaPlayer.CurrentResource > maxResource) {
-                mobaPlayer.CurrentResource = maxResource;
+            if (mobaPlayer.CurrentResource > maxMana) {
+                mobaPlayer.CurrentResource = (int)Math.Floor(maxMana);
             }
         }
 

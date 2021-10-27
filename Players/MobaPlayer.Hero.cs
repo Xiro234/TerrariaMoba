@@ -19,7 +19,7 @@ namespace TerrariaMoba.Players {
             if (lifeRegenTimer == 60) {
                 float healthRegenFromMax = (Player.statLifeMax2 * 0.125f / 60f);
 
-                float healthRegen = (healthRegenFromMax + Hero.BaseStatistics.HealthRegen + FlatStats.HealthRegen) * (1 + MultiplicativeStats.HealthRegen);
+                float healthRegen = (healthRegenFromMax + GetCurrentAttributeValue(AttributeType.HEALTH_REGEN));
                 Player.statLife += (int)Math.Ceiling(healthRegen);
 
                 if (Player.statLife > Player.statLifeMax2) {
@@ -34,18 +34,13 @@ namespace TerrariaMoba.Players {
             resourceRegenTimer++;
 
             if (resourceRegenTimer == 60) {
-                Hero.RegenResource();
+                Hero.RegenResource(GetCurrentAttributeValue(AttributeType.MAX_MANA));
                 resourceRegenTimer = 0;
             }
         }
 
-        public void ResetStats() {
-            FlatStats.ResetStats();
-            MultiplicativeStats.ResetStats();
-        }
-
-        public void SetPlayerStats() {
-            Player.statLifeMax2 = (int)Math.Ceiling(((Hero?.BaseStatistics.MaxHealth ?? 100f) + FlatStats.MaxHealth) * (1 + MultiplicativeStats.MaxHealth));
+        public void SetPlayerHealth() {
+            Player.statLifeMax2 = (int)Math.Floor(GetCurrentAttributeValue(AttributeType.MAX_HEALTH));
         }
 
         public float GetCurrentAttributeValue(AttributeType attribute) {
