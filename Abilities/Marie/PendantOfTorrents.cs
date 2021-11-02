@@ -3,13 +3,13 @@ using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.Marie {
-    public class TorrentialPendant : Ability {
-        public TorrentialPendant() : base("Torrential Pendant", 60, 0, AbilityType.Passive) { }
+    public class PendantOfTorrents : Ability {
+        public PendantOfTorrents() : base("Pendant of Torrents", 60, 0, AbilityType.Passive) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
 
         public override void WhileActive() {
-            //TODO - Figure out how it should work; causes rain, stats boosted whilst in water/rain.
+            //TODO - magic dmg dealt to enemies can reduce their MR, healing allies makes their basic attacks deal bonus magical dmg
         }
     }
 }

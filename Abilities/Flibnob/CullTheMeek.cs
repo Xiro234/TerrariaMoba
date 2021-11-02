@@ -4,12 +4,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
-using TerrariaMoba.Interfaces;
 using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Flibnob;
 
 namespace TerrariaMoba.Abilities.Flibnob {
-    public class CullTheMeek : Ability, IModifyHitPvpWithProj {
+    public class CullTheMeek : Ability {
         public CullTheMeek() : base("Cull The Meek", 60, 0, AbilityType.Active) { }
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobUltimateTwo").Value; }
@@ -27,30 +26,5 @@ namespace TerrariaMoba.Abilities.Flibnob {
                 }
             }
         }
-
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            //TODO - Whatever debuff this will inflict goes here.
-        }
     }
 }
-/*using System;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-
-namespace TerrariaMoba.Abilities.Flibnob {
-    [Serializable]
-    public class CullTheMeek : Ability {
-        public CullTheMeek(Player myPlayer) : base(myPlayer) {
-            Name = "Cull the Meek";
-            Icon = ModContent.Request<Texture2D>("Textures/Flibnob/FlibnobUltimateTwo").Value;
-        }
-        
-        public override void OnCast() {
-            if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
-                Projectile.NewProjectile(User.Center, Vector2.Zero,
-                    ModContent.ProjectileType<CullPillar"), 0, 0, User.whoAmI, 0f);
-            }
-        }
-    }
-}*/

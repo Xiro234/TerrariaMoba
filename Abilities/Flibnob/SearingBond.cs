@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
-using TerrariaMoba.Players;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Flibnob;
 
@@ -35,16 +34,9 @@ namespace TerrariaMoba.Abilities.Flibnob {
 
             StatusEffectManager.AddEffect(User, new SearingBondEffect(total, BASE_ARMOR_GAIN, 60, false));
             
+            //TODO - Remove effect, when xiro makes attribute stuff implement here
+            
             //TODO - All physical damage has a chance to ignite, make sure effect works correctly
         }
     }
 }
-/*
-public override void WhileActive() {
-    float change = (float) (User.statLifeMax2 - User.statLife) / User.statLifeMax2 * 100f;
-    int defBoost = (int) Math.Floor(change / 2f);
-    if (defBoost != oldDefBoost) {
-        User.GetModPlayer<MobaPlayer>().armor += defBoost - oldDefBoost;
-        oldDefBoost = defBoost;
-    }
-}*/

@@ -14,7 +14,7 @@ namespace TerrariaMoba.Characters {
         
         public Marie(Player user) : base(user, new Statistics(1460f, 0f, 500f,
             0f, Resource.Mana, 0f, 0f, 75f, 1.5f, 9f), 
-            new WhirlpoolInABottle(),  new TomeOfLacusia(), new Floodboost(), new EyeOfTheStorm(), new TorrentialPendant()) { }
+            new WhirlpoolInABottle(),  new SurgingVitality(), new RefreshingRipple(), new EyeOfTheStorm(), new PendantOfTorrents()) { }
 
         public override string Name {
             get => "Marie Tidewrath";
@@ -36,38 +36,3 @@ namespace TerrariaMoba.Characters {
         public override int LegVanityID { get => ItemID.FishCostumeFinskirt; }
     }
 }
-
-/*
-namespace TerrariaMoba.Characters {
-    public class Marie : Character {
-        public override string FullName {
-            get => "Marie Tidewrath, High Priestess of Lacusia";
-        }
-        public override void SetPlayer() {
-            vanityHead.SetDefaults(3226);
-            dyeHead.SetDefaults(1014);
-            vanityLeg.SetDefaults(2500);
-            primary.SetDefaults(ModContent.ItemType<MarieStaff"));
-
-            Player.Male = false;
-            Player.hair = 5;
-            Player.hairColor = new Color(0, 133, 255);
-            Player.skinColor = new Color(235, 159, 125);
-            Player.eyeColor = new Color(0, 0, 255);
-            baseMaxLife = 1460;
-            baseLifeRegen = (baseMaxLife * 0.125f) / 60;
-            baseMaxResource = 500;
-            baseResourceRegen = (baseMaxResource * 0.125f) / 30;
-            baseArmor = 0;
-            
-            QAbility = new WhirlpoolInABottle(Player);
-            EAbility = new TomeOfLacusia(Player);
-            RAbility = new EyeOfTheStorm(Player);
-            CAbility = new Floodboost(Player);
-            
-            /*
-            FountainOfTheGoddess ultimate = new FountainOfTheGoddess(Player);
-            abilities[2] = ultimate;
-            #1#
-        }
-*/

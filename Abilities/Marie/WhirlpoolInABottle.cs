@@ -21,8 +21,9 @@ namespace TerrariaMoba.Abilities.Marie {
         public const int BOTTLE_BASE_DAMAGE = 500;
         public const int POOL_BASE_DAMAGE = 200;
         public const int POOL_BASE_DURATION = 150;
-        public const int SLOW_BASE_DURATION = 90;
-        
+        public const float SLOW_MAGNITUDE = 0.50f;
+        public const int SLOW_DURATION = 60;
+
         public override void OnCast() {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
                 Vector2 playerToMouse = Main.MouseWorld - User.Center;
@@ -52,7 +53,7 @@ namespace TerrariaMoba.Abilities.Marie {
             var modProj = proj.ModProjectile;
             WBWhirlpool pool = modProj as WBWhirlpool;
             if (pool != null) {
-                StatusEffectManager.AddEffect(target, new EnsnaringVinesEffect(SLOW_BASE_DURATION, true));
+                //StatusEffectManager.AddEffect(target, new WhirlpoolSlow(SLOW_MAGNITUDE, SLOW_DURATION, true));
             }
         }
     }
