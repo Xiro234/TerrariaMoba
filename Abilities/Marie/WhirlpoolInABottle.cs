@@ -10,7 +10,6 @@ using TerrariaMoba.Interfaces;
 using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Marie;
 using TerrariaMoba.StatusEffects;
-using TerrariaMoba.StatusEffects.Sylvia;
 
 namespace TerrariaMoba.Abilities.Marie {
     public class WhirlpoolInABottle : Ability, IModifyHitPvpWithProj {
@@ -50,6 +49,7 @@ namespace TerrariaMoba.Abilities.Marie {
         }
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
+            //TODO - Bottle stuns
             var modProj = proj.ModProjectile;
             WBWhirlpool pool = modProj as WBWhirlpool;
             if (pool != null) {

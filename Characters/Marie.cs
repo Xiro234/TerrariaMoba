@@ -14,7 +14,7 @@ namespace TerrariaMoba.Characters {
         
         public Marie(Player user) : base(user, new Statistics(1460f, 0f, 500f,
             0f, Resource.Mana, 0f, 0f, 75f, 1.5f, 9f), 
-            new WhirlpoolInABottle(),  new SurgingVitality(), new RefreshingRipple(), new EyeOfTheStorm(), new PendantOfTorrents()) { }
+            new WhirlpoolInABottle(),  new SurgingVitality(), new Confluence(), new EyeOfTheStorm(), new PendantOfTorrents()) { }
 
         public override string Name {
             get => "Marie Tidewrath";

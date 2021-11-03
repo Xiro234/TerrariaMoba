@@ -24,7 +24,7 @@ namespace TerrariaMoba.Abilities.Marie {
         public const int WET_DURATION = 120;
         
         public const int CLOUD_DAMAGE = 250;
-        public const int CLOUD_DURATION = 300;
+        public const int CLOUD_DURATION = 380;
 
         public const int EYE_DAMAGE = 500;
         
@@ -46,10 +46,21 @@ namespace TerrariaMoba.Abilities.Marie {
                     0, 0, User.whoAmI);
                 SoundEngine.PlaySound(SoundID.Item66, User.Center);
 
-                if (proj != null) {
-                    
+                ESSpawner eye = proj.ModProjectile as ESSpawner;
+                
+                if (eye != null) {
+                    eye.LightningDamage = LIGHTNING_DAMAGE;
+                    eye.LightningSpeed = LIGHTNING_SPEED;
+                    eye.RainDamage = RAIN_DAMAGE;
+                    eye.RainSpeed = RAIN_SPEED;
+                    eye.CloudDamage = CLOUD_DAMAGE;
+                    eye.CloudDuration = CLOUD_DURATION;
                 }
             }
+        }
+        
+        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
+            //TODO - Debuffs for eye of the storm.
         }
     }
 }
