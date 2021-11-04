@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.StatusEffects;
+using TerrariaMoba.StatusEffects.Marie;
 
 namespace TerrariaMoba.Abilities.Marie {
     public class Confluence : Ability {
@@ -22,8 +24,13 @@ namespace TerrariaMoba.Abilities.Marie {
                     float dist = (plr.Center - User.Center).Length();
                     if (plr.team == User.team && dist <= CONF_RANGE && i != User.whoAmI) {
                         //TODO - Reduce cooldowns of ally non-ultimate abilities.
+                        /*
+                         * foreach ability plr has
+                         * if that ability is on cd
+                         * cooldowntimer -= basecooldown * confluencemod
+                         */
                         for (int d = 0; d < 40; d++) {
-                            Dust.NewDust(plr.position, plr.width, plr.height, 41, 0f, 0f, 150, default(Color), 1.5f);
+                            Dust.NewDust(plr.position, plr.width, plr.height, DustID.Water_Snow, 0f, 0f, 150, default(Color), 1.5f);
                         }
                         alliesInRange++;
                     }
@@ -31,7 +38,7 @@ namespace TerrariaMoba.Abilities.Marie {
             }
 
             if (alliesInRange > 0) {
-                //StatusEffectManager.AddEffect(User, new ConfluenceEffect(BUFF_DURATION, true));
+                StatusEffectManager.AddEffect(User, new ConfluenceEffect(alliesInRange, BUFF_DURATION, true));
             }
         }
     }

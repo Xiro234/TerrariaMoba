@@ -21,7 +21,7 @@ namespace TerrariaMoba.Projectiles.Marie {
         }
 
         public override void SetDefaults() {
-            Projectile.Name = "Storm Spawner";
+            Projectile.Name = "Storm Eye";
             Projectile.netImportant = true;
             Projectile.width = 28; 
             Projectile.height = 28; 

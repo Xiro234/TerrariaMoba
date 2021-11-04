@@ -37,8 +37,6 @@ namespace TerrariaMoba.Characters {
         public override int LegVanityID { get => ItemID.PalladiumLeggings; }
         public override int LegDyeID { get => ItemID.YellowandSilverDye; }
     }
-    
-    //TODO - [Texture] Ability icons
-    //TODO - [Char] Paladin's Shield slot
+    //TODO - Paladin's Shield slot
     
 }

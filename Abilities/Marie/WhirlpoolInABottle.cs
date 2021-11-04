@@ -17,11 +17,13 @@ namespace TerrariaMoba.Abilities.Marie {
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieAbilityOne").Value; }
 
-        public const int BOTTLE_BASE_DAMAGE = 500;
-        public const int POOL_BASE_DAMAGE = 200;
-        public const int POOL_BASE_DURATION = 150;
+        public const int BOTTLE_DAMAGE = 500;
+        public const int POOL_DAMAGE = 200;
+        public const int POOL_DURATION = 150;
+        
         public const float SLOW_MAGNITUDE = 0.50f;
-        public const int SLOW_DURATION = 60;
+        public const int SLOW_DURATION = 6;
+        public const int STUN_DURATION = 60;
 
         public override void OnCast() {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
@@ -36,24 +38,29 @@ namespace TerrariaMoba.Abilities.Marie {
                 Vector2 velocity = new Vector2(dirX, dirY);
 
                 Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),User.Center, velocity, 
-                    ModContent.ProjectileType<WBBottle>(), BOTTLE_BASE_DAMAGE, 0, User.whoAmI);
+                    ModContent.ProjectileType<WBBottle>(), BOTTLE_DAMAGE, 0, User.whoAmI);
                 SoundEngine.PlaySound(SoundID.Item1, User.Center);
                 
                 WBBottle bottle = proj.ModProjectile as WBBottle;
                 
                 if (bottle != null) {
-                    bottle.PoolDamage = POOL_BASE_DAMAGE;
-                    bottle.PoolDuration = POOL_BASE_DURATION;
+                    bottle.PoolDamage = POOL_DAMAGE;
+                    bottle.PoolDuration = POOL_DURATION;
                 }
             }
         }
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            //TODO - Bottle stuns
             var modProj = proj.ModProjectile;
+            
             WBWhirlpool pool = modProj as WBWhirlpool;
             if (pool != null) {
-                //StatusEffectManager.AddEffect(target, new WhirlpoolSlow(SLOW_MAGNITUDE, SLOW_DURATION, true));
+                StatusEffectManager.AddEffect(target, new FunSlow(SLOW_MAGNITUDE, SLOW_DURATION, true));
+            }
+            
+            WBBottle bottle = modProj as WBBottle;
+            if (bottle != null) {
+                StatusEffectManager.AddEffect(target, new FunStun(STUN_DURATION, true));
             }
         }
     }

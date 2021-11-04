@@ -12,7 +12,7 @@ namespace TerrariaMoba.Abilities.Nocturne {
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 
-        //TODO - Kills and assists (if possible) grant nocturne bonus damage
+        //TODO - Kills and assists (if possible) reduce Nocturnes cooldowns.
         
         /*
         public const int ATKBUFF_REFRESH_TIME = 240;

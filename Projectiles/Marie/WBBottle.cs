@@ -1,8 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.IO;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Abilities.Marie;
 
 namespace TerrariaMoba.Projectiles.Marie {
     public class WBBottle : ModProjectile {
@@ -13,8 +15,10 @@ namespace TerrariaMoba.Projectiles.Marie {
         public override void SetDefaults() {
             Projectile.width = 14;
             Projectile.height = 14;
-            Projectile.friendly = true;
             Projectile.penetrate = 1;
+
+            PoolDamage = WhirlpoolInABottle.POOL_DAMAGE;
+            PoolDuration = WhirlpoolInABottle.POOL_DURATION;
         }
 
         public override void AI() {
@@ -35,7 +39,6 @@ namespace TerrariaMoba.Projectiles.Marie {
         }
 
         public override void Kill(int timeLeft) {
-            Player Player = Main.player[Projectile.owner];
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) { 
                 Projectile proj = Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Vector2.Zero, 
                     ModContent.ProjectileType<WBWhirlpool>(), PoolDamage, 0, Projectile.whoAmI);
@@ -46,6 +49,16 @@ namespace TerrariaMoba.Projectiles.Marie {
                     pool.PoolDuration = PoolDuration;
                 }
             }
+        }
+        
+        public override void SendExtraAI(BinaryWriter writer) {
+            writer.Write(PoolDamage);
+            writer.Write(PoolDuration);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader) {
+            PoolDamage = reader.ReadInt32();
+            PoolDuration = reader.ReadInt32();
         }
     }
 }
