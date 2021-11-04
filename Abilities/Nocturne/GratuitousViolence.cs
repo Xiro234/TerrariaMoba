@@ -3,16 +3,18 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
-using TerrariaMoba.Players;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Nocturne;
 
 namespace TerrariaMoba.Abilities.Nocturne {
-    public class UnrelentingOnslaught : Ability {
-        public UnrelentingOnslaught() : base("Unrelenting Onslaught", 180, 0, AbilityType.Active) { }
+    public class GratuitousViolence : Ability {
+        public GratuitousViolence() : base("Gratuitous Violence", 180, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 
+        //TODO - Kills and assists (if possible) grant nocturne bonus damage
+        
+        /*
         public const int ATKBUFF_REFRESH_TIME = 240;
         public const int ATKBUFF_DURATION = 60;
 
@@ -40,8 +42,8 @@ namespace TerrariaMoba.Abilities.Nocturne {
             } else {
                 Main.NewText("Timer: " + timer);
                 timer--;
-            }
-            
+            } 
         }
+        */
     }
 }

@@ -12,34 +12,14 @@ namespace TerrariaMoba.Abilities.Sylvia {
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaAbilityTwo").Value; }
         
-        public const float BUFF_ATKSPD_MODIFIER = 1.3f;
-        public const float BUFF_ATKVEL_MODIFIER = 1.3f;
-        public const int BUFF_BASE_DURATION = 240;
+        public const float ATKSPD_MODIFIER = 1.3f;
+        public const float ATKVEL_MODIFIER = 1.3f;
+        public const int BUFF_DURATION = 240;
 
         public override void OnCast() {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
-                StatusEffectManager.AddEffect(User, new VerdantFuryEffect(BUFF_BASE_DURATION, BUFF_ATKSPD_MODIFIER, BUFF_ATKVEL_MODIFIER, false));
+                StatusEffectManager.AddEffect(User, new VerdantFuryEffect(BUFF_DURATION, ATKSPD_MODIFIER, ATKVEL_MODIFIER, false));
             }
         }
     }
 }
-
-/*using Terraria;
-using TerrariaMoba.Players;
-
-namespace TerrariaMoba.Abilities.Sylvia {
-    public class VerdantFury : Ability {
-        public VerdantFury(Player myPlayer) : base(myPlayer) {
-            Name = "Verdant Fury";
-            Icon = ModContent.Request<Texture2D>("Textures/Sylvia/SylviaAbilityTwo").Value;
-        }
-
-        public override void OnCast() {
-            //Player.AddBuff(BuffType<Buffs.VerdantFuryBuff>(), 60 * 4);
-            if (Main.LocalPlayer == User) {
-                User.GetModPlayer<MobaPlayer>().AddEffect(new Slow(360, User.whoAmI,0.3f));
-            }
-            cooldownTimer = 10 * 60;
-        }
-    }
-}*/

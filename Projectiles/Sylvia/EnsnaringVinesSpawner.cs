@@ -24,10 +24,10 @@ namespace TerrariaMoba.Projectiles.Sylvia {
             Projectile.alpha = 255;
             Projectile.tileCollide = false;
 
-            TrapDamage = EnsnaringVinesAbility.TRAP_BASE_DAMAGE;
-            TrapDuration = EnsnaringVinesAbility.TRAP_BASE_DURATION;
-            NumberOfTraps = EnsnaringVinesAbility.TRAP_BASE_NUMBER;
-            TileDistance = EnsnaringVinesAbility.TRAP_BASE_TILE_DISTANCE;
+            TrapDamage = EnsnaringVines.TRAP_DAMAGE;
+            TrapDuration = EnsnaringVines.TRAP_DURATION;
+            NumberOfTraps = EnsnaringVines.TRAP_AMOUNT;
+            TileDistance = EnsnaringVines.TRAP_DISTANCE;
         }
 
         public override bool? CanDamage() {

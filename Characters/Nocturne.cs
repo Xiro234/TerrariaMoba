@@ -14,7 +14,7 @@ namespace TerrariaMoba.Characters {
         
         public Nocturne(Player user) : base(user, new Statistics(1825f, 0f, 500f,
             0f, Resource.Mana, 0f, 0f, 103f, 1.11f, 9f), 
-            new UmbralBlade(), new TitaniumGuard(), new IronRush(), new BastionOfTitanium(), new UnrelentingOnslaught()) { }
+            new VersatileCombatant(), new ViolentRetaliation(), new RallyingCry(), new BastionOfTitanium(), new GratuitousViolence()) { }
 
         public override string Name {
             get => "Nocturne Umbra";

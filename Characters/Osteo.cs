@@ -14,7 +14,7 @@ namespace TerrariaMoba.Characters {
         
         public Osteo(Player user) : base(user, new Statistics(1440f, 0f, 500f,
             0f, Resource.Mana, 0f, 0f, 75f, 1.5f, 9f), 
-            new RaiseDead(), new LifedrainPulse(), new SpectralBolt(), new SongOfTheDamned(), new SkeletalBond()) { }
+            new RaiseDead(), new LifedrainPulse(), new SpectralBarrage(), new SongOfTheDamned(), new SkeletalBond()) { }
 
         public override string Name {
             get => "Osteo Prime";

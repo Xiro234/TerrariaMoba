@@ -1,48 +1,30 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.NPCs;
+using TerrariaMoba.Players;
+using TerrariaMoba.Projectiles;
+using TerrariaMoba.Projectiles.Osteo;
 
 namespace TerrariaMoba.Abilities.Osteo {
     public class SoulSiphon : Ability {
         public SoulSiphon() : base("Soul Siphon", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Osteo/OsteoUltimateTwo").Value; }
-    }
-}
-
-/*using System;
-using System.Collections.Generic;
-using BaseMod;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using TerrariaMoba.NPCs;
-using TerrariaMoba.Players;
-using static Terraria.ModLoader.ModContent;
-
-namespace TerrariaMoba.Abilities.Osteo {
-    [Serializable]
-    public class SoulSiphon : Ability {
+        
         private List<Projectile> soulList;
         private List<Vector2> soulPositions;
-
-        public SoulSiphon(Player myPlayer) : base(myPlayer) {
-            Name = "Soul Siphon";
-            Icon = ModContent.Request<Texture2D>("Textures/Osteo/OsteoUltimateTwo").Value;
-            soulList = new List<Projectile>();
-            soulPositions = new List<Vector2>();
-        }
-
-
+        private int Timer;
+        
         public override void OnCast() {
             if (soulList.Count == 0) {
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
                     var proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),User.Center, Vector2.Zero,
-                        ModContent.ProjectileType<OsteoSoul"), 0, 0, User.whoAmI);
+                        ModContent.ProjectileType<OsteoSoul>(), 0, 0, User.whoAmI);
                     soulList.Add(proj);
                 }
                 soulPositions.Add(User.Center);
@@ -86,6 +68,7 @@ namespace TerrariaMoba.Abilities.Osteo {
                     int maxSkeles = 6;
                     for (int i = 0; i < maxSkeles; i++) {
                         if (i < maxSkeles / 2) {
+                            /*
                             Vector2 position = BaseAI.Trace(
                                 new Vector2(User.Center.X + ((96) * User.direction) + (i * 32),
                                     User.Center.Y - 64),
@@ -95,10 +78,9 @@ namespace TerrariaMoba.Abilities.Osteo {
 
                             Main.npc[npc].GetGlobalNPC<MobaGlobalNPC>().owner = User.whoAmI;
                             Main.npc[npc].direction = User.direction;
-                            (User.GetModPlayer<MobaPlayer>().MyCharacter as Characters.Osteo).skeleList.Add(
+                            (User.GetModPlayer<MobaPlayer>().Hero as Characters.Osteo).skeleList.Add(
                                 Main.npc[npc]);
-                        }
-                        else {
+                        } else {
                             Vector2 position = BaseAI.Trace(
                                 new Vector2(User.Center.X + ((96) * -User.direction) - ((i - maxSkeles / 2) * 32),
                                     User.Center.Y - 64),
@@ -108,8 +90,9 @@ namespace TerrariaMoba.Abilities.Osteo {
 
                             Main.npc[npc].GetGlobalNPC<MobaGlobalNPC>().owner = User.whoAmI;
                             Main.npc[npc].direction = -User.direction;
-                            (User.GetModPlayer<MobaPlayer>().MyCharacter as Characters.Osteo).skeleList.Add(
+                            (User.GetModPlayer<MobaPlayer>().Hero as Characters.Osteo).skeleList.Add(
                                 Main.npc[npc]);
+                                */
                         }
                     }
                     IsActive = true;
@@ -132,4 +115,4 @@ namespace TerrariaMoba.Abilities.Osteo {
             IsActive = false;
         }
     }
-}*/
+}
