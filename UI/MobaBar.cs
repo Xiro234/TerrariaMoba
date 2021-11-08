@@ -176,7 +176,7 @@ namespace TerrariaMoba.UI {
             //manaText.SetText(mobaPlayer.currentResource + "/" + mobaPlayer.maxResource + " (+" + mobaPlayer.resourceRegen + ")", 0.75f, false);
 
             //armorText.SetText(mobaPlayer.armor.ToString(), 0.6f, false);
-            //moveSpeedText.SetText(((Player.maxRunSpeed / 3) * 100).ToString() + "%", 0.6f, false);
+            //moveSpeedText.SetText(((Player.maxRunSpeed / 3) * 100).ToString() + "%", 0.6 falsef,);
 
             if (Player.dead) {
                 deathTimer.SetText(Math.Ceiling(Player.respawnTimer / 60f).ToString());
@@ -189,12 +189,10 @@ namespace TerrariaMoba.UI {
         public void DrawIcon(ref UIText text, ref UIAbilityIcon icon, int timer, Ability ability) {
             if(timer > 0) {
                 if (timer >= 40) {
-                    text.SetText(Math.Ceiling(timer / 60f)
-                        .ToString());
+                    text.SetText(Math.Ceiling(timer / 60f).ToString());
                 }
                 else {
-                    text.SetText((Math.Ceiling((timer / 60f) * 10) / 10f)
-                        .ToString());
+                    text.SetText((Math.Ceiling((timer / 60f) * 10) / 10f).ToString());
                 }
             }
             else {

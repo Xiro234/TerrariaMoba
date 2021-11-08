@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -15,24 +16,28 @@ namespace TerrariaMoba.Characters {
     public class Sylvia : Character {
         public Sylvia() { }
 
-        public override Dictionary<AttributeType, float> BaseAttributes => new Dictionary<AttributeType, float>() {
-            { MAX_HEALTH, 1340f },
-            { MAX_MANA, 500f },
-            { ATTACK_DAMAGE, 75f },
-            { ATTACK_SPEED, 1.5f },
-            { ATTACK_VELOCITY, 9f }
-        };
-
-        public override Ability[] Skills => new Ability[] {
-            new EnsnaringVinesAbility(),
-            new GracefulLeap(),
-            new VerdantFury(),
-            new Flourish(),
-            new JunglesWrathAbility()
-        };
-
         public Sylvia(Player user) : base(user) { }
-        
+
+        protected override Dictionary<AttributeType, Func<float>> BaseAttributesFactory() {
+            return new Dictionary<AttributeType, Func<float>>() {
+                { MAX_HEALTH, () => 1340f },
+                { MAX_MANA, () => 500f },
+                { ATTACK_DAMAGE, () => 75f },
+                { ATTACK_SPEED, () => 1.5f },
+                { ATTACK_VELOCITY, () => 9f }
+            };
+        }
+
+        protected override Ability[] BaseSkillsFactory() {
+            return new Ability[] {
+                new EnsnaringVinesAbility(),
+                new GracefulLeap(),
+                new VerdantFury(),
+                new Flourish(),
+                new JunglesWrathAbility()
+            };
+        }
+
         public override string Name {
             get => "Sylvia Verda";
         }

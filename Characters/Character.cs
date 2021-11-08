@@ -18,8 +18,8 @@ namespace TerrariaMoba.Characters {
         
         public const int XP_PER_LEVEL = 100;
         public int Experience { get; protected set; }
-        public abstract Ability[] Skills { get; }
-        public abstract Dictionary<AttributeType, Func<float>> BaseAttributes { get; }
+        public Ability[] Skills { get; private set; }
+        public Dictionary<AttributeType, Func<float>> BaseAttributes { get; private set; }
         public int Level { get; protected set; }
 
         //Appearance
@@ -66,9 +66,19 @@ namespace TerrariaMoba.Characters {
 
         public Character(Player user) {
             User = user;
+            Initialize();
         }
         
         public Character() { } //For reflection
+
+        private void Initialize() {
+            BaseAttributes = BaseAttributesFactory();
+            Skills = BaseSkillsFactory();
+        }
+
+        protected abstract Ability[] BaseSkillsFactory();
+
+        protected abstract Dictionary<AttributeType, Func<float>> BaseAttributesFactory();
 
         public virtual void GainExperience(int xp) {
             Experience += xp;

@@ -15,8 +15,8 @@ namespace TerrariaMoba.StatusEffects {
         public int Duration { get; protected set; }
         public int DurationTimer { get; protected set; }
         public bool CanBeCleansed { get; protected set; }
-        public virtual Dictionary<AttributeType, Func<float>> FlatAttributes { get; }
-        public virtual Dictionary<AttributeType, Func<float>> MultAttributes { get; }
+        public Dictionary<AttributeType, Func<float>> FlatAttributes { get; private set; }
+        public Dictionary<AttributeType, Func<float>> MultAttributes { get; private set; }
         protected virtual bool ShowBar {
             get => true;
         }
@@ -26,6 +26,20 @@ namespace TerrariaMoba.StatusEffects {
         public StatusEffect(int duration, bool canBeCleansed) {
             Duration = duration;
             CanBeCleansed = canBeCleansed;
+            Initialize();
+        }
+
+        private void Initialize() {
+            FlatAttributes = FlatAttributesFactory();
+            MultAttributes = MultAttributesFactory();
+        }
+
+        public virtual Dictionary<AttributeType, Func<float>> FlatAttributesFactory() {
+            return new Dictionary<AttributeType, Func<float>>();
+        }
+        
+        public virtual Dictionary<AttributeType, Func<float>> MultAttributesFactory() {
+            return new Dictionary<AttributeType, Func<float>>();
         }
 
         public virtual void Apply() {

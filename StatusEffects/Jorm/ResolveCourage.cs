@@ -16,7 +16,7 @@ namespace TerrariaMoba.StatusEffects.Jorm {
         public ResolveCourage(int stacks, int duration, bool canBeCleansed) : base(duration, canBeCleansed) {
             stackCount = stacks;
         }
-        //TODO - Think of easy way to get attributes easy
+        
         public override Dictionary<AttributeType, Func<float>> FlatAttributes => new Dictionary<AttributeType, Func<float>> {
             { PHYSICAL_ARMOR, () => stackCount * 5f },
             { HEALTH_REGEN, () => stackCount * 0.5f },
