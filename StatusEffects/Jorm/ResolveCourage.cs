@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 using TerrariaMoba.Statistic;
@@ -16,9 +17,9 @@ namespace TerrariaMoba.StatusEffects.Jorm {
             stackCount = stacks;
         }
         //TODO - Think of easy way to get attributes easy
-        public override Dictionary<AttributeType, float> FlatAttributes { get => {
-            { PHYSICAL_ARMOR, stackCount * 0.5f },
-            { HEALTH_REGEN, stackCount * 0.5f },
+        public override Dictionary<AttributeType, Func<float>> FlatAttributes => new Dictionary<AttributeType, Func<float>> {
+            { PHYSICAL_ARMOR, () => stackCount * 5f },
+            { HEALTH_REGEN, () => stackCount * 0.5f },
         };
     }
 }

@@ -19,7 +19,7 @@ namespace TerrariaMoba.Characters {
         public const int XP_PER_LEVEL = 100;
         public int Experience { get; protected set; }
         public abstract Ability[] Skills { get; }
-        public abstract Dictionary<AttributeType, float> BaseAttributes { get; }
+        public abstract Dictionary<AttributeType, Func<float>> BaseAttributes { get; }
         public int Level { get; protected set; }
 
         //Appearance

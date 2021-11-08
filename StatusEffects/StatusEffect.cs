@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -14,8 +15,8 @@ namespace TerrariaMoba.StatusEffects {
         public int Duration { get; protected set; }
         public int DurationTimer { get; protected set; }
         public bool CanBeCleansed { get; protected set; }
-        public virtual Dictionary<AttributeType, float> FlatAttributes { get; }
-        public virtual Dictionary<AttributeType, float> MultAttributes { get; }
+        public virtual Dictionary<AttributeType, Func<float>> FlatAttributes { get; }
+        public virtual Dictionary<AttributeType, Func<float>> MultAttributes { get; }
         protected virtual bool ShowBar {
             get => true;
         }
@@ -39,6 +40,10 @@ namespace TerrariaMoba.StatusEffects {
 
         public void SetPlayer(Player Player) {
             User = Player;
+        }
+
+        public virtual void ReApply() {
+            DurationTimer = Duration;
         }
 
         public virtual void GetListOfPlayerDrawLayers(List<PlayerDrawLayer> playerLayers) { }
