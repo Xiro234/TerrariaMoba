@@ -15,7 +15,27 @@ namespace TerrariaMoba.Abilities.Nocturne {
 
         //TODO - Switch between 2 weapons, 2h sword and throwing spear, think jinx q
         //TODO - 2h sword has unrelenting onslaught effect, throwing spear has a stacking attack speed buff
-        
-        
+
+        public override void OnCast() {
+            /*
+             * if primary weapon is sword
+             * change weapon to spear
+             * set issword to false;
+             * set isspear to true
+             * else
+             * change weapon to sword
+             * set isspear to false
+             * set issword to true
+             */
+        }
+
+        public override void WhileActive() {
+            /*
+             * if issword
+             * every fifth attack deals %max health dmg
+             * if isspear
+             * every successful(?) attack increases attackspeed
+             */
+        }
     }
 }

@@ -13,10 +13,20 @@ namespace TerrariaMoba.Abilities.Nocturne {
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
         
-        //TODO - Globally buffs allies depending on which weapon nocturne is holding: melee = 25% debuff resistance (reduces duration of debuffs) / ranged = bonus atkspd
-        
-        
-        
+        //TODO - Globally buffs allies depending on which weapon nocturne is holding: melee = 25% status resistance (reduces duration of negative effects) / ranged = bonus atkspd
+
+        public override void OnCast() {
+            /*
+             * if nocturnes primary is sword
+             * for all players on nocturnes team that are alive including himself
+             * grant effect that increases status resistance
+             *
+             * if nocturnes primary is throwing spear
+             * for all players on nocturnes team that are alive including himself
+             * grant effect that increases attack speed
+             */
+        }
+
         /*
         public const float DASH_X_VELOCITY = 8f;
         public const int WAIT_TIME = 60;
