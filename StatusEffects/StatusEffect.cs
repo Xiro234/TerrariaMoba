@@ -34,11 +34,11 @@ namespace TerrariaMoba.StatusEffects {
             MultAttributes = MultAttributesFactory();
         }
 
-        public virtual Dictionary<AttributeType, Func<float>> FlatAttributesFactory() {
+        protected virtual Dictionary<AttributeType, Func<float>> FlatAttributesFactory() {
             return new Dictionary<AttributeType, Func<float>>();
         }
         
-        public virtual Dictionary<AttributeType, Func<float>> MultAttributesFactory() {
+        protected virtual Dictionary<AttributeType, Func<float>> MultAttributesFactory() {
             return new Dictionary<AttributeType, Func<float>>();
         }
 

@@ -17,9 +17,11 @@ namespace TerrariaMoba.StatusEffects.Jorm {
             stackCount = stacks;
         }
         
-        public override Dictionary<AttributeType, Func<float>> FlatAttributes => new Dictionary<AttributeType, Func<float>> {
-            { PHYSICAL_ARMOR, () => stackCount * 5f },
-            { HEALTH_REGEN, () => stackCount * 0.5f },
-        };
+        protected override Dictionary<AttributeType, Func<float>> FlatAttributesFactory() {
+            return new Dictionary<AttributeType, Func<float>> {
+                { PHYSICAL_ARMOR, () => stackCount * 5f },
+                { HEALTH_REGEN, () => stackCount * 0.5f },
+            };
+        }
     }
 }

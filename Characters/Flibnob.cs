@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -17,21 +18,25 @@ namespace TerrariaMoba.Characters {
 
         public Flibnob(Player user) : base(user) { }
         
-        public override Dictionary<AttributeType, float> BaseAttributes => new Dictionary<AttributeType, float>() {
-            { MAX_HEALTH, 1340f },
-            { MAX_MANA, 500f },
-            { ATTACK_DAMAGE, 75f },
-            { ATTACK_SPEED, 1.5f },
-            { ATTACK_VELOCITY, 9f }
-        };
+        protected override Dictionary<AttributeType, Func<float>> BaseAttributesFactory() {
+            return new Dictionary<AttributeType, Func<float>>() {
+                { MAX_HEALTH, () => 1340f },
+                { MAX_MANA, () => 500f },
+                { ATTACK_DAMAGE, () => 75f },
+                { ATTACK_SPEED, () => 1.5f },
+                { ATTACK_VELOCITY, () => 9f }
+            };
+        }
 
-        public override Ability[] Skills => new Ability[] {
-            new FlameBelch(),
-            new TitaniumShell(),
-            new Rockwrecker(),
-            new Earthsplitter(),
-            new BattleHardened()
-        };
+        protected override Ability[] BaseSkillsFactory() {
+            return new Ability[] {
+                new FlameBelch(),
+                new TitaniumShell(),
+                new Rockwrecker(),
+                new Earthsplitter(),
+                new BattleHardened()
+            };
+        }
 
         public override string Name {
             get => "Flibnob";

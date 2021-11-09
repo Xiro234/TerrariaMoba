@@ -1,10 +1,12 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
-using TerrariaMoba.Interfaces;
-using TerrariaMoba.Players;
+using TerrariaMoba.Statistic;
+using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.StatusEffects.Jorm {
-    public class ResolveWisdom : StatusEffect, IResetEffects {
+    public class ResolveWisdom : StatusEffect {
         public override string DisplayName { get => "Wisdom"; }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
@@ -15,9 +17,11 @@ namespace TerrariaMoba.StatusEffects.Jorm {
             stackCount = stacks;
         }
 
-        public void ResetEffects() {
-            User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics.ResourceRegen += (stackCount * 0.5f);
-            User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics.MagicalArmor += (stackCount * 5);
+        protected override Dictionary<AttributeType, Func<float>> FlatAttributesFactory() {
+            return new Dictionary<AttributeType, Func<float>> {
+                { MANA_REGEN, () => stackCount * 0.5f },
+                { MAGICAL_ARMOR, () => stackCount * 5f },
+            };
         }
     }
 }

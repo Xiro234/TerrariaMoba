@@ -1,21 +1,43 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Abilities;
 using TerrariaMoba.Abilities.Marie;
 using TerrariaMoba.Items.Marie;
 using TerrariaMoba.Statistic;
+using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.Characters {
     public class Marie : Character {
         public Marie() { }
         
-        public Marie(Player user) : base(user, new Statistics(1460f, 0f, 500f,
-            0f, Resource.Mana, 0f, 0f, 75f, 1.5f, 9f), 
-            new WhirlpoolInABottle(),  new TomeOfLacusia(), new Floodboost(), new EyeOfTheStorm(), new TorrentialPendant()) { }
+        public Marie(Player user) : base(user) { }
 
+        protected override Dictionary<AttributeType, Func<float>> BaseAttributesFactory() {
+            return new Dictionary<AttributeType, Func<float>>() {
+                { MAX_HEALTH, () => 1340f },
+                { MAX_MANA, () => 500f },
+                { ATTACK_DAMAGE, () => 75f },
+                { ATTACK_SPEED, () => 1.5f },
+                { ATTACK_VELOCITY, () => 9f }
+            };
+        }
+        
+        protected override Ability[] BaseSkillsFactory() {
+            return new Ability[] {
+                new WhirlpoolInABottle(),  
+                new TomeOfLacusia(), 
+                new Floodboost(), 
+                new EyeOfTheStorm(), 
+                new TorrentialPendant()
+            };
+        }
+        
         public override string Name {
             get => "Marie Tidewrath";
         }

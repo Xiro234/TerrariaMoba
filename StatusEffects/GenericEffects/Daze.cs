@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -18,11 +19,13 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
             modifier = magnitude;
         }
 
-        public override Dictionary<AttributeType, float> MultAttributes => new Dictionary<AttributeType, float>() {
-            { MOVEMENT_SPEED, 1 - modifier },
-            { ATTACK_SPEED, 1 - modifier },
-            { JUMP_SPEED, 1 - modifier },
-        };
+        protected override Dictionary<AttributeType, Func<float>> MultAttributesFactory() {
+            return new Dictionary<AttributeType, Func<float>>() {
+                { MOVEMENT_SPEED, () => 1 - modifier },
+                { ATTACK_SPEED, () => 1 - modifier },
+                { JUMP_SPEED, () => 1 - modifier },
+            };
+        }
 
         public class DazeDrawLayer : PlayerDrawLayer {
             public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) {
