@@ -43,7 +43,6 @@ namespace TerrariaMoba.Abilities.Jorm {
 
         //TODO - Possibly convert to nearest ally to mouse.
         public override void TimeOut() {
-            Statistics jorm = User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics;
             IsActive = false;
             float closestDist  = float.MaxValue;
             int closestPlayerID = -1;
@@ -58,11 +57,10 @@ namespace TerrariaMoba.Abilities.Jorm {
 
             if (closestPlayerID != -1) {
                 Player plr = Main.player[closestPlayerID];
-                StatusEffectManager.AddEffect(plr, new HolyBarrier(jorm.PhysicalArmor, jorm.MagicalArmor, ABSORB_MAGNITUDE, User.whoAmI, BARRIER_DURATION, true));
-                /*
-                plr.statLife += SEAL_HEAL_AMOUNT;
-                CombatText.NewText(Main.player[closestPlayerID].Hitbox, Color.Goldenrod, SEAL_HEAL_AMOUNT, true);
-                */
+                StatusEffectManager.AddEffect(plr, new HolyBarrier(
+                    User.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.PHYSICAL_ARMOR), 
+                    User.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.MAGICAL_ARMOR), 
+                    ABSORB_MAGNITUDE, User.whoAmI, BARRIER_DURATION, true));
                 SoundEngine.PlaySound(SoundID.Item4, plr.Center);
                 for (int d = 0; d < 8; d++) {
                     Dust.NewDust(plr.position, plr.width, plr.height, 269, 0f, 0f, 200, default(Color), 1.5f);

@@ -1,10 +1,13 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
-using TerrariaMoba.Players;
+using TerrariaMoba.Statistic;
+using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.StatusEffects.Jorm {
-    public class HolyBarrier : StatusEffect, IResetEffects, ITakePvpDamage {
+    public class HolyBarrier : StatusEffect, ITakePvpDamage {
         public override string DisplayName { get => "Holy Barrier"; }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
@@ -13,6 +16,7 @@ namespace TerrariaMoba.StatusEffects.Jorm {
         private float jormMagRes;
         private float dmgAbsorbMag;
         private float jormPlayerId;
+        
         public HolyBarrier(float armor, float magres, float magnitude, int id, int duration, bool canBeCleansed) : base(duration, canBeCleansed) {
             jormArmor = armor;
             jormMagRes = magres;
@@ -20,9 +24,11 @@ namespace TerrariaMoba.StatusEffects.Jorm {
             jormPlayerId = id;
         }
         
-        public void ResetEffects() {
-            User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics.PhysicalArmor += jormArmor;
-            User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics.MagicalArmor += jormMagRes;
+        protected override Dictionary<AttributeType, Func<float>> FlatAttributesFactory() {
+            return new Dictionary<AttributeType, Func<float>> {
+                { PHYSICAL_ARMOR, () => jormArmor },
+                { MAGICAL_ARMOR, () => jormMagRes },
+            };
         }
 
         //TODO - Implement Jorm's damage absorption.

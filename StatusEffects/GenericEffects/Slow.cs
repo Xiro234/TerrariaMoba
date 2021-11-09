@@ -1,13 +1,15 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
-using TerrariaMoba.Interfaces;
-using TerrariaMoba.Players;
+using TerrariaMoba.Statistic;
+using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.StatusEffects.GenericEffects {
-    public abstract class Slow : StatusEffect, IResetEffects {
+    public abstract class Slow : StatusEffect {
         private float modifier;
         
         public Slow() { }
@@ -16,9 +18,11 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
             modifier = magnitude;
         }
         
-        public void ResetEffects() {
-            User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics.MovementSpeed *= 1-modifier;
-            User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics.JumpSpeed *= 1-modifier;
+        protected override Dictionary<AttributeType, Func<float>> MultAttributesFactory() {
+            return new Dictionary<AttributeType, Func<float>>() {
+                { MOVEMENT_SPEED, () => 1 - modifier },
+                { JUMP_SPEED, () => 1 - modifier },
+            };
         }
         
         public class SlowDrawLayer : PlayerDrawLayer {

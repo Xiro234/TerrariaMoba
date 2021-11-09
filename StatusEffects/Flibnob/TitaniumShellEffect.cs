@@ -1,11 +1,13 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
-using TerrariaMoba.Players;
 using TerrariaMoba.Statistic;
+using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.StatusEffects.Flibnob {
-    public class TitaniumShellEffect : StatusEffect, IResetEffects, ITakePvpDamage {
+    public class TitaniumShellEffect : StatusEffect, ITakePvpDamage {
         public override string DisplayName { get => "Titanium Shell"; }
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
@@ -23,11 +25,17 @@ namespace TerrariaMoba.StatusEffects.Flibnob {
             healDamage = heal;
         }
 
-        public void ResetEffects() {
-            Statistics flibnob = User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics;
-            flibnob.PhysicalArmor += shellArmor; 
-            flibnob.MagicalArmor += shellMagRes; 
-            flibnob.MovementSpeed *= moveSpeed; 
+        protected override Dictionary<AttributeType, Func<float>> FlatAttributesFactory() {
+            return new Dictionary<AttributeType, Func<float>> {
+                { PHYSICAL_ARMOR, () => shellArmor },
+                { PHYSICAL_ARMOR, () => shellMagRes }
+            };
+        }
+        
+        protected override Dictionary<AttributeType, Func<float>> MultAttributesFactory() {
+            return new Dictionary<AttributeType, Func<float>>() {
+                { MOVEMENT_SPEED, () => 1 - moveSpeed }
+            };
         }
 
         public void TakePvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {

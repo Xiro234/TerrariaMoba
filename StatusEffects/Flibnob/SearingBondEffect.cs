@@ -1,10 +1,12 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
-using TerrariaMoba.Interfaces;
-using TerrariaMoba.Players;
+using TerrariaMoba.Statistic;
+using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.StatusEffects.Flibnob {
-    public class SearingBondEffect : StatusEffect, IResetEffects {
+    public class SearingBondEffect : StatusEffect {
 
         public override string DisplayName { get => "Searing Bond"; }
         
@@ -18,8 +20,10 @@ namespace TerrariaMoba.StatusEffects.Flibnob {
             armorGain = armor;
         }
 
-        public void ResetEffects() {
-            User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics.PhysicalArmor += armorGain * currentStacks;
+        protected override Dictionary<AttributeType, Func<float>> FlatAttributesFactory() {
+            return new Dictionary<AttributeType, Func<float>> {
+                { PHYSICAL_ARMOR, () => armorGain * currentStacks }
+            };
         }
     }
 }

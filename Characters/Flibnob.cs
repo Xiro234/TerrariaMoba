@@ -34,7 +34,7 @@ namespace TerrariaMoba.Characters {
                 new TitaniumShell(),
                 new Rockwrecker(),
                 new Earthsplitter(),
-                new BattleHardened()
+                new SearingBond()
             };
         }
 
