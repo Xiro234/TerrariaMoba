@@ -19,22 +19,26 @@ namespace TerrariaMoba.Abilities.Flibnob {
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobAbilityOne").Value; }
 
         public const int FLAME_BASE_DAMAGE = 225;
-        public const int FLAME_BASE_NUMBER = 4;
         public const int FLAME_BASE_DELAY = 60;
-        
         public const int BURN_BASE_DURATION = 150;
-        
         public int timer;
-        public int remainingFlames;
 
         public override void OnCast() {
-            timer = FLAME_BASE_DELAY;
-            remainingFlames = FLAME_BASE_NUMBER;
-            IsActive = true;
+            if (IsActive) {
+                IsActive = false;
+                timer = 0;
+            } else {
+                timer = FLAME_BASE_DELAY;
+                IsActive = true;
+            }
         }
 
+        //TODO - Make into toggle that drains mana each flame cast
         public override void WhileActive() {
-            timer--;
+            if (timer > 0) {
+                timer--;
+            }
+
             if (timer == 0) {
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
                     Vector2 playerToMouse = Main.MouseWorld - User.Center;
@@ -47,25 +51,16 @@ namespace TerrariaMoba.Abilities.Flibnob {
                     Projectile.NewProjectile(new ProjectileSource_Ability(User, this), User.Center, vel,
                         ModContent.ProjectileType<FlameBelchSpawner>(), FLAME_BASE_DAMAGE, 0, User.whoAmI);
                 }
-                remainingFlames--;
+                //player resource reduced by 50
+                timer = FLAME_BASE_DELAY;
             }
-            
-            if (remainingFlames == 0) {
-                TimeOut();
-            }
-        }
-        
-        public override void TimeOut() {
-            timer = 0;
-            remainingFlames = 0;
-            IsActive = false;
         }
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            //TODO - Add burning effect.
+            //TODO - Apply 2 different effects; ignite if no ignite already, something more if already ignited
             var ModProjectile = proj.ModProjectile;
-            FlameBelchSpawner trap = ModProjectile as FlameBelchSpawner;
-            if (trap != null) {
+            FlameBelchSpawner flame= ModProjectile as FlameBelchSpawner;
+            if (flame != null) {
                 StatusEffectManager.AddEffect(target, new EnsnaringVinesEffect(BURN_BASE_DURATION, true));
             }
         }

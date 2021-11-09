@@ -6,6 +6,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Players;
+using TerrariaMoba.Statistic;
+using TerrariaMoba.StatusEffects;
+using TerrariaMoba.StatusEffects.Jorm;
 
 namespace TerrariaMoba.Abilities.Jorm {
     public class SealOfHephaesta : Ability {
@@ -13,8 +16,9 @@ namespace TerrariaMoba.Abilities.Jorm {
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
 
-        public const float SEAL_HEAL_RANGE = 200f;
-        public const int SEAL_HEAL_AMOUNT = 200;
+        public const float SEAL_RANGE = 200f;
+        public const float ABSORB_MAGNITUDE = 25f;
+        public const int BARRIER_DURATION = 180;
         public const int INTERNAL_CAST_TIME = 60;
         public int timer;
         
@@ -37,14 +41,16 @@ namespace TerrariaMoba.Abilities.Jorm {
             }
         }
 
+        //TODO - Possibly convert to nearest ally to mouse.
         public override void TimeOut() {
+            Statistics jorm = User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics;
             IsActive = false;
             float closestDist  = float.MaxValue;
             int closestPlayerID = -1;
             for (int i = 0; i < Main.maxPlayers; i++) {
                 Player plr = Main.player[i];
                 float dist = (plr.Center - User.Center).Length();
-                if (plr.active && plr.team == User.team && dist <= SEAL_HEAL_RANGE && i != User.whoAmI) {
+                if (plr.active && plr.team == User.team && dist <= SEAL_RANGE && i != User.whoAmI) {
                     closestDist = dist < closestDist ? dist : closestDist;
                     closestPlayerID = i;
                 }
@@ -52,17 +58,18 @@ namespace TerrariaMoba.Abilities.Jorm {
 
             if (closestPlayerID != -1) {
                 Player plr = Main.player[closestPlayerID];
+                StatusEffectManager.AddEffect(plr, new HolyBarrier(jorm.PhysicalArmor, jorm.MagicalArmor, ABSORB_MAGNITUDE, User.whoAmI, BARRIER_DURATION, true));
+                /*
                 plr.statLife += SEAL_HEAL_AMOUNT;
                 CombatText.NewText(Main.player[closestPlayerID].Hitbox, Color.Goldenrod, SEAL_HEAL_AMOUNT, true);
+                */
                 SoundEngine.PlaySound(SoundID.Item4, plr.Center);
                 for (int d = 0; d < 8; d++) {
                     Dust.NewDust(plr.position, plr.width, plr.height, 269, 0f, 0f, 200, default(Color), 1.5f);
                 }
             } else {
-                Main.NewText("Could not find a player in range to heal!");
+                Main.NewText("Could not find a player in range to give Holy Barrier!");
             }
         }
-        
-        //TODO - refactor to give allies jorms armor/mr and jorm takes 25% of all premitigated dmg / is an effect
     }
 }

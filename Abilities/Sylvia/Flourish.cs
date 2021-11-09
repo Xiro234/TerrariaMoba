@@ -10,24 +10,21 @@ using TerrariaMoba.Projectiles.Sylvia;
 
 namespace TerrariaMoba.Abilities.Sylvia {
     public class Flourish : Ability {
-        public Flourish() : base("Flourish", 60, 0, AbilityType.Active) {
-        }
+        public Flourish() : base("Flourish", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon {
-            get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaUltimateOne").Value;
-        }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaUltimateOne").Value; }
 
-        public const int JAVELIN_BASE_DAMAGE = 400;
-        public const int JAVELIN_BASE_NUMBER = 3;
-        public const int AIRTIME_BASE_DURATION = 360;
+        public const int JAVELIN_DAMAGE = 400;
+        public const int JAVELIN_NUMBER = 3;
+        public const int AIRTIME_DURATION = 360;
 
-        public Projectile teleport = null;
+        public Projectile teleport;
         public int timer;
         public int remainingJavelins;
 
         public override void OnCast() {
             IsActive = true;
-            timer = AIRTIME_BASE_DURATION;
+            timer = AIRTIME_DURATION;
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
 
                 Vector2 position = User.Top;
@@ -49,24 +46,21 @@ namespace TerrariaMoba.Abilities.Sylvia {
             if (timer > 345) {
                 User.immune = true;
                 User.immuneTime = 1;
-            }
-            else if (timer == 345) {
+                
+            } else if (timer == 345) {
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
                     User.position = teleport.position;
                     NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, Main.myPlayer);
                     teleport.Kill();
                 }
-
-                remainingJavelins = JAVELIN_BASE_NUMBER;
-            }
-            else if (timer < 345) {
+                remainingJavelins = JAVELIN_NUMBER;
+                
+            } else if (timer < 345) {
                 if (User.velocity.Y != 0f) { //Ripped from webbed
                     User.velocity = new Vector2(0f, 1E-06f);
-                }
-                else {
+                } else {
                     User.velocity = Vector2.Zero;
                 }
-
                 User.gravity = 0f;
                 User.moveSpeed = 0f;
             }
@@ -84,24 +78,12 @@ namespace TerrariaMoba.Abilities.Sylvia {
     }
 }
 
-/*using Terraria;
-using System;
-using System.IO;
-using Microsoft.Xna.Framework;
-using Terraria.ID;
+/*
 
-namespace TerrariaMoba.Abilities.Sylvia {
-    [Serializable]
-    public class Flourish : Ability {
         public int NumberJavelins = 0;
         private int PreviousJavelins = 0;
         public Projectile teleport = null;
         public bool teleporting = false;
-
-        public Flourish(Player myPlayer) : base(myPlayer) {
-            Name = "Flourish";
-            Icon = ModContent.Request<Texture2D>("Textures/Sylvia/SylviaUltimateOne").Value;
-        }
 
         public override void OnCast() {
             Timer = 6 * 60;

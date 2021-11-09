@@ -8,19 +8,26 @@ using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Nocturne;
 
 namespace TerrariaMoba.Abilities.Nocturne {
-    public class IronRush : Ability {
-        public IronRush() : base("Iron Rush", 60, 0, AbilityType.Active) { }
-
-        // TODO - Add an animation to make it look like the projectile is moving/running.
-        // TODO - Make sprite alpha scale with Sin/Cos so it pulses in and out.
-        // TODO - Replace control locking with a root near the final product (cant test on SP otherwise).
-        // TODO - If possible, stop the teleport forcing Player into blocks (can be used to get out of bounds).
-        // TODO - Implement armor boost effect.
-        // TODO - Implement stun on enemy contact effect.
-        // TODO - Implement damage, resource and scaling stats.
+    public class RallyingCry : Ability {
+        public RallyingCry() : base("Rallying Cry", 60, 0, AbilityType.Active) { }
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
+        
+        //TODO - Globally buffs allies depending on which weapon nocturne is holding: melee = 25% status resistance (reduces duration of negative effects) / ranged = bonus atkspd
 
+        public override void OnCast() {
+            /*
+             * if nocturnes primary is sword
+             * for all players on nocturnes team that are alive including himself
+             * grant effect that increases status resistance
+             *
+             * if nocturnes primary is throwing spear
+             * for all players on nocturnes team that are alive including himself
+             * grant effect that increases attack speed
+             */
+        }
+
+        /*
         public const float DASH_X_VELOCITY = 8f;
         public const int WAIT_TIME = 60;
 
@@ -72,5 +79,6 @@ namespace TerrariaMoba.Abilities.Nocturne {
             timer = 0;
             IsActive = false;
         }
+        */
     }
 }

@@ -1,34 +1,20 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Osteo {
     public class SongOfTheDamned : Ability {
         public SongOfTheDamned() : base("Song of the Damned", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Osteo/OsteoUltimateOne").Value; }
-    }
-}
 
-/*using System;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
-using TerrariaMoba.Effects;
-using TerrariaMoba.Players;
-
-namespace TerrariaMoba.Abilities.Osteo {
-    [Serializable]
-    public class SongOfTheDamned : Ability {
-        public SongOfTheDamned(Player myPlayer) : base(myPlayer) {
-            Name = "Song of the Damned";
-            Icon = ModContent.Request<Texture2D>("Textures/Osteo/OsteoUltimateOne").Value;
-        }
-
+        private int Timer;
+        
         public override void OnCast() {
             IsActive = true;
             Timer = 0;
@@ -43,7 +29,7 @@ namespace TerrariaMoba.Abilities.Osteo {
                         if (!Main.player[i].dead) {
                             modPlayer.ultTimer = Timer;
 
-                            double displace = OsteoEffects.GetSwordPosition(Timer);
+                            double displace = 1f; //OsteoEffects.GetSwordPosition(Timer);
                             float xPosition = Main.player[i].Center.X - 1; //Aligning
 
                             displace -= 34;
@@ -74,7 +60,7 @@ namespace TerrariaMoba.Abilities.Osteo {
                     if (Main.player[i].team != User.team) {
                         var modPlayer = Main.player[i].GetModPlayer<MobaPlayer>();
                         if (!Main.player[i].dead) {
-                            modPlayer.DamageOverride((int)User.GetModPlayer<MobaPlayer>().OsteoStats.U1Dmg.Value, Main.player[i], User.whoAmI, true);
+                            //modPlayer.DamageOverride((int)User.GetModPlayer<MobaPlayer>().OsteoStats.U1Dmg.Value, Main.player[i], User.whoAmI, true);
                             SoundEngine.PlaySound(SoundID.Item71, Main.player[i].position);
                         }
                         modPlayer.ultTimer = -1;
@@ -83,4 +69,4 @@ namespace TerrariaMoba.Abilities.Osteo {
             }
         }
     }
-}*/
+}

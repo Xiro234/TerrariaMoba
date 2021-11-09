@@ -9,11 +9,11 @@ namespace TerrariaMoba.Abilities.Nocturne {
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 
         public override void OnCast() {
-            //TODO - Light shines through the titanium on nocturnes armor; changes A1,2,3 and Trait:
-            //T = leave behind damaging trail
-            //A1 = throws a spear of light that burns enemies with a dot
-            //A2 = grants selfshield that gives 40/40 armor/mr, armor/mr decays when shield falls
-            //A3 = aoe ally ms buff
+            //TODO - Changes trait and abilities:
+            //T = kills and assists also grant increased experience
+            //A1 = can no longer switch, set to spear, on use spear inflict %health burn 
+            //A2 = can move whilst active
+            //A3 = base effects become passive whilst near nocturne and do opposite to enemies in range
         }
     }
 }

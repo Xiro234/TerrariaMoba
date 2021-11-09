@@ -23,9 +23,9 @@ namespace TerrariaMoba.Projectiles.Sylvia {
             Projectile.aiStyle = 0;
             DrawOffsetX = -46;
 
-            SporeDamage = PlanterasLastWill.SPORE_BASE_DAMAGE;
-            NumberOfSpores = PlanterasLastWill.SPORE_BASE_NUMBER;
-            SporeDuration = PlanterasLastWill.SPORE_BASE_DURATION;
+            SporeDamage = PlanterasLastWill.SPORE_DAMAGE;
+            NumberOfSpores = PlanterasLastWill.SPORE_NUMBER;
+            SporeDuration = PlanterasLastWill.SPORE_DURATION;
         }
 
         public override void AI() {

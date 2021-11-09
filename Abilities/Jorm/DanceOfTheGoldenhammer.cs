@@ -35,10 +35,10 @@ namespace TerrariaMoba.Abilities.Jorm {
 
                     Vector2 velocity = direction.RotatedBy(MathHelper.ToRadians(i * 90 + 45));
 
-                    Projectile projectile = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), User.Center, velocity,
+                    Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), User.Center, velocity,
                         ModContent.ProjectileType<SpinningHammer>(), (int)HAMMER_DAMAGE, 0, User.whoAmI);
                     
-                    SpinningHammer hammer = projectile.ModProjectile as SpinningHammer;
+                    SpinningHammer hammer = proj.ModProjectile as SpinningHammer;
                     if (hammer != null) {
                         hammer.SpinRadius = HAMMER_SPIN_RADIUS;
                         hammer.SpawnSpeed = HAMMER_SPAWN_SPEED;
@@ -49,10 +49,12 @@ namespace TerrariaMoba.Abilities.Jorm {
             }
         }
         
+        //TODO - Not dealing damage to NPCs for some reason (Hammerfall does for example)
+        
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
             var modProjectile = proj.ModProjectile;
-            SpinningHammer trap = modProjectile as SpinningHammer;
-            if (trap != null) {
+            SpinningHammer hammer = modProjectile as SpinningHammer;
+            if (hammer != null) {
                 StatusEffectManager.AddEffect(target, new GoldenhammerDanceEffect(DAZE_MAGNITUDE, DAZE_BASE_DURATION, true));
             }
         }

@@ -14,24 +14,8 @@ namespace TerrariaMoba.Abilities.Osteo {
     }
 }
 
-/*using System;
-using BaseMod;
-using Microsoft.Xna.Framework;
-using Terraria;
-using TerrariaMoba.Enums;
-using TerrariaMoba.Players;
-
-namespace TerrariaMoba.Abilities.Osteo {
-    [Serializable]
-    public class SkeletalBond : Ability {
-        public SkeletalBond(Player myPlayer) : base(myPlayer) {
-            AbilityType = Enums.AbilityType.Active;
-            Name = "Skeletal Bond";
-            IsActive = true;
-            Icon = ModContent.Request<Texture2D>("Textures/Osteo/OsteoTrait").Value;
-        }
-
-        public override void Cast() {
+/*
+         public override void Cast() {
             if ((User.GetModPlayer<MobaPlayer>().MyCharacter as Characters.Osteo).skeleList.Count > 0) {
                 float distance = Single.MaxValue;
                 Player newTargetPlayer = null;

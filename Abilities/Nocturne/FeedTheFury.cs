@@ -3,16 +3,34 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
-using TerrariaMoba.Players;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Nocturne;
 
 namespace TerrariaMoba.Abilities.Nocturne {
-    public class UnrelentingOnslaught : Ability {
-        public UnrelentingOnslaught() : base("Unrelenting Onslaught", 180, 0, AbilityType.Active) { }
+    public class FeedTheFury : Ability {
+        public FeedTheFury() : base("Feed the Fury", 180, 0, AbilityType.Passive) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 
+        public const float DEATH_RANGE = 25f;
+        public const int COOLDOWN_REDUC = 1;
+        
+        public override void WhileActive() {
+            //TODO - Any character that dies near Nocturne reduces his non-ult cooldowns. Kills reduce Nocturnes cooldowns further.
+            /*
+             * if any player dies within DEATH_RANGE
+             * go through all of nocturnes abilities
+             * foreach ability on cooldown
+             * reduce cooldown by COOLDOWN_REDUC
+             *
+             * if user kills enemy
+             * go through all of nocturnes abilities
+             * foreach ability on cooldown
+             * reduce cooldown by COOLDOWN_REDUC * 2
+             */
+        }
+
+        /*
         public const int ATKBUFF_REFRESH_TIME = 240;
         public const int ATKBUFF_DURATION = 60;
 
@@ -40,8 +58,8 @@ namespace TerrariaMoba.Abilities.Nocturne {
             } else {
                 Main.NewText("Timer: " + timer);
                 timer--;
-            }
-            
+            } 
         }
+        */
     }
 }

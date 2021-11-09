@@ -12,13 +12,15 @@ namespace TerrariaMoba.Abilities.Flibnob {
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobAbilityTwo").Value; }
 
-        public const int SHELL_BASE_ARMOR = 10;
-        public const float SHELL_BASE_MS_REDUCTION = 0.33f;
-        public const int SHELL_BASE_DURATION = 240;
+        public const int SHELL_ARMOR = 10;
+        public const int SHELL_MR = 10;
+        public const float SHELL_MS_REDUCTION = 0.50f;
+        public const float SHELL_HEALING = 0.50f;
+        public const int SHELL_DURATION = 180;
 
         public override void OnCast() {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
-                StatusEffectManager.AddEffect(User, new TitaniumShellEffect(SHELL_BASE_DURATION, SHELL_BASE_ARMOR, SHELL_BASE_MS_REDUCTION));
+                StatusEffectManager.AddEffect(User, new TitaniumShellEffect(SHELL_ARMOR, SHELL_MR, SHELL_MS_REDUCTION, SHELL_HEALING, SHELL_DURATION));
             }
         }
     }

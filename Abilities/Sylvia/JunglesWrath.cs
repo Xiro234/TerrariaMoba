@@ -10,8 +10,8 @@ using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Sylvia;
 
 namespace TerrariaMoba.Abilities.Sylvia {
-    public class JunglesWrathAbility : Ability, IModifyHitPvpWithProj  {
-        public JunglesWrathAbility() : base("Jungles Wrath", 0, 0, AbilityType.Passive) { }
+    public class JunglesWrath : Ability, IModifyHitPvpWithProj  {
+        public JunglesWrath() : base("Jungle's Wrath", 0, 0, AbilityType.Passive) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaTrait").Value; }
 
