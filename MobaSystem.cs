@@ -12,8 +12,10 @@ namespace TerrariaMoba {
         
         static internal MobaBar MobaBar;
         static internal CharacterSelect CharacterSelect;
+        static internal DebugWindow DebugWindow;
         static internal UserInterface BarInterface;
         static internal UserInterface SelectInterface;
+        static internal UserInterface DebugInterface;
 
         public override void NetSend(BinaryWriter writer) {
             writer.Write(MatchInProgress);
@@ -36,16 +38,22 @@ namespace TerrariaMoba {
                 CharacterSelect = new CharacterSelect();
                 SelectInterface = new UserInterface();
                 SelectInterface.SetState(null);
+                
+                DebugWindow = new DebugWindow();
+                DebugInterface = new UserInterface();
+                DebugInterface.SetState(DebugWindow);
             }
         }
 
         public override void Unload() {
             MobaBar.UnLoad();
+            DebugWindow.UnLoad();
         }
 
         public override void UpdateUI(GameTime gameTime) {
             BarInterface?.Update(gameTime);
             SelectInterface?.Update(gameTime);
+            DebugInterface?.Update(gameTime);
         }
 		
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
