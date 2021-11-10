@@ -44,11 +44,10 @@ namespace TerrariaMoba.Players {
         }
 
         public float GetCurrentAttributeValue(AttributeType attribute) {
-            float value = Hero.BaseAttributes[attribute]();
+            float value = Hero.BaseAttributes.ContainsKey(attribute) ? Hero.BaseAttributes[attribute]() : 0f;
             
             value += EffectList.Where(effect => effect.FlatAttributes.ContainsKey(attribute)).Sum(effect => effect.FlatAttributes[attribute]());
-            float mult = EffectList.Where(effect => effect.MultAttributes.ContainsKey(attribute)).Sum(effect => effect.MultAttributes[attribute]());
-
+            float mult = 1 + EffectList.Where(effect => effect.MultAttributes.ContainsKey(attribute)).Sum(effect => effect.MultAttributes[attribute]());
             return value * mult;
         }
     }
