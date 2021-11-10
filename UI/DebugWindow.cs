@@ -2,6 +2,8 @@
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
+using TerrariaMoba.Players;
+using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.UI {
     public class DebugWindow :  UIState {
@@ -21,8 +23,9 @@ namespace TerrariaMoba.UI {
         public override void OnInitialize() {
             debugPanel = new UIPanel();
             debugPanel.Width.Set(200, 0);
-            debugPanel.Height.Set(600, 0);
+            debugPanel.Height.Set(460, 0);
             debugPanel.VAlign = 0.50f;
+            debugPanel.HAlign = 0.05f;
             Append(debugPanel);
 
             HPt = new UIText("Max Health: ");
@@ -76,6 +79,20 @@ namespace TerrariaMoba.UI {
             if (debugPanel.ContainsPoint(Main.MouseScreen)) {
                 Main.LocalPlayer.mouseInterface = true;
             }
+            
+            var plr = Main.LocalPlayer.GetModPlayer<MobaPlayer>();
+            HPt.SetText("Max Health: " + plr.GetCurrentAttributeValue(AttributeType.MAX_HEALTH));
+            HPRt.SetText("HP Regen: " + plr.GetCurrentAttributeValue(AttributeType.HEALTH_REGEN));
+            MPt.SetText("Max Mana: " + plr.GetCurrentAttributeValue(AttributeType.MAX_MANA));
+            MPRt.SetText("Mana Regen: " + plr.GetCurrentAttributeValue(AttributeType.MANA_REGEN));
+            ARMt.SetText("Phys. Resist: " + plr.GetCurrentAttributeValue(AttributeType.PHYSICAL_ARMOR));
+            MRt.SetText("Mag. Resist: " + plr.GetCurrentAttributeValue(AttributeType.MAGICAL_ARMOR));
+            ADt.SetText("Attack Damage: " + plr.GetCurrentAttributeValue(AttributeType.ATTACK_DAMAGE));
+            ASt.SetText("Attack Speed: " + plr.GetCurrentAttributeValue(AttributeType.ATTACK_SPEED));
+            AVt.SetText("Attack Velocity: " + plr.GetCurrentAttributeValue(AttributeType.ATTACK_VELOCITY)); 
+            MSt.SetText("Movement Speed: " + plr.GetCurrentAttributeValue(AttributeType.MOVEMENT_SPEED));
+            JSt.SetText("Jump Speed: " + plr.GetCurrentAttributeValue(AttributeType.JUMP_SPEED));
+            
         }
         
         public void UnLoad() {

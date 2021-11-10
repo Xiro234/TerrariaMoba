@@ -30,17 +30,28 @@ namespace TerrariaMoba.Players {
             TestAbilities = new List<Ability>();
         }
 
-        public override void OnEnterWorld(Player Player) {
-            //TerrariaMoba.Instance.MobaBar = null;
-            //TerrariaMoba.Instance.MobaBar = new MobaBar();
-            //TerrariaMoba.Instance.HideBar();
-
-            //TestAbilities.Add(new UnrelentingOnslaught());
-            //TestAbilities.Add(new UmbralBlade());
-        }
-
         public override void OnRespawn(Player Player) {
             Player.statLife = Player.statLifeMax;
+        }
+
+        public override void ModifyShootStats(Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage,
+            ref float knockback) {
+            damage = (int)Player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.ATTACK_DAMAGE);
+            velocity.Normalize();
+            velocity *= Player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.ATTACK_VELOCITY);
+        }
+
+        public override void PreUpdateMovement() {
+            if (MobaSystem.MatchInProgress) {
+                Player.jumpSpeed *= Player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.JUMP_SPEED);
+            }
+        }
+        
+        public override void PostUpdateRunSpeeds() {
+            if (MobaSystem.MatchInProgress) {
+                Player.moveSpeed *= Player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.MOVEMENT_SPEED);
+                Player.maxRunSpeed *= Player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.MOVEMENT_SPEED);
+            }
         }
 
         public override void ResetEffects() {
@@ -51,39 +62,15 @@ namespace TerrariaMoba.Players {
                 AbilityEffectManager.ResetEffects(Player);
                 SetPlayerHealth();
             }
-
-            //Player.maxRunSpeed = 0.5f;
-            //Player.moveSpeed /= 2f;
         }
 
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TerrariaMoba.AbilityOneHotkey.JustPressed) {
                 Hero?.BasicAbilityOne.OnCast();
-                /*
-                if (Main.netMode != NetmodeID.MultiplayerClient) {
-                    MyCharacter.HandleAbility(MyCharacter.QAbility);
-                }
-                else {
-                    new AbilityCastPacket() {
-                        index = MyCharacter.abilities.IndexOf(MyCharacter.QAbility)
-                    }.Send();
-                }
-                */
             }
             
             if (TerrariaMoba.AbilityTwoHotkey.JustPressed) {
                 Hero?.BasicAbilityTwo.OnCast();
-                /*
-                if (Main.netMode != NetmodeID.MultiplayerClient) {
-                    MyCharacter.HandleAbility(MyCharacter.EAbility);
-                }
-                else {
-                    new AbilityCastPacket() {
-                        ability = MyCharacter.EAbility,
-                        index = MyCharacter.abilities.IndexOf(MyCharacter.EAbility)
-                    }.Send();
-                }
-                */
             }
 
             if (TerrariaMoba.AbilityThreeHotkey.JustPressed) {
@@ -98,19 +85,17 @@ namespace TerrariaMoba.Players {
                 Hero?.Trait.OnCast();
             }
             
-            /*
-            if (TerrariaMoba.UltimateHotkey.JustPressed) {
-                if (Main.netMode != NetmodeID.MultiplayerClient) {
-                    MyCharacter.HandleAbility(MyCharacter.RAbility);
+            if (TerrariaMoba.OpenCharacterSelect.JustPressed) {
+                if (MobaSystem.SelectInterface.CurrentState == null && Hero == null) {
+                    MobaSystem.ShowSelect();
                 }
                 else {
-                    new AbilityCastPacket() {
-                        ability = MyCharacter.RAbility,
-                        index = MyCharacter.abilities.IndexOf(MyCharacter.RAbility)
-                    }.Send();
+                    MobaSystem.HideSelect();
                 }
             }
             
+            /*
+            //ability networking
             if (TerrariaMoba.TraitHotkey.JustPressed) {
                 if (Main.netMode != NetmodeID.MultiplayerClient) {
                     MyCharacter.HandleAbility(MyCharacter.CAbility);
@@ -123,6 +108,7 @@ namespace TerrariaMoba.Players {
                 }
             }
             
+            //talent selection
             if (TerrariaMoba.LevelTalentOneHotKey.JustPressed) {
                 MyCharacter.LevelTalentOne();
             }
@@ -133,15 +119,6 @@ namespace TerrariaMoba.Players {
                 MyCharacter.LevelTalentThree();
             }
             */
-            if (TerrariaMoba.OpenCharacterSelect.JustPressed) {
-                if (MobaSystem.SelectInterface.CurrentState == null && Hero == null) {
-                    MobaSystem.ShowSelect();
-                }
-                else {
-                    MobaSystem.HideSelect();
-                }
-            }
-            
         }
 
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit,
