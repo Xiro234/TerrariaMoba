@@ -44,11 +44,13 @@ namespace TerrariaMoba.Players {
         }
 
         public override void ResetEffects() {
-            TickStatusEffects();
-            TickAbilities();
+            if (MobaSystem.MatchInProgress) {
+                TickStatusEffects();
+                TickAbilities();
 
-            AbilityEffectManager.ResetEffects(Player);
-            SetPlayerHealth();
+                AbilityEffectManager.ResetEffects(Player);
+                SetPlayerHealth();
+            }
 
             //Player.maxRunSpeed = 0.5f;
             //Player.moveSpeed /= 2f;
