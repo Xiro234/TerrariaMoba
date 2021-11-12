@@ -41,13 +41,15 @@ namespace TerrariaMoba {
                 
                 DebugWindow = new DebugWindow();
                 DebugInterface = new UserInterface();
-                DebugInterface.SetState(DebugWindow);
+                DebugInterface.SetState(null);
             }
         }
 
         public override void Unload() {
             MobaBar.UnLoad();
+            MobaBar = null;
             DebugWindow.UnLoad();
+            DebugWindow = null;
         }
 
         public override void UpdateUI(GameTime gameTime) {
@@ -70,6 +72,7 @@ namespace TerrariaMoba {
                     delegate {
                         BarInterface.Draw(Main.spriteBatch, new GameTime());
                         SelectInterface.Draw(Main.spriteBatch, new GameTime());
+                        DebugInterface.Draw(Main.spriteBatch, new GameTime());
                         return true;
                     },
                     InterfaceScaleType.UI)
@@ -79,6 +82,7 @@ namespace TerrariaMoba {
         
         static internal void ShowBar() {
             BarInterface?.SetState(MobaBar);
+            DebugInterface?.SetState(DebugWindow);
         }
 
         static internal void HideBar() {

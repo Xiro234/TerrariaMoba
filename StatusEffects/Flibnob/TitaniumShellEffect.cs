@@ -28,19 +28,19 @@ namespace TerrariaMoba.StatusEffects.Flibnob {
         protected override Dictionary<AttributeType, Func<float>> FlatAttributesFactory() {
             return new Dictionary<AttributeType, Func<float>> {
                 { PHYSICAL_ARMOR, () => shellArmor },
-                { PHYSICAL_ARMOR, () => shellMagRes }
+                { MAGICAL_ARMOR, () => shellMagRes }
             };
         }
         
         protected override Dictionary<AttributeType, Func<float>> MultAttributesFactory() {
             return new Dictionary<AttributeType, Func<float>>() {
-                { MOVEMENT_SPEED, () => 1 - moveSpeed }
+                { MOVEMENT_SPEED, () => -moveSpeed }
             };
         }
 
         public void TakePvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {
             //TODO - Store mitigated damage correctly.
-            mitigatedDamageTaken = 69;
+            mitigatedDamageTaken = 500;
         }
 
         public override void FallOff() {
