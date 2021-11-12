@@ -16,7 +16,6 @@ namespace TerrariaMoba.Players {
 
                     if (ability.CooldownTimer > 0) {
                         ability.CooldownTimer--;
-                        Main.NewText(ability.CooldownTimer);
                     } //TODO - TEMPORARY, WILL CHANGE TO AN ABILITY-TO-ABILITY BASIS
                 }
             }

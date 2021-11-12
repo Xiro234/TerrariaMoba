@@ -9,7 +9,7 @@ namespace TerrariaMoba.Abilities {
     public class TestUseItemAbility : Ability {
         public Item testItem { get; }
 
-        public TestUseItemAbility() : base("Test", 0, 0, AbilityType.Active) {
+        public TestUseItemAbility(Player player) : base(player, "Test", 0, 0, AbilityType.Active) {
             testItem = new Item();
             testItem.SetDefaults(ModContent.ItemType<SylviaBow>());
         }

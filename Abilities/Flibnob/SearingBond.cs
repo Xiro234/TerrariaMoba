@@ -7,7 +7,7 @@ using TerrariaMoba.StatusEffects.Flibnob;
 
 namespace TerrariaMoba.Abilities.Flibnob {
     public class SearingBond : Ability {
-        public SearingBond() : base("Searing Bond", 0, 0, AbilityType.Passive) {
+        public SearingBond(Player player) : base(player, "Searing Bond", 0, 0, AbilityType.Passive) {
         }
 
         public override Texture2D Icon {

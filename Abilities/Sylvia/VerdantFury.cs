@@ -8,7 +8,7 @@ using TerrariaMoba.StatusEffects.Sylvia;
 
 namespace TerrariaMoba.Abilities.Sylvia {
     public class VerdantFury : Ability {
-        public VerdantFury() : base("Verdant Fury", 60, 0, AbilityType.Active) { }
+        public VerdantFury(Player player) : base(player, "Verdant Fury", 60, 0, AbilityType.Active) { }
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaAbilityTwo").Value; }
         

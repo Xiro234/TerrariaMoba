@@ -12,7 +12,7 @@ using TerrariaMoba.StatusEffects.Sylvia;
 
 namespace TerrariaMoba.Abilities.Sylvia {
     public class PlanterasLastWill : Ability, IModifyHitPvpWithProj {
-        public PlanterasLastWill() : base("Plantera's Last Will", 60, 0, AbilityType.Active) { }
+        public PlanterasLastWill(Player player) : base(player, "Plantera's Last Will", 60, 0, AbilityType.Active) { }
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaUltimateTwo").Value; }
 

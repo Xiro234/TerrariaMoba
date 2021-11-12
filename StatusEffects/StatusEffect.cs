@@ -21,7 +21,9 @@ namespace TerrariaMoba.StatusEffects {
             get => true;
         }
 
-        public StatusEffect() { }
+        public StatusEffect() {
+            Initialize();
+        }
 
         public StatusEffect(int duration, bool canBeCleansed) {
             Duration = duration;

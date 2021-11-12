@@ -13,7 +13,7 @@ using TerrariaMoba.StatusEffects.Jorm;
 
 namespace TerrariaMoba.Abilities.Jorm {
     public class DanceOfTheGoldenhammer : Ability {
-        public DanceOfTheGoldenhammer() : base("Dance of the Goldenhammer", 60, 0, AbilityType.Active) { }
+        public DanceOfTheGoldenhammer(Player player) : base(player, "Dance of the Goldenhammer", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
 

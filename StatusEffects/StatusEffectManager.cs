@@ -28,13 +28,31 @@ namespace TerrariaMoba.StatusEffects {
 
         public static bool RemoveEffect(Player Player, StatusEffect statusEffect, bool quiet = false) {
             var mobaPlayer = Player.GetModPlayer<MobaPlayer>();
-            bool returnVar = mobaPlayer.EffectList.Remove(statusEffect);
+            int index = mobaPlayer.EffectList.IndexOf(statusEffect);
+            
+            if (index >= 0) {
+                mobaPlayer.EffectList.RemoveAt(index);
 
-            if (returnVar && !quiet) {
-                NetworkHandler.SendSyncEffectList(Player.whoAmI, Player.whoAmI);
+                if (!quiet && Main.netMode != NetmodeID.SinglePlayer) {
+                    NetworkHandler.SendSyncRemoveEffect(index, Player.whoAmI);
+                }
             }
             
-            return returnVar;
+            return index >= 0;
+        }
+        
+        public static bool RemoveEffect(Player Player, int index, bool quiet = false) {
+            var mobaPlayer = Player.GetModPlayer<MobaPlayer>();
+
+            if (index >= 0) {
+                mobaPlayer.EffectList.RemoveAt(index);
+
+                if (!quiet && Main.netMode != NetmodeID.SinglePlayer) {
+                    NetworkHandler.SendSyncRemoveEffect(index, Player.whoAmI);
+                }
+            }
+            
+            return index >= 0;
         }
         
         public static bool HasEffect(Player Player, StatusEffect effect) {

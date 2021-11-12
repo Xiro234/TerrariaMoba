@@ -68,8 +68,10 @@ namespace TerrariaMoba.Characters {
             User = user;
             Initialize();
         }
-        
-        public Character() { } //For reflection
+
+        public Character() {
+            Initialize();
+        } //For reflection
 
         private void Initialize() {
             BaseAttributes = BaseAttributesFactory();

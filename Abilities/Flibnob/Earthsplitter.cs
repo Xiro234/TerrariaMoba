@@ -10,7 +10,7 @@ using TerrariaMoba.Projectiles.Flibnob;
 
 namespace TerrariaMoba.Abilities.Flibnob {
     public class Earthsplitter : Ability, IModifyHitPvpWithProj {
-        public Earthsplitter() : base("Earthsplitter", 60, 0, AbilityType.Active) { }
+        public Earthsplitter(Player player) : base(player, "Earthsplitter", 60, 0, AbilityType.Active) { }
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobUltimateOne").Value; }
 

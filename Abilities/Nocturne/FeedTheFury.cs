@@ -8,7 +8,7 @@ using TerrariaMoba.StatusEffects.Nocturne;
 
 namespace TerrariaMoba.Abilities.Nocturne {
     public class FeedTheFury : Ability {
-        public FeedTheFury() : base("Feed the Fury", 180, 0, AbilityType.Passive) { }
+        public FeedTheFury(Player player) : base(player, "Feed the Fury", 180, 0, AbilityType.Passive) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 

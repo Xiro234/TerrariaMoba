@@ -36,11 +36,11 @@ namespace TerrariaMoba.Characters {
 
         protected override Ability[] BaseSkillsFactory() {
             return new Ability[] {
-                new EnsnaringVines(),
-                new WitheredRose(),
-                new VerdantFury(),
-                new Flourish(),
-                new JunglesWrath()
+                new EnsnaringVines(User),
+                new WitheredRose(User),
+                new VerdantFury(User),
+                new Flourish(User),
+                new JunglesWrath(User)
             };
         }
 

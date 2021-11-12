@@ -9,7 +9,7 @@ using TerrariaMoba.Projectiles.Flibnob;
 
 namespace TerrariaMoba.Abilities.Flibnob {
     public class CullTheMeek : Ability {
-        public CullTheMeek() : base("Cull The Meek", 60, 0, AbilityType.Active) { }
+        public CullTheMeek(Player player) : base(player, "Cull The Meek", 60, 0, AbilityType.Active) { }
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobUltimateTwo").Value; }
 

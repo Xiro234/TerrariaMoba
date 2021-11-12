@@ -22,16 +22,12 @@ namespace TerrariaMoba.Abilities {
         public int CooldownTimer { get; set; }
         public bool IsActive { get; set; }
 
-        public Ability(String name, int baseCooldown, int baseResourceCost, AbilityType abilityType) {
+        public Ability(Player player, String name, int baseCooldown, int baseResourceCost, AbilityType abilityType) {
             Name = name;
             BaseCooldown = baseCooldown;
             AbilityType = abilityType;
             BaseResourceCost = baseResourceCost;
-            SetPlayer(Main.LocalPlayer);
-        }
-
-        public void SetPlayer(Player Player) {
-            User = Player;
+            User = player;
         }
 
         /*public static Ability CreateAbility(Player Player) { //, Type type) {

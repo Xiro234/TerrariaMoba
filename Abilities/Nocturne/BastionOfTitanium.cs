@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.Nocturne {
     public class BastionOfTitanium : Ability {
-        public BastionOfTitanium() : base("Bastion of Titanium", 60, 0, AbilityType.Active) { }
+        public BastionOfTitanium(Player player) : base(player, "Bastion of Titanium", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 

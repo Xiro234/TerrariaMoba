@@ -12,7 +12,7 @@ namespace TerrariaMoba.Abilities {
         public void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
         }
 
-        public TestKillAbility() : base("TestKillAbility", 60, 0, AbilityType.Active) {
+        public TestKillAbility(Player player) : base(player, "TestKillAbility", 60, 0, AbilityType.Active) {
             
         }
 

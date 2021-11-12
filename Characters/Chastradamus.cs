@@ -35,11 +35,11 @@ namespace TerrariaMoba.Characters {
         
         protected override Ability[] BaseSkillsFactory() {
             return new Ability[] {
-                new BrewConcoction(),
-                new Incision(),
-                new FlaskOfVitality(),
-                new Crowstorm(),
-                new Bloodletting()
+                new BrewConcoction(User),
+                new Incision(User),
+                new FlaskOfVitality(User),
+                new Crowstorm(User),
+                new Bloodletting(User)
             };
         }
 

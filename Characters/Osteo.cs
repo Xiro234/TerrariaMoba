@@ -36,11 +36,11 @@ namespace TerrariaMoba.Characters {
         
         protected override Ability[] BaseSkillsFactory() {
             return new Ability[] {
-                new RaiseDead(),  
-                new LifedrainPulse(), 
-                new SpectralBarrage(), 
-                new SongOfTheDamned(), 
-                new SkeletalBond()
+                new RaiseDead(User),  
+                new LifedrainPulse(User), 
+                new SpectralBarrage(User), 
+                new SongOfTheDamned(User), 
+                new SkeletalBond(User)
             };
         }
 

@@ -36,11 +36,11 @@ namespace TerrariaMoba.Characters {
         
         protected override Ability[] BaseSkillsFactory() {
             return new Ability[] {
-                new VersatileCombatant(),  
-                new ViolentRetaliation(), 
-                new RallyingCry(), 
-                new BastionOfTitanium(), 
-                new FeedTheFury()
+                new VersatileCombatant(User),  
+                new ViolentRetaliation(User), 
+                new RallyingCry(User), 
+                new BastionOfTitanium(User), 
+                new FeedTheFury(User)
             };
         }
 

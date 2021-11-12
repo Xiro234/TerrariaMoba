@@ -36,11 +36,11 @@ namespace TerrariaMoba.Characters {
 
         protected override Ability[] BaseSkillsFactory() {
             return new Ability[] {
-                new DanceOfTheGoldenhammer(),
-                new Consecration(),
-                new SealOfHephaesta(),
-                new Hammerfall(),
-                new PaladinsResolve()
+                new DanceOfTheGoldenhammer(User),
+                new Consecration(User),
+                new SealOfHephaesta(User),
+                new Hammerfall(User),
+                new PaladinsResolve(User)
             };
         }
         

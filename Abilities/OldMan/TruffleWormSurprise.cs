@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.OldMan {
     public class TruffleWormSurprise : Ability {
-        public TruffleWormSurprise() : base("Truffle Worm Surprise", 60, 0, AbilityType.Active) { }
+        public TruffleWormSurprise(Player player) : base(player, "Truffle Worm Surprise", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 

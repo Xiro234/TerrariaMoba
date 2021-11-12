@@ -24,7 +24,7 @@ namespace TerrariaMoba.Players {
 
         public int ultTimer = -1;
         public List<Ability> TestAbilities;
-
+        
         public override void Initialize() {
             EffectList = new List<StatusEffect>();
             TestAbilities = new List<Ability>();
@@ -67,22 +67,42 @@ namespace TerrariaMoba.Players {
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TerrariaMoba.AbilityOneHotkey.JustPressed) {
                 Hero?.BasicAbilityOne.OnCast();
+
+                if (Main.netMode != NetmodeID.SinglePlayer) {
+                    NetworkHandler.SendAbilityCast(0, Player.whoAmI);
+                }
             }
             
             if (TerrariaMoba.AbilityTwoHotkey.JustPressed) {
                 Hero?.BasicAbilityTwo.OnCast();
+
+                if (Main.netMode != NetmodeID.SinglePlayer) {
+                    NetworkHandler.SendAbilityCast(1, Player.whoAmI);
+                }
             }
 
             if (TerrariaMoba.AbilityThreeHotkey.JustPressed) {
                 Hero?.BasicAbilityThree.OnCast();
+
+                if (Main.netMode != NetmodeID.SinglePlayer) {
+                    NetworkHandler.SendAbilityCast(2, Player.whoAmI);
+                }
             }
 
             if (TerrariaMoba.UltimateHotkey.JustPressed) {
                 Hero?.Ultimate.OnCast();
+                
+                if (Main.netMode != NetmodeID.SinglePlayer) {
+                    NetworkHandler.SendAbilityCast(3, Player.whoAmI);
+                }
             }
 
             if (TerrariaMoba.TraitHotkey.JustPressed) {
                 Hero?.Trait.OnCast();
+
+                if (Main.netMode != NetmodeID.SinglePlayer) {
+                    NetworkHandler.SendAbilityCast(4, Player.whoAmI);
+                }
             }
             
             if (TerrariaMoba.OpenCharacterSelect.JustPressed) {

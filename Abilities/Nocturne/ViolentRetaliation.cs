@@ -8,7 +8,7 @@ using TerrariaMoba.StatusEffects.Nocturne;
 
 namespace TerrariaMoba.Abilities.Nocturne {
     public class ViolentRetaliation : Ability {
-        public ViolentRetaliation() : base("Violent Retaliation", 60, 0, AbilityType.Active) { }
+        public ViolentRetaliation(Player player) : base(player, "Violent Retaliation", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 

@@ -8,7 +8,7 @@ using TerrariaMoba.StatusEffects;
 
 namespace TerrariaMoba.Abilities.Marie {
     public class BlessingOfTheGoddess : Ability {
-        public BlessingOfTheGoddess() : base("Blessing of the Goddess", 60, 0, AbilityType.Active) { }
+        public BlessingOfTheGoddess(Player player) : base(player, "Blessing of the Goddess", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieUltimateOne").Value; }
 

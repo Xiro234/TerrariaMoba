@@ -12,7 +12,7 @@ using TerrariaMoba.StatusEffects;
 
 namespace TerrariaMoba.Abilities.Jorm {
     public class Hammerfall : Ability {
-        public Hammerfall() : base("Hammerfall", 60, 0, AbilityType.Active) { }
+        public Hammerfall(Player player) : base(player, "Hammerfall", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
 

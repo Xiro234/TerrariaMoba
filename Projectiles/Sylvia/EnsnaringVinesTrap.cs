@@ -30,6 +30,8 @@ namespace TerrariaMoba.Projectiles.Sylvia {
             }
             Projectile.ai[0] += 1f;
             
+
+            
             /*
             var Player = Main.player[Projectile.owner].GetModPlayer<MobaPlayer>();
             //Venus Flytrap

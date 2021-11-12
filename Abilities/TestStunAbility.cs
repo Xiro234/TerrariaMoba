@@ -9,7 +9,7 @@ namespace TerrariaMoba.Abilities {
         public override Texture2D Icon { get { return ModContent.Request<Texture2D>("Textures/Blank").Value;} }
         private const int STUN_DURATION = 120;
 
-        public TestStunAbility() : base("TestStunAbility", 60, 0, AbilityType.Active) {
+        public TestStunAbility(Player player) : base(player, "TestStunAbility", 60, 0, AbilityType.Active) {
             
         }
         

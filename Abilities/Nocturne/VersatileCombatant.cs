@@ -9,7 +9,7 @@ using TerrariaMoba.Projectiles;
 
 namespace TerrariaMoba.Abilities.Nocturne {
     public class VersatileCombatant : Ability {
-        public VersatileCombatant() : base("Versatile Combatant", 60, 0, AbilityType.Active) { }
+        public VersatileCombatant(Player player) : base(player, "Versatile Combatant", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 

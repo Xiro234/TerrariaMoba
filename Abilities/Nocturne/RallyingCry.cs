@@ -9,7 +9,7 @@ using TerrariaMoba.Projectiles.Nocturne;
 
 namespace TerrariaMoba.Abilities.Nocturne {
     public class RallyingCry : Ability {
-        public RallyingCry() : base("Rallying Cry", 60, 0, AbilityType.Active) { }
+        public RallyingCry(Player player) : base(player, "Rallying Cry", 60, 0, AbilityType.Active) { }
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
         

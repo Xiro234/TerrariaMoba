@@ -13,8 +13,10 @@ namespace TerrariaMoba.Network {
             ADD_STATUS_EFFECT,
             SYNC_STATUS_EFFECT,
             SYNC_EFFECT_LIST,
+            SYNC_REMOVE_EFFECT,
             START_GAME,
-            ASSIGN_CHARACTER
+            ASSIGN_CHARACTER,
+            ABILITY_CAST
         }
         
         public static void HandlePacket(BinaryReader reader, int sender) {
@@ -32,11 +34,17 @@ namespace TerrariaMoba.Network {
                 case NetTag.SYNC_EFFECT_LIST:
                     ReceiveSyncEffectList(reader, sender);
                     break;
+                case NetTag.SYNC_REMOVE_EFFECT:
+                    ReceiveSyncRemoveEffect(reader, sender);
+                    break;
                 case NetTag.START_GAME:
                     ReceiveStartGame(reader, sender);
                     break;
                 case NetTag.ASSIGN_CHARACTER:
-                    RecieveAssignCharacter(reader, sender);
+                    ReceiveAssignCharacter(reader, sender);
+                    break;
+                case NetTag.ABILITY_CAST:
+                    ReceiveAbilityCast(reader, sender);
                     break;
                 default:
                     //TODO - Add error logging
@@ -146,6 +154,28 @@ namespace TerrariaMoba.Network {
         }
         #endregion
 
+        #region SYNC_REMOVE_EFFECT
+
+        public static void SendSyncRemoveEffect(int index, int target, int ignore = -1) {
+            ModPacket modPacket = TerrariaMoba.Instance.GetPacket();
+            modPacket.Write((byte)NetTag.SYNC_REMOVE_EFFECT);
+            modPacket.Write(target);
+            modPacket.Write(index);
+            modPacket.Send(ignoreClient: ignore);
+        }
+        
+        public static void ReceiveSyncRemoveEffect(BinaryReader reader, int sender) {
+            int whoAmI = reader.ReadInt32();
+            var target = Main.player[whoAmI];
+            int index = reader.ReadInt32();
+
+            if (StatusEffectManager.RemoveEffect(target, index, true) && Main.netMode == NetmodeID.Server) {
+                SendSyncRemoveEffect(index, whoAmI, sender);
+            }
+        }
+
+        #endregion
+
         #region START_GAME
         public static void SendStartGame(int ignore = -1) {
             ModPacket modPacket = TerrariaMoba.Instance.GetPacket();
@@ -174,16 +204,39 @@ namespace TerrariaMoba.Network {
             modPacket.Send(ignoreClient: ignore);
         }
 
-        public static void RecieveAssignCharacter(BinaryReader reader, int sender) {
+        public static void ReceiveAssignCharacter(BinaryReader reader, int sender) {
             int whoAmI = reader.ReadInt32();
             var target = Main.player[whoAmI].GetModPlayer<MobaPlayer>();
             int ID = reader.ReadInt32();
             target.selectedCharacter = CharacterManager.CharacterTypesList[ID];
-            //Main.NewText("woo");
             if (Main.netMode == NetmodeID.Server) {
-                SendAssignCharacter(target.Player.whoAmI, sender);
+                SendAssignCharacter(whoAmI, sender);
             }
         }
+        #endregion
+        
+        #region ABILITY_CAST
+
+        public static void SendAbilityCast(int index, int target, int ignore = -1) {
+            ModPacket modPacket = TerrariaMoba.Instance.GetPacket();
+            modPacket.Write((byte) NetTag.ABILITY_CAST);
+            modPacket.Write(target);
+            modPacket.Write(index);
+            modPacket.Send(ignoreClient: ignore);
+        }
+
+        public static void ReceiveAbilityCast(BinaryReader reader, int sender) {
+            int whoAmI = reader.ReadInt32();
+            int index = reader.ReadInt32();
+            var mobaPlayer = Main.player[whoAmI].GetModPlayer<MobaPlayer>();
+            
+            mobaPlayer.Hero?.Skills[index].OnCast();
+            
+            if (Main.netMode == NetmodeID.Server) {
+                SendAbilityCast(index, whoAmI, whoAmI);
+            }
+        }
+        
         #endregion
     }
 }

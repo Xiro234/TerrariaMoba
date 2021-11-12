@@ -13,7 +13,7 @@ using TerrariaMoba.StatusEffects.Sylvia;
 
 namespace TerrariaMoba.Abilities.Sylvia {
     public class EnsnaringVines : Ability, IModifyHitPvpWithProj {
-        public EnsnaringVines() : base("Ensnaring Vines", 60, 0, AbilityType.Active) { }
+        public EnsnaringVines(Player player) : base(player, "Ensnaring Vines", 60, 0, AbilityType.Active) { }
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaAbilityOne").Value; }
         

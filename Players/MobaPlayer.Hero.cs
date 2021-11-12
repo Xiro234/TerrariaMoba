@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Characters;
 using TerrariaMoba.Statistic;
@@ -45,9 +47,22 @@ namespace TerrariaMoba.Players {
 
         public float GetCurrentAttributeValue(AttributeType attribute) {
             float value = Hero.BaseAttributes.ContainsKey(attribute) ? Hero.BaseAttributes[attribute]() : 0f;
+            float mult = 1f;
             
-            value += EffectList.Where(effect => effect.FlatAttributes.ContainsKey(attribute)).Sum(effect => effect.FlatAttributes[attribute]());
-            float mult = 1 + EffectList.Where(effect => effect.MultAttributes.ContainsKey(attribute)).Sum(effect => effect.MultAttributes[attribute]());
+            if(EffectList == null) {
+                if (Main.netMode == NetmodeID.Server) {
+                    Console.WriteLine(EffectList == null);
+                }
+                else {
+                    Main.NewText(EffectList == null);
+                }
+            }
+            
+            value += EffectList.Sum(
+                e => e.FlatAttributes.ContainsKey(attribute) ? e.FlatAttributes[attribute]() : 0);
+            mult += EffectList.Sum(
+                e => e.MultAttributes.ContainsKey(attribute) ? e.MultAttributes[attribute]() : 0);
+
             return value * mult;
         }
     }

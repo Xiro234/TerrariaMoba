@@ -12,7 +12,7 @@ using TerrariaMoba.StatusEffects.Jorm;
 
 namespace TerrariaMoba.Abilities.Jorm {
     public class SealOfHephaesta : Ability {
-        public SealOfHephaesta() : base("Seal of Hephaesta", 60, 0, AbilityType.Active) { }
+        public SealOfHephaesta(Player player) : base(player, "Seal of Hephaesta", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
 

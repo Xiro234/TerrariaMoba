@@ -40,10 +40,10 @@ namespace TerrariaMoba.Projectiles.Sylvia {
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) {
                     Vector2 newPos = new Vector2(Projectile.position.X, GetYPos());
                     Projectile proj = Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), newPos, Vector2.Zero, ModContent.ProjectileType<EnsnaringVinesTrap>(),
-                        TrapDamage, 0, Projectile.whoAmI);
+                        TrapDamage, 0, Main.myPlayer);
                     
                     EnsnaringVinesTrap trap = proj.ModProjectile as EnsnaringVinesTrap;
-
+                    
                     if (trap != null) {
                         trap.TrapDuration = TrapDuration;
                     }

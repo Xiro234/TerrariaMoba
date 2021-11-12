@@ -9,7 +9,7 @@ using TerrariaMoba.StatusEffects.Jorm;
 
 namespace TerrariaMoba.Abilities.Jorm {
     public class PaladinsResolve : Ability {
-        public PaladinsResolve() : base("Paladin's Resolve", 60, 0, AbilityType.Active) { }
+        public PaladinsResolve(Player player) : base(player, "Paladin's Resolve", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
 

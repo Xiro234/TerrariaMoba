@@ -8,7 +8,7 @@ using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.Marie {
     public class SurgingVitality : Ability {
-        public SurgingVitality() : base("Surging Vitality", 60, 0, AbilityType.Active) { }
+        public SurgingVitality(Player player) : base(player, "Surging Vitality", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieAbilityTwo").Value; }
 

@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.OldMan {
     public class PerfectFillet : Ability {
-        public PerfectFillet() : base("Perfect Fillet", 60, 0, AbilityType.Active) { }
+        public PerfectFillet(Player player) : base(player, "Perfect Fillet", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 

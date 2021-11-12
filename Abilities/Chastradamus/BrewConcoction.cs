@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.Chastradamus {
     public class BrewConcoction : Ability {
-        public BrewConcoction() : base("Brew Concoction", 60, 0, AbilityType.Active) { }
+        public BrewConcoction(Player player) : base(player, "Brew Concoction", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 

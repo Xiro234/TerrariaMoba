@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Statistic;
@@ -17,6 +19,8 @@ namespace TerrariaMoba.StatusEffects.Flibnob {
         private float moveSpeed;
         private float healDamage;
         private int mitigatedDamageTaken;
+        
+        public TitaniumShellEffect() { }
 
         public TitaniumShellEffect(int armor, int mr, float ms, float heal, int duration) : base(duration, true) {
             shellArmor = armor;
@@ -45,6 +49,7 @@ namespace TerrariaMoba.StatusEffects.Flibnob {
 
         public override void FallOff() {
             User.statLife += (int) (mitigatedDamageTaken * healDamage);
+            CombatText.NewText(User.Hitbox, Color.Aqua, 69420);
         }
     }
 }

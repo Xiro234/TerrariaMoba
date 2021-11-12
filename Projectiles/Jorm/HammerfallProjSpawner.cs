@@ -41,7 +41,7 @@ namespace TerrariaMoba.Projectiles.Jorm {
                     Vector2 velocity = new Vector2(0, HammerSpeed);
                     Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.position,
                         velocity, ModContent.ProjectileType<HammerfallProj>(),
-                        (int)HammerDamage, 0, Projectile.whoAmI, HammerSpeed);
+                        (int)HammerDamage, 0, Main.myPlayer, HammerSpeed);
                 }
             }
 

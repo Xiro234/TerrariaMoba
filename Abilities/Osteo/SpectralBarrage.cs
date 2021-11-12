@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.Osteo {
     public class SpectralBarrage : Ability {
-        public SpectralBarrage() : base("Spectral Barrage", 60, 0, AbilityType.Active) { }
+        public SpectralBarrage(Player player) : base(player, "Spectral Barrage", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
 

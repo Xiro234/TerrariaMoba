@@ -8,7 +8,7 @@ using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.Osteo {
     public class SkeletalBond: Ability {
-        public SkeletalBond() : base("Skeletal Bond", 10, 0, AbilityType.Active) { }
+        public SkeletalBond(Player player) : base(player, "Skeletal Bond", 10, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Osteo/OsteoTrait").Value; }
     }

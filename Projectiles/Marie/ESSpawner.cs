@@ -52,7 +52,7 @@ namespace TerrariaMoba.Projectiles.Marie {
         public override void Kill(int timeLeft) {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) {
                 Projectile proj = Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Vector2.Zero, 
-                    ModContent.ProjectileType<ESStormCloud>(), CloudDamage, 0f, Projectile.whoAmI);
+                    ModContent.ProjectileType<ESStormCloud>(), CloudDamage, 0f, Main.myPlayer);
                 SoundEngine.PlaySound(SoundID.Item74, Projectile.Center);
 
                 ESStormCloud cloud = proj.ModProjectile as ESStormCloud;

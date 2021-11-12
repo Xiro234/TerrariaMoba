@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.OldMan {
     public class WhatsInTheCrate : Ability {
-        public WhatsInTheCrate() : base("What's in the Crate?", 60, 0, AbilityType.Active) { }
+        public WhatsInTheCrate(Player player) : base(player, "What's in the Crate?", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 

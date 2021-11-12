@@ -36,11 +36,11 @@ namespace TerrariaMoba.Characters {
         
         protected override Ability[] BaseSkillsFactory() {
             return new Ability[] {
-                new WhirlpoolInABottle(),  
-                new SurgingVitality(), 
-                new Confluence(), 
-                new EyeOfTheStorm(), 
-                new PendantOfTorrents()
+                new WhirlpoolInABottle(User),  
+                new SurgingVitality(User), 
+                new Confluence(User), 
+                new EyeOfTheStorm(User), 
+                new PendantOfTorrents(User)
             };
         }
         

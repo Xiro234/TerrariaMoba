@@ -9,7 +9,7 @@ using TerrariaMoba.Projectiles.Flibnob;
 
 namespace TerrariaMoba.Abilities.Flibnob {
     public class Rockwrecker : Ability {
-        public Rockwrecker() : base("Rockwrecker", 60, 0, AbilityType.Active) { }
+        public Rockwrecker(Player player) : base(player, "Rockwrecker", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Lock").Value; }
 

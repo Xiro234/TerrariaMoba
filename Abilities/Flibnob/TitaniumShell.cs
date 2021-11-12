@@ -8,7 +8,7 @@ using TerrariaMoba.StatusEffects.Flibnob;
 
 namespace TerrariaMoba.Abilities.Flibnob {
     public class TitaniumShell : Ability {
-        public TitaniumShell() : base("Titanium Shell", 60, 0, AbilityType.Active) { }
+        public TitaniumShell(Player player) : base(player, "Titanium Shell", 60, 0, AbilityType.Active) { }
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobAbilityTwo").Value; }
 

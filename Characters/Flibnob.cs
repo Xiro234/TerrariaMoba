@@ -36,11 +36,11 @@ namespace TerrariaMoba.Characters {
 
         protected override Ability[] BaseSkillsFactory() {
             return new Ability[] {
-                new FlameBelch(),
-                new Rockwrecker(),
-                new TitaniumShell(),
-                new Earthsplitter(),
-                new SearingBond()
+                new FlameBelch(User),
+                new Rockwrecker(User),
+                new TitaniumShell(User),
+                new Earthsplitter(User),
+                new SearingBond(User)
             };
         }
 

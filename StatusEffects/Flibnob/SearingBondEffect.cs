@@ -15,6 +15,8 @@ namespace TerrariaMoba.StatusEffects.Flibnob {
         private int currentStacks;
         private int armorGain;
         
+        public SearingBondEffect() { }
+        
         public SearingBondEffect(int stacks, int armor, int duration, bool canBeCleansed) : base(duration, false) {
             currentStacks = stacks;
             armorGain = armor;

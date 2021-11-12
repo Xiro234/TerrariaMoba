@@ -13,7 +13,7 @@ using TerrariaMoba.StatusEffects;
 
 namespace TerrariaMoba.Abilities.Marie {
     public class WhirlpoolInABottle : Ability, IModifyHitPvpWithProj {
-        public WhirlpoolInABottle() : base("Whirlpool in a Bottle", 60, 0, AbilityType.Active) { }
+        public WhirlpoolInABottle(Player player) : base(player, "Whirlpool in a Bottle", 60, 0, AbilityType.Active) { }
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieAbilityOne").Value; }
 
