@@ -39,42 +39,42 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
             base.ReceiveEffectElements(reader);
             Stacks = reader.ReadInt32();
         }
+    }
+    
+    public class JunglesWrathDrawLayer : PlayerDrawLayer {
+        public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) {
+            return StatusEffectManager.PlayerHasEffectType<JunglesWrathEffect>(drawInfo.drawPlayer);
+        }
 
-        public class JunglesWrathDrawLayer : PlayerDrawLayer {
-            public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) {
-                return StatusEffectManager.PlayerHasEffectType<JunglesWrathEffect>(drawInfo.drawPlayer);
+        public override Position GetDefaultPosition() => new Between(PlayerDrawLayers.ProjectileOverArm,
+            PlayerDrawLayers.FrozenOrWebbedDebuff);
+
+        protected override void Draw(ref PlayerDrawSet drawInfo) {
+            Player drawPlayer = drawInfo.drawPlayer;
+            var effect = drawPlayer.GetModPlayer<MobaPlayer>().EffectList.OfType<JunglesWrathEffect>().First();
+
+            Texture2D texture;
+            switch (effect.Stacks) {
+                case 1:
+                    texture = Mod.Assets.Request<Texture2D>("Textures/Sylvia/JunglesWrath/JunglesWrath1").Value;
+                    break;
+                case 2:
+                    texture = Mod.Assets.Request<Texture2D>("Textures/Sylvia/JunglesWrath/JunglesWrath2").Value;
+                    break;
+                case 3:
+                    texture = Mod.Assets.Request<Texture2D>("Textures/Sylvia/JunglesWrath/JunglesWrath3").Value;
+                    break;
+                case 4:
+                    texture = Mod.Assets.Request<Texture2D>("Textures/Sylvia/JunglesWrath/JunglesWrath4").Value;
+                    break;
+                default:
+                    return;
             }
 
-            public override Position GetDefaultPosition() => new Between(PlayerDrawLayers.ProjectileOverArm,
-                PlayerDrawLayers.FrozenOrWebbedDebuff);
-
-            protected override void Draw(ref PlayerDrawSet drawInfo) {
-                Player drawPlayer = drawInfo.drawPlayer;
-                var effect = drawPlayer.GetModPlayer<MobaPlayer>().EffectList.OfType<JunglesWrathEffect>().First();
-
-                Texture2D texture;
-                switch (effect.Stacks) {
-                    case 1:
-                        texture = Mod.Assets.Request<Texture2D>("Textures/Sylvia/JunglesWrath/JunglesWrath1").Value;
-                        break;
-                    case 2:
-                        texture = Mod.Assets.Request<Texture2D>("Textures/Sylvia/JunglesWrath/JunglesWrath2").Value;
-                        break;
-                    case 3:
-                        texture = Mod.Assets.Request<Texture2D>("Textures/Sylvia/JunglesWrath/JunglesWrath3").Value;
-                        break;
-                    case 4:
-                        texture = Mod.Assets.Request<Texture2D>("Textures/Sylvia/JunglesWrath/JunglesWrath4").Value;
-                        break;
-                    default:
-                        return;
-                }
-
-                Vector2 texturePos = new Vector2(drawPlayer.Top.X - Main.screenPosition.X - (texture.Width / 2),
-                    drawPlayer.Top.Y - Main.screenPosition.Y - 40);
-                DrawData data = new DrawData(texture, texturePos, Color.White);
-                drawInfo.DrawDataCache.Add(data);
-            }
+            Vector2 texturePos = new Vector2(drawPlayer.Top.X - Main.screenPosition.X - (texture.Width / 2),
+                drawPlayer.Top.Y - Main.screenPosition.Y - 40);
+            DrawData data = new DrawData(texture, texturePos, Color.White);
+            drawInfo.DrawDataCache.Add(data);
         }
     }
 }
