@@ -92,7 +92,7 @@ namespace TerrariaMoba.UI {
             AVt.SetText("Attack Velocity: " + plr.GetCurrentAttributeValue(AttributeType.ATTACK_VELOCITY)); 
             MSt.SetText("Movement Speed: " + plr.GetCurrentAttributeValue(AttributeType.MOVEMENT_SPEED));
             JSt.SetText("Jump Speed: " + plr.GetCurrentAttributeValue(AttributeType.JUMP_SPEED));
-            
+            //i ahte this shit
         }
         
         public void UnLoad() {
