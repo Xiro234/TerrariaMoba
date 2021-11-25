@@ -10,7 +10,7 @@ namespace TerrariaMoba.Abilities.Nocturne {
     public class FeedTheFury : Ability {
         public FeedTheFury(Player player) : base(player, "Feed the Fury", 180, 0, AbilityType.Passive) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Nocturne/NocturneTrait").Value; }
 
         public const float DEATH_RANGE = 25f;
         public const int COOLDOWN_REDUC = 1;

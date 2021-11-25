@@ -16,7 +16,9 @@ namespace TerrariaMoba.StatusEffects.Jorm {
         private float jormMagRes;
         private float dmgAbsorbMag;
         private float jormPlayerId;
-        
+
+        public HolyBarrier() { }
+
         public HolyBarrier(float armor, float magres, float magnitude, int id, int duration, bool canBeCleansed) : base(duration, canBeCleansed) {
             jormArmor = armor;
             jormMagRes = magres;

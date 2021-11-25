@@ -7,7 +7,7 @@ namespace TerrariaMoba.Abilities.Nocturne {
     public class EclipteranLightbringer : Ability {
         public EclipteranLightbringer(Player player) : base(player, "Eclipteran Lightbringer", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Nocturne/NocturneUltimateTwo").Value; }
 
         public override void OnCast() {
             //TODO - Changes trait and abilities:

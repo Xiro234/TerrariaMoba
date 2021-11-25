@@ -10,7 +10,7 @@ namespace TerrariaMoba.Abilities.Nocturne {
     public class ViolentRetaliation : Ability {
         public ViolentRetaliation(Player player) : base(player, "Violent Retaliation", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Nocturne/NocturneAbilityTwo").Value; }
 
         public const int RETAL_DURATION = 60;
         public const float BUFF_MAGNITUDE = 0.04f;

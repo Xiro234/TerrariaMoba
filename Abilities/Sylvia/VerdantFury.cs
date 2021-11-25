@@ -10,7 +10,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
     public class VerdantFury : Ability {
         public VerdantFury(Player player) : base(player, "Verdant Fury", 60, 0, AbilityType.Active) { }
         
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaAbilityTwo").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaAbilityThree").Value; }
         
         public const float ATKSPD_MODIFIER = 1.3f;
         public const float ATKVEL_MODIFIER = 1.3f;

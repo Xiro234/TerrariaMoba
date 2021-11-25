@@ -13,6 +13,8 @@ namespace TerrariaMoba.StatusEffects.Jorm {
 
         private float stackCount;
 
+        public ResolveCourage() { }
+
         public ResolveCourage(int stacks, int duration, bool canBeCleansed) : base(duration, canBeCleansed) {
             stackCount = stacks;
         }

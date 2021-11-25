@@ -11,7 +11,7 @@ namespace TerrariaMoba.Abilities.Nocturne {
     public class VersatileCombatant : Ability {
         public VersatileCombatant(Player player) : base(player, "Versatile Combatant", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Nocturne/NocturneAbilityOne").Value; }
 
         //TODO - Switch between 2 weapons, 2h sword and throwing spear, think jinx q
         //TODO - 2h sword has unrelenting onslaught effect, throwing spear has a stacking attack speed buff

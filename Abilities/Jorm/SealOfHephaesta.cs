@@ -14,7 +14,7 @@ namespace TerrariaMoba.Abilities.Jorm {
     public class SealOfHephaesta : Ability {
         public SealOfHephaesta(Player player) : base(player, "Seal of Hephaesta", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Jorm/JormAbilityThree").Value; }
 
         public const float SEAL_RANGE = 200f;
         public const float ABSORB_MAGNITUDE = 25f;

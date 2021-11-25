@@ -22,11 +22,12 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
             attackVelocity = atkvel;
         }
         
+        //TODO: Add a UseSpeedMultiplier interface and modify attack speed.
+        
         public bool Shoot(ref Item item, ref ProjectileSource_Item_WithAmmo source, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage,
             ref float knockback) {
-            /*speedX *= attackSpeed;
-            speedY *= attackVelocity;*/
-            //TODO: Fix speed
+            velocity.Normalize();
+            velocity *= attackVelocity;
             return true;
         }
     }

@@ -115,19 +115,6 @@ namespace TerrariaMoba.Players {
             }
             
             /*
-            //ability networking
-            if (TerrariaMoba.TraitHotkey.JustPressed) {
-                if (Main.netMode != NetmodeID.MultiplayerClient) {
-                    MyCharacter.HandleAbility(MyCharacter.CAbility);
-                }
-                else {
-                    new AbilityCastPacket() {
-                        ability = MyCharacter.CAbility,
-                        index = MyCharacter.abilities.IndexOf(MyCharacter.CAbility)
-                    }.Send();
-                }
-            }
-            
             //talent selection
             if (TerrariaMoba.LevelTalentOneHotKey.JustPressed) {
                 MyCharacter.LevelTalentOne();

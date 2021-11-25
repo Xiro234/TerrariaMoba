@@ -9,7 +9,7 @@ namespace TerrariaMoba.Abilities.Jorm {
     public class VexillumImmortalis : Ability {
         public VexillumImmortalis(Player player) : base(player, "Vexillum Immortalis", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Jorm/JormUltimateTwo").Value; }
 
         public const float BANNER_BUFF_RANGE = 25f;
         

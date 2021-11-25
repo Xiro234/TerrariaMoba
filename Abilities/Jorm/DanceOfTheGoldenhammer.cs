@@ -15,7 +15,7 @@ namespace TerrariaMoba.Abilities.Jorm {
     public class DanceOfTheGoldenhammer : Ability {
         public DanceOfTheGoldenhammer(Player player) : base(player, "Dance of the Goldenhammer", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Jorm/JormAbilityOne").Value; }
 
         public const float HAMMER_DAMAGE = 200f;
         public const float HAMMER_SPIN_RADIUS = 135f;

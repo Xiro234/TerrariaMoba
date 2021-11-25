@@ -11,7 +11,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
     public class Rockwrecker : Ability {
         public Rockwrecker(Player player) : base(player, "Rockwrecker", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Lock").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobAbilityThree").Value; }
 
         public const int ROCK_DAMAGE = 690;
         public const float ROCK_KNOCKBACK = 15f;

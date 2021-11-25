@@ -7,7 +7,7 @@ namespace TerrariaMoba.Abilities.Nocturne {
     public class BastionOfTitanium : Ability {
         public BastionOfTitanium(Player player) : base(player, "Bastion of Titanium", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Nocturne/NocturneUltimateOne").Value; }
 
         public override void OnCast() {
             //TODO - Changes trait and abilities:

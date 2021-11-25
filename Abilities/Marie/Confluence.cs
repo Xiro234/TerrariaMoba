@@ -10,7 +10,7 @@ using TerrariaMoba.StatusEffects.Marie;
 namespace TerrariaMoba.Abilities.Marie {
     public class Confluence : Ability {
         public Confluence(Player player) : base(player, "Confluence", 60, 0, AbilityType.Active) { }
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieTrait").Value; } //not trait anymore just texture name
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieAbilityThree").Value; } //not trait anymore just texture name
 
         public const float CONF_RANGE = 150f;
         public const int BUFF_DURATION = 150;

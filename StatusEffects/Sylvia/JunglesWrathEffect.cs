@@ -10,18 +10,14 @@ using TerrariaMoba.Players;
 namespace TerrariaMoba.StatusEffects.Sylvia {
     public class JunglesWrathEffect : StatusEffect {
 
+        public override string DisplayName { get => "Jungle's Wrath"; }
+        
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
+        
+        public JunglesWrathEffect() { }
+        
         public JunglesWrathEffect(int duration, int stacks) : base(duration, true) {
             Stacks = stacks;
-        }
-
-        public JunglesWrathEffect() { }
-
-        public override string DisplayName {
-            get => "Jungle's Wrath";
-        }
-
-        public override Texture2D Icon {
-            get => ModContent.Request<Texture2D>("Textures/Blank").Value;
         }
 
         protected override bool ShowBar {

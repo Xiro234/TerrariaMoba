@@ -11,7 +11,7 @@ namespace TerrariaMoba.Abilities.Nocturne {
     public class RallyingCry : Ability {
         public RallyingCry(Player player) : base(player, "Rallying Cry", 60, 0, AbilityType.Active) { }
         
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Nocturne/NocturneAbilityThree").Value; }
         
         //TODO - Globally buffs allies depending on which weapon nocturne is holding: melee = 25% status resistance (reduces duration of negative effects) / ranged = bonus atkspd
 

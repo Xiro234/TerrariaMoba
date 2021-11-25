@@ -14,7 +14,7 @@ namespace TerrariaMoba.Abilities.Jorm {
     public class Hammerfall : Ability {
         public Hammerfall(Player player) : base(player, "Hammerfall", 60, 0, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Jorm/JormUltimateOne").Value; }
 
         public const float BIGHAMMER_SPEED = 8f;
         public const float BIGHAMMER_DAMAGE = 700f;
