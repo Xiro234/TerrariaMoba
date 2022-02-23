@@ -17,10 +17,8 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
 
         public Daze(float magnitude, int duration, bool canBeCleansed) : base(duration, canBeCleansed) {
             modifier = magnitude;
-        }
-
-        protected override Dictionary<AttributeType, Func<float>> MultAttributesFactory() {
-            return new Dictionary<AttributeType, Func<float>>() {
+            
+            MultAttributes = new Dictionary<AttributeType, Func<float>>() {
                 { MOVEMENT_SPEED, () => 1 - modifier },
                 { ATTACK_SPEED, () => 1 - modifier },
                 { JUMP_SPEED, () => 1 - modifier },

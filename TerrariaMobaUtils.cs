@@ -51,7 +51,7 @@ namespace  TerrariaMoba {
         
         public static bool TileIsSolidOrPlatform(int x, int y) {
             Tile tile = Main.tile[x, y];
-            return tile != null && (tile.IsActive && (Main.tileSolid[tile.type] || Main.tileSolidTop[tile.type] && tile.frameY == 0));
+            return tile != null && (tile.HasTile && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType] && tile.TileFrameY == 0));
         }
 
         public static string GetHoverText(Texture2D texture) {

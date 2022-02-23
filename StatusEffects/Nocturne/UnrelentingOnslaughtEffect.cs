@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -7,6 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Projectiles;
+using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.StatusEffects.Nocturne {
     public class UnrelentingOnslaughtEffect: StatusEffect, IShoot {

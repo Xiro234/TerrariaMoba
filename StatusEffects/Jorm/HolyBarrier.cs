@@ -22,10 +22,8 @@ namespace TerrariaMoba.StatusEffects.Jorm {
             jormMagRes = magres;
             dmgAbsorbMag = magnitude;
             jormPlayerId = id;
-        }
-        
-        protected override Dictionary<AttributeType, Func<float>> FlatAttributesFactory() {
-            return new Dictionary<AttributeType, Func<float>> {
+            
+            FlatAttributes = new Dictionary<AttributeType, Func<float>> {
                 { PHYSICAL_ARMOR, () => jormArmor },
                 { MAGICAL_ARMOR, () => jormMagRes },
             };
