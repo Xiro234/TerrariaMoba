@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Characters;
+using TerrariaMoba.Interfaces;
+using TerrariaMoba.Network;
 using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Players {
@@ -64,6 +69,39 @@ namespace TerrariaMoba.Players {
                 e => e.MultAttributes.ContainsKey(attribute) ? e.MultAttributes[attribute]() : 0);
 
             return value * mult;
+        }
+        
+        public void TakePvpDamage(int physicalDamage, int magicalDamage, int trueDamage, int killer, bool noBroadcast) {
+            if (!Player.immune) {
+                AbilityEffectManager.TakePvpDamage(Player, ref physicalDamage, ref magicalDamage, ref trueDamage, ref killer);
+                int mitigatedPhysical = (int)Math.Ceiling(physicalDamage - physicalDamage * GetCurrentAttributeValue(AttributeType.PHYSICAL_ARMOR) * 0.01f);
+                int mitigatedMagical = (int)Math.Ceiling(magicalDamage - magicalDamage * GetCurrentAttributeValue(AttributeType.MAGICAL_ARMOR) * 0.01f);
+                
+                if (mitigatedPhysical > 0) {
+                    CombatText.NewText(Player.Hitbox, Color.Maroon, mitigatedPhysical);
+                }
+
+                if (mitigatedMagical > 0) {
+                    CombatText.NewText(Player.Hitbox, Color.DodgerBlue, mitigatedMagical);
+                }
+
+                if (trueDamage > 0) {
+                    CombatText.NewText(Player.Hitbox, Color.Goldenrod, trueDamage);
+                }
+
+                int dealtDamage = mitigatedPhysical + mitigatedMagical + trueDamage;
+                Player.statLife -= dealtDamage;
+                
+                if (Player.statLife <= 0) {
+                    Player.KillMe(PlayerDeathReason.ByPlayer(killer), dealtDamage, 1, true);
+                }
+                
+                SoundEngine.PlaySound(1, Player.position);
+
+                if (!noBroadcast) {
+                    NetworkHandler.SendPvpHit(physicalDamage, magicalDamage, trueDamage, Player.whoAmI, killer);
+                }
+            }
         }
     }
 }

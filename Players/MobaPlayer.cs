@@ -49,9 +49,7 @@ namespace TerrariaMoba.Players {
         
         public override void PostUpdateRunSpeeds() {
             if (MobaSystem.MatchInProgress) {
-                Player.moveSpeed *= Player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.MOVEMENT_SPEED);
-                Player.maxRunSpeed *= Player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.MOVEMENT_SPEED);
-
+                Player.maxRunSpeed = Player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.MOVEMENT_SPEED);
                 Player.accRunSpeed = Player.maxRunSpeed;
             }
         }
@@ -186,7 +184,7 @@ namespace TerrariaMoba.Players {
         }
 
         public override void ModifyHitPvp(Item item, Player target, ref int damage, ref bool crit) {
-            target.GetModPlayer<MobaPlayer>().TakePvpDamage(damage, 0, 0, Player.whoAmI, false);
+            target.GetModPlayer<MobaPlayer>().TakePvpDamage((int)Math.Floor(GetCurrentAttributeValue(AttributeType.ATTACK_DAMAGE)), 0, 0, Player.whoAmI, false);
         }
 
         public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) {
@@ -288,38 +286,7 @@ namespace TerrariaMoba.Players {
         }
         
 
-        public void TakePvpDamage(int physicalDamage, int magicalDamage, int trueDamage, int killer, bool noBroadcast) {
-            if (!Player.immune) {
-                AbilityEffectManager.TakePvpDamage(Player, ref physicalDamage, ref magicalDamage, ref trueDamage, ref killer);
-                int mitigatedPhysical = (int)Math.Ceiling(physicalDamage - physicalDamage * GetCurrentAttributeValue(AttributeType.PHYSICAL_ARMOR) * 0.01f);
-                int mitigatedMagical = (int)Math.Ceiling(magicalDamage - magicalDamage * GetCurrentAttributeValue(AttributeType.MAGICAL_ARMOR) * 0.01f);
-                
-                if (mitigatedPhysical > 0) {
-                    CombatText.NewText(Player.Hitbox, Color.Maroon, mitigatedPhysical);
-                }
-
-                if (mitigatedMagical > 0) {
-                    CombatText.NewText(Player.Hitbox, Color.DodgerBlue, mitigatedMagical);
-                }
-
-                if (trueDamage > 0) {
-                    CombatText.NewText(Player.Hitbox, Color.Goldenrod, trueDamage);
-                }
-
-                int dealtDamage = mitigatedPhysical + mitigatedMagical + trueDamage;
-                Player.statLife -= dealtDamage;
-                
-                if (Player.statLife <= 0) {
-                    Player.KillMe(PlayerDeathReason.ByPlayer(killer), dealtDamage, 1, true);
-                }
-                
-                SoundEngine.PlaySound(1, Player.position);
-
-                if (!noBroadcast) {
-                    NetworkHandler.SendPvpHit(physicalDamage, magicalDamage, trueDamage, Player.whoAmI, killer);
-                }
-            }
-        }
+        
 
         public void HealMe(int amount, bool doText) {
             if(doText) {
