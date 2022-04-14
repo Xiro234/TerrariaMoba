@@ -18,7 +18,7 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
             User.controlDown = false;
         }
 
-        public bool Shoot(ref Item item, ref ProjectileSource_Item_WithAmmo source, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage,
+        public bool Shoot(ref Item item, ref EntitySource_ItemUse_WithAmmo source, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage,
             ref float knockback) {
             return false;
         }

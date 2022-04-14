@@ -21,11 +21,12 @@ namespace TerrariaMoba.Items.Sylvia {
             Item.useAnimation = 40;
             Item.UseSound = SoundID.Item5;
             Item.shootSpeed = 9f;
-            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 0;
             Item.value = 10000;
             Item.rare = ItemRarityID.Green;
             Item.autoReuse = false;
+            Item.useAmmo = ItemID.WoodenArrow;
         }
         
         public override Vector2? HoldoutOffset() {

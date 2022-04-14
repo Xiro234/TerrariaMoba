@@ -25,7 +25,7 @@ namespace TerrariaMoba.Interfaces {
             }
         }
 
-        public static bool Shoot(Player Player, ref Item item, ref ProjectileSource_Item_WithAmmo source, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage,
+        public static bool Shoot(Player Player, ref Item item, ref EntitySource_ItemUse_WithAmmo source, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage,
             ref float knockback) {
             List<Ability> abilities = GetValidAbilities<IShoot>(Player);
             List<StatusEffect> effects = GetValidEffects<IShoot>(Player);
@@ -42,6 +42,40 @@ namespace TerrariaMoba.Interfaces {
             }
 
             return result;
+        }
+
+        public static float UseSpeedMultiplier(Player player, ref Item item) {
+            List<Ability> abilities = GetValidAbilities<IUseSpeedMultiplier>(player);
+            List<StatusEffect> effects = GetValidEffects<IUseSpeedMultiplier>(player);
+
+            float result = 1f;
+            foreach (Ability ability in abilities) {
+                if (ability.CanCastAbility()) {
+                    result *= ((IUseSpeedMultiplier)ability).UseSpeedMultiplier(ref item);
+                }
+            }
+            
+            foreach (StatusEffect effect in effects) {
+                result *= ((IUseSpeedMultiplier)effect).UseSpeedMultiplier(ref item);
+            }
+
+            return result;
+        }
+
+        public static void ModifyShootStats(Player player, ref Item item, ref Vector2 position, ref Vector2 velocity,
+            ref int type, ref int damage, ref float knockback) {
+            List<Ability> abilities = GetValidAbilities<IModifyShootStats>(player);
+            List<StatusEffect> effects = GetValidEffects<IModifyShootStats>(player);
+
+            foreach (Ability ability in abilities) {
+                if (ability.CanCastAbility()) {
+                    ((IModifyShootStats)ability).ModifyShootStats(ref item, ref position, ref velocity, ref type, ref damage, ref knockback);
+                }
+            }
+            
+            foreach (StatusEffect effect in effects) {
+                ((IModifyShootStats)effect).ModifyShootStats(ref item, ref position, ref velocity, ref type, ref damage, ref knockback);
+            }
         }
 
         public static void SetControls(Player Player) {

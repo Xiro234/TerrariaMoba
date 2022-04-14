@@ -4,9 +4,11 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
+using TerrariaMoba.Players;
+using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.StatusEffects.Sylvia {
-    public class VerdantFuryEffect : StatusEffect, IShoot {
+    public class VerdantFuryEffect : StatusEffect, IUseSpeedMultiplier, IModifyShootStats {
         public override string DisplayName { get => "Verdant Fury"; }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
@@ -21,14 +23,15 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
             attackSpeed = atkspd;
             attackVelocity = atkvel;
         }
-        
-        //TODO: Add a UseSpeedMultiplier interface and modify attack speed.
-        
-        public bool Shoot(ref Item item, ref ProjectileSource_Item_WithAmmo source, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage,
+
+        public float UseSpeedMultiplier(ref Item item) {
+            return attackSpeed;
+        }
+
+        public void ModifyShootStats(ref Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage,
             ref float knockback) {
             velocity.Normalize();
-            velocity *= attackVelocity;
-            return true;
+            velocity *= User.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.ATTACK_VELOCITY) * attackVelocity;
         }
     }
 }
