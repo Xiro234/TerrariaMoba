@@ -26,7 +26,6 @@ namespace TerrariaMoba.Items.Sylvia {
             Item.value = 10000;
             Item.rare = ItemRarityID.Green;
             Item.autoReuse = false;
-            Item.useAmmo = ItemID.WoodenArrow;
         }
         
         public override Vector2? HoldoutOffset() {
