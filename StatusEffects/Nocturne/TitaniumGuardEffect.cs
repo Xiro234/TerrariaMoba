@@ -1,6 +1,9 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
+using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.StatusEffects.Nocturne {
     public class TitaniumGuardEffect: StatusEffect, ITakePvpDamage {

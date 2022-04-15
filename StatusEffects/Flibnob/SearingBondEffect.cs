@@ -20,10 +20,8 @@ namespace TerrariaMoba.StatusEffects.Flibnob {
         public SearingBondEffect(int stacks, int armor, int duration, bool canBeCleansed) : base(duration, false) {
             currentStacks = stacks;
             armorGain = armor;
-        }
-
-        protected override Dictionary<AttributeType, Func<float>> FlatAttributesFactory() {
-            return new Dictionary<AttributeType, Func<float>> {
+            
+            FlatAttributes = new Dictionary<AttributeType, Func<float>> {
                 { PHYSICAL_ARMOR, () => armorGain * currentStacks }
             };
         }

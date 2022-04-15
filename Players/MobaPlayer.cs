@@ -54,6 +54,8 @@ namespace TerrariaMoba.Players {
             if (MobaSystem.MatchInProgress) {
                 Player.moveSpeed *= Player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.MOVEMENT_SPEED);
                 Player.maxRunSpeed *= Player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.MOVEMENT_SPEED);
+
+                Player.accRunSpeed = Player.maxRunSpeed;
             }
         }
 

@@ -75,7 +75,15 @@ namespace TerrariaMoba.StatusEffects {
         #endregion
         
         public static StatusEffect GetNewEffectInstance(int ID) {
-            return (StatusEffect)Activator.CreateInstance(StatusEffectTypesList[ID]);
+            StatusEffect effect = (StatusEffect)Activator.CreateInstance(StatusEffectTypesList[ID]);
+            if (effect == null) {
+                TerrariaMoba.Instance.Logger.Debug("Null!");
+            }
+            else {
+                TerrariaMoba.Instance.Logger.Debug(effect.DisplayName);
+            }
+
+            return effect;
         }
 
         public static int GetIDOfEffect(StatusEffect effect) {

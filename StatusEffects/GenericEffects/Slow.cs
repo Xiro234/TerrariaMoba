@@ -16,15 +16,13 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
 
         public Slow(float magnitude, int duration, bool canBeCleansed) : base(duration, canBeCleansed) {
             modifier = magnitude;
-        }
-        
-        protected override Dictionary<AttributeType, Func<float>> MultAttributesFactory() {
-            return new Dictionary<AttributeType, Func<float>>() {
+            
+            MultAttributes = new Dictionary<AttributeType, Func<float>>() {
                 { MOVEMENT_SPEED, () => 1 - modifier },
                 { JUMP_SPEED, () => 1 - modifier },
             };
         }
-        
+
         public class SlowDrawLayer : PlayerDrawLayer {
             public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) {
                 return StatusEffectManager.PlayerHasEffectType<Daze>(drawInfo.drawPlayer);

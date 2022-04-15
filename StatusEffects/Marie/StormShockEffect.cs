@@ -1,5 +1,8 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
+using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.StatusEffects.Marie {
     public class StormShockEffect : StatusEffect {

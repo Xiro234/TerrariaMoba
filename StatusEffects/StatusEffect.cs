@@ -15,33 +15,18 @@ namespace TerrariaMoba.StatusEffects {
         public int Duration { get; protected set; }
         public int DurationTimer { get; protected set; }
         public bool CanBeCleansed { get; protected set; }
-        public Dictionary<AttributeType, Func<float>> FlatAttributes { get; private set; }
-        public Dictionary<AttributeType, Func<float>> MultAttributes { get; private set; }
+        public Dictionary<AttributeType, Func<float>> FlatAttributes { get; protected set; }
+        public Dictionary<AttributeType, Func<float>> MultAttributes { get; protected set; }
+
         protected virtual bool ShowBar {
             get => true;
         }
 
-        public StatusEffect() {
-            Initialize();
-        }
+        public StatusEffect() { }
 
         public StatusEffect(int duration, bool canBeCleansed) {
             Duration = duration;
             CanBeCleansed = canBeCleansed;
-            Initialize();
-        }
-
-        private void Initialize() {
-            FlatAttributes = FlatAttributesFactory();
-            MultAttributes = MultAttributesFactory();
-        }
-
-        protected virtual Dictionary<AttributeType, Func<float>> FlatAttributesFactory() {
-            return new Dictionary<AttributeType, Func<float>>();
-        }
-        
-        protected virtual Dictionary<AttributeType, Func<float>> MultAttributesFactory() {
-            return new Dictionary<AttributeType, Func<float>>();
         }
 
         public virtual void Apply() {
@@ -67,7 +52,7 @@ namespace TerrariaMoba.StatusEffects {
         public virtual void RefreshDuration() {
             DurationTimer = Duration;
         }
-        
+
         /// <summary>
         /// Override this if the status effect contains more information to be synced. Should return base.SendEffectElements(packet).
         /// </summary>
@@ -76,7 +61,7 @@ namespace TerrariaMoba.StatusEffects {
             packet.Write(Duration);
             packet.Write(CanBeCleansed);
         }
-        
+
         /// <summary>
         /// Override this if the status effect contains more information to be synced. Should return base.ReceiveEffectElements(reader).
         /// </summary>
@@ -84,6 +69,17 @@ namespace TerrariaMoba.StatusEffects {
         public virtual void ReceiveEffectElements(BinaryReader reader) {
             Duration = reader.ReadInt32();
             CanBeCleansed = reader.ReadBoolean();
+            ConstructFlatAttributes();
+            ConstructMultAttributes();
         }
+
+        public virtual void ConstructFlatAttributes() {
+            FlatAttributes = new Dictionary<AttributeType, Func<float>>();
+        }
+        
+        public virtual void ConstructMultAttributes() {
+            MultAttributes = new Dictionary<AttributeType, Func<float>>();
+        }
+
     }
 }
