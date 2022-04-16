@@ -21,8 +21,8 @@ namespace TerrariaMoba.StatusEffects.Nocturne {
             hitsTaken = hits;
         }
         
-        protected override Dictionary<AttributeType, Func<float>> MultAttributesFactory() {
-            return new Dictionary<AttributeType, Func<float>>() {
+        public override void ConstructMultAttributes() {
+            MultAttributes = new Dictionary<AttributeType, Func<float>>() {
                 { ATTACK_DAMAGE, () => dmgBoost * hitsTaken }
             };
         }
