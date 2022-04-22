@@ -27,7 +27,7 @@ namespace TerrariaMoba.Characters {
                 { PHYSICAL_ARMOR, () => 0f },
                 { MAGICAL_ARMOR, () => 0f },
                 { ATTACK_DAMAGE, () => 69f },
-                { ATTACK_SPEED, () => 1.11f },
+                { ATTACK_SPEED, () => 0.10f },
                 { ATTACK_VELOCITY, () => 7.33f },
                 { MOVEMENT_SPEED, () => 1f },
                 { JUMP_SPEED, () => 1f }

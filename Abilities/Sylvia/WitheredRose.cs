@@ -15,23 +15,21 @@ namespace TerrariaMoba.Abilities.Sylvia {
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaAbilityTwo").Value;  }
 
         public const float THORN_DAMAGE = 200f;
-        
-        private int Timer;
+
         private bool toggleOn;
         
         public override void OnCast() {
             //TODO - new sylvia ability
             //passive: passively grants 10% armor and mr penetration
             //toggle: surrounds sylvia in a thorn bush when damage is taken, fire a homing thorn that deals 50% of primary damage towards attacker as magic dmg, drains mana whilst on
-            Timer = 0;
 
-            IsActive = true;
-            
             if (!toggleOn) {
                 toggleOn = true;
+                IsActive = true;
                 Main.NewText("Withered Rose: Toggle On.");
             }  else {
                 toggleOn = false;
+                IsActive = false;
                 Main.NewText("Withered Rose: Toggle Off.");
             }
 
@@ -40,11 +38,12 @@ namespace TerrariaMoba.Abilities.Sylvia {
 
         public override void WhileActive() {
             // armor/mr penetration code here
-
+            //Main.NewText("Withered Rose: IsActive " + IsActive);
         }
 
         public void TakePvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {
-            if (toggleOn) {
+            Main.NewText("Withered Rose: um " + IsActive);
+            if (IsActive) {
                 Main.NewText("Withered Rose: Damage taken whilst toggle on.");
                 
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {

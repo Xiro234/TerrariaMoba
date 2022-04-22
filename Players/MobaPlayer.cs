@@ -291,6 +291,7 @@ namespace TerrariaMoba.Players {
 
         public void TakePvpDamage(int physicalDamage, int magicalDamage, int trueDamage, int killer, bool noBroadcast) {
             if (!Player.immune) {
+                Main.NewText(Player.name + " just took PvP damage.");
                 AbilityEffectManager.TakePvpDamage(Player, ref physicalDamage, ref magicalDamage, ref trueDamage, ref killer);
                 int mitigatedPhysical = (int)Math.Ceiling(physicalDamage - physicalDamage * GetCurrentAttributeValue(AttributeType.PHYSICAL_ARMOR) * 0.01f);
                 int mitigatedMagical = (int)Math.Ceiling(magicalDamage - magicalDamage * GetCurrentAttributeValue(AttributeType.MAGICAL_ARMOR) * 0.01f);
