@@ -142,7 +142,6 @@ namespace TerrariaMoba.Interfaces {
             //TODO - Add some sort of system to make sure multiple effects will always make a consistent outcome (I.E, 2x damage + 2x damage + flat damage vs., 2x damage + flat damage + 2x damage)
             foreach (Ability ability in abilities) {
                 ((ITakePvpDamage)ability).TakePvpDamage(ref physicalDamage, ref magicalDamage, ref trueDamage, ref killer);
-                Main.NewText(Player.name + " just had an ability cast from taking PvP damage.");
             }
 
             foreach (StatusEffect effect in effects) {

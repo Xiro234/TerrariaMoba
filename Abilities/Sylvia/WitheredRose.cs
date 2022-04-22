@@ -26,11 +26,9 @@ namespace TerrariaMoba.Abilities.Sylvia {
             if (!toggleOn) {
                 toggleOn = true;
                 IsActive = true;
-                Main.NewText("Withered Rose: Toggle On.");
             }  else {
                 toggleOn = false;
                 IsActive = false;
-                Main.NewText("Withered Rose: Toggle Off.");
             }
 
             CooldownTimer = BaseCooldown;
@@ -38,13 +36,10 @@ namespace TerrariaMoba.Abilities.Sylvia {
 
         public override void WhileActive() {
             // armor/mr penetration code here
-            //Main.NewText("Withered Rose: IsActive " + IsActive);
         }
 
         public void TakePvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {
-            Main.NewText("Withered Rose: um " + IsActive);
             if (IsActive) {
-                Main.NewText("Withered Rose: Damage taken whilst toggle on.");
                 
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
                     Vector2 direction = Vector2.UnitX;
@@ -52,8 +47,6 @@ namespace TerrariaMoba.Abilities.Sylvia {
 
                     Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), User.Center, velocity,
                         ModContent.ProjectileType<RoseThorn>(), (int)THORN_DAMAGE, 0, User.whoAmI, killer);
-                    
-                    Main.NewText("Withered Rose: Created projectile.");
                 }
                 
                 //drain mana code here
