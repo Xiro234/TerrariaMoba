@@ -25,22 +25,22 @@ namespace TerrariaMoba.Interfaces {
             }
         }
 
-        public static bool Shoot(Player Player, ref Item item, ref EntitySource_ItemUse_WithAmmo source, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage,
-            ref float knockback) {
+        public static bool Shoot(Player Player, Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, 
+            Vector2 velocity, int type, int damage, float knockback) {
             List<Ability> abilities = GetValidAbilities<IShoot>(Player);
             List<StatusEffect> effects = GetValidEffects<IShoot>(Player);
 
             bool result = true;
             foreach (Ability ability in abilities) {
                 if (ability.CanCastAbility()) {
-                    result &= ((IShoot)ability).Shoot(ref item, ref source, ref position, ref velocity, ref type, ref damage, ref knockback);
+                    result &= ((IShoot)ability).Shoot(item, source, position, velocity, type, damage, knockback);
                 }
             }
             
             foreach (StatusEffect effect in effects) {
-                result &= ((IShoot)effect).Shoot(ref item, ref source, ref position, ref velocity, ref type, ref damage, ref knockback);
+                result &= ((IShoot)effect).Shoot(item, source, position, velocity, type, damage, knockback);
             }
-
+            
             return result;
         }
 
@@ -141,7 +141,7 @@ namespace TerrariaMoba.Interfaces {
             List<StatusEffect> effects = GetValidEffects<ITakePvpDamage>(Player);
             //TODO - Add some sort of system to make sure multiple effects will always make a consistent outcome (I.E, 2x damage + 2x damage + flat damage vs., 2x damage + flat damage + 2x damage)
             foreach (Ability ability in abilities) {
-                ((ITakePvpDamage) ability).TakePvpDamage(ref physicalDamage, ref magicalDamage, ref trueDamage, ref killer);
+                ((ITakePvpDamage)ability).TakePvpDamage(ref physicalDamage, ref magicalDamage, ref trueDamage, ref killer);
             }
 
             foreach (StatusEffect effect in effects) {
@@ -155,9 +155,9 @@ namespace TerrariaMoba.Interfaces {
             var mobaPlayer = Player.GetModPlayer<MobaPlayer>();
             List<Ability> abilities = new List<Ability>();
 
-            for(int i = 0; i < mobaPlayer.TestAbilities.Count; i++) {
-                if (mobaPlayer.TestAbilities[i] is T) {
-                    abilities.Add(mobaPlayer.TestAbilities[i]);
+            for (int i = 0; i < mobaPlayer.Hero?.Skills.Length; i++) {
+                if (mobaPlayer.Hero.Skills[i] is T) {
+                    abilities.Add(mobaPlayer.Hero.Skills[i]);
                 }
             }
 

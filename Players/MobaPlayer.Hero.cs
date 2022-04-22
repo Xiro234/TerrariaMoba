@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Characters;
 using TerrariaMoba.Statistic;
+using TerrariaMoba.StatusEffects;
 
 namespace TerrariaMoba.Players {
     public partial class MobaPlayer : ModPlayer {
@@ -63,7 +64,12 @@ namespace TerrariaMoba.Players {
             mult += EffectList.Sum(
                 e => e.MultAttributes.ContainsKey(attribute) ? e.MultAttributes[attribute]() : 0);
 
-            return value * mult;
+            switch (attribute) {
+                case AttributeType.ATTACK_SPEED:
+                    return value + mult;
+                default:
+                    return value * mult;
+            }
         }
     }
 }

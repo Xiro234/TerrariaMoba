@@ -16,7 +16,7 @@ namespace TerrariaMoba.StatusEffects.Jorm {
         public VexillumImmortalisEffect(int duration, bool canBeCleansed) : base(duration, canBeCleansed) { }
         
         public void TakePvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {
-            physicalDamage = 0;
+            physicalDamage *= 0;
         }
     }
 }

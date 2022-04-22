@@ -36,12 +36,14 @@ namespace TerrariaMoba.Players {
 
         public override void ModifyShootStats(Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage,
             ref float knockback) {
-            damage = (int)Player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.ATTACK_DAMAGE);
-            velocity.Normalize();
-            velocity *= Player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.ATTACK_VELOCITY);
-
-            AbilityEffectManager.ModifyShootStats(Player, ref item, ref position, ref velocity, ref type, ref damage,
-                ref knockback);
+            if (MobaSystem.MatchInProgress) {
+                damage = (int)Player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.ATTACK_DAMAGE);
+                velocity.Normalize();
+                velocity *= Player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.ATTACK_VELOCITY);
+                
+                /* AbilityEffectManager.ModifyShootStats(Player, ref item, ref position, ref velocity, ref type,
+                    ref damage, ref knockback); */
+            }
         }
 
         public override void PreUpdateMovement() {
@@ -223,13 +225,18 @@ namespace TerrariaMoba.Players {
             AbilityEffectManager.DrawEffects(Player, drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
         }
 
-        public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage,
-            float knockback) {
-            return AbilityEffectManager.Shoot(Player, ref item, ref source, ref position, ref velocity, ref type, ref damage, ref knockback);
+        public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, 
+            int type, int damage, float knockback) {
+            Main.NewText(source.Item.Name);
+            return AbilityEffectManager.Shoot(Player, item, source, position, velocity, type, damage, knockback);
         }
 
         public override float UseSpeedMultiplier(Item item) {
-            return AbilityEffectManager.UseSpeedMultiplier(Player, ref item);
+            if (MobaSystem.MatchInProgress) {
+                return 1 + Player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.ATTACK_SPEED);
+            } else {
+                return 1f;
+            }
         }
 
         // For use later when I rework Marie's ultimate.

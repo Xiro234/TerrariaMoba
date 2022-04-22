@@ -21,8 +21,8 @@ namespace TerrariaMoba.StatusEffects.Nocturne {
         
         public UnrelentingOnslaughtEffect(int duration, bool canBeCleansed) : base(duration, canBeCleansed) { }
         
-        public bool Shoot(ref Item item, ref EntitySource_ItemUse_WithAmmo source, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage,
-            ref float knockback) {
+        public bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, 
+            int damage, float knockback) {
 
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
                 SoundEngine.PlaySound(SoundID.Item114, User.Center);

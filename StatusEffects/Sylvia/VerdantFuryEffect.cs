@@ -1,14 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.DataStructures;
 using Terraria.ModLoader;
-using TerrariaMoba.Interfaces;
-using TerrariaMoba.Players;
 using TerrariaMoba.Statistic;
+using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.StatusEffects.Sylvia {
-    public class VerdantFuryEffect : StatusEffect, IUseSpeedMultiplier, IModifyShootStats {
+    public sealed class VerdantFuryEffect : StatusEffect {
         public override string DisplayName { get => "Verdant Fury"; }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
@@ -18,20 +17,31 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         
         public VerdantFuryEffect() { }
 
-        public VerdantFuryEffect(int duration, float atkspd, float atkvel, bool canBeCleansed) : base(duration,
-            canBeCleansed) {
+        public VerdantFuryEffect(int duration, float atkspd, float atkvel) : base(duration, true) {
             attackSpeed = atkspd;
             attackVelocity = atkvel;
+            
+            ConstructFlatAttributes();
+            ConstructMultAttributes();
         }
-
-        public float UseSpeedMultiplier(ref Item item) {
-            return attackSpeed;
+        
+        public override void SendEffectElements(ModPacket packet) {
+            packet.Write(attackSpeed);
+            packet.Write(attackVelocity);
+            base.SendEffectElements(packet);
         }
-
-        public void ModifyShootStats(ref Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage,
-            ref float knockback) {
-            velocity.Normalize();
-            velocity *= User.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.ATTACK_VELOCITY) * attackVelocity;
+        
+        public override void ReceiveEffectElements(BinaryReader reader) {
+            attackSpeed = reader.ReadInt32();
+            attackVelocity = reader.ReadInt32();
+            base.ReceiveEffectElements(reader);
+        }
+        
+        public override void ConstructMultAttributes() {
+            MultAttributes = new Dictionary<AttributeType, Func<float>>() {
+                { ATTACK_SPEED, () => attackSpeed },
+                { ATTACK_VELOCITY, () => attackVelocity }
+            };
         }
     }
 }

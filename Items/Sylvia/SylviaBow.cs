@@ -17,15 +17,15 @@ namespace TerrariaMoba.Items.Sylvia {
             Item.shoot = ModContent.ProjectileType<SylviaArrow>();
             Item.width = 20;
             Item.height = 12;
-            Item.useTime = 40;
-            Item.useAnimation = 40;
+            Item.useTime = 60;
+            Item.useAnimation = 60;
             Item.UseSound = SoundID.Item5;
-            Item.shootSpeed = 9f;
+            Item.shootSpeed = 1f;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 0;
             Item.value = 10000;
             Item.rare = ItemRarityID.Green;
-            Item.autoReuse = false;
+            Item.autoReuse = true;
         }
         
         public override Vector2? HoldoutOffset() {
