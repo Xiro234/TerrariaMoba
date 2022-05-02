@@ -48,8 +48,10 @@ namespace TerrariaMoba.Abilities.Flibnob {
                     Vector2 vel = new Vector2(dirX, dirY);
                 
                     SoundEngine.PlaySound(SoundID.DD2_OgreAttack, User.Center);
-                    Projectile.NewProjectile(new ProjectileSource_Ability(User, this), User.Center, vel,
-                        ModContent.ProjectileType<FlameBelchSpawner>(), FLAME_BASE_DAMAGE, 0, User.whoAmI);
+                    Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), User.Center, 
+                        vel, ModContent.ProjectileType<FlameBelchSpawner>(), 0, 0, 
+                        User.whoAmI);
+                    TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: FLAME_BASE_DAMAGE);
                 }
                 //player resource reduced by 50
                 timer = FLAME_BASE_DELAY;

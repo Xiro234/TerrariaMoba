@@ -14,7 +14,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaAbilityTwo").Value;  }
 
-        public const float THORN_DAMAGE = 200f;
+        public const int THORN_DAMAGE = 200;
 
         private bool toggleOn;
         
@@ -46,7 +46,8 @@ namespace TerrariaMoba.Abilities.Sylvia {
                     Vector2 velocity = direction.RotatedBy(MathHelper.ToRadians(1 * 90 + 45));
 
                     Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), User.Center, velocity,
-                        ModContent.ProjectileType<RoseThorn>(), (int)THORN_DAMAGE, 0, User.whoAmI, killer);
+                        ModContent.ProjectileType<RoseThorn>(), 0, 0, User.whoAmI, killer);
+                    TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: THORN_DAMAGE);
                 }
                 
                 //drain mana code here

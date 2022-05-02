@@ -34,6 +34,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
 
                 Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),position, velocity, ModContent.ProjectileType<SylviaUlt2>(), 
                     HEAD_DAMAGE, 1, User.whoAmI);
+                TerrariaMobaUtils.SetProjectileDamage(proj, PhysicalDamage: HEAD_DAMAGE);
                 
                 SylviaUlt2 head = proj.ModProjectile as SylviaUlt2;
                 

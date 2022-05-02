@@ -42,6 +42,8 @@ namespace TerrariaMoba.Projectiles.Marie {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) { 
                 Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, 
                     ModContent.ProjectileType<WBWhirlpool>(), PoolDamage, 0, Main.myPlayer);
+                TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: PoolDamage);
+                
                 SoundEngine.PlaySound(SoundID.Item27, Projectile.position);
                 
                 WBWhirlpool pool = proj.ModProjectile as WBWhirlpool;

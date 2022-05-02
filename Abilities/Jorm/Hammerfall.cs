@@ -17,7 +17,7 @@ namespace TerrariaMoba.Abilities.Jorm {
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Jorm/JormUltimateOne").Value; }
 
         public const float BIGHAMMER_SPEED = 8f;
-        public const float BIGHAMMER_DAMAGE = 700f;
+        public const int BIGHAMMER_DAMAGE = 700;
         public const float BIGHAMMER_HEIGHT = -600f;
         public const int BIGHAMMER_NUMBER = 4;
         public const int BIGHAMMER_TILE_DISTANCE = 18;

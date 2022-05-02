@@ -84,8 +84,10 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 vel.Normalize();
                 vel *= 15;
 
-                Projectile.NewProjectile(source, position.X, position.Y, vel.X, vel.Y, 
-                    ModContent.ProjectileType<SylviaUlt1Projectile>(), JAVELIN_DAMAGE, 0f, User.whoAmI);
+                Projectile proj = Projectile.NewProjectileDirect(source, position, vel, 
+                    ModContent.ProjectileType<SylviaUlt1Projectile>(), 0, 0f, User.whoAmI);
+                TerrariaMobaUtils.SetProjectileDamage(proj, PhysicalDamage: JAVELIN_DAMAGE);
+                
                 remainingJavelins--;
 
                 if (remainingJavelins == 0) {

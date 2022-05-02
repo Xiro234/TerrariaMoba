@@ -38,8 +38,9 @@ namespace TerrariaMoba.Abilities.Flibnob {
                     }
                     Vector2 velocity = new Vector2(User.direction * 10f, 0);
 
-                    Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), position, velocity, 
-                        ModContent.ProjectileType<EarthsplitterSpawner>(), 0, 0, User.whoAmI);
+                    Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), 
+                        position, velocity, ModContent.ProjectileType<EarthsplitterSpawner>(), 0, 0,
+                        User.whoAmI);
                     
                     EarthsplitterSpawner spawner = proj.ModProjectile as EarthsplitterSpawner;
 
