@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using TerrariaMoba.Players;
 using TerrariaMoba.NPCs;
+using TerrariaMoba.Projectiles;
 
 namespace  TerrariaMoba {
     public static class TerrariaMobaUtils {
@@ -121,6 +122,14 @@ namespace  TerrariaMoba {
             }
             
             MobaSystem.StartGame();
+        }
+
+        public static void SetProjectileDamage(Projectile proj, int PhysicalDamage = 0, int MagicalDamage = 0,
+            int TrueDamage = 0) {
+            var gProj = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
+           gProj.PhysicalDamage = PhysicalDamage;
+           gProj.MagicalDamage = MagicalDamage;
+           gProj.TrueDamage = TrueDamage;
         }
     }
 }

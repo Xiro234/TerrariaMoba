@@ -38,7 +38,7 @@ namespace TerrariaMoba.Characters {
                 new BrewConcoction(User),
                 new Incision(User),
                 new FlaskOfVitality(User),
-                new Crowstorm(User),
+                new HumorReblance(User),
                 new Bloodletting(User)
             };
         }

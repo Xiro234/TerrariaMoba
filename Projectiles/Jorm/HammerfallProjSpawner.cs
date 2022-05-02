@@ -39,7 +39,7 @@ namespace TerrariaMoba.Projectiles.Jorm {
             if (((int)Projectile.ai[0] % timeBetween) == 0){
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) {
                     Vector2 velocity = new Vector2(0, HammerSpeed);
-                    Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.position,
+                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.position,
                         velocity, ModContent.ProjectileType<HammerfallProj>(),
                         (int)HammerDamage, 0, Main.myPlayer, HammerSpeed);
                 }

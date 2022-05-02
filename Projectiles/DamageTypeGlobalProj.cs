@@ -6,6 +6,8 @@ namespace TerrariaMoba.Projectiles {
         public int MagicalDamage { get; set; }
         public int TrueDamage { get; set; }
 
+        public int TotalPremitigated => PhysicalDamage + MagicalDamage + TrueDamage;
+
         public override bool InstancePerEntity { get => true; }
     }
 }

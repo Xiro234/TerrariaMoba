@@ -8,6 +8,10 @@ namespace TerrariaMoba.Projectiles {
         public readonly Player Player;
         public readonly StatusEffect Effect;
 
+        public string Context {
+            get => Effect.DisplayName;
+        }
+
         public ProjectileSource_StatusEffect(Player player, StatusEffect effect) {
             Player = player;
             Effect = effect;

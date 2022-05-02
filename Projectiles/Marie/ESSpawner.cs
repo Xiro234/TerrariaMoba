@@ -5,6 +5,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Abilities.Marie;
+using static TerrariaMoba.TerrariaMobaUtils;
 
 namespace TerrariaMoba.Projectiles.Marie {
     public class ESSpawner : ModProjectile {
@@ -51,9 +52,10 @@ namespace TerrariaMoba.Projectiles.Marie {
 
         public override void Kill(int timeLeft) {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) {
-                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Vector2.Zero, 
+                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, 
                     ModContent.ProjectileType<ESStormCloud>(), CloudDamage, 0f, Main.myPlayer);
                 SoundEngine.PlaySound(SoundID.Item74, Projectile.Center);
+                SetProjectileDamage(proj, PhysicalDamage: CloudDamage);
 
                 ESStormCloud cloud = proj.ModProjectile as ESStormCloud;
 

@@ -266,7 +266,7 @@ namespace TerrariaMoba.Players {
         });
         */
 
-        /*public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {
+        /*public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {1
 
             foreach (var effect in EffectList) {
                 List<PlayerDrawLayer> playerLayers = new List<PlayerDrawLayer>();

@@ -39,7 +39,7 @@ namespace TerrariaMoba.Projectiles.Flibnob {
 
         public override void Kill(int timeLeft) {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) {
-                Projectile.NewProjectileDirect(Projectile.GetProjectileSource_FromThis(), Projectile.Center, Vector2.Zero, 
+                Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, 
                     ModContent.ProjectileType<RockwreckerProj>(), RockDamage, RockKnockback, Main.myPlayer);
             }
         }
