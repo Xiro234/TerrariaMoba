@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities {
     public abstract class Ability {
@@ -34,6 +35,31 @@ namespace TerrariaMoba.Abilities {
             
         }*/
 
+        
+        /// <summary>
+        /// Will cast if able to, override if resources are not a factor.
+        /// </summary>
+        public virtual bool CastIfAble() {
+            var mobaPlayer = User.GetModPlayer<MobaPlayer>();
+            if (mobaPlayer.CurrentResource >= BaseResourceCost && CanCastAbility() && CooldownTimer == 0) {
+                OnCast();
+                ReduceResource();
+                return true;
+            }
+
+            return false;
+        }
+
+        public virtual void ReduceResource() {
+            var mobaPlayer = User.GetModPlayer<MobaPlayer>();
+            if (mobaPlayer.CurrentResource - BaseResourceCost < 0) {
+                mobaPlayer.CurrentResource = 0;
+            }
+            else {
+                mobaPlayer.CurrentResource -= BaseResourceCost;
+            }
+        }
+
         /// <summary>
         /// Action the frame the ability is cast.
         /// </summary>
@@ -55,6 +81,16 @@ namespace TerrariaMoba.Abilities {
         /// <returns></returns>
         public virtual bool CanCastAbility() {
             return true;
+        }
+
+        /// <summary>
+        /// Override this if there are any specific cooldown logic.
+        /// </summary>
+        /// <returns></returns>
+        public virtual void TickCooldown() {
+            if (CooldownTimer > 0) {
+                CooldownTimer--;
+            }
         }
     }
 }

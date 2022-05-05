@@ -25,7 +25,7 @@ namespace TerrariaMoba.UI {
             var Player = Main.LocalPlayer;
             var mobaPlayer = Player.GetModPlayer<MobaPlayer>();
             if (Player != null) {
-                string text = "";
+                string text;
 
                 if (resource == Resource.Life) {
                     quotient = (float) Player.statLife / Player.statLifeMax2;

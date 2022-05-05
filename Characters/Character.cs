@@ -97,7 +97,8 @@ namespace TerrariaMoba.Characters {
 
         public virtual void RegenResource(float maxMana) { //Base is mana
             var mobaPlayer = User.GetModPlayer<MobaPlayer>();
-            
+            mobaPlayer.CurrentResource += (int)mobaPlayer.GetCurrentAttributeValue(AttributeType.MANA_REGEN);
+
             if (mobaPlayer.CurrentResource > maxMana) {
                 mobaPlayer.CurrentResource = (int)Math.Floor(maxMana);
             }

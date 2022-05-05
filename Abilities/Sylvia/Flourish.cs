@@ -85,7 +85,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 vel *= 15;
 
                 Projectile proj = Projectile.NewProjectileDirect(source, position, vel, 
-                    ModContent.ProjectileType<SylviaUlt1Projectile>(), 0, 0f, User.whoAmI);
+                    ModContent.ProjectileType<SylviaUlt1Projectile>(),1, 0f, User.whoAmI);
                 TerrariaMobaUtils.SetProjectileDamage(proj, PhysicalDamage: JAVELIN_DAMAGE);
                 
                 remainingJavelins--;
@@ -98,7 +98,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
             }
             return true;
         }
-        
+
         public override bool CanCastAbility() {
             return true;
         }

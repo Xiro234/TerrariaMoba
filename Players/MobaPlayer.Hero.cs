@@ -46,6 +46,10 @@ namespace TerrariaMoba.Players {
             Player.statLifeMax2 = (int)Math.Floor(GetCurrentAttributeValue(AttributeType.MAX_HEALTH));
         }
 
+        public void SetPlayerResource() {
+            CurrentResource = (int)Math.Floor(GetCurrentAttributeValue(AttributeType.MAX_MANA));
+        }
+
         public float GetCurrentAttributeValue(AttributeType attribute) {
             float value = Hero.BaseAttributes.ContainsKey(attribute) ? Hero.BaseAttributes[attribute]() : 0f;
             float mult = 1f;

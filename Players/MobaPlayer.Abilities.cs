@@ -6,17 +6,11 @@ namespace TerrariaMoba.Players {
         public void TickAbilities() {
             if (Hero != null) {
                 foreach (var ability in Hero.Skills) {
-                    if (ability == null) {
-                        continue;
-                    }
-                    
-                    if (ability.IsActive) {
+                    if (ability?.IsActive == true) {
                         ability.WhileActive();
                     }
-
-                    if (ability.CooldownTimer > 0) {
-                        ability.CooldownTimer--;
-                    } //TODO - TEMPORARY, WILL CHANGE TO AN ABILITY-TO-ABILITY BASIS
+                    
+                    ability?.TickCooldown();
                 }
             }
         }

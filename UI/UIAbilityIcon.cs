@@ -1,11 +1,15 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
 using System;
+using System.Drawing;
+using Microsoft.Xna.Framework;
+using ReLogic.Graphics;
 using Terraria.GameContent;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.Players;
+using Color = Microsoft.Xna.Framework.Color;
+using Rectangle = Microsoft.Xna.Framework.Rectangle;
 
 namespace TerrariaMoba.UI {
     public class UIAbilityIcon : UIImage {
@@ -26,10 +30,10 @@ namespace TerrariaMoba.UI {
                 Rectangle hitbox = GetDimensions().ToRectangle();
 
                 //pixel adjustments so it covers the entirety of the icon
-                int left = hitbox.Left - 1;
-                int right = hitbox.Right - 1;
+                int left = hitbox.Left;
+                int right = hitbox.Right;
                 int top = hitbox.Top;
-                int bottom = hitbox.Bottom;
+                int bottom = hitbox.Bottom + 1;
                 
                 float rads = (float)(Math.PI * 2) - ((float)(Math.PI * 2) * ((float) MyAbility.CooldownTimer / (float) MyAbility.BaseCooldown));
                 
@@ -49,6 +53,16 @@ namespace TerrariaMoba.UI {
                         spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(right - i, top + j, 1, 1), color); //Top + j makes it go clockwise
                     }
                 }
+
+                var text = "";
+                if (MyAbility.CooldownTimer >= 40) {
+                    text = Math.Ceiling(MyAbility.CooldownTimer / 60f).ToString();
+                }
+                else {
+                    text = ((Math.Ceiling((MyAbility.CooldownTimer / 60f) * 10) / 10f).ToString());
+                }
+
+                spriteBatch.DrawString(FontAssets.MouseText.Value, text, hitbox.Center() - FontAssets.MouseText.Value.MeasureString(text) / 2f, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
         }
 
