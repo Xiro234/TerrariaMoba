@@ -36,7 +36,7 @@ namespace TerrariaMoba.Abilities.Jorm {
                     Vector2 velocity = direction.RotatedBy(MathHelper.ToRadians(i * 90 + 45));
 
                     Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), 
-                        User.Center, velocity, ModContent.ProjectileType<SpinningHammer>(), 0, 0, 
+                        User.Center, velocity, ModContent.ProjectileType<SpinningHammer>(), 1, 0, 
                         User.whoAmI);
                     TerrariaMobaUtils.SetProjectileDamage(proj, PhysicalDamage: HAMMER_DAMAGE);
                     

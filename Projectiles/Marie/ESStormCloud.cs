@@ -57,7 +57,7 @@ namespace TerrariaMoba.Projectiles.Marie {
                     Vector2 pos = new Vector2(rainX, rainY);
                     Vector2 vel = new Vector2(0f, RainSpeed);
                     Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), pos, 
-                        vel, ModContent.ProjectileType<ESRain>(), 0, 0f, Main.myPlayer);
+                        vel, ModContent.ProjectileType<ESRain>(), 1, 0f, Main.myPlayer);
                     TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: RainDamage);
                 }
             }
@@ -70,7 +70,7 @@ namespace TerrariaMoba.Projectiles.Marie {
                     Vector2 pos = new Vector2(lightX, lightY);
                     Vector2 vel = new Vector2(0f, LightningSpeed);
                     Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), pos, 
-                        vel, ModContent.ProjectileType<ESLightning>(), 0, 0f, Main.myPlayer);
+                        vel, ModContent.ProjectileType<ESLightning>(), 1, 0f, Main.myPlayer);
                     TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: LightningDamage);
                 }
             }

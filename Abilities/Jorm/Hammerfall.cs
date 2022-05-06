@@ -36,7 +36,7 @@ namespace TerrariaMoba.Abilities.Jorm {
                 Vector2 spawnLoc = new Vector2(User.Top.X, User.Top.Y + BIGHAMMER_HEIGHT);
                 
                 Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), spawnLoc, velocity, 
-                    ModContent.ProjectileType<HammerfallProjSpawner>(), 0, 0, User.whoAmI, 1);
+                    ModContent.ProjectileType<HammerfallProjSpawner>(), 1, 0, User.whoAmI, 1);
 
                 HammerfallProjSpawner spawner = proj.ModProjectile as HammerfallProjSpawner;
                 

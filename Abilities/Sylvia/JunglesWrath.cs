@@ -1,6 +1,10 @@
 ﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Chat;
+using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Interfaces;
@@ -31,15 +35,14 @@ namespace TerrariaMoba.Abilities.Sylvia {
                         if (JWrath.Stacks < 4) {
                             JWrath.Stacks += 1;
                             StatusEffectManager.SyncSingleEffect(target, JWrath);
-                        }
-                        else {
+                        } else {
                             StatusEffectManager.RemoveEffect(target, JWrath);
                             damage += (int)Math.Ceiling(target.statLifeMax2 * DAMAGE_PERCENT);
                         }
                         return;
                     }
                 }
-                Main.NewText("woo");
+                
                 StatusEffectManager.AddEffect(target, new JunglesWrathEffect(EFFECT_DURATION, 1));
             }
         }

@@ -30,7 +30,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
                 position.Y = GetYPos(position.X) - 13f;
 
                 Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), 
-                    position, Vector2.Zero, ModContent.ProjectileType<RockwreckerGuide>(), 0, 0, 
+                    position, Vector2.Zero, ModContent.ProjectileType<RockwreckerGuide>(), 1, 0, 
                     User.whoAmI, -1f, 360f);
 
                 RockwreckerGuide guide = proj.ModProjectile as RockwreckerGuide;

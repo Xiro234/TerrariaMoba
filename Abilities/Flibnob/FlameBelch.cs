@@ -49,7 +49,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
                 
                     SoundEngine.PlaySound(SoundID.DD2_OgreAttack, User.Center);
                     Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), User.Center, 
-                        vel, ModContent.ProjectileType<FlameBelchSpawner>(), 0, 0, 
+                        vel, ModContent.ProjectileType<FlameBelchSpawner>(), 1, 0, 
                         User.whoAmI);
                     TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: FLAME_BASE_DAMAGE);
                 }

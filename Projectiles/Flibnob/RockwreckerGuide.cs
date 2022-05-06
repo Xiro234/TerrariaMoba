@@ -41,7 +41,7 @@ namespace TerrariaMoba.Projectiles.Flibnob {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) {
                 Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), 
                     Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RockwreckerProj>(), 
-                    0, RockKnockback, Main.myPlayer);
+                    1, RockKnockback, Main.myPlayer);
                 TerrariaMobaUtils.SetProjectileDamage(proj, PhysicalDamage: RockDamage);
             }
         }

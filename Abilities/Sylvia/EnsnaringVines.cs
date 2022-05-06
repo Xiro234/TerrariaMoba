@@ -34,8 +34,9 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 Vector2 directionVector = Vector2.UnitX * direction;
                 Vector2 position = User.Center + directionVector * TRAP_DISTANCE * 16;
 
-                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),position, velocity, ModContent.ProjectileType<EnsnaringVinesSpawner>(), 
-                    0, 0, User.whoAmI);
+                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),position,
+                    velocity, ModContent.ProjectileType<EnsnaringVinesSpawner>(), 
+                    1, 0, User.whoAmI);
                 
                 EnsnaringVinesSpawner spawner = proj.ModProjectile as EnsnaringVinesSpawner;
                 

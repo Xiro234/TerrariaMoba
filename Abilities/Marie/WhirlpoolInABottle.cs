@@ -38,7 +38,7 @@ namespace TerrariaMoba.Abilities.Marie {
                 Vector2 velocity = new Vector2(dirX, dirY);
 
                 Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),User.Center, velocity, 
-                    ModContent.ProjectileType<WBBottle>(), 0, 0, User.whoAmI);
+                    ModContent.ProjectileType<WBBottle>(), 1, 0, User.whoAmI);
                 TerrariaMobaUtils.SetProjectileDamage(proj, PhysicalDamage: BOTTLE_DAMAGE);
                 SoundEngine.PlaySound(SoundID.Item1, User.Center);
                 

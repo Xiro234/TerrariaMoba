@@ -59,7 +59,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
 
                     //TODO - Create new spore Projectile and pass on SporeDuration.
                     Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, velocity, 
-                        ModContent.ProjectileType<SylviaSpores>(), 0, 0, Projectile.owner);
+                        ModContent.ProjectileType<SylviaSpores>(), 1, 0, Projectile.owner);
                     TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: SporeDamage);
                 }
             }

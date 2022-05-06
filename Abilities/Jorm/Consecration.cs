@@ -27,7 +27,7 @@ namespace TerrariaMoba.Abilities.Jorm {
                 
                 Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), 
                     User.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Jorm.Consecration>(), 
-                    0, 0, User.whoAmI);
+                    1, 0, User.whoAmI);
                 TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: CONSEC_DAMAGE);
 
                 Projectiles.Jorm.Consecration consec = proj.ModProjectile as Projectiles.Jorm.Consecration;

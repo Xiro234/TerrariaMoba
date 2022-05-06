@@ -28,7 +28,7 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
             PlayerDrawLayers.FrozenOrWebbedDebuff);
 
         protected override void Draw(ref PlayerDrawSet drawInfo) {
-            Texture2D texture = ModContent.Request<Texture2D>("Textures/Sylvia/EnsnaringVines").Value;
+            Texture2D texture = ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/EnsnaringVines").Value;
             Player drawPlayer = drawInfo.drawPlayer;
                 
             int drawX = (int)(drawInfo.Position.X + drawPlayer.width / 2f - Main.screenPosition.X);

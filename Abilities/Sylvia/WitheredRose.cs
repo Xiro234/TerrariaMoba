@@ -46,7 +46,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
                     Vector2 velocity = direction.RotatedBy(MathHelper.ToRadians(1 * 90 + 45));
 
                     Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), User.Center, velocity,
-                        ModContent.ProjectileType<RoseThorn>(), 0, 0, User.whoAmI, killer);
+                        ModContent.ProjectileType<RoseThorn>(), 1, 0, User.whoAmI, killer);
                     TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: THORN_DAMAGE);
                 }
                 
