@@ -10,6 +10,6 @@ public class ChastradamusUIState: UIState {
 
         concoctionWheel = new ConcoctionWheel();
         Instance.Append(concoctionWheel);
-        concoctionWheel.Hi
+        concoctionWheel
     }
 }
