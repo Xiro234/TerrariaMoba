@@ -44,8 +44,9 @@ namespace TerrariaMoba.Abilities.Marie {
                 }
                 Vector2 velocity = new Vector2(dirX, dirY);
 
-                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),User.Center, velocity, ModContent.ProjectileType<ESSpawner>(), 
-                    0, 0, User.whoAmI);
+                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),
+                    User.Center, velocity, ModContent.ProjectileType<ESSpawner>(), 1, 0, 
+                    User.whoAmI);
                 SoundEngine.PlaySound(SoundID.Item66, User.Center);
 
                 ESSpawner eye = proj.ModProjectile as ESSpawner;

@@ -8,7 +8,7 @@ using TerrariaMoba.Abilities.Jorm;
 namespace TerrariaMoba.Projectiles.Jorm {
     public class HammerfallProjSpawner : ModProjectile {
         
-        public float HammerDamage { get; set; }
+        public int HammerDamage { get; set; }
         public float HammerSpeed { get; set; }
         public int NumberOfHammers { get; set; }
         public int TileDistance { get; set; }
@@ -39,9 +39,10 @@ namespace TerrariaMoba.Projectiles.Jorm {
             if (((int)Projectile.ai[0] % timeBetween) == 0){
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) {
                     Vector2 velocity = new Vector2(0, HammerSpeed);
-                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.position,
-                        velocity, ModContent.ProjectileType<HammerfallProj>(),
-                        (int)HammerDamage, 0, Main.myPlayer, HammerSpeed);
+                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), 
+                        Projectile.position, velocity, ModContent.ProjectileType<HammerfallProj>(), 1, 0,
+                        Main.myPlayer, HammerSpeed);
+                    TerrariaMobaUtils.SetProjectileDamage(proj, PhysicalDamage: HammerDamage);
                 }
             }
 
@@ -60,7 +61,7 @@ namespace TerrariaMoba.Projectiles.Jorm {
         }
 
         public override void ReceiveExtraAI(BinaryReader reader) {
-            HammerDamage = reader.ReadSingle();
+            HammerDamage = reader.ReadInt32();
             HammerSpeed = reader.ReadSingle();
             NumberOfHammers = reader.ReadInt32();
             TileDistance = reader.ReadInt32();

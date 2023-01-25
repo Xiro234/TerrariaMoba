@@ -15,6 +15,7 @@ namespace TerrariaMoba.Players {
             }
             
             SetPlayerHealth();
+            SetPlayerResource();
             Player.statLife = Player.statLifeMax2;
         }
         

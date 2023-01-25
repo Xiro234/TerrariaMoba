@@ -10,7 +10,7 @@ using TerrariaMoba.Interfaces;
 using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Flibnob;
 using TerrariaMoba.StatusEffects;
-using TerrariaMoba.StatusEffects.Sylvia;
+using TerrariaMoba.StatusEffects.Flibnob;
 
 namespace TerrariaMoba.Abilities.Flibnob {
     public class FlameBelch : Ability, IModifyHitPvpWithProj {
@@ -48,8 +48,10 @@ namespace TerrariaMoba.Abilities.Flibnob {
                     Vector2 vel = new Vector2(dirX, dirY);
                 
                     SoundEngine.PlaySound(SoundID.DD2_OgreAttack, User.Center);
-                    Projectile.NewProjectile(new ProjectileSource_Ability(User, this), User.Center, vel,
-                        ModContent.ProjectileType<FlameBelchSpawner>(), FLAME_BASE_DAMAGE, 0, User.whoAmI);
+                    Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), User.Center, 
+                        vel, ModContent.ProjectileType<FlameBelchSpawner>(), 1, 0, 
+                        User.whoAmI);
+                    TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: FLAME_BASE_DAMAGE);
                 }
                 //player resource reduced by 50
                 timer = FLAME_BASE_DELAY;
@@ -59,9 +61,14 @@ namespace TerrariaMoba.Abilities.Flibnob {
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
             //TODO - Apply 2 different effects; ignite if no ignite already, something more if already ignited
             var ModProjectile = proj.ModProjectile;
-            FlameBelchSpawner flame= ModProjectile as FlameBelchSpawner;
+            FlameBelchSpawner flame = ModProjectile as FlameBelchSpawner;
             if (flame != null) {
-                StatusEffectManager.AddEffect(target, new EnsnaringVinesEffect(BURN_BASE_DURATION, true));
+                if (StatusEffectManager.PlayerHasEffectType<FlameBelchEffect>(target)) {
+                    StatusEffectManager.RemoveEffect(target, StatusEffectManager.GetIDOfEffect(new FlameBelchEffect(BURN_BASE_DURATION, true)));
+                    StatusEffectManager.AddEffect(target, new FlameBelchSecondEffect(BURN_BASE_DURATION, true));
+                } else {
+                    StatusEffectManager.AddEffect(target, new FlameBelchEffect(BURN_BASE_DURATION, true));
+                }
             }
         }
     }

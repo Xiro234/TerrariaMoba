@@ -13,7 +13,7 @@ using TerrariaMoba.StatusEffects.Sylvia;
 
 namespace TerrariaMoba.Abilities.Sylvia {
     public class EnsnaringVines : Ability, IModifyHitPvpWithProj {
-        public EnsnaringVines(Player player) : base(player, "Ensnaring Vines", 60, 0, AbilityType.Active) { }
+        public EnsnaringVines(Player player) : base(player, "Ensnaring Vines", 60, 100, AbilityType.Active) { }
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaAbilityOne").Value; }
         
@@ -34,8 +34,9 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 Vector2 directionVector = Vector2.UnitX * direction;
                 Vector2 position = User.Center + directionVector * TRAP_DISTANCE * 16;
 
-                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),position, velocity, ModContent.ProjectileType<EnsnaringVinesSpawner>(), 
-                    0, 0, User.whoAmI);
+                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),position,
+                    velocity, ModContent.ProjectileType<EnsnaringVinesSpawner>(), 
+                    1, 0, User.whoAmI);
                 
                 EnsnaringVinesSpawner spawner = proj.ModProjectile as EnsnaringVinesSpawner;
                 

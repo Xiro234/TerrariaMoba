@@ -17,7 +17,7 @@ namespace TerrariaMoba.Abilities.Jorm {
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Jorm/JormUltimateOne").Value; }
 
         public const float BIGHAMMER_SPEED = 8f;
-        public const float BIGHAMMER_DAMAGE = 700f;
+        public const int BIGHAMMER_DAMAGE = 700;
         public const float BIGHAMMER_HEIGHT = -600f;
         public const int BIGHAMMER_NUMBER = 4;
         public const int BIGHAMMER_TILE_DISTANCE = 18;
@@ -36,7 +36,7 @@ namespace TerrariaMoba.Abilities.Jorm {
                 Vector2 spawnLoc = new Vector2(User.Top.X, User.Top.Y + BIGHAMMER_HEIGHT);
                 
                 Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), spawnLoc, velocity, 
-                    ModContent.ProjectileType<HammerfallProjSpawner>(), 0, 0, User.whoAmI, 1);
+                    ModContent.ProjectileType<HammerfallProjSpawner>(), 1, 0, User.whoAmI, 1);
 
                 HammerfallProjSpawner spawner = proj.ModProjectile as HammerfallProjSpawner;
                 

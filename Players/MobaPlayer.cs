@@ -32,6 +32,7 @@ namespace TerrariaMoba.Players {
 
         public override void OnRespawn(Player Player) {
             Player.statLife = Player.statLifeMax;
+            SetPlayerResource();
         }
 
         public override void ModifyShootStats(Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage,
@@ -73,42 +74,43 @@ namespace TerrariaMoba.Players {
 
         public override void ProcessTriggers(TriggersSet triggersSet) {
             if (TerrariaMoba.AbilityOneHotkey.JustPressed) {
-                Hero?.BasicAbilityOne.OnCast();
-
-                if (Main.netMode != NetmodeID.SinglePlayer) {
-                    NetworkHandler.SendAbilityCast(0, Player.whoAmI);
+                if (Hero?.BasicAbilityOne.CastIfAble() == true) {
+                    if (Main.netMode != NetmodeID.SinglePlayer) {
+                        NetworkHandler.SendAbilityCast(0, Player.whoAmI);
+                    }
                 }
             }
             
             if (TerrariaMoba.AbilityTwoHotkey.JustPressed) {
-                Hero?.BasicAbilityTwo.OnCast();
-
-                if (Main.netMode != NetmodeID.SinglePlayer) {
-                    NetworkHandler.SendAbilityCast(1, Player.whoAmI);
+                if (Hero?.BasicAbilityTwo.CastIfAble() == true) {
+                    if (Main.netMode != NetmodeID.SinglePlayer) {
+                        NetworkHandler.SendAbilityCast(1, Player.whoAmI);
+                    }
                 }
             }
 
             if (TerrariaMoba.AbilityThreeHotkey.JustPressed) {
-                Hero?.BasicAbilityThree.OnCast();
-
-                if (Main.netMode != NetmodeID.SinglePlayer) {
-                    NetworkHandler.SendAbilityCast(2, Player.whoAmI);
+                if (Hero?.BasicAbilityThree.CastIfAble() == true) {
+                    if (Main.netMode != NetmodeID.SinglePlayer) {
+                        NetworkHandler.SendAbilityCast(2, Player.whoAmI);
+                    }
                 }
             }
 
             if (TerrariaMoba.UltimateHotkey.JustPressed) {
-                Hero?.Ultimate.OnCast();
-                
-                if (Main.netMode != NetmodeID.SinglePlayer) {
-                    NetworkHandler.SendAbilityCast(3, Player.whoAmI);
+                if (Hero?.Ultimate.CastIfAble() == true) {
+
+                    if (Main.netMode != NetmodeID.SinglePlayer) {
+                        NetworkHandler.SendAbilityCast(3, Player.whoAmI);
+                    }
                 }
             }
 
             if (TerrariaMoba.TraitHotkey.JustPressed) {
-                Hero?.Trait.OnCast();
-
-                if (Main.netMode != NetmodeID.SinglePlayer) {
-                    NetworkHandler.SendAbilityCast(4, Player.whoAmI);
+                if (Hero?.Trait.CastIfAble() == true) {
+                    if (Main.netMode != NetmodeID.SinglePlayer) {
+                        NetworkHandler.SendAbilityCast(4, Player.whoAmI);
+                    }
                 }
             }
             
@@ -135,8 +137,7 @@ namespace TerrariaMoba.Players {
             */
         }
 
-        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit,
-            ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
+        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter) {
             if (pvp) {
                 return false;
             }
@@ -266,30 +267,14 @@ namespace TerrariaMoba.Players {
         });
         */
 
-        /*public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {1
-
-            foreach (var effect in EffectList) {
-                List<PlayerDrawLayer> playerLayers = new List<PlayerDrawLayer>();
-                effect.GetListOfPlayerDrawLayers(playerLayers);
-                foreach (var effectLayer in playerLayers) {
-                    if (effectLayer != null) {
-                        effectLayer.visible = true;
-                        layers.Add(effectLayer);
-                        layers.Add(effect.GetEffectBar());
-                    }
-                }
-                //TODO - Add checking for invisiblity and add constants somewhere for where elements should be
-                //TODO - Work in new player-layer system
-            }
-        }*/
-        
-        
         public override void SetControls() {
            AbilityEffectManager.SetControls(Player);
         }
         
 
         public void TakePvpDamage(int physicalDamage, int magicalDamage, int trueDamage, int killer, bool noBroadcast) {
+            Logging.PublicLogger.Debug(physicalDamage + " " + magicalDamage + " " + trueDamage);
+            
             if (!Player.immune) {
                 AbilityEffectManager.TakePvpDamage(Player, ref physicalDamage, ref magicalDamage, ref trueDamage, ref killer);
                 int mitigatedPhysical = (int)Math.Ceiling(physicalDamage - physicalDamage * GetCurrentAttributeValue(AttributeType.PHYSICAL_ARMOR) * 0.01f);
@@ -314,7 +299,7 @@ namespace TerrariaMoba.Players {
                     Player.KillMe(PlayerDeathReason.ByPlayer(killer), dealtDamage, 1, true);
                 }
                 
-                SoundEngine.PlaySound(1, Player.position);
+                SoundEngine.PlaySound(SoundID.PlayerHit, Player.position);
 
                 if (!noBroadcast) {
                     NetworkHandler.SendPvpHit(physicalDamage, magicalDamage, trueDamage, Player.whoAmI, killer);

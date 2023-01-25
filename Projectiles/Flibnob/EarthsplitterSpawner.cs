@@ -36,8 +36,10 @@ namespace TerrariaMoba.Projectiles.Flibnob {
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) {
                     Vector2 newPos = new Vector2(Projectile.position.X, GetYPos());
                     newPos.Y -= 8f;
-                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), newPos, Vector2.Zero, ModContent.ProjectileType<SplitEarth>(),
-                        EarthDamage, 0, Main.myPlayer);
+                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), newPos, 
+                        Vector2.Zero, ModContent.ProjectileType<SplitEarth>(), 1, 0, 
+                        Main.myPlayer);
+                    TerrariaMobaUtils.SetProjectileDamage(proj, PhysicalDamage: EarthDamage);
                     
                     SplitEarth earth = proj.ModProjectile as SplitEarth;
 

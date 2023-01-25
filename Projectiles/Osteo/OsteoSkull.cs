@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TerrariaMoba.Projectiles.Osteo {
@@ -52,7 +53,7 @@ namespace TerrariaMoba.Projectiles.Osteo {
                 dust2.noLight = true;
             }
 
-            SoundEngine.PlaySound(0, Projectile.position);
+            SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
         }
     }
 }

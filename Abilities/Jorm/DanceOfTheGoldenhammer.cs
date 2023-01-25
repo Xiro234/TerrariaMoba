@@ -17,7 +17,7 @@ namespace TerrariaMoba.Abilities.Jorm {
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Jorm/JormAbilityOne").Value; }
 
-        public const float HAMMER_DAMAGE = 200f;
+        public const int HAMMER_DAMAGE = 275;
         public const float HAMMER_SPIN_RADIUS = 135f;
         public const float HAMMER_SPAWN_SPEED = 5f;
         public const float DAZE_MAGNITUDE = 0.2f;
@@ -35,8 +35,10 @@ namespace TerrariaMoba.Abilities.Jorm {
 
                     Vector2 velocity = direction.RotatedBy(MathHelper.ToRadians(i * 90 + 45));
 
-                    Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), User.Center, velocity,
-                        ModContent.ProjectileType<SpinningHammer>(), (int)HAMMER_DAMAGE, 0, User.whoAmI);
+                    Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), 
+                        User.Center, velocity, ModContent.ProjectileType<SpinningHammer>(), 1, 0, 
+                        User.whoAmI);
+                    TerrariaMobaUtils.SetProjectileDamage(proj, PhysicalDamage: HAMMER_DAMAGE);
                     
                     SpinningHammer hammer = proj.ModProjectile as SpinningHammer;
                     if (hammer != null) {

@@ -56,8 +56,9 @@ namespace TerrariaMoba.Projectiles.Marie {
                     int rainY = (int) Projectile.position.Y + Projectile.height;
                     Vector2 pos = new Vector2(rainX, rainY);
                     Vector2 vel = new Vector2(0f, RainSpeed);
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), pos, vel, ModContent.ProjectileType<ESRain>(), 
-                        RainDamage, 0f, Main.myPlayer);
+                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), pos, 
+                        vel, ModContent.ProjectileType<ESRain>(), 1, 0f, Main.myPlayer);
+                    TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: RainDamage);
                 }
             }
 
@@ -68,8 +69,9 @@ namespace TerrariaMoba.Projectiles.Marie {
                     int lightY = (int) (Projectile.position.Y + Projectile.height - 20f);
                     Vector2 pos = new Vector2(lightX, lightY);
                     Vector2 vel = new Vector2(0f, LightningSpeed);
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), pos, vel, ModContent.ProjectileType<ESLightning>(), 
-                        LightningDamage, 0f, Main.myPlayer);
+                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), pos, 
+                        vel, ModContent.ProjectileType<ESLightning>(), 1, 0f, Main.myPlayer);
+                    TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: LightningDamage);
                 }
             }
         }

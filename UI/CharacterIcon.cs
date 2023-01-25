@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Terraria.ID;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
@@ -50,12 +51,12 @@ namespace TerrariaMoba.UI {
                 modPlayer.selectedCharacter = Hero.GetType();
             }
 
-            SoundEngine.PlaySound(10);
+            SoundEngine.PlaySound(SoundID.MenuOpen);
         }
 
         public override void MouseOver(UIMouseEvent evt) {
             base.MouseOver(evt);
-            SoundEngine.PlaySound(12);
+            SoundEngine.PlaySound(SoundID.MenuTick);
         }
     }
 }

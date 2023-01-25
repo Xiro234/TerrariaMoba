@@ -15,7 +15,8 @@ namespace TerrariaMoba.Abilities.Jorm {
 
         public const float CONSEC_SPREAD_RANGE = 500f;
         public const int CONSEC_DURATION = 300;
-
+        public const int CONSEC_DAMAGE = 100;
+        
         public override void OnCast() {
             //TODO - ally in contact = +HPR / enemy in contact = -HPR
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
@@ -24,8 +25,10 @@ namespace TerrariaMoba.Abilities.Jorm {
                     pr.AddStack();
                 }
                 
-                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), User.Center, Vector2.Zero,
-                    ModContent.ProjectileType<Projectiles.Jorm.Consecration>(), 0, 0, User.whoAmI);
+                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), 
+                    User.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Jorm.Consecration>(), 
+                    1, 0, User.whoAmI);
+                TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: CONSEC_DAMAGE);
 
                 Projectiles.Jorm.Consecration consec = proj.ModProjectile as Projectiles.Jorm.Consecration;
                 if (consec != null) {

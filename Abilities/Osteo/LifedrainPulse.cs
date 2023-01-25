@@ -13,6 +13,8 @@ namespace TerrariaMoba.Abilities.Osteo {
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Osteo/OsteoAbilityTwo").Value; }
 
+        public const int PULSE_DAMAGE = 300;
+        
         private int Timer;
         
         public override void OnCast() {
@@ -30,8 +32,10 @@ namespace TerrariaMoba.Abilities.Osteo {
                         Vector2 direction = new Vector2((float) x, (float) y);
                         Vector2 position = User.Center + direction * 16;
                         Vector2 velocity = direction * 6.25f;
-                        var proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),position, velocity,
-                            ModContent.ProjectileType<Projectiles.Osteo.LifedrainPulse>(), 69, 0, User.whoAmI);
+                        var proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), 
+                            position, velocity, ModContent.ProjectileType<Projectiles.Osteo.LifedrainPulse>(), 0, 
+                            0, User.whoAmI);
+                        TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: PULSE_DAMAGE);
                         proj.timeLeft = 90;
                     }
                 }
@@ -43,8 +47,10 @@ namespace TerrariaMoba.Abilities.Osteo {
                         Vector2 direction = new Vector2((float) x, (float) y);
                         Vector2 position = User.Center + direction * 16;
                         Vector2 velocity = direction * 6.25f;
-                        var proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),position, velocity,
-                            ModContent.ProjectileType<Projectiles.Osteo.LifedrainPulse>(), (int)(69 * 1.5f), 0, User.whoAmI);
+                        var proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), 
+                            position, velocity, ModContent.ProjectileType<Projectiles.Osteo.LifedrainPulse>(), 0, 
+                            0, User.whoAmI);
+                        TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: (int)(PULSE_DAMAGE * 1.5f));
                         proj.timeLeft = 90;
                     }
                 }
