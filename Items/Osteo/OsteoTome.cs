@@ -16,7 +16,7 @@ namespace TerrariaMoba.Items.Osteo {
             Item.DamageType = DamageClass.Ranged;
             Item.noMelee = true;
             Item.shoot = ModContent.ProjectileType<OsteoSkull>();
-            Item.UseSound = SoundID.Item104.WithVolume(0.3f).WithPitchVariance(0.5f);
+            Item.UseSound = SoundID.Item104.WithVolumeScale(0.3f).WithPitchOffset(0.5f);
             Item.useTime = 57;
             Item.useAnimation = 57;
             Item.shootSpeed = 7.66f;
