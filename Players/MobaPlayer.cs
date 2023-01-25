@@ -137,8 +137,7 @@ namespace TerrariaMoba.Players {
             */
         }
 
-        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit,
-            ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
+        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter) {
             if (pvp) {
                 return false;
             }
@@ -300,7 +299,7 @@ namespace TerrariaMoba.Players {
                     Player.KillMe(PlayerDeathReason.ByPlayer(killer), dealtDamage, 1, true);
                 }
                 
-                SoundEngine.PlaySound(1, Player.position);
+                SoundEngine.PlaySound(SoundID.PlayerHit, Player.position);
 
                 if (!noBroadcast) {
                     NetworkHandler.SendPvpHit(physicalDamage, magicalDamage, trueDamage, Player.whoAmI, killer);

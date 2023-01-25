@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TerrariaMoba.Projectiles.Sylvia {
@@ -56,7 +57,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         }
 
         public override void Kill(int timeLeft) {
-            SoundEngine.PlaySound(0, (int) Projectile.position.X, (int) Projectile.position.Y);
+            SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
             for (int i = 0; i < 10; i++) {
                 Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 7, 0f, 0f, 0, Color.Red, 1f);
             }

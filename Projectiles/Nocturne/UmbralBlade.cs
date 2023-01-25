@@ -1,5 +1,6 @@
 ﻿using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TerrariaMoba.Projectiles.Nocturne {
@@ -26,7 +27,7 @@ namespace TerrariaMoba.Projectiles.Nocturne {
         }
         
         public override void Kill(int timeLeft) {
-            SoundEngine.PlaySound(0, Projectile.position);
+            SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
             for (int i = 0; i < 40; i++) {
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 36);
             }
