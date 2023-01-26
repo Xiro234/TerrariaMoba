@@ -54,18 +54,8 @@ namespace TerrariaMoba.Players {
             float value = Hero.BaseAttributes.ContainsKey(attribute) ? Hero.BaseAttributes[attribute]() : 0f;
             float mult = 1f;
 
-            foreach (StatusEffect effect in EffectList) {
-                if (effect == null) {
-                    Main.NewText("effect is currently null");
-                }
-
-                if (effect.FlatAttributes == null) {
-                    Main.NewText("flat attributes is currently null");
-                }
-            }
-            
-            //value += EffectList.Sum(e => e.FlatAttributes.ContainsKey(attribute) ? e.FlatAttributes[attribute]() : 0);
-            //mult += EffectList.Sum(e => e.MultAttributes.ContainsKey(attribute) ? e.MultAttributes[attribute]() : 0);
+            value += EffectList.Sum(e => e.FlatAttributes.ContainsKey(attribute) ? e.FlatAttributes[attribute]() : 0);
+            mult += EffectList.Sum(e => e.MultAttributes.ContainsKey(attribute) ? e.MultAttributes[attribute]() : 0);
 
             switch (attribute) {
                 case AttributeType.ATTACK_SPEED:
