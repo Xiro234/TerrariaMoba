@@ -80,6 +80,5 @@ namespace TerrariaMoba.StatusEffects {
         public virtual void ConstructMultAttributes() {
             MultAttributes = new Dictionary<AttributeType, Func<float>>();
         }
-
     }
 }

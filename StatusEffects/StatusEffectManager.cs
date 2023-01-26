@@ -17,6 +17,8 @@ namespace TerrariaMoba.StatusEffects {
         public static bool AddEffect(Player Player, StatusEffect statusEffect, bool quiet = false) {
             statusEffect.SetPlayer(Player);
             statusEffect.Apply();
+            statusEffect.ConstructFlatAttributes();
+            statusEffect.ConstructMultAttributes();
             Player.GetModPlayer<MobaPlayer>().EffectList.Add(statusEffect);
 
             if (!quiet && Main.netMode != NetmodeID.SinglePlayer) {
