@@ -53,20 +53,11 @@ namespace TerrariaMoba.Players {
         public float GetCurrentAttributeValue(AttributeType attribute) {
             float value = Hero.BaseAttributes.ContainsKey(attribute) ? Hero.BaseAttributes[attribute]() : 0f;
             float mult = 1f;
-            
-            if(EffectList == null) {
-                if (Main.netMode == NetmodeID.Server) {
-                    Console.WriteLine(EffectList == null);
-                }
-                else {
-                    Main.NewText(EffectList == null);
-                }
+
+            if (EffectList?.Count > 0) {
+                value += EffectList.Sum(e => e.FlatAttributes.ContainsKey(attribute) ? e.FlatAttributes[attribute]() : 0);
+                mult += EffectList.Sum(e => e.MultAttributes.ContainsKey(attribute) ? e.MultAttributes[attribute]() : 0);
             }
-            
-            value += EffectList.Sum(
-                e => e.FlatAttributes.ContainsKey(attribute) ? e.FlatAttributes[attribute]() : 0);
-            mult += EffectList.Sum(
-                e => e.MultAttributes.ContainsKey(attribute) ? e.MultAttributes[attribute]() : 0);
 
             switch (attribute) {
                 case AttributeType.ATTACK_SPEED:
