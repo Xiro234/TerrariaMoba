@@ -1,24 +1,30 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.StatusEffects.Flibnob; 
 
 public class FlameBelchSecondEffect : StatusEffect {
     
-    public override string DisplayName { get => "Scorched"; }
+    public override string DisplayName { get => "Melting"; }
         
     public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 
+    private int applierId;
+
     public FlameBelchSecondEffect() { }
 
-    public FlameBelchSecondEffect(int duration, bool canBeCleansed) : base(duration, canBeCleansed) { }
+    public FlameBelchSecondEffect(int id, int duration, bool canBeCleansed) : base(duration, canBeCleansed) {
+        applierId = id;
+    }
     
-    public override void WhileActive() { 
-        User.Hurt(PlayerDeathReason.ByCustomReason("Fire burn all human to death!"), 420, -User.direction, true);
-        //cuts defenses/reduces healing effectiveness?
-        var num1 = Dust.NewDust(User.position, User.width, User.height, 6, User.velocity.X * 0.2f, User.velocity.Y * 0.2f, 100);
+    public override void WhileActive() {
+        //cuts armor
+        User.GetModPlayer<MobaPlayer>().TakePvpDamage(0, 420, 0, applierId, false);
+
+        var num1 = Dust.NewDust(User.position, User.width, User.height, DustID.Torch, User.velocity.X * 0.2f, User.velocity.Y * 0.2f, 100);
         Dust dust1;
         if (Main.rand.Next(3) < 2) {
             Main.dust[num1].noGravity = true;
@@ -28,5 +34,4 @@ public class FlameBelchSecondEffect : StatusEffect {
             dust1.velocity.Y *= 3f;
         }
     }
-    
 }

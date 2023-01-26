@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
-using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.StatusEffects.Jorm {
     public class ConsecrationEffect : StatusEffect, IResetEffects {
@@ -21,9 +20,14 @@ namespace TerrariaMoba.StatusEffects.Jorm {
             IsEnemy = enemy;
         }
 
-        public void ResetEffects() {
-            //User.GetModPlayer<MobaPlayer>().Stats.HealEff += modifier;
-            //if(IsEnemy) { StatusEffectManager.RemoveEffect(User, beneficial buffs) }
+        public void ResetEffects() { 
+            /* 
+             * if enemy {
+             *  reduce users healing effectiveness by magnitude
+             * } else {
+             *  increase users healing effectiveness by magnitude
+             * }
+             */
         }
     }
 }

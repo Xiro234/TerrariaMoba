@@ -12,7 +12,7 @@ using TerrariaMoba.Projectiles.Sylvia;
 
 namespace TerrariaMoba.Abilities.Sylvia {
     public class Flourish : Ability, IShoot {
-        public Flourish(Player player) : base(player, "Flourish", 60, 0, AbilityType.Active) { }
+        public Flourish(Player player) : base(player, "Flourish", 180, 20, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaUltimateOne").Value; }
 

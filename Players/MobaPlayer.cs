@@ -228,7 +228,6 @@ namespace TerrariaMoba.Players {
 
         public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, 
             int type, int damage, float knockback) {
-            Main.NewText(source.Item.Name);
             return AbilityEffectManager.Shoot(Player, item, source, position, velocity, type, damage, knockback);
         }
 

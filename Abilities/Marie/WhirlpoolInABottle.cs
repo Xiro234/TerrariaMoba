@@ -52,6 +52,7 @@ namespace TerrariaMoba.Abilities.Marie {
         }
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
+            /*
             var modProj = proj.ModProjectile;
             
             WBWhirlpool pool = modProj as WBWhirlpool;
@@ -63,6 +64,7 @@ namespace TerrariaMoba.Abilities.Marie {
             if (bottle != null) {
                 StatusEffectManager.AddEffect(target, new FunStun(STUN_DURATION, true));
             }
+            */
         }
     }
 }

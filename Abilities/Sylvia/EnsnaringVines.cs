@@ -13,12 +13,12 @@ using TerrariaMoba.StatusEffects.Sylvia;
 
 namespace TerrariaMoba.Abilities.Sylvia {
     public class EnsnaringVines : Ability, IModifyHitPvpWithProj {
-        public EnsnaringVines(Player player) : base(player, "Ensnaring Vines", 60, 100, AbilityType.Active) { }
+        public EnsnaringVines(Player player) : base(player, "Ensnaring Vines", 180, 20, AbilityType.Active) { }
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaAbilityOne").Value; }
         
         public const int TRAP_DAMAGE = 225;
-        public const int TRAP_DURATION = 90;
+        public const int TRAP_DURATION = 240;
         public const int TRAP_AMOUNT = 5;
         public const int TRAP_DISTANCE = 6;
 
@@ -34,9 +34,8 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 Vector2 directionVector = Vector2.UnitX * direction;
                 Vector2 position = User.Center + directionVector * TRAP_DISTANCE * 16;
 
-                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),position,
-                    velocity, ModContent.ProjectileType<EnsnaringVinesSpawner>(), 
-                    1, 0, User.whoAmI);
+                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), 
+                    position, velocity, ModContent.ProjectileType<EnsnaringVinesSpawner>(), 1, 0, User.whoAmI);
                 
                 EnsnaringVinesSpawner spawner = proj.ModProjectile as EnsnaringVinesSpawner;
                 
@@ -50,7 +49,6 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 CooldownTimer = BaseCooldown;
             }
         }
-
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
             var modProjectile = proj.ModProjectile;
             EnsnaringVinesTrap trap = modProjectile as EnsnaringVinesTrap;

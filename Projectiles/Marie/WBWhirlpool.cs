@@ -1,5 +1,6 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
+using TerrariaMoba.Abilities.Marie;
 
 namespace TerrariaMoba.Projectiles.Marie {
     public class WBWhirlpool : ModProjectile {
@@ -13,20 +14,22 @@ namespace TerrariaMoba.Projectiles.Marie {
         public override void SetDefaults() {
             Projectile.width = 162;
             Projectile.height = 42;
+            Projectile.timeLeft = 1000;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.penetrate = -1;
+
+            PoolDuration = WhirlpoolInABottle.POOL_DURATION;
         }
         
         public override void AI() {
+            if (Projectile.timeLeft == 1000) {
+                Projectile.timeLeft = PoolDuration;
+            }
+
             if (++Projectile.frameCounter >= 5) {
                 Projectile.frameCounter = 0;
                 Projectile.frame = ++Projectile.frame % Main.projFrames[Projectile.type];
-            }
-            
-            Projectile.ai[0] += 1f;
-            if ((int)Projectile.ai[0] == PoolDuration) {
-                Projectile.Kill();
             }
         }
     }

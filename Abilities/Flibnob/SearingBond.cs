@@ -15,12 +15,10 @@ namespace TerrariaMoba.Abilities.Flibnob {
         }
 
         public const int BASE_ARMOR_GAIN = 5;
-        //public const int BASE_MR_GAIN = 0;
         public const float BUFF_RANGE = 200f;
         public int finalStacks;
 
         public override void WhileActive() {
-            //+10 to User.GetModPlayer<MobaPlayer>().Hero.BaseStatistics.PhysicalArmor
 
             int total = 0;
             for (int i = 0; i < Main.maxPlayers; i++) {
@@ -36,7 +34,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
             
             //TODO - Remove effect, when xiro makes attribute stuff implement here
             
-            //TODO - All physical damage has a chance to ignite, make sure effect works correctly
+            //TODO - All physical damage burns, make sure effect works correctly
         }
     }
 }

@@ -1,6 +1,11 @@
 ﻿using Terraria.ModLoader;
 using Terraria.ID;
 using TerrariaMoba.Projectiles.Osteo;
+using TerrariaMoba.Players;
+using TerrariaMoba.Statistic;
+using Terraria;
+using Terraria.DataStructures;
+using Microsoft.Xna.Framework;
 
 namespace TerrariaMoba.Items.Osteo {
     public class OsteoTome : ModItem {
@@ -25,6 +30,16 @@ namespace TerrariaMoba.Items.Osteo {
             Item.value = 10000;
             Item.rare = ItemRarityID.Blue;
             Item.autoReuse = false;
+        }
+
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+            Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, ModContent.ProjectileType<OsteoSkull>(), 1, 0f, player.whoAmI);
+
+            if (MobaSystem.MatchInProgress) {
+                TerrariaMobaUtils.SetProjectileDamage(proj, PhysicalDamage: (int)player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.ATTACK_DAMAGE));
+            }
+
+            return false;
         }
     }
 }

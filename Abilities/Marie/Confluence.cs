@@ -10,14 +10,16 @@ using TerrariaMoba.StatusEffects.Marie;
 namespace TerrariaMoba.Abilities.Marie {
     public class Confluence : Ability {
         public Confluence(Player player) : base(player, "Confluence", 60, 0, AbilityType.Active) { }
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieAbilityThree").Value; } //not trait anymore just texture name
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieAbilityThree").Value; }
 
         public const float CONF_RANGE = 150f;
         public const int BUFF_DURATION = 150;
-        
+
         private int alliesInRange;
         
         public override void OnCast() {
+            alliesInRange = 0;
+
             for (int i = 0; i < Main.maxPlayers; i++) {
                 Player plr = Main.player[i];
                 if (plr.active) {

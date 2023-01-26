@@ -37,13 +37,10 @@ namespace TerrariaMoba.Items.Sylvia {
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-            Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, 
-                ModContent.ProjectileType<SylviaArrow>(), 1, 0f, player.whoAmI);
+            Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, ModContent.ProjectileType<SylviaArrow>(), 1, 0f, player.whoAmI);
             
             if (MobaSystem.MatchInProgress) {
-                TerrariaMobaUtils.SetProjectileDamage(proj,
-                    PhysicalDamage: (int)player.GetModPlayer<MobaPlayer>()
-                        .GetCurrentAttributeValue(AttributeType.ATTACK_DAMAGE));
+                TerrariaMobaUtils.SetProjectileDamage(proj, PhysicalDamage: (int)player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.ATTACK_DAMAGE));
             }
 
             return false;

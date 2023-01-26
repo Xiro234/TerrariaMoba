@@ -39,8 +39,8 @@ namespace TerrariaMoba.Projectiles.Sylvia {
             if (((int)Projectile.ai[0] % timeBetween) == 0){
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) {
                     Vector2 newPos = new Vector2(Projectile.position.X, GetYPos());
-                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), newPos, Vector2.Zero, ModContent.ProjectileType<EnsnaringVinesTrap>(),
-                        1, 0, Main.myPlayer);
+                    Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), newPos, Vector2.Zero, 
+                        ModContent.ProjectileType<EnsnaringVinesTrap>(), 1, 0f, Main.myPlayer);
                     TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: TrapDamage);
                     
                     EnsnaringVinesTrap trap = proj.ModProjectile as EnsnaringVinesTrap;

@@ -14,13 +14,13 @@ using TerrariaMoba.StatusEffects.Flibnob;
 
 namespace TerrariaMoba.Abilities.Flibnob {
     public class FlameBelch : Ability, IModifyHitPvpWithProj {
-        public FlameBelch(Player player) : base(player, "Flame Belch", 60, 0, AbilityType.Active) { }
+        public FlameBelch(Player player) : base(player, "Flame Belch", 30, 0, AbilityType.Active) { }
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobAbilityOne").Value; }
 
         public const int FLAME_BASE_DAMAGE = 225;
         public const int FLAME_BASE_DELAY = 60;
-        public const int BURN_BASE_DURATION = 150;
+        public const int BURN_BASE_DURATION = 120;
         public int timer;
 
         public override void OnCast() {
@@ -59,15 +59,16 @@ namespace TerrariaMoba.Abilities.Flibnob {
         }
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            //TODO - Apply 2 different effects; ignite if no ignite already, something more if already ignited
             var ModProjectile = proj.ModProjectile;
             FlameBelchSpawner flame = ModProjectile as FlameBelchSpawner;
             if (flame != null) {
-                if (StatusEffectManager.PlayerHasEffectType<FlameBelchEffect>(target)) {
-                    StatusEffectManager.RemoveEffect(target, StatusEffectManager.GetIDOfEffect(new FlameBelchEffect(BURN_BASE_DURATION, true)));
-                    StatusEffectManager.AddEffect(target, new FlameBelchSecondEffect(BURN_BASE_DURATION, true));
+                if (StatusEffectManager.PlayerHasEffectType<FlameBelchSecondEffect>(target)) {
+                    StatusEffectManager.AddEffect(target, new FlameBelchSecondEffect(User.whoAmI, BURN_BASE_DURATION, true));
+                } else if (StatusEffectManager.PlayerHasEffectType<FlameBelchEffect>(target)) {
+                    StatusEffectManager.RemoveEffect(target, StatusEffectManager.GetIDOfEffect(new FlameBelchEffect(User.whoAmI, BURN_BASE_DURATION, true)));
+                    StatusEffectManager.AddEffect(target, new FlameBelchSecondEffect(User.whoAmI, BURN_BASE_DURATION, true));
                 } else {
-                    StatusEffectManager.AddEffect(target, new FlameBelchEffect(BURN_BASE_DURATION, true));
+                    StatusEffectManager.AddEffect(target, new FlameBelchEffect(User.whoAmI, BURN_BASE_DURATION, true));
                 }
             }
         }
