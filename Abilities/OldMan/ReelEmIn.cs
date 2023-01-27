@@ -4,8 +4,8 @@ using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.OldMan {
-    public class Riptide : Ability {
-        public Riptide(Player player) : base(player, "Riptide", 60, 0, AbilityType.Active) { }
+    public class ReelEmIn : Ability {
+        public ReelEmIn(Player player) : base(player, "ReelEmIn", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 

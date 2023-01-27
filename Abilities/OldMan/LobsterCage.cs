@@ -4,8 +4,8 @@ using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 
 namespace TerrariaMoba.Abilities.OldMan {
-    public class PerfectFillet : Ability {
-        public PerfectFillet(Player player) : base(player, "Perfect Fillet", 60, 0, AbilityType.Active) { }
+    public class LobsterCage : Ability {
+        public LobsterCage(Player player) : base(player, "Perfect Fillet", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 
