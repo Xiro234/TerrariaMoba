@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,16 +14,37 @@ public class FlameBelchSecondEffect : StatusEffect {
     public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 
     private int applierId;
+    private int damageDealt;
+    private int dotTimer;
 
     public FlameBelchSecondEffect() { }
 
-    public FlameBelchSecondEffect(int id, int duration, bool canBeCleansed) : base(duration, canBeCleansed) {
+    public FlameBelchSecondEffect(int id, int dmg, int duration, bool canBeCleansed) : base(duration, canBeCleansed) {
         applierId = id;
+        damageDealt = dmg;
+        dotTimer = 0;
     }
-    
+
+    public override void SendEffectElements(ModPacket packet) {
+        packet.Write(applierId);
+        packet.Write(damageDealt);
+        base.SendEffectElements(packet);
+    }
+
+    public override void ReceiveEffectElements(BinaryReader reader) {
+        applierId = reader.ReadInt32();
+        damageDealt = reader.ReadInt32();
+        base.ReceiveEffectElements(reader);
+    }
+
     public override void WhileActive() {
         //cuts armor
-        User.GetModPlayer<MobaPlayer>().TakePvpDamage(0, 420, 0, applierId, false);
+        if (dotTimer == 0) {
+            dotTimer = 60;
+            User.GetModPlayer<MobaPlayer>().TakePvpDamage(0, 0, damageDealt, applierId, false);
+        } else {
+            dotTimer--;
+        }
 
         var num1 = Dust.NewDust(User.position, User.width, User.height, DustID.Torch, User.velocity.X * 0.2f, User.velocity.Y * 0.2f, 100);
         Dust dust1;
@@ -33,5 +55,7 @@ public class FlameBelchSecondEffect : StatusEffect {
             dust1.velocity.X *= 3f;
             dust1.velocity.Y *= 3f;
         }
+
+        DurationTimer--;
     }
 }

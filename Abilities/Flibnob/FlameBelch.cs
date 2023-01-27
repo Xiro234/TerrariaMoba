@@ -21,7 +21,9 @@ namespace TerrariaMoba.Abilities.Flibnob {
 
         public const int FLAME_BASE_DAMAGE = 225;
         public const int FLAME_BASE_DELAY = 60;
-        public const int BURN_BASE_DURATION = 120;
+        public const int BURN_BASE_DAMAGE = 10;
+        public const int MELT_BASE_DAMAGE = 50;
+        public const int BURN_BASE_DURATION = 180;
         public const int MANA_DRAIN = 50;
         public int timer;
 
@@ -70,12 +72,12 @@ namespace TerrariaMoba.Abilities.Flibnob {
             FlameBelchSpawner flame = ModProjectile as FlameBelchSpawner;
             if (flame != null) {
                 if (StatusEffectManager.PlayerHasEffectType<FlameBelchSecondEffect>(target)) {
-                    StatusEffectManager.AddEffect(target, new FlameBelchSecondEffect(User.whoAmI, BURN_BASE_DURATION, true));
+                    StatusEffectManager.AddEffect(target, new FlameBelchSecondEffect(User.whoAmI, BURN_BASE_DAMAGE, BURN_BASE_DURATION, true));
                 } else if (StatusEffectManager.PlayerHasEffectType<FlameBelchEffect>(target)) {
-                    StatusEffectManager.RemoveEffect(target, StatusEffectManager.GetIDOfEffect(new FlameBelchEffect(User.whoAmI, BURN_BASE_DURATION, true)));
-                    StatusEffectManager.AddEffect(target, new FlameBelchSecondEffect(User.whoAmI, BURN_BASE_DURATION, true));
+                    StatusEffectManager.RemoveEffect(target, StatusEffectManager.GetIDOfEffect(new FlameBelchEffect(User.whoAmI, BURN_BASE_DAMAGE, BURN_BASE_DURATION, true)));
+                    StatusEffectManager.AddEffect(target, new FlameBelchSecondEffect(User.whoAmI, BURN_BASE_DAMAGE, BURN_BASE_DURATION, true));
                 } else {
-                    StatusEffectManager.AddEffect(target, new FlameBelchEffect(User.whoAmI, BURN_BASE_DURATION, true));
+                    StatusEffectManager.AddEffect(target, new FlameBelchEffect(User.whoAmI, BURN_BASE_DAMAGE, BURN_BASE_DURATION, true));
                 }
             }
         }
