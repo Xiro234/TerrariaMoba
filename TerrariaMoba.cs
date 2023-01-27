@@ -17,7 +17,8 @@ namespace TerrariaMoba {
 		public static ModKeybind AbilityThreeHotkey;
  		public static ModKeybind UltimateHotkey;
 		public static ModKeybind TraitHotkey;
-		public static ModKeybind OpenCharacterSelect;
+        public static ModKeybind SecondUltHotkey;
+        public static ModKeybind OpenCharacterSelect;
 		public static TerrariaMoba Instance { get; private set; }
 
 		public const float nonKillXpRatio = 0.75f;
@@ -34,6 +35,7 @@ namespace TerrariaMoba {
 			AbilityThreeHotkey = KeybindLoader.RegisterKeybind(Instance, "Basic Ability Three", "F");
 			UltimateHotkey = KeybindLoader.RegisterKeybind(Instance, "Ultimate", "R");
 			TraitHotkey = KeybindLoader.RegisterKeybind(Instance, "Trait", "C");
+			SecondUltHotkey = KeybindLoader.RegisterKeybind(Instance, "Second Ultimate (Testing)", "X");
 			OpenCharacterSelect = KeybindLoader.RegisterKeybind(Instance, "Open Character Select", "P");
 
 			StatusEffectManager.Load();
@@ -46,6 +48,8 @@ namespace TerrariaMoba {
 			AbilityThreeHotkey = null;
 			UltimateHotkey = null;
 			TraitHotkey = null;
+            SecondUltHotkey = null;
+            OpenCharacterSelect = null;
 
 			Instance = null;
 		}

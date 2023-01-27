@@ -15,7 +15,8 @@ namespace TerrariaMoba.Abilities.Flibnob {
         }
 
         public const int BASE_ARMOR_GAIN = 5;
-        public const float BUFF_RANGE = 200f;
+        public const int BURN_BASE_DURATION = 120;
+        public const float BUFF_RANGE = 50f;
         public int finalStacks;
 
         public override void WhileActive() {
@@ -30,11 +31,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
             }
             finalStacks = total;
 
-            StatusEffectManager.AddEffect(User, new SearingBondEffect(total, BASE_ARMOR_GAIN, 60, false));
-            
-            //TODO - Remove effect, when xiro makes attribute stuff implement here
-            
-            //TODO - All physical damage burns, make sure effect works correctly
+            StatusEffectManager.AddEffect(User, new SearingBondEffect(User.whoAmI, total, BASE_ARMOR_GAIN, BURN_BASE_DURATION, 60, false));
         }
     }
 }

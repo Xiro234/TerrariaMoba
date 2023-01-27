@@ -113,7 +113,17 @@ namespace TerrariaMoba.Players {
                     }
                 }
             }
-            
+
+            if(TerrariaMoba.SecondUltHotkey.JustPressed) {
+                if (Hero?.SecondUlt.CastIfAble() == true)
+                {
+                    if (Main.netMode != NetmodeID.SinglePlayer)
+                    {
+                        NetworkHandler.SendAbilityCast(5, Player.whoAmI);
+                    }
+                }
+            }
+
             if (TerrariaMoba.OpenCharacterSelect.JustPressed) {
                 if (MobaSystem.SelectInterface.CurrentState == null && Hero == null) {
                     MobaSystem.ShowSelect();

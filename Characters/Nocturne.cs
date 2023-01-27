@@ -40,7 +40,8 @@ namespace TerrariaMoba.Characters {
                 new ViolentRetaliation(User), 
                 new RallyingCry(User), 
                 new BastionOfTitanium(User), 
-                new FeedTheFury(User)
+                new FeedTheFury(User),
+                new EclipteranLightbringer(User)
             };
         }
 

@@ -40,7 +40,8 @@ namespace TerrariaMoba.Characters {
                 new Rockwrecker(User),
                 new TitaniumShell(User),
                 new Earthsplitter(User),
-                new SearingBond(User)
+                new SearingBond(User),
+                new CullTheMeek(User)
             };
         }
 
@@ -66,46 +67,3 @@ namespace TerrariaMoba.Characters {
         public override int LegDyeID { get => ItemID.ReflectiveMetalDye; }
     }
 }
-
-/*
-namespace TerrariaMoba.Characters {
-    public class Flibnob : Character {
-        public override string FullName { get => "Flibnob, the Chieftain of Krommock"; }
-
-        public Flibnob(Player Player) : base(Player) { }
-        
-        public override void InitializeCharacter() { }
-        
-        public override void SetPlayer() {
-            vanityHead.SetDefaults(3865);
-            vanityBody.SetDefaults(667);
-            dyeBody.SetDefaults(3555);
-            vanityLeg.SetDefaults(668);
-            dyeLeg.SetDefaults(3555);
-            primary.SetDefaults(ModContent.ItemType<FlibnobAxe"));
-
-            Player.Male = true;
-            Player.hair = 15;
-            Player.hairColor = new Color(0, 0, 0);
-            Player.skinColor = new Color(120, 63, 4);
-            Player.eyeColor = new Color(255, 0, 0);
-        }
-
-        public override void SetStats() {
-            baseMaxLife = 2060;
-            baseLifeRegen = (baseMaxLife * 0.125f) / 60;
-            baseMaxResource = 500;
-            baseResourceRegen = (baseMaxResource * 0.125f) / 30;
-            baseArmor = 0;
-
-            QAbility = new FlameBelch(Player);
-            EAbility = new TitaniumShell(Player);
-            RAbility = new Earthsplitter(Player);
-            CAbility = new BattleHardened(Player);
-
-            /*
-            CullTheMeek ultimate = new CullTheMeek(Player);
-            abilities[2] = ultimate;
-            #1#
-        }
-*/

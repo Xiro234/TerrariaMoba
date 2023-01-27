@@ -64,6 +64,11 @@ namespace TerrariaMoba.Characters {
             protected set { Skills[4] = value; }
         }
 
+        public Ability SecondUlt {
+            get { return Skills[5]; }
+            protected set { Skills[5] = value; }
+        }
+
         public Character(Player user) {
             User = user;
             Initialize();

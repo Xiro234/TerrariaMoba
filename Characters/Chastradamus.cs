@@ -39,7 +39,8 @@ namespace TerrariaMoba.Characters {
                 new Incision(User),
                 new FlaskOfVitality(User),
                 new HumorReblance(User),
-                new Bloodletting(User)
+                new Bloodletting(User),
+                new Plaguebringer(User)
             };
         }
 

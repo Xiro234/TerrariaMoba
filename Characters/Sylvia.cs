@@ -40,8 +40,8 @@ namespace TerrariaMoba.Characters {
                 new WitheredRose(User),
                 new VerdantFury(User),
                 new Flourish(User),
-                //new PlanterasLastWill(User),
-                new JunglesWrath(User)
+                new JunglesWrath(User),
+                new PlanterasLastWill(User)
             };
         }
 

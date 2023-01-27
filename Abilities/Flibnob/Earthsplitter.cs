@@ -7,6 +7,7 @@ using TerrariaMoba.Enums;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Flibnob;
+using TerrariaMoba.StatusEffects;
 
 namespace TerrariaMoba.Abilities.Flibnob {
     public class Earthsplitter : Ability, IModifyHitPvpWithProj {
@@ -18,7 +19,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
 
         public const int EARTH_BASE_DAMAGE = 1000;
         public const int EARTH_BASE_NUMBER = 5;
-        public const int EARTH_BASE_DURATION = 30;
+        public const int EARTH_BASE_DURATION = 45;
         public const int EARTH_BASE_DELAY = 15;
 
         public override void OnCast() {
@@ -55,7 +56,11 @@ namespace TerrariaMoba.Abilities.Flibnob {
         }
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            //TODO - Whatever debuff this will inflict goes here.
+            var modProjectile = proj.ModProjectile;
+            SplitEarth earth = modProjectile as SplitEarth;
+            if (earth != null) {
+                StatusEffectManager.AddEffect(target, new FunStun(120, true));
+            }
         }
     }
 }

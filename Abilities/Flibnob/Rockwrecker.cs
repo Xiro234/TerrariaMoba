@@ -13,7 +13,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobAbilityThree").Value; }
 
-        public const int ROCK_DAMAGE = 690;
+        public const int ROCK_DAMAGE = 500;
         public const float ROCK_KNOCKBACK = 15f;
         public const int GUIDE_LIFETIME = 150;
         public const float ROCK_RANGE = 30f;

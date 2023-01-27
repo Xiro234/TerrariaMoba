@@ -40,7 +40,8 @@ namespace TerrariaMoba.Characters {
                 new SurgingVitality(User), 
                 new Confluence(User), 
                 new EyeOfTheStorm(User), 
-                new PendantOfTorrents(User)
+                new PendantOfTorrents(User),
+                new BlessingOfTheGoddess(User)
             };
         }
         

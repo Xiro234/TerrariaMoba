@@ -40,7 +40,8 @@ namespace TerrariaMoba.Characters {
                 new LifedrainPulse(User), 
                 new SpectralBarrage(User), 
                 new SongOfTheDamned(User), 
-                new SkeletalBond(User)
+                new SkeletalBond(User),
+                new SoulSiphon(User)
             };
         }
 

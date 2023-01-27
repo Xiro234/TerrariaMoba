@@ -40,7 +40,8 @@ namespace TerrariaMoba.Characters {
                 new Consecration(User),
                 new SealOfHephaesta(User),
                 new Hammerfall(User),
-                new PaladinsResolve(User)
+                new PaladinsResolve(User),
+                new VexillumImmortalis(User)
             };
         }
         

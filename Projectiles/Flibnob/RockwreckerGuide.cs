@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -27,6 +28,10 @@ namespace TerrariaMoba.Projectiles.Flibnob {
             GuideTimer = Rockwrecker.GUIDE_LIFETIME;
         }
 
+        public override bool? CanDamage() {
+            return false;
+        }
+
         public override void AI() {
             if (Projectile.ai[0] <= -1f) {
                 Projectile.timeLeft = GuideTimer;
@@ -44,6 +49,18 @@ namespace TerrariaMoba.Projectiles.Flibnob {
                     1, RockKnockback, Main.myPlayer);
                 TerrariaMobaUtils.SetProjectileDamage(proj, PhysicalDamage: RockDamage);
             }
+        }
+
+        public override void SendExtraAI(BinaryWriter writer) {
+            writer.Write(RockDamage);
+            writer.Write(RockKnockback);
+            writer.Write(GuideTimer);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader) {
+            RockDamage = reader.ReadInt32();
+            RockKnockback = reader.ReadSingle();
+            GuideTimer = reader.ReadInt32();
         }
     }
 }

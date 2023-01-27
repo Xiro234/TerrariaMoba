@@ -11,6 +11,7 @@ using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Flibnob;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Flibnob;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Flibnob {
     public class FlameBelch : Ability, IModifyHitPvpWithProj {
@@ -21,6 +22,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
         public const int FLAME_BASE_DAMAGE = 225;
         public const int FLAME_BASE_DELAY = 60;
         public const int BURN_BASE_DURATION = 120;
+        public const int MANA_DRAIN = 50;
         public int timer;
 
         public override void OnCast() {
@@ -33,7 +35,6 @@ namespace TerrariaMoba.Abilities.Flibnob {
             }
         }
 
-        //TODO - Make into toggle that drains mana each flame cast
         public override void WhileActive() {
             if (timer > 0) {
                 timer--;
@@ -41,19 +42,25 @@ namespace TerrariaMoba.Abilities.Flibnob {
 
             if (timer == 0) {
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
-                    Vector2 playerToMouse = Main.MouseWorld - User.Center;
-                    double mag = Math.Sqrt(playerToMouse.X * playerToMouse.X + playerToMouse.Y * playerToMouse.Y);
-                    float dirX = (float)(playerToMouse.X * (6.0 / mag));
-                    float dirY = (float)(playerToMouse.Y * (6.0 / mag));
-                    Vector2 vel = new Vector2(dirX, dirY);
-                
-                    SoundEngine.PlaySound(SoundID.DD2_OgreAttack, User.Center);
-                    Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), User.Center, 
-                        vel, ModContent.ProjectileType<FlameBelchSpawner>(), 1, 0, 
-                        User.whoAmI);
-                    TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: FLAME_BASE_DAMAGE);
+                    var mobaPlayer = User.GetModPlayer<MobaPlayer>();
+                    if (mobaPlayer.CurrentResource < MANA_DRAIN) {
+                        IsActive = false;
+                    } else {
+                        Vector2 playerToMouse = Main.MouseWorld - User.Center;
+                        double mag = Math.Sqrt(playerToMouse.X * playerToMouse.X + playerToMouse.Y * playerToMouse.Y);
+                        float dirX = (float)(playerToMouse.X * (6.0 / mag));
+                        float dirY = (float)(playerToMouse.Y * (6.0 / mag));
+                        Vector2 vel = new Vector2(dirX, dirY);
+
+                        SoundEngine.PlaySound(SoundID.DD2_OgreAttack, User.Center);
+                        Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), User.Center,
+                            vel, ModContent.ProjectileType<FlameBelchSpawner>(), 1, 0,
+                            User.whoAmI);
+                        TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: FLAME_BASE_DAMAGE);
+
+                        mobaPlayer.CurrentResource -= MANA_DRAIN;
+                    }
                 }
-                //player resource reduced by 50
                 timer = FLAME_BASE_DELAY;
             }
         }

@@ -30,6 +30,10 @@ namespace TerrariaMoba.Projectiles.Flibnob {
             EarthDistance = Earthsplitter.EARTH_BASE_DELAY;
         }
 
+        public override bool? CanDamage() {
+            return false;
+        }
+
         public override void AI() {
             int timeBetween = (int) ((EarthDistance * 16) / Projectile.velocity.Length());
             if (((int)Projectile.ai[0] % timeBetween) == 0){
@@ -37,8 +41,7 @@ namespace TerrariaMoba.Projectiles.Flibnob {
                     Vector2 newPos = new Vector2(Projectile.position.X, GetYPos());
                     newPos.Y -= 8f;
                     Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), newPos, 
-                        Vector2.Zero, ModContent.ProjectileType<SplitEarth>(), 1, 0, 
-                        Main.myPlayer);
+                        Vector2.Zero, ModContent.ProjectileType<SplitEarth>(), 1, 0f, Main.myPlayer);
                     TerrariaMobaUtils.SetProjectileDamage(proj, PhysicalDamage: EarthDamage);
                     
                     SplitEarth earth = proj.ModProjectile as SplitEarth;
@@ -54,10 +57,6 @@ namespace TerrariaMoba.Projectiles.Flibnob {
             if ((int)Projectile.ai[0] == (NumberOfEarths * timeBetween)) {
                 Projectile.Kill();
             }
-        }
-
-        public override bool? CanDamage() {
-            return false;
         }
         
         public override void SendExtraAI(BinaryWriter writer) {

@@ -39,7 +39,8 @@ namespace TerrariaMoba.Characters {
                 new ExplosiveCatch(User),
                 new PerfectFillet(User),
                 new Riptide(User),
-                new WhatsInTheCrate(User)
+                new WhatsInTheCrate(User),
+                new TruffleWormSurprise(User)
             };
         }
 
