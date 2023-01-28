@@ -13,22 +13,20 @@ using TerrariaMoba.StatusEffects.Marie;
 
 namespace TerrariaMoba.Abilities.Marie {
     public class EyeOfTheStorm : Ability {
-        public EyeOfTheStorm(Player player) : base(player, "Eye of the Storm", 60, 0, AbilityType.Active) { }
+        public EyeOfTheStorm(Player player) : base(player, "Eye of the Storm", 180, 100, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieUltimateTwo").Value; }
 
-        public const int LIGHTNING_DAMAGE = 569;
-        public const float LIGHTNING_SPEED = 3.25f;
-        public const int RAIN_DAMAGE = 73;
-        public const float RAIN_SPEED = 4.5f;
-        public const int CLOUD_DAMAGE = 250;
+        public const int LIGHTNING_DAMAGE = 300;
+        public const float LIGHTNING_SPEED = 3f;
+        public const int RAIN_DAMAGE = 50;
+        public const float RAIN_SPEED = 4f;
+        public const int CLOUD_DAMAGE = 222;
         public const int CLOUD_DURATION = 380;
-        public const int EYE_DAMAGE = 500;
+        public const int EYE_DAMAGE = 444;
         
-        public const float SHOCK_MAGNITUDE = 0.25f;
-        public const int SHOCK_DURATION = 120;
-        public const float WET_REDUC = 0.25f;
-        public const int WET_DURATION = 120;
+        public const float SHOCK_MAGNITUDE = 0.1f;
+        public const int SHOCK_DURATION = 90;
         
         public override void OnCast() {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
@@ -72,12 +70,6 @@ namespace TerrariaMoba.Abilities.Marie {
             ESStormCloud  cloud = modProj as ESStormCloud;
             if (cloud != null) {
                 StatusEffectManager.AddEffect(target, new StormShockEffect(SHOCK_MAGNITUDE, SHOCK_DURATION, true));
-                StatusEffectManager.AddEffect(target, new StormWetEffect(WET_REDUC, WET_DURATION, true));
-            }
-            
-            ESRain rain = modProj as ESRain;
-            if (rain != null) {
-                StatusEffectManager.AddEffect(target, new StormWetEffect(WET_REDUC, WET_DURATION, true));
             }
             
             ESLightning lightning = modProj as ESLightning;

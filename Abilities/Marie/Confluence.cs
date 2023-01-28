@@ -1,7 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.StatusEffects;
@@ -9,39 +7,43 @@ using TerrariaMoba.StatusEffects.Marie;
 
 namespace TerrariaMoba.Abilities.Marie {
     public class Confluence : Ability {
-        public Confluence(Player player) : base(player, "Confluence", 60, 0, AbilityType.Active) { }
+        public Confluence(Player player) : base(player, "Confluence", 600, 200, AbilityType.Active) { }
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieAbilityThree").Value; }
 
-        public const float CONF_RANGE = 150f;
-        public const int BUFF_DURATION = 150;
+        public const float CONF_RANGE = 300f;
+        public const float CONF_MAGNITUDE = 0.25f;
+        public const int CONF_DURATION = 300;
 
-        private int alliesInRange;
+        private int timer;
         
         public override void OnCast() {
-            alliesInRange = 0;
+            IsActive= true;
+            timer = CONF_DURATION;
+        }
+
+        public override void WhileActive() {
+            if (timer == 0) {
+                TimeOut();
+            }
 
             for (int i = 0; i < Main.maxPlayers; i++) {
                 Player plr = Main.player[i];
                 if (plr.active) {
                     float dist = (plr.Center - User.Center).Length();
-                    if (plr.team == User.team && dist <= CONF_RANGE && i != User.whoAmI) {
-                        //TODO - Reduce cooldowns of ally non-ultimate abilities.
-                        /*
-                         * foreach ability plr has
-                         * if that ability is on cd
-                         * cooldowntimer -= basecooldown * confluencemod
-                         */
-                        for (int d = 0; d < 40; d++) {
-                            Dust.NewDust(plr.position, plr.width, plr.height, DustID.Water_Snow, 0f, 0f, 150, default(Color), 1.5f);
-                        }
-                        alliesInRange++;
+                    if (plr.team == User.team && dist <= CONF_RANGE) {
+                        //plr.addeffect confluence + movespeed
+                    } else if (plr.team != User.team && dist <= CONF_RANGE) {
+                        //plr.addeffect confluence - movespeed
                     }
                 }
             }
 
-            if (alliesInRange > 0) {
-                StatusEffectManager.AddEffect(User, new ConfluenceEffect(alliesInRange, BUFF_DURATION, true));
-            }
+            timer--;
+        }
+
+        public override void TimeOut() {
+            IsActive= false;
+            CooldownTimer = BaseCooldown;
         }
     }
 }
