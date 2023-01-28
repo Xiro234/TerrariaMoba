@@ -35,12 +35,10 @@ namespace TerrariaMoba.Characters {
         
         protected override Ability[] BaseSkillsFactory() {
             return new Ability[] {
-                new Frostbite(User),
-                new ExplosiveCatch(User),
-                new PerfectFillet(User),
-                new Riptide(User),
-                new WhatsInTheCrate(User),
-                new TruffleWormSurprise(User)
+                new HookPotato(User),
+                new LobsterCage(User),
+                new ReelEmIn(User),
+                new WaitForIt(User)
             };
         }
 
