@@ -52,19 +52,7 @@ namespace TerrariaMoba.Abilities.Marie {
         }
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            /*
-            var modProj = proj.ModProjectile;
-            
-            WBWhirlpool pool = modProj as WBWhirlpool;
-            if (pool != null) {
-                StatusEffectManager.AddEffect(target, new FunSlow(SLOW_MAGNITUDE, SLOW_DURATION, true));
-            }
-            
-            WBBottle bottle = modProj as WBBottle;
-            if (bottle != null) {
-                StatusEffectManager.AddEffect(target, new FunStun(STUN_DURATION, true));
-            }
-            */
+
         }
     }
 }

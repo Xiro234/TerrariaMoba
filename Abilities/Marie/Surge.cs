@@ -5,6 +5,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Marie {
     public class Surge : Ability {
@@ -20,8 +21,12 @@ namespace TerrariaMoba.Abilities.Marie {
                 if (plr.active && plr.team == User.team) {
                     plr.statLife += SURGE_HEAL;
                     CombatText.NewText(plr.Hitbox, Color.CornflowerBlue, SURGE_HEAL, true);
-                    SoundEngine.PlaySound(SoundID.Item4, plr.Center);
+                    BlessingOfTheGoddess botg = User.GetModPlayer<MobaPlayer>().Hero.Trait as BlessingOfTheGoddess;
+                    if (botg != null) {
+                        botg.PlayerHealed(plr);
+                    }
 
+                    SoundEngine.PlaySound(SoundID.Item4, plr.Center);
                     for (int d = 0; d < 30; d++) {
                         Dust.NewDust(plr.position, plr.width, plr.height, DustID.Water_Hallowed, 0f, -2f, 170, default(Color), 2.5f);
                     }

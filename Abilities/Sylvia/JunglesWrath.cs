@@ -5,7 +5,6 @@ using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Players;
-using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Sylvia;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Sylvia;
@@ -21,7 +20,6 @@ namespace TerrariaMoba.Abilities.Sylvia {
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
             var ModProjectile = proj.ModProjectile;
-            var damageTypeProj = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
             SylviaArrow arrow = ModProjectile as SylviaArrow;
             
             if (arrow != null) {
@@ -35,7 +33,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
                             StatusEffectManager.SyncSingleEffect(target, JWrath);
                         } else {
                             StatusEffectManager.RemoveEffect(target, JWrath);
-                            damageTypeProj.TrueDamage += (int)Math.Ceiling(target.statLifeMax2 * DAMAGE_PERCENT);
+                            mobaPlayer.TakePvpDamage(0, 0, (int)Math.Ceiling(target.statLifeMax2 * DAMAGE_PERCENT), User.whoAmI, false);
                         }
                         return;
                     }

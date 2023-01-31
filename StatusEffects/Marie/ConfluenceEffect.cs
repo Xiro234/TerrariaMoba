@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
-using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.StatusEffects.Marie {
     public class ConfluenceEffect : StatusEffect {
-        public override string DisplayName { get => "Root"; }
+
+        public override string DisplayName { get => "Confluence"; }
         public override Texture2D Icon { get { return ModContent.Request<Texture2D>("Textures/Blank").Value;} }
+
         public ConfluenceEffect() { }
-        public ConfluenceEffect(int stacks, int duration, bool canBeCleansed) : base(duration, canBeCleansed) { }
+        public ConfluenceEffect(float magnitude, int duration, bool canBeCleansed) : base(duration, canBeCleansed) { }
         
-        //TODO - Increase magic damage by (5*stacks)%.
+        //TODO - Increase movespeed of allies and reduce of enemies
     }
 }

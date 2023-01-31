@@ -31,9 +31,9 @@ namespace TerrariaMoba.Abilities.Marie {
                 if (plr.active) {
                     float dist = (plr.Center - User.Center).Length();
                     if (plr.team == User.team && dist <= CONF_RANGE) {
-                        //plr.addeffect confluence + movespeed
+                        //plr.addeffect confluence +movespeed
                     } else if (plr.team != User.team && dist <= CONF_RANGE) {
-                        //plr.addeffect confluence - movespeed
+                        //plr.addeffect confluence -movespeed
                     }
                 }
             }

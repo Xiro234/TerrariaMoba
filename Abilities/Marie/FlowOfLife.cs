@@ -50,12 +50,19 @@ namespace TerrariaMoba.Abilities.Marie {
             
             if (closestPlayerID != -1) {
                 Player plr = Main.player[closestPlayerID];
+
                 plr.statLife += FLOW_HEAL;
                 CombatText.NewText(plr.Hitbox, Color.CornflowerBlue, FLOW_HEAL, true);
+                BlessingOfTheGoddess botg = User.GetModPlayer<MobaPlayer>().Hero.Trait as BlessingOfTheGoddess;
+                if (botg != null) {
+                    botg.PlayerHealed(plr);
+                }
+
                 SoundEngine.PlaySound(SoundID.Item4, plr.Center);
                 for (int d = 0; d < 30; d++) {
                     Dust.NewDust(plr.position, plr.width, plr.height, DustID.Water_GlowingMushroom, 0f, 0f, 150, default(Color), 1.5f);
                 }
+
                 CooldownTimer = BaseCooldown;
             } else {
                 Main.NewText("Could not find a player in range to heal!");
