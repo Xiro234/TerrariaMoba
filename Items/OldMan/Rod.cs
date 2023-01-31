@@ -32,5 +32,12 @@ namespace TerrariaMoba.Items.OldMan {
                 ModContent.ProjectileType<Bobber>(), 1, 0f, player.whoAmI);
             return false;
         }
+
+        public override void UseStyle(Player player, Rectangle heldItemFrame) {
+            if (player.itemTime <= 2) {
+                player.itemRotation = 0;
+                player.bodyFrame.Y = 5 * 56;
+            }
+        }
     }
 }
