@@ -11,7 +11,7 @@ namespace TerrariaMoba.Abilities.Marie {
     public class Surge : Ability {
         public Surge(Player player) : base(player, "Surge", 600, 50, AbilityType.Active) { }
 
-        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieUltimateOne").Value; }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieTrait").Value; }
 
         public const int SURGE_HEAL = 750;
         
@@ -22,9 +22,7 @@ namespace TerrariaMoba.Abilities.Marie {
                     plr.statLife += SURGE_HEAL;
                     CombatText.NewText(plr.Hitbox, Color.CornflowerBlue, SURGE_HEAL, true);
                     BlessingOfTheGoddess botg = User.GetModPlayer<MobaPlayer>().Hero.Trait as BlessingOfTheGoddess;
-                    if (botg != null) {
-                        botg.PlayerHealed(plr);
-                    }
+                    botg?.PlayerHealed(plr);
 
                     SoundEngine.PlaySound(SoundID.Item4, plr.Center);
                     for (int d = 0; d < 30; d++) {

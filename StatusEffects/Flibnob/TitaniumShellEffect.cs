@@ -4,8 +4,10 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
+using TerrariaMoba.Players;
 using TerrariaMoba.Statistic;
 using static TerrariaMoba.Statistic.AttributeType;
 
@@ -34,13 +36,19 @@ namespace TerrariaMoba.StatusEffects.Flibnob {
         }
 
         public void TakePvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {
-            //TODO - Store mitigated damage correctly.
-            mitigatedDamageTaken = 500;
+            var mobaPlayer = User.GetModPlayer<MobaPlayer>();
+            int mitigatedPhysical = (int)Math.Ceiling(physicalDamage * mobaPlayer.GetCurrentAttributeValue(AttributeType.PHYSICAL_ARMOR) * 0.01f);
+            int mitigatedMagical = (int)Math.Ceiling(magicalDamage * mobaPlayer.GetCurrentAttributeValue(AttributeType.MAGICAL_ARMOR) * 0.01f);
+            mitigatedDamageTaken += mitigatedPhysical + mitigatedMagical;
         }
 
         public override void FallOff() {
-            User.statLife += (int) (mitigatedDamageTaken * healDamage);
-            CombatText.NewText(User.Hitbox, Color.Aqua, 69420);
+            int finalDmg = (int)(mitigatedDamageTaken * healDamage);
+            if (Main.netMode != NetmodeID.Server) {
+                Main.NewText("Total damage mitigated by Titanium Shell: " + mitigatedDamageTaken);
+            }
+            User.statLife += finalDmg;
+            CombatText.NewText(User.Hitbox, Color.Aqua, finalDmg);
         }
 
         public override void SendEffectElements(ModPacket packet) {

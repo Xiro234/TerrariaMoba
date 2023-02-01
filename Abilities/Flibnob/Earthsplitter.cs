@@ -17,7 +17,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
 
         public const float LEAP_BASE_HEIGHT = -14.6f;
 
-        public const int EARTH_BASE_DAMAGE = 1000;
+        public const int EARTH_BASE_DAMAGE = 400;
         public const int EARTH_BASE_NUMBER = 5;
         public const int EARTH_BASE_DURATION = 45;
         public const int EARTH_BASE_DELAY = 15;

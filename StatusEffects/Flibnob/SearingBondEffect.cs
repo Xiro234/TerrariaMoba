@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using log4net.Repository.Hierarchy;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
@@ -22,12 +23,14 @@ namespace TerrariaMoba.StatusEffects.Flibnob {
         private int applierId;
         
         public SearingBondEffect() { }
-        
-        public SearingBondEffect(int id, int stacks, int armor, int burndur, int duration, bool canBeCleansed) : base(duration, false) {
+
+        public SearingBondEffect(int id, int stacks, int armor, int burndur, int duration, bool canBeCleansed) : base(duration, canBeCleansed) {
             currentStacks = stacks;
             armorGain = armor;
             burnDuration = burndur;
             applierId = id;
+
+            ConstructFlatAttributes();
         }
 
         public override void SendEffectElements(ModPacket packet) {
@@ -47,11 +50,9 @@ namespace TerrariaMoba.StatusEffects.Flibnob {
         }
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            var damageTypeProj = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
-            if (damageTypeProj.PhysicalDamage > 0 && proj != null) {
-                if (!StatusEffectManager.PlayerHasEffectType<FlameBelchSecondEffect>(target)) {
-                    StatusEffectManager.AddEffect(target, new FlameBelchEffect(applierId, 22, burnDuration, true));
-                }
+            var dmgType = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
+            if (proj != null && dmgType.PhysicalDamage > 0) {
+                StatusEffectManager.AddEffect(target, new FlameBelchEffect(applierId, 10, burnDuration, true));
             }
         }
 
