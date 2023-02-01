@@ -65,6 +65,7 @@ namespace TerrariaMoba.StatusEffects {
         public virtual void SendEffectElements(ModPacket packet) {
             packet.Write(Duration);
             packet.Write(CanBeCleansed);
+            packet.Write(ApplicantID);
         }
 
         /// <summary>
@@ -74,6 +75,7 @@ namespace TerrariaMoba.StatusEffects {
         public virtual void ReceiveEffectElements(BinaryReader reader) {
             Duration = reader.ReadInt32();
             CanBeCleansed = reader.ReadBoolean();
+            ApplicantID = reader.ReadInt32();
             ConstructFlatAttributes();
             ConstructMultAttributes();
         }

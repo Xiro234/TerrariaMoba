@@ -31,7 +31,7 @@ namespace TerrariaMoba.Players {
         }
 
         public override void OnRespawn(Player Player) {
-            Player.statLife = Player.statLifeMax;
+            Player.statLife = Player.statLifeMax2;
             SetPlayerResource();
         }
 
@@ -170,6 +170,7 @@ namespace TerrariaMoba.Players {
             }
             else {
                 AbilityEffectManager.Kill(Player, damage, hitDirection, pvp, damageSource);
+                EffectList.Clear();
             }
         }
 
