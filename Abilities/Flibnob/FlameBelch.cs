@@ -73,10 +73,24 @@ namespace TerrariaMoba.Abilities.Flibnob {
 
             if (flame != null) {
                 var mobaPlayer = target.GetModPlayer<MobaPlayer>();
+
                 foreach (var effect in new List<StatusEffect>(mobaPlayer.EffectList)) {
                     var burning = effect as FlameBelchEffect;
                     var melting = effect as FlameBelchSecondEffect;
-
+                    
+                    //
+                    
+                    if (effect is FlameBelchEffect) {
+                        
+                    }
+                    else if (effect is FlameBelchSecondEffect) {
+                        
+                    }
+                    else {
+                        
+                    }
+                    
+                    /*
                     if (burning is null && melting is null) {
                         StatusEffectManager.AddEffect(target, new FlameBelchEffect(User.whoAmI, BURN_BASE_DAMAGE, BURN_BASE_DURATION, true));
                     } else if (burning is not null && melting is null) {
@@ -86,7 +100,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
                         StatusEffectManager.AddEffect(target, new FlameBelchSecondEffect(User.whoAmI, MELT_BASE_DAMAGE, BURN_BASE_DURATION, true));
                     } else {
                         Logging.PublicLogger.Debug("This should never happen.");
-                    }
+                    }*/
                 }
 
                 //StatusEffectManager.AddEffect(target, new FlameBelchEffect(User.whoAmI, BURN_BASE_DAMAGE, BURN_BASE_DURATION, true));
