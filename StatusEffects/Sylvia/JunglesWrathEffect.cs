@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -16,15 +17,28 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         
         public JunglesWrathEffect() { }
         
-        public JunglesWrathEffect(int duration, int stacks) : base(duration, true) {
+        public JunglesWrathEffect(int duration, int applicantId, float damagePercent, int stacks) : base(duration, true, applicantId) {
             Stacks = stacks;
         }
 
         protected override bool ShowBar {
             get => false;
         }
-
+        
         public int Stacks { get; set; }
+        public float DamagePercent { get; set; }
+        
+        public override void ReApply() {
+            base.ReApply();
+            
+            if (Stacks < 4) {
+                Stacks += 1;
+            } else {
+                User.GetModPlayer<MobaPlayer>().TakePvpDamage(0, 0, (int)Math.Ceiling(User.statLifeMax2 * DamagePercent), User.whoAmI, false);
+                Duration = 0;
+            }
+        }
+
 
         public override void SendEffectElements(ModPacket packet) {
             base.SendEffectElements(packet);

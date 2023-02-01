@@ -23,7 +23,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
             SylviaArrow arrow = ModProjectile as SylviaArrow;
             
             if (arrow != null) {
-                var mobaPlayer = target.GetModPlayer<MobaPlayer>();
+                /*var mobaPlayer = target.GetModPlayer<MobaPlayer>();
                 foreach (var effect in mobaPlayer.EffectList) {
                     var JWrath = effect as JunglesWrathEffect;
 
@@ -37,9 +37,9 @@ namespace TerrariaMoba.Abilities.Sylvia {
                         }
                         return;
                     }
-                }
+                }*/
                 
-                StatusEffectManager.AddEffect(target, new JunglesWrathEffect(EFFECT_DURATION, 1));
+                StatusEffectManager.AddEffect(target, new JunglesWrathEffect(EFFECT_DURATION, User.whoAmI, DAMAGE_PERCENT, 1));
             }
         }
     }

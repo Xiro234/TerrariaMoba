@@ -10,7 +10,11 @@ namespace TerrariaMoba.StatusEffects {
     public abstract class StatusEffect {
         public abstract string DisplayName { get; }
         public Player User { get; private set; }
+        public int ApplicantID { get; private set; }
         public abstract Texture2D Icon { get; }
+        public int ID {
+            get { return StatusEffectManager.GetIDOfEffect(this); }
+        }
 
         public int Duration { get; protected set; }
         public int DurationTimer { get; protected set; }
@@ -24,9 +28,10 @@ namespace TerrariaMoba.StatusEffects {
 
         public StatusEffect() { }
 
-        public StatusEffect(int duration, bool canBeCleansed) {
+        public StatusEffect(int duration, bool canBeCleansed, int applicantId) {
             Duration = duration;
             CanBeCleansed = canBeCleansed;
+            ApplicantID = applicantId;
         }
 
         public virtual void Apply() {
