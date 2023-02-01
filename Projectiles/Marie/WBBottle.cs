@@ -17,8 +17,8 @@ namespace TerrariaMoba.Projectiles.Marie {
             Projectile.height = 14;
             Projectile.penetrate = 1;
 
-            PoolDamage = WhirlpoolInABottle.POOL_DAMAGE;
-            PoolDuration = WhirlpoolInABottle.POOL_DURATION;
+            PoolDamage = Tidecaller.POOL_DAMAGE;
+            PoolDuration = Tidecaller.POOL_DURATION;
         }
 
         public override void AI() {
@@ -31,7 +31,7 @@ namespace TerrariaMoba.Projectiles.Marie {
             Projectile.rotation += Projectile.velocity.X * 0.1f;
             
             for (int i = 0; i < 6; i++) {
-                int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 137);
+                int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.IcyMerman);
                 Main.dust[dust].noGravity = true;
                 Main.dust[dust].scale = Main.rand.Next(70, 110) * 0.013f;
                 Main.dust[dust].velocity *= 0.2f;

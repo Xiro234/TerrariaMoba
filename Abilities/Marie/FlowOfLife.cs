@@ -9,7 +9,7 @@ using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Marie {
     public class FlowOfLife : Ability {
-        public FlowOfLife(Player player) : base(player, "Flow of Life", 240, 100, AbilityType.Active) { }
+        public FlowOfLife(Player player) : base(player, "Flow of Life", 240, 50, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieAbilityTwo").Value; }
 

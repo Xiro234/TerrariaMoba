@@ -13,7 +13,7 @@ using TerrariaMoba.StatusEffects;
 
 namespace TerrariaMoba.Abilities.Marie {
     public class Tidecaller : Ability, IModifyHitPvpWithProj {
-        public Tidecaller(Player player) : base(player, "Tidecaller", 60, 0, AbilityType.Active) { }
+        public Tidecaller(Player player) : base(player, "Tidecaller", 60, 50, AbilityType.Active) { }
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieAbilityOne").Value; }
 

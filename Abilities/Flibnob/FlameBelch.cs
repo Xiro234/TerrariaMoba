@@ -12,6 +12,7 @@ using TerrariaMoba.Projectiles.Flibnob;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Flibnob;
 using TerrariaMoba.Players;
+using System.Collections.Generic;
 
 namespace TerrariaMoba.Abilities.Flibnob {
     public class FlameBelch : Ability, IModifyHitPvpWithProj {
@@ -19,10 +20,10 @@ namespace TerrariaMoba.Abilities.Flibnob {
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobAbilityOne").Value; }
 
-        public const int FLAME_BASE_DAMAGE = 225;
-        public const int FLAME_BASE_DELAY = 60;
-        public const int BURN_BASE_DAMAGE = 10;
-        public const int MELT_BASE_DAMAGE = 50;
+        public const int FLAME_BASE_DAMAGE = 100;
+        public const int FLAME_BASE_DELAY = 75;
+        public const int BURN_BASE_DAMAGE = 5;
+        public const int MELT_BASE_DAMAGE = 25;
         public const int BURN_BASE_DURATION = 180;
         public const int MANA_DRAIN = 50;
         public int timer;
@@ -56,8 +57,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
 
                         SoundEngine.PlaySound(SoundID.DD2_OgreAttack, User.Center);
                         Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), User.Center,
-                            vel, ModContent.ProjectileType<FlameBelchSpawner>(), 1, 0,
-                            User.whoAmI);
+                            vel, ModContent.ProjectileType<FlameBelchSpawner>(), 1, 0, User.whoAmI);
                         TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: FLAME_BASE_DAMAGE);
 
                         mobaPlayer.CurrentResource -= MANA_DRAIN;
@@ -68,17 +68,28 @@ namespace TerrariaMoba.Abilities.Flibnob {
         }
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            var ModProjectile = proj.ModProjectile;
-            FlameBelchSpawner flame = ModProjectile as FlameBelchSpawner;
+            var modProjectile = proj.ModProjectile;
+            FlameBelchSpawner flame = modProjectile as FlameBelchSpawner;
+
             if (flame != null) {
-                if (StatusEffectManager.PlayerHasEffectType<FlameBelchSecondEffect>(target)) {
-                    StatusEffectManager.AddEffect(target, new FlameBelchSecondEffect(User.whoAmI, BURN_BASE_DAMAGE, BURN_BASE_DURATION, true));
-                } else if (StatusEffectManager.PlayerHasEffectType<FlameBelchEffect>(target)) {
-                    StatusEffectManager.RemoveEffect(target, StatusEffectManager.GetIDOfEffect(new FlameBelchEffect(User.whoAmI, BURN_BASE_DAMAGE, BURN_BASE_DURATION, true)));
-                    StatusEffectManager.AddEffect(target, new FlameBelchSecondEffect(User.whoAmI, BURN_BASE_DAMAGE, BURN_BASE_DURATION, true));
-                } else {
-                    StatusEffectManager.AddEffect(target, new FlameBelchEffect(User.whoAmI, BURN_BASE_DAMAGE, BURN_BASE_DURATION, true));
+                var mobaPlayer = target.GetModPlayer<MobaPlayer>();
+                foreach (var effect in new List<StatusEffect>(mobaPlayer.EffectList)) {
+                    var burning = effect as FlameBelchEffect;
+                    var melting = effect as FlameBelchSecondEffect;
+
+                    if (burning is null && melting is null) {
+                        StatusEffectManager.AddEffect(target, new FlameBelchEffect(User.whoAmI, BURN_BASE_DAMAGE, BURN_BASE_DURATION, true));
+                    } else if (burning is not null && melting is null) {
+                        StatusEffectManager.RemoveEffect(target, burning);
+                        StatusEffectManager.AddEffect(target, new FlameBelchSecondEffect(User.whoAmI, MELT_BASE_DAMAGE, BURN_BASE_DURATION, true));
+                    } else if (melting is not null && burning is null) {
+                        StatusEffectManager.AddEffect(target, new FlameBelchSecondEffect(User.whoAmI, MELT_BASE_DAMAGE, BURN_BASE_DURATION, true));
+                    } else {
+                        Logging.PublicLogger.Debug("This should never happen.");
+                    }
                 }
+
+                //StatusEffectManager.AddEffect(target, new FlameBelchEffect(User.whoAmI, BURN_BASE_DAMAGE, BURN_BASE_DURATION, true));
             }
         }
     }

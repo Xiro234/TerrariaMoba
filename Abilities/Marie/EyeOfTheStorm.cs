@@ -13,7 +13,7 @@ using TerrariaMoba.StatusEffects.Marie;
 
 namespace TerrariaMoba.Abilities.Marie {
     public class EyeOfTheStorm : Ability {
-        public EyeOfTheStorm(Player player) : base(player, "Eye of the Storm", 180, 100, AbilityType.Active) { }
+        public EyeOfTheStorm(Player player) : base(player, "Eye of the Storm", 180, 50, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieUltimateTwo").Value; }
 

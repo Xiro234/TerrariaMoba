@@ -19,7 +19,7 @@ namespace TerrariaMoba.Projectiles.Marie {
             Projectile.ignoreWater = true;
             Projectile.penetrate = -1;
 
-            PoolDuration = WhirlpoolInABottle.POOL_DURATION;
+            PoolDuration = Tidecaller.POOL_DURATION;
         }
         
         public override void AI() {

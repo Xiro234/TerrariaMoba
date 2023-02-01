@@ -9,7 +9,7 @@ using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Marie {
     public class Surge : Ability {
-        public Surge(Player player) : base(player, "Surge", 600, 300, AbilityType.Active) { }
+        public Surge(Player player) : base(player, "Surge", 600, 50, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieUltimateOne").Value; }
 

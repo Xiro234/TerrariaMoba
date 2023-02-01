@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
 
@@ -18,7 +19,9 @@ namespace TerrariaMoba.StatusEffects.Marie
         }
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            Main.NewText("You have the Goddess's Blessing, this should increase your magic damage by " + damageIncrease + " but not right now!");
+            if (Main.netMode != NetmodeID.Server && Main.myPlayer == target.whoAmI) {
+                Main.NewText("You have the Goddess's Blessing, this should increase your magic damage by " + damageIncrease + " but not right now!");
+            }
         }
     }
 }
