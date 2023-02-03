@@ -37,7 +37,7 @@ public class FlameBelchSecondEffect : StatusEffect {
         //cuts armor
         if (dotTimer == 0) {
             dotTimer = 60;
-            User.GetModPlayer<MobaPlayer>().TakePvpDamage(0, 0, damageDealt, ApplicantID, false);
+            User.GetModPlayer<MobaPlayer>().TakePvpDamage(0, 0, damageDealt, ApplicantID, true);
         } else {
             dotTimer--;
         }

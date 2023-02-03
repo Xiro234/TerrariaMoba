@@ -35,7 +35,7 @@ public class FlameBelchEffect : StatusEffect {
     public override void WhileActive() {
         if (dotTimer == 0) {
             dotTimer = 60;
-            User.GetModPlayer<MobaPlayer>().TakePvpDamage(0, damageDealt, 0, ApplicantID, false);
+            User.GetModPlayer<MobaPlayer>().TakePvpDamage(0, damageDealt, 0, ApplicantID, true);
         } else {
             dotTimer--;
         }
