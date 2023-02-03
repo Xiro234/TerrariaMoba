@@ -39,8 +39,8 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
                 if (Main.netMode != NetmodeID.Server) {
                     Main.NewText("Jungle's Wrath proc.");
                 }
-                User.GetModPlayer<MobaPlayer>().TakePvpDamage(0, 0, (int)Math.Ceiling(User.statLifeMax2 * DamagePercent), User.whoAmI, false);
-                StatusEffectManager.RemoveEffect(User, this);
+                User.GetModPlayer<MobaPlayer>().TakePvpDamage(0, 0, (int)Math.Ceiling(User.statLifeMax2 * DamagePercent), User.whoAmI, true);
+                DurationTimer = 0;
             }
         }
 
