@@ -1,11 +1,15 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Projectiles;
+using TerrariaMoba.Statistic;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Flibnob;
+using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.Abilities.Flibnob {
     public class SearingBond : Ability, IModifyHitPvpWithProj {
@@ -49,6 +53,12 @@ namespace TerrariaMoba.Abilities.Flibnob {
                     StatusEffectManager.AddEffect(target, new FlameBelchEffect(10, BURN_BASE_DURATION, true, User.whoAmI));
                 }
             }
+        }
+        
+        public override void ConstructFlatAttributes() {
+            PassiveFlatAttributes = new Dictionary<AttributeType, Func<float>> {
+                { PHYSICAL_ARMOR, () => BASE_ARMOR_GAIN * finalStacks }
+            };
         }
     }
 }

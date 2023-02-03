@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Players;
+using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Abilities {
     public abstract class Ability {
         public string Name { get; protected set; }
         public int BaseCooldown { get; }
         public int BaseResourceCost { get; }
+        public Dictionary<AttributeType, Func<float>> PassiveFlatAttributes { get; protected set; }
+        public Dictionary<AttributeType, Func<float>> PassiveMultAttributes { get; protected set; }
 
         public AbilityType AbilityType { get; }
         public Player User { get; private set; }
@@ -91,6 +95,14 @@ namespace TerrariaMoba.Abilities {
             if (CooldownTimer > 0) {
                 CooldownTimer--;
             }
+        }
+        
+        public virtual void ConstructFlatAttributes() {
+            PassiveFlatAttributes = new Dictionary<AttributeType, Func<float>>();
+        }
+        
+        public virtual void ConstructMultAttributes() {
+            PassiveMultAttributes = new Dictionary<AttributeType, Func<float>>();
         }
     }
 }
