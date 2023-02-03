@@ -31,9 +31,9 @@ namespace TerrariaMoba.Abilities.Marie {
                 if (plr.active) {
                     float dist = (plr.Center - User.Center).Length();
                     if (plr.team == User.team && dist <= CONF_RANGE) {
-                        StatusEffectManager.AddEffect(plr, new ConfluenceEffect(CONF_MAGNITUDE, 30, true));
+                        StatusEffectManager.AddEffect(plr, new ConfluenceEffect(CONF_MAGNITUDE, 30, true, User.whoAmI));
                     } else if (plr.team != User.team && dist <= CONF_RANGE) {
-                        StatusEffectManager.AddEffect(plr, new ConfluenceEffect(-CONF_MAGNITUDE, 30, true));
+                        StatusEffectManager.AddEffect(plr, new ConfluenceEffect(-CONF_MAGNITUDE, 30, true, User.whoAmI));
                     }
                 }
             }

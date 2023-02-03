@@ -2,6 +2,7 @@
 using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Abilities.Jorm;
 
@@ -45,7 +46,7 @@ namespace TerrariaMoba.Projectiles.Jorm {
             }
 
             for (int d = 0; d < 2; d++) {
-                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 269, 0, 0, 200);
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Sandnado, 0, 0, 200);
             }
         }
 

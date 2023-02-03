@@ -34,7 +34,7 @@ namespace TerrariaMoba.Abilities.Jorm {
         public override void WhileActive() {
             timer--;
             for (int d = 0; d < 2; d++) {
-                Dust.NewDust(User.position, User.width, User.height, 269, 0, 0, 200);
+                Dust.NewDust(User.position, User.width, User.height, DustID.Sandnado, 0, 0, 200);
             }
             if (timer == 0) {
                 TimeOut();
@@ -57,13 +57,10 @@ namespace TerrariaMoba.Abilities.Jorm {
 
             if (closestPlayerID != -1) {
                 Player plr = Main.player[closestPlayerID];
-                StatusEffectManager.AddEffect(plr, new HolyBarrier(
-                    User.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.PHYSICAL_ARMOR), 
-                    User.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.MAGICAL_ARMOR), 
-                    ABSORB_MAGNITUDE, User.whoAmI, BARRIER_DURATION, true));
+                StatusEffectManager.AddEffect(plr, new HolyBarrier(1f, 1f, 1f, 1, BARRIER_DURATION, true, User.whoAmI));
                 SoundEngine.PlaySound(SoundID.Item4, plr.Center);
                 for (int d = 0; d < 8; d++) {
-                    Dust.NewDust(plr.position, plr.width, plr.height, 269, 0f, 0f, 200, default(Color), 1.5f);
+                    Dust.NewDust(plr.position, plr.width, plr.height, DustID.Sandnado, 0f, 0f, 200, default(Color), 1.5f);
                 }
             } else {
                 Main.NewText("Could not find a player in range to give Holy Barrier!");

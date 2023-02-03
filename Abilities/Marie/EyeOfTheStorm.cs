@@ -64,17 +64,17 @@ namespace TerrariaMoba.Abilities.Marie {
             var modProj = proj.ModProjectile;
             ESSpawner eye = modProj as ESSpawner;
             if (eye != null) {
-                StatusEffectManager.AddEffect(target, new StormShockEffect(SHOCK_MAGNITUDE, SHOCK_DURATION, true));
+                StatusEffectManager.AddEffect(target, new StormShockEffect(SHOCK_MAGNITUDE, SHOCK_DURATION, true, User.whoAmI));
             }
 
             ESStormCloud  cloud = modProj as ESStormCloud;
             if (cloud != null) {
-                StatusEffectManager.AddEffect(target, new StormShockEffect(SHOCK_MAGNITUDE, SHOCK_DURATION, true));
+                StatusEffectManager.AddEffect(target, new StormShockEffect(SHOCK_MAGNITUDE, SHOCK_DURATION, true, User.whoAmI));
             }
             
             ESLightning lightning = modProj as ESLightning;
             if (lightning != null) {
-                StatusEffectManager.AddEffect(target, new StormShockEffect(SHOCK_MAGNITUDE, SHOCK_DURATION, true));
+                StatusEffectManager.AddEffect(target, new StormShockEffect(SHOCK_MAGNITUDE, SHOCK_DURATION, true, User.whoAmI));
             }
         }
     }

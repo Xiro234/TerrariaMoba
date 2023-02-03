@@ -10,6 +10,6 @@ namespace TerrariaMoba.StatusEffects {
         public override string DisplayName { get => "Stun"; }
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
         public FunStun() { }
-        public FunStun(int duration, bool canBeCleansed) : base(duration, canBeCleansed) { }
+        public FunStun(int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) { }
     }
 }

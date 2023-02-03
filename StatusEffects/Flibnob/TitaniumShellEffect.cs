@@ -25,14 +25,11 @@ namespace TerrariaMoba.StatusEffects.Flibnob {
         
         public TitaniumShellEffect() { }
 
-        public TitaniumShellEffect(int armor, int mr, float ms, float heal, int duration) : base(duration, true) {
+        public TitaniumShellEffect(int armor, int mr, float ms, float heal, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
             shellArmor = armor;
             shellMagRes = mr;
             moveSpeed = ms;
             healDamage = heal;
-            
-            ConstructFlatAttributes();
-            ConstructMultAttributes();
         }
 
         public void TakePvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {

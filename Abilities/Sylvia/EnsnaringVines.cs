@@ -53,7 +53,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
             var modProjectile = proj.ModProjectile;
             EnsnaringVinesTrap trap = modProjectile as EnsnaringVinesTrap;
             if (trap != null) {
-                StatusEffectManager.AddEffect(target, new EnsnaringVinesEffect(ROOT_DURATION, true));
+                StatusEffectManager.AddEffect(target, new EnsnaringVinesEffect(ROOT_DURATION, true, User.whoAmI));
             }
         }
     }

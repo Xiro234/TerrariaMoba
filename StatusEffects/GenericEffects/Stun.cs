@@ -8,7 +8,7 @@ using TerrariaMoba.Interfaces;
 namespace TerrariaMoba.StatusEffects.GenericEffects {
     public abstract class Stun : StatusEffect, ISetControls, IShoot {
         public Stun() { }
-        public Stun(int duration, bool canBeCleansed) : base(duration, canBeCleansed) { }
+        public Stun(int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) { }
         
         public void SetControls() {
             User.controlRight = false;

@@ -29,7 +29,7 @@ namespace TerrariaMoba.Projectiles.Marie {
                 for (int a = 0; a < 360; a++) {
                     int xPos = (int)(fountainPos.X + radius * Math.Cos(TerrariaMobaUtils.Conv2Rad(a)));
                     int yPos = (int)(fountainPos.Y + radius * Math.Sin(TerrariaMobaUtils.Conv2Rad(a)));
-                    int dust = Dust.NewDust(new Vector2(xPos, yPos), 2, 2, 113, 0, 0, 0, default(Color));
+                    int dust = Dust.NewDust(new Vector2(xPos, yPos), 2, 2, DustID.Clentaminator_Blue, 0, 0, 0, default(Color));
                     Main.dust[dust].noGravity = true;
                     Main.dust[dust].scale = (float)Main.rand.Next(70, 110) * 0.013f;
                 }

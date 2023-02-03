@@ -52,7 +52,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
             var ModProjectile = proj.ModProjectile;
             SylviaUlt2 head = ModProjectile as SylviaUlt2;
             if (head != null) {
-                StatusEffectManager.AddEffect(target, new PlanteraStunEffect(STUN_DURATION, true));
+                StatusEffectManager.AddEffect(target, new PlanteraStunEffect(STUN_DURATION, true, User.whoAmI));
             }
             
             SylviaSpores spore = ModProjectile as SylviaSpores;

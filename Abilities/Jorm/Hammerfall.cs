@@ -55,7 +55,7 @@ namespace TerrariaMoba.Abilities.Jorm {
             var modProjectile = proj.ModProjectile;
             HammerfallProj hammer = modProjectile as HammerfallProj;
             if (hammer != null) {
-                StatusEffectManager.AddEffect(target, new FunStun(STUN_DURATION, true));
+                StatusEffectManager.AddEffect(target, new FunStun(STUN_DURATION, true, User.whoAmI));
             }
         }
     }

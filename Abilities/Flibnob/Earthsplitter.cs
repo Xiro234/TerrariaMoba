@@ -59,7 +59,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
             var modProjectile = proj.ModProjectile;
             SplitEarth earth = modProjectile as SplitEarth;
             if (earth != null) {
-                StatusEffectManager.AddEffect(target, new FunStun(120, true));
+                StatusEffectManager.AddEffect(target, new FunStun(120, true, User.whoAmI));
             }
         }
     }

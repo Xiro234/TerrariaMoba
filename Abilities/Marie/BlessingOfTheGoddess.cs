@@ -14,7 +14,7 @@ namespace TerrariaMoba.Abilities.Marie {
         public const int BONUS_DAMAGE = 30;
         
         public void PlayerHealed(Player plr) {
-            StatusEffectManager.AddEffect(plr, new MarieTraitEffect(BONUS_DAMAGE, 600, false));
+            StatusEffectManager.AddEffect(plr, new MarieTraitEffect(BONUS_DAMAGE, 600, false, User.whoAmI));
         }
 
         //TODO - Whenever Marie heals herself or an ally, they are blessed for 3 seconds. For this duration, basic attacks and abilities deal a bonus 30(4 % sc) magic damage.

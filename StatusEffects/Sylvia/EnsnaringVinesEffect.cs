@@ -16,7 +16,7 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
 
         public EnsnaringVinesEffect() { }
 
-        public EnsnaringVinesEffect(int duration, bool canBeCleansed) : base(duration, canBeCleansed) { }
+        public EnsnaringVinesEffect(int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) { }
     }
     
     public class EnsnaringVinesLayer : PlayerDrawLayer {

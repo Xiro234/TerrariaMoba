@@ -12,7 +12,6 @@ namespace TerrariaMoba.Players {
         public int CurrentResource { get; set; }
         public Character Hero { get; set; }
         public Type selectedCharacter;
-        //TODO - STATISTACTS
         public int lifeRegenTimer = 0;
         public int resourceRegenTimer = 0;
 

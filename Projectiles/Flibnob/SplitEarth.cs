@@ -40,7 +40,7 @@ namespace TerrariaMoba.Projectiles.Flibnob {
             if ((int)Projectile.ai[0] == 0) {
                 SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
                 for (int i = 0; i < 30; i++) {
-                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 0, 0, 0, 0, default(Color), 1.2f);
+                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Dirt, 0, 0, 0, default(Color), 1.2f);
                 }
                 Projectile.ai[0] += 1f;
             }
@@ -49,7 +49,7 @@ namespace TerrariaMoba.Projectiles.Flibnob {
         public override void Kill(int timeLeft) {
             SoundEngine.PlaySound(SoundID.Tink, Projectile.position);
             for (int i = 0; i < 20; i++) {
-                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 0, 0, 0, 0, default(Color), 1.2f);
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Dirt, 0, 0, 0, default(Color), 1.2f);
             }
         }
     }

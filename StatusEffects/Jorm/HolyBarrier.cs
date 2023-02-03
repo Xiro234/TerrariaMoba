@@ -15,20 +15,13 @@ namespace TerrariaMoba.StatusEffects.Jorm {
         private float jormArmor;
         private float jormMagRes;
         private float dmgAbsorbMag;
-        private float jormPlayerId;
 
         public HolyBarrier() { }
 
-        public HolyBarrier(float armor, float magres, float magnitude, int id, int duration, bool canBeCleansed) : base(duration, canBeCleansed) {
+        public HolyBarrier(float armor, float magres, float magnitude, int id, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
             jormArmor = armor;
             jormMagRes = magres;
             dmgAbsorbMag = magnitude;
-            jormPlayerId = id;
-            
-            FlatAttributes = new Dictionary<AttributeType, Func<float>> {
-                { PHYSICAL_ARMOR, () => jormArmor },
-                { MAGICAL_ARMOR, () => jormMagRes },
-            };
         }
 
         //TODO - Implement Jorm's damage absorption.

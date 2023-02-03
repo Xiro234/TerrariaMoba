@@ -15,10 +15,8 @@ namespace TerrariaMoba.StatusEffects.Marie {
         private float moveSpeed;
 
         public ConfluenceEffect() { }
-        public ConfluenceEffect(float ms, int duration, bool canBeCleansed) : base(duration, canBeCleansed) { 
+        public ConfluenceEffect(float ms, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) { 
             moveSpeed = ms;
-
-            ConstructMultAttributes();
         }
 
         public override void SendEffectElements(ModPacket packet) {
@@ -36,7 +34,5 @@ namespace TerrariaMoba.StatusEffects.Marie {
                 { MOVEMENT_SPEED, () => moveSpeed }
             };
         }
-
-        //TODO - Increase movespeed of allies and reduce of enemies
     }
 }

@@ -57,7 +57,7 @@ namespace TerrariaMoba.Abilities.Jorm {
             var modProjectile = proj.ModProjectile;
             SpinningHammer hammer = modProjectile as SpinningHammer;
             if (hammer != null) {
-                StatusEffectManager.AddEffect(target, new GoldenhammerDanceEffect(DAZE_MAGNITUDE, DAZE_BASE_DURATION, true));
+                StatusEffectManager.AddEffect(target, new GoldenhammerDanceEffect(DAZE_MAGNITUDE, DAZE_BASE_DURATION, true, User.whoAmI));
             }
         }
     }

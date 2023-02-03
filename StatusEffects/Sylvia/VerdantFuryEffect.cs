@@ -17,7 +17,7 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         
         public VerdantFuryEffect() { }
 
-        public VerdantFuryEffect(int duration, float atkspd, float atkvel) : base(duration, true) {
+        public VerdantFuryEffect(int duration, float atkspd, float atkvel, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
             attackSpeed = atkspd;
             attackVelocity = atkvel;
             

@@ -2,11 +2,13 @@
 using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Interfaces;
+using TerrariaMoba.Projectiles;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Flibnob;
 
 namespace TerrariaMoba.Abilities.Flibnob {
-    public class SearingBond : Ability {
+    public class SearingBond : Ability, IModifyHitPvpWithProj {
         public SearingBond(Player player) : base(player, "Searing Bond", 0, 0, AbilityType.Active) { }
 
         public override Texture2D Icon {
@@ -17,14 +19,12 @@ namespace TerrariaMoba.Abilities.Flibnob {
         public const int BURN_BASE_DURATION = 120;
         public const float BUFF_RANGE = 20f;
         private int finalStacks;
-        private int timer;
 
         public override void OnCast() {
             if (IsActive) {
                 IsActive = false;
             } else {
                 IsActive = true;
-                timer = 0;
             }
         }
 
@@ -39,11 +39,15 @@ namespace TerrariaMoba.Abilities.Flibnob {
             }
             finalStacks = total;
 
-            if (timer == 0) {
-                StatusEffectManager.AddEffect(User, new SearingBondEffect(User.whoAmI, finalStacks, BASE_ARMOR_GAIN, BURN_BASE_DURATION, 60, false));
-                timer = 60;
-            } else {
-                timer--;
+            StatusEffectManager.AddEffect(User, new SearingBondEffect(finalStacks, BASE_ARMOR_GAIN, 10, false, User.whoAmI));
+        }
+
+        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
+            if (proj.owner == User.whoAmI) { 
+                var dmgType = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
+                if (proj != null && dmgType.PhysicalDamage > 0) {
+                    StatusEffectManager.AddEffect(target, new FlameBelchEffect(10, BURN_BASE_DURATION, true, User.whoAmI));
+                }
             }
         }
     }

@@ -15,7 +15,7 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
         
         public Daze() { }
 
-        public Daze(float magnitude, int duration, bool canBeCleansed) : base(duration, canBeCleansed) {
+        public Daze(float magnitude, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
             modifier = magnitude;
             
             MultAttributes = new Dictionary<AttributeType, Func<float>>() {

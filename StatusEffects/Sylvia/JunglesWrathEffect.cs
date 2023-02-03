@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Players;
 
@@ -19,6 +20,7 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         
         public JunglesWrathEffect(int duration, int applicantId, float damagePercent, int stacks) : base(duration, true, applicantId) {
             Stacks = stacks;
+            DamagePercent = damagePercent;
         }
 
         protected override bool ShowBar {
@@ -34,8 +36,11 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
             if (Stacks < 4) {
                 Stacks += 1;
             } else {
+                if (Main.netMode != NetmodeID.Server) {
+                    Main.NewText("Jungle's Wrath proc.");
+                }
                 User.GetModPlayer<MobaPlayer>().TakePvpDamage(0, 0, (int)Math.Ceiling(User.statLifeMax2 * DamagePercent), User.whoAmI, false);
-                Duration = 0;
+                StatusEffectManager.RemoveEffect(User, this);
             }
         }
 

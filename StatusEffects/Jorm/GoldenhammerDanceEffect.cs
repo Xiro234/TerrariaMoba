@@ -14,6 +14,6 @@ namespace TerrariaMoba.StatusEffects.Jorm {
 
         public GoldenhammerDanceEffect() { }
 
-        public GoldenhammerDanceEffect(float magnitude, int duration, bool canBeCleansed) : base(magnitude, duration, canBeCleansed) { }
+        public GoldenhammerDanceEffect(float magnitude, int duration, bool canBeCleansed, int applierId) : base(magnitude, duration, canBeCleansed, applierId) { }
     }
 }

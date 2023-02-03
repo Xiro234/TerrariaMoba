@@ -15,7 +15,7 @@ namespace TerrariaMoba.StatusEffects.Jorm {
 
         public ResolveWisdom() { }
 
-        public ResolveWisdom(int stacks, int duration, bool canBeCleansed) : base(duration, canBeCleansed) {
+        public ResolveWisdom(int stacks, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
             stackCount = stacks;
             
             FlatAttributes = new Dictionary<AttributeType, Func<float>> {

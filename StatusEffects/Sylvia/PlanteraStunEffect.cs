@@ -13,6 +13,6 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         
         public PlanteraStunEffect() { }
 
-        public PlanteraStunEffect(int duration, bool canBeCleansed) : base(duration, canBeCleansed) { }
+        public PlanteraStunEffect(int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) { }
     }
 }

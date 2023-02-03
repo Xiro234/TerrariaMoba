@@ -22,6 +22,7 @@ namespace TerrariaMoba.StatusEffects {
 
                 if (index != -1) {
                     mobaPlayer.EffectList[index].ReApply();
+                    Logging.PublicLogger.Debug("StatusEffectManager: Found existing effect, reapplied: " + statusEffect.DisplayName);
                 }
             }
             else {
@@ -30,6 +31,7 @@ namespace TerrariaMoba.StatusEffects {
                 statusEffect.ConstructFlatAttributes();
                 statusEffect.ConstructMultAttributes();
                 Player.GetModPlayer<MobaPlayer>().EffectList.Add(statusEffect);
+                Logging.PublicLogger.Debug("StatusEffectManager: " + statusEffect.DisplayName + " added.");
             }
 
             if (!quiet && Main.netMode != NetmodeID.SinglePlayer) {
@@ -93,7 +95,7 @@ namespace TerrariaMoba.StatusEffects {
                 TerrariaMoba.Instance.Logger.Debug("Null!");
             }
             else {
-                TerrariaMoba.Instance.Logger.Debug(effect.DisplayName);
+                //TerrariaMoba.Instance.Logger.Debug(effect.DisplayName);
             }
 
             return effect;
