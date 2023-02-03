@@ -31,7 +31,11 @@ namespace TerrariaMoba.Players {
         }
 
         public override void OnRespawn(Player Player) {
-            Player.statLife = Player.statLifeMax2;
+            if (MobaSystem.MatchInProgress) {
+                SetPlayerHealth();
+                Player.statLife = Player.statLifeMax2;
+            }
+
             SetPlayerResource();
         }
 
@@ -166,9 +170,7 @@ namespace TerrariaMoba.Players {
         }
 
         public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
-            if (Main.netMode == NetmodeID.MultiplayerClient && pvp) {
-            }
-            else {
+            if (Main.netMode == NetmodeID.MultiplayerClient && MobaSystem.MatchInProgress) {
                 AbilityEffectManager.Kill(Player, damage, hitDirection, pvp, damageSource);
                 EffectList.Clear();
             }
