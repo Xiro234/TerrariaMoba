@@ -3,14 +3,16 @@ using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Steamworks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Interfaces;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.StatusEffects.Sylvia {
-    public class JunglesWrathEffect : StatusEffect {
+    public class JunglesWrathEffect : StatusEffect, ITakePvpDamage {
 
         public override string DisplayName { get => "Jungle's Wrath"; }
         
@@ -29,21 +31,20 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         
         public int Stacks { get; set; }
         public float DamagePercent { get; set; }
-        
+
         public override void ReApply() {
             base.ReApply();
-            
+
             if (Stacks < 4) {
                 Stacks += 1;
             } else {
                 if (Main.netMode != NetmodeID.Server) {
                     Main.NewText("Jungle's Wrath proc.");
                 }
-                User.GetModPlayer<MobaPlayer>().TakePvpDamage(0, 0, (int)Math.Ceiling(User.statLifeMax2 * DamagePercent), User.whoAmI, true);
+                User.GetModPlayer<MobaPlayer>().TakePvpDamage(0, 0, (int)Math.Ceiling(User.statLifeMax2 * DamagePercent), ApplicantID, true);
                 DurationTimer = 0;
             }
         }
-
 
         public override void SendEffectElements(ModPacket packet) {
             base.SendEffectElements(packet);
@@ -53,6 +54,10 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         public override void ReceiveEffectElements(BinaryReader reader) {
             base.ReceiveEffectElements(reader);
             Stacks = reader.ReadInt32();
+        }
+
+        public void TakePvpDamage(ref int phsyicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) { 
+            
         }
     }
     

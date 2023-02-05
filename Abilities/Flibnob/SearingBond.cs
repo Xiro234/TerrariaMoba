@@ -40,6 +40,8 @@ namespace TerrariaMoba.Abilities.Flibnob {
                 }
             }
             finalStacks = total;
+
+            ConstructFlatAttributes();
         }
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
