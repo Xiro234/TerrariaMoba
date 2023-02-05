@@ -26,23 +26,5 @@ namespace TerrariaMoba.StatusEffects.Flibnob {
             currentStacks = stacks;
             armorGain = armor;
         }
-
-        public override void SendEffectElements(ModPacket packet) {
-            packet.Write(currentStacks);
-            packet.Write(armorGain);
-            base.SendEffectElements(packet);
-        }
-
-        public override void ReceiveEffectElements(BinaryReader reader) {
-            currentStacks = reader.ReadInt32();
-            armorGain = reader.ReadInt32();
-            base.ReceiveEffectElements(reader);
-        }
-
-        public override void ConstructFlatAttributes() {
-            FlatAttributes = new Dictionary<AttributeType, Func<float>> {
-                { PHYSICAL_ARMOR, () => armorGain * currentStacks }
-            };
-        }
     }
 }

@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Linq;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Characters;
 using TerrariaMoba.Statistic;
-using TerrariaMoba.StatusEffects;
 
 namespace TerrariaMoba.Players {
     public partial class MobaPlayer : ModPlayer {
@@ -52,6 +50,9 @@ namespace TerrariaMoba.Players {
         public float GetCurrentAttributeValue(AttributeType attribute) {
             float value = Hero.BaseAttributes.ContainsKey(attribute) ? Hero.BaseAttributes[attribute]() : 0f;
             float mult = 1f;
+
+            value += Hero.Skills.Sum(e => e.PassiveFlatAttributes.ContainsKey(attribute) ? e.PassiveFlatAttributes[attribute]() : 0);
+            mult += Hero.Skills.Sum(e => e.PassiveMultAttributes.ContainsKey(attribute) ? e.PassiveMultAttributes[attribute]() : 0);
 
             value += EffectList.Sum(e => e.FlatAttributes.ContainsKey(attribute) ? e.FlatAttributes[attribute]() : 0);
             mult += EffectList.Sum(e => e.MultAttributes.ContainsKey(attribute) ? e.MultAttributes[attribute]() : 0);

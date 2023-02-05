@@ -21,13 +21,11 @@ namespace TerrariaMoba.Abilities.Flibnob {
 
         public const int BASE_ARMOR_GAIN = 5;
         public const int BURN_BASE_DURATION = 120;
-        public const float BUFF_RANGE = 20f;
+        public const float BUFF_RANGE = 30f;
         private int finalStacks;
 
         public override void OnCast() {
-            if (IsActive) {
-                IsActive = false;
-            } else {
+            if (!IsActive) {
                 IsActive = true;
             }
         }
@@ -42,8 +40,6 @@ namespace TerrariaMoba.Abilities.Flibnob {
                 }
             }
             finalStacks = total;
-
-            StatusEffectManager.AddEffect(User, new SearingBondEffect(finalStacks, BASE_ARMOR_GAIN, 10, false, User.whoAmI));
         }
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
