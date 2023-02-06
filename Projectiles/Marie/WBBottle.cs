@@ -16,9 +16,6 @@ namespace TerrariaMoba.Projectiles.Marie {
             Projectile.width = 14;
             Projectile.height = 14;
             Projectile.penetrate = 1;
-
-            PoolDamage = Tidecaller.POOL_DAMAGE;
-            PoolDuration = Tidecaller.POOL_DURATION;
         }
 
         public override void AI() {

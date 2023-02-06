@@ -29,7 +29,7 @@ namespace TerrariaMoba.Projectiles.Flibnob {
                 }
                 Projectile.ai[0] += 1f;
                 var num298 = 6;
-                if (num298 == 6 || Main.rand.Next(2) == 0) {
+                if (num298 == 6 || Main.rand.NextBool(2)) {
                     int num3;
                     for (var num299 = 0; num299 < 1; num299 = num3 + 1) {
                         var num300 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y),
@@ -37,7 +37,7 @@ namespace TerrariaMoba.Projectiles.Flibnob {
                             Projectile.velocity.Y * 0.2f, 100);
                         
                         Dust dust3;
-                        if (Main.rand.Next(3) != 0 || num298 == 75 && Main.rand.Next(3) == 0) {
+                        if (!Main.rand.NextBool(3) || num298 == 75 && Main.rand.NextBool(3)) {
                             Main.dust[num300].noGravity = true;
                             dust3 = Main.dust[num300];
                             dust3.scale *= 3f;

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace TerrariaMoba.Projectiles.Osteo {
@@ -26,7 +27,7 @@ namespace TerrariaMoba.Projectiles.Osteo {
 
         public override void AI() {
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
-            int dust = Dust.NewDust(Projectile.Center, 0, 0, 60, 0f, 0f, 100, Color.DarkRed, 2f);
+            int dust = Dust.NewDust(Projectile.Center, 0, 0, DustID.RedTorch, 0f, 0f, 100, Color.DarkRed, 2f);
             Main.dust[dust].noGravity = true;
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {

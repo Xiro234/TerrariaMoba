@@ -21,7 +21,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobAbilityOne").Value; }
 
         public const int FLAME_BASE_DAMAGE = 100;
-        public const int FLAME_BASE_DELAY = 75;
+        public const int FLAME_BASE_DELAY = 60;
         public const int BURN_BASE_DAMAGE = 5;
         public const int MELT_BASE_DAMAGE = 25;
         public const int BURN_BASE_DURATION = 180;

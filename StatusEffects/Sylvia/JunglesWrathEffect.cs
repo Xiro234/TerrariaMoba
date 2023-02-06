@@ -3,10 +3,8 @@ using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Steamworks;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Players;
@@ -35,13 +33,14 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         public override void ReApply() {
             base.ReApply();
 
-            if (Stacks < 4) {
+            if (Stacks < 5) {
                 Stacks += 1;
-            } else {
-                if (Main.netMode != NetmodeID.Server) {
-                    Main.NewText("Jungle's Wrath proc.");
-                }
-                User.GetModPlayer<MobaPlayer>().TakePvpDamage(0, 0, (int)Math.Ceiling(User.statLifeMax2 * DamagePercent), ApplicantID, true);
+            }
+        }
+
+        public void TakePvpDamage(ref int phsyicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {
+            if (Stacks >= 5) {
+                trueDamage += (int)Math.Ceiling(User.statLifeMax2 * DamagePercent);
                 DurationTimer = 0;
             }
         }
@@ -54,10 +53,6 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         public override void ReceiveEffectElements(BinaryReader reader) {
             base.ReceiveEffectElements(reader);
             Stacks = reader.ReadInt32();
-        }
-
-        public void TakePvpDamage(ref int phsyicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) { 
-            
         }
     }
     
