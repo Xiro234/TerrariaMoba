@@ -21,12 +21,12 @@ namespace TerrariaMoba.Abilities.Marie {
         public const float LIGHTNING_SPEED = 3f;
         public const int RAIN_DAMAGE = 50;
         public const float RAIN_SPEED = 4f;
-        public const int CLOUD_DAMAGE = 222;
+        public const int CLOUD_DAMAGE = 333;
         public const int CLOUD_DURATION = 380;
-        public const int EYE_DAMAGE = 444;
         
-        public const float SHOCK_MAGNITUDE = 0.1f;
-        public const int SHOCK_DURATION = 90;
+        public const float SHOCK_SLOW_MAG = 0.25f;
+        public const int SHOCK_MR_LOSS = 10;
+        public const int SHOCK_DURATION = 120;
         
         public override void OnCast() {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
@@ -43,8 +43,7 @@ namespace TerrariaMoba.Abilities.Marie {
                 Vector2 velocity = new Vector2(dirX, dirY);
 
                 Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),
-                    User.Center, velocity, ModContent.ProjectileType<ESSpawner>(), 1, 0, 
-                    User.whoAmI);
+                    User.Center, velocity, ModContent.ProjectileType<ESSpawner>(), 1, 0, User.whoAmI);
                 SoundEngine.PlaySound(SoundID.Item66, User.Center);
 
                 ESSpawner eye = proj.ModProjectile as ESSpawner;
@@ -62,19 +61,10 @@ namespace TerrariaMoba.Abilities.Marie {
         
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
             var modProj = proj.ModProjectile;
-            ESSpawner eye = modProj as ESSpawner;
-            if (eye != null) {
-                StatusEffectManager.AddEffect(target, new StormShockEffect(SHOCK_MAGNITUDE, SHOCK_DURATION, true, User.whoAmI));
-            }
-
-            ESStormCloud  cloud = modProj as ESStormCloud;
-            if (cloud != null) {
-                StatusEffectManager.AddEffect(target, new StormShockEffect(SHOCK_MAGNITUDE, SHOCK_DURATION, true, User.whoAmI));
-            }
             
             ESLightning lightning = modProj as ESLightning;
             if (lightning != null) {
-                StatusEffectManager.AddEffect(target, new StormShockEffect(SHOCK_MAGNITUDE, SHOCK_DURATION, true, User.whoAmI));
+                StatusEffectManager.AddEffect(target, new StormShockEffect(SHOCK_SLOW_MAG, SHOCK_MR_LOSS, SHOCK_DURATION, true, User.whoAmI));
             }
         }
     }

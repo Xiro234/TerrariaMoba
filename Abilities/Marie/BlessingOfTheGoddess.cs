@@ -13,19 +13,14 @@ namespace TerrariaMoba.Abilities.Marie {
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieUltimateOne").Value; }
 
         public const int BONUS_DAMAGE = 30;
-        
-        public void PlayerHealed(Player plr) {
-            StatusEffectManager.AddEffect(plr, new MarieTraitEffect(BONUS_DAMAGE, 600, false, User.whoAmI));
-        }
+        public const int BUFF_DURATION = 300;
 
         public void OnHeal(ref int amount, ref bool doText) {
-            StatusEffectManager.AddEffect(User, new MarieTraitEffect(BONUS_DAMAGE, 600, false, User.whoAmI));
+            StatusEffectManager.AddEffect(User, new MarieTraitEffect(BONUS_DAMAGE, BUFF_DURATION, false, User.whoAmI));
         }
 
         public void OnHealOtherPlayer(Player target, ref int amount, ref bool doText) {
-            StatusEffectManager.AddEffect(target, new MarieTraitEffect(BONUS_DAMAGE, 600, false, User.whoAmI));
+            StatusEffectManager.AddEffect(target, new MarieTraitEffect(BONUS_DAMAGE, BUFF_DURATION, false, User.whoAmI));
         }
-
-        //TODO - Whenever Marie heals herself or an ally, they are blessed for 3 seconds. For this duration, basic attacks and abilities deal a bonus 30(4 % sc) magic damage.
     }
 }

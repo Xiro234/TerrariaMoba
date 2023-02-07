@@ -5,6 +5,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Interfaces;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Marie {
@@ -34,7 +35,6 @@ namespace TerrariaMoba.Abilities.Marie {
             }
         }
 
-        //TODO - Might need syncing to ensure HP bars are updated but might be tripping
         public override void TimeOut() {
             IsActive = false;
             float closestDist  = float.MaxValue;
@@ -50,11 +50,7 @@ namespace TerrariaMoba.Abilities.Marie {
             
             if (closestPlayerID != -1) {
                 Player plr = Main.player[closestPlayerID];
-
-                plr.statLife += FLOW_HEAL;
-                CombatText.NewText(plr.Hitbox, Color.CornflowerBlue, FLOW_HEAL, true);
-                BlessingOfTheGoddess botg = User.GetModPlayer<MobaPlayer>().Hero.Trait as BlessingOfTheGoddess;
-                botg?.PlayerHealed(plr);
+                User.GetModPlayer<MobaPlayer>().HealOtherPlayer(plr, FLOW_HEAL, true);
 
                 SoundEngine.PlaySound(SoundID.Item4, plr.Center);
                 for (int d = 0; d < 30; d++) {

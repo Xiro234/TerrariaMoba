@@ -24,7 +24,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
             DrawOffsetX = -46;
 
             SporeDamage = PlanterasLastWill.SPORE_DAMAGE;
-            NumberOfSpores = PlanterasLastWill.SPORE_NUMBER;
+            NumberOfSpores = PlanterasLastWill.SPORE_COUNT;
             SporeDuration = PlanterasLastWill.SPORE_DURATION;
         }
 

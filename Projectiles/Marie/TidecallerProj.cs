@@ -1,11 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Abilities.Marie;
 
 namespace TerrariaMoba.Projectiles.Marie {
     public class TidecallerProj : ModProjectile {
+        public int TideDamage { get; set; }
+        public int TideDuration { get; set; }
 
         public override void SetDefaults() {
             Projectile.width = 10;
@@ -14,14 +18,19 @@ namespace TerrariaMoba.Projectiles.Marie {
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
+
+            TideDamage = Tidecaller.TIDE_DAMAGE;
+            TideDuration = Tidecaller.TIDE_DURATION;
+        }
+
+        public override bool? CanDamage() {
+            return false;
         }
 
         public override void AI() {
             int x = (int)Projectile.Bottom.X;
             int y = (int)Projectile.Bottom.Y;
             if (TerrariaMobaUtils.TileIsSolidOrPlatform(x / 16, y / 16)) {
-                Projectile.width += 120;
-                Projectile.height += 25;
                 Projectile.position.X -= 60;
                 Projectile.position.Y -= 25;
                 Projectile.Kill();
@@ -49,12 +58,28 @@ namespace TerrariaMoba.Projectiles.Marie {
         }
 
         public override void Kill(int timeLeft) {
-            for (int i = 0; i < 40; i++) {
-                int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.WhiteTorch, 0f, 0f, Projectile.alpha, Color.CornflowerBlue);
-                Main.dust[dust].noGravity = true;
-                Main.dust[dust].scale = Main.rand.Next(50, 100) * 0.033f;
-                Main.dust[dust].velocity *= 0.33f;
+            if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) {
+                float x = Projectile.TopLeft.X;
+                float y = Projectile.TopLeft.Y;
+                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), new Vector2(x + 81f, y + 15f), Vector2.Zero,
+                    ModContent.ProjectileType<TidecallerTide>(), 1, 0f, Main.myPlayer);
+                TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: TideDamage);
+
+                TidecallerTide tide = proj.ModProjectile as TidecallerTide;
+                if (tide != null) {
+                    tide.TideDuration = TideDuration;
+                }
             }
+        }
+
+        public override void SendExtraAI(BinaryWriter writer) {
+            writer.Write(TideDamage);
+            writer.Write(TideDuration);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader) {
+            TideDamage = reader.ReadInt32();
+            TideDuration = reader.ReadInt32();
         }
     }
 }
