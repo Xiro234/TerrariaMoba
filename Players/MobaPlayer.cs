@@ -291,15 +291,5 @@ namespace TerrariaMoba.Players {
                 }
             }
         }
-
-        public void HealMe(int amount, bool doText) {
-            if(doText) {
-                CombatText.NewText(Player.Hitbox, CombatText.HealLife, amount, false);
-            }
-            Player.statLife += amount;
-            if (Player.statLife > Player.statLifeMax2) {
-                Player.statLife = Player.statLifeMax2;
-            }
-        }
     }
 }

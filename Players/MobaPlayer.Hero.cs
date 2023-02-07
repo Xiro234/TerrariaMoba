@@ -3,6 +3,7 @@ using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Characters;
+using TerrariaMoba.Interfaces;
 using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Players {
@@ -15,7 +16,7 @@ namespace TerrariaMoba.Players {
 
         public void RegenLife() {
             lifeRegenTimer++;
-            
+
             if (lifeRegenTimer == 60) {
                 float healthRegenFromMax = (Player.statLifeMax2 * 0.125f / 60f);
 
@@ -51,8 +52,10 @@ namespace TerrariaMoba.Players {
             float value = Hero.BaseAttributes.ContainsKey(attribute) ? Hero.BaseAttributes[attribute]() : 0f;
             float mult = 1f;
 
-            value += Hero.Skills.Sum(e => e.PassiveFlatAttributes.ContainsKey(attribute) ? e.PassiveFlatAttributes[attribute]() : 0);
-            mult += Hero.Skills.Sum(e => e.PassiveMultAttributes.ContainsKey(attribute) ? e.PassiveMultAttributes[attribute]() : 0);
+            value += Hero.Skills.Sum(e =>
+                e.PassiveFlatAttributes.ContainsKey(attribute) ? e.PassiveFlatAttributes[attribute]() : 0);
+            mult += Hero.Skills.Sum(e =>
+                e.PassiveMultAttributes.ContainsKey(attribute) ? e.PassiveMultAttributes[attribute]() : 0);
 
             value += EffectList.Sum(e => e.FlatAttributes.ContainsKey(attribute) ? e.FlatAttributes[attribute]() : 0);
             mult += EffectList.Sum(e => e.MultAttributes.ContainsKey(attribute) ? e.MultAttributes[attribute]() : 0);
@@ -62,6 +65,23 @@ namespace TerrariaMoba.Players {
                     return value + mult;
                 default:
                     return value * mult;
+            }
+        }
+
+        public void HealOtherPlayer(Player target, int amount, bool doText) {
+            AbilityEffectManager.OnHealOtherPlayer(Player, target, ref amount, ref doText);
+            target.GetModPlayer<MobaPlayer>().HealMe(amount, doText);
+        }
+        
+        public void HealMe(int amount, bool doText) {
+            AbilityEffectManager.OnHeal(Player, ref amount, ref doText);
+            
+            if(doText) {
+                CombatText.NewText(Player.Hitbox, CombatText.HealLife, amount, false);
+            }
+            Player.statLife += amount;
+            if (Player.statLife > Player.statLifeMax2) {
+                Player.statLife = Player.statLifeMax2;
             }
         }
     }

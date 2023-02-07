@@ -19,10 +19,7 @@ namespace TerrariaMoba.Abilities.Marie {
             for (int i = 0; i < Main.maxPlayers; i++) {
                 Player plr = Main.player[i];
                 if (plr.active && plr.team == User.team) {
-                    plr.statLife += SURGE_HEAL;
-                    CombatText.NewText(plr.Hitbox, Color.CornflowerBlue, SURGE_HEAL, true);
-                    BlessingOfTheGoddess botg = User.GetModPlayer<MobaPlayer>().Hero.Trait as BlessingOfTheGoddess;
-                    botg?.PlayerHealed(plr);
+                    User.GetModPlayer<MobaPlayer>().HealOtherPlayer(plr, SURGE_HEAL, true);
 
                     SoundEngine.PlaySound(SoundID.Item4, plr.Center);
                     for (int d = 0; d < 30; d++) {

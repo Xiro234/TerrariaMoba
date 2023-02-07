@@ -148,6 +148,40 @@ namespace TerrariaMoba.Interfaces {
                 ((ITakePvpDamage)effect).TakePvpDamage(ref physicalDamage, ref magicalDamage, ref trueDamage, ref killer);
             }
         }
+
+        public static void OnHeal(Player Player, ref int amount, ref bool doText) {
+            List<Ability> abilities = GetValidAbilities<IOnHeal>(Player);
+            List<StatusEffect> effects = GetValidEffects<ITakePvpDamage>(Player);
+
+            bool curDoText = true;
+            
+            foreach (Ability ability in abilities) {
+                ((IOnHeal)ability).OnHeal(ref amount, ref curDoText);
+                doText = doText && curDoText;
+            }
+            
+            foreach (StatusEffect effect in effects) {
+                ((IOnHeal)effect).OnHeal(ref amount, ref doText);
+                doText = doText && curDoText;
+            }
+        }
+
+        public static void OnHealOtherPlayer(Player Player, Player target, ref int amount, ref bool doText) {
+            List<Ability> abilities = GetValidAbilities<IOnHeal>(Player);
+            List<StatusEffect> effects = GetValidEffects<ITakePvpDamage>(Player);
+
+            bool curDoText = true;
+            
+            foreach (Ability ability in abilities) {
+                ((IOnHealOtherPlayer)ability).OnHealOtherPlayer(target, ref amount, ref curDoText);
+                doText = doText && curDoText;
+            }
+            
+            foreach (StatusEffect effect in effects) {
+                ((IOnHealOtherPlayer)effect).OnHealOtherPlayer(target, ref amount, ref curDoText);
+                doText = doText && curDoText;
+            }
+        }
         #endregion
         
         
