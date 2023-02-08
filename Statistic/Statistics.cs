@@ -10,6 +10,8 @@
         ATTACK_SPEED,
         ATTACK_VELOCITY,
         MOVEMENT_SPEED,
-        JUMP_SPEED
+        JUMP_SPEED,
+        HEALING_EFFECTIVENESS,
+        STATUS_RESISTANCE
     }
 }

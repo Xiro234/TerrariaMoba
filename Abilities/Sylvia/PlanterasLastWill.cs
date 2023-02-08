@@ -60,7 +60,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
             
             SylviaSpores spore = ModProjectile as SylviaSpores;
             if (spore != null) {
-                //StatusEffectManager.AddEffect(target, new PlanteraSporeEffect( , true, User.whoAmI));
+                StatusEffectManager.AddEffect(target, new PlanteraSporeEffect(SPORE_HEALEFF_REDUCTION, SPORE_DEBUFF_DURATION, true, User.whoAmI));
             }
         }
     }

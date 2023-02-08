@@ -79,7 +79,7 @@ namespace TerrariaMoba.Players {
             if(doText) {
                 CombatText.NewText(Player.Hitbox, CombatText.HealLife, amount, false);
             }
-            Player.statLife += amount;
+            Player.statLife += amount * (int)GetCurrentAttributeValue(AttributeType.HEALING_EFFECTIVENESS);
             if (Player.statLife > Player.statLifeMax2) {
                 Player.statLife = Player.statLifeMax2;
             }
