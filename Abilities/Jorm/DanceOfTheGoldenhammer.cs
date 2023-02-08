@@ -20,7 +20,7 @@ namespace TerrariaMoba.Abilities.Jorm {
         public const int HAMMER_DAMAGE = 275;
         public const float HAMMER_SPIN_RADIUS = 135f;
         public const float HAMMER_SPAWN_SPEED = 5f;
-        public const float DAZE_MAGNITUDE = 0.2f;
+        public const float DAZE_MAGNITUDE = 0.20f;
         public const int DAZE_BASE_DURATION = 90;
         
         public override void OnCast() {
@@ -32,12 +32,10 @@ namespace TerrariaMoba.Abilities.Jorm {
 
                 for (int i = 0; i < 4; i++) {
                     Vector2 direction = Vector2.UnitX;
-
                     Vector2 velocity = direction.RotatedBy(MathHelper.ToRadians(i * 90 + 45));
 
-                    Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), 
-                        User.Center, velocity, ModContent.ProjectileType<SpinningHammer>(), 1, 0, 
-                        User.whoAmI);
+                    Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), User.Center, velocity, 
+                        ModContent.ProjectileType<SpinningHammer>(), 1, 0, User.whoAmI);
                     TerrariaMobaUtils.SetProjectileDamage(proj, PhysicalDamage: HAMMER_DAMAGE);
                     
                     SpinningHammer hammer = proj.ModProjectile as SpinningHammer;
@@ -50,8 +48,6 @@ namespace TerrariaMoba.Abilities.Jorm {
                 SoundEngine.PlaySound(SoundID.Item1, User.Center);
             }
         }
-        
-        //TODO - Not dealing damage to NPCs for some reason (Hammerfall does for example)
         
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
             var modProjectile = proj.ModProjectile;

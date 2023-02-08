@@ -40,7 +40,7 @@ namespace TerrariaMoba.Characters {
             return new Ability[] {
                 new DanceOfTheGoldenhammer(User),
                 new Consecration(User),
-                new SealOfHephaesta(User),
+                new ShieldOfHephaesta(User),
                 new Hammerfall(User),
                 new PaladinsResolve(User),
                 new VexillumImmortalis(User)

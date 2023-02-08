@@ -1,9 +1,10 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Abilities.Jorm;
 
 namespace TerrariaMoba.Projectiles.Jorm {
-    public class Consecration : ModProjectile {
+    public class ConsecrationProj : ModProjectile {
         public float ConsecSpread { get; set; }
         public float ConsecDuration { get; set; }
 
@@ -17,8 +18,8 @@ namespace TerrariaMoba.Projectiles.Jorm {
             Projectile.alpha = 255;
             Projectile.penetrate = -1;
 
-            ConsecSpread = Abilities.Jorm.Consecration.CONSEC_SPREAD_RANGE;
-            ConsecDuration = Abilities.Jorm.Consecration.CONSEC_DURATION;
+            ConsecSpread = Consecration.CONSEC_SPREAD_RANGE;
+            ConsecDuration = Consecration.CONSEC_DURATION;
         }
 
         public override void AI() {

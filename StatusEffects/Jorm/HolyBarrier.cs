@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Terraria;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
-using TerrariaMoba.Statistic;
-using static TerrariaMoba.Statistic.AttributeType;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.StatusEffects.Jorm {
     public class HolyBarrier : StatusEffect, ITakePvpDamage {
@@ -12,27 +10,30 @@ namespace TerrariaMoba.StatusEffects.Jorm {
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
 
-        private float jormArmor;
-        private float jormMagRes;
-        private float dmgAbsorbMag;
+        private float rangeToAbsorb;
+        private float absorbMagnitude;
+        private Player jormPlayer;
 
         public HolyBarrier() { }
 
-        public HolyBarrier(float armor, float magres, float magnitude, int id, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
-            jormArmor = armor;
-            jormMagRes = magres;
-            dmgAbsorbMag = magnitude;
+        public HolyBarrier(float range, float magnitude, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
+            rangeToAbsorb = range;
+            absorbMagnitude = magnitude;
+            jormPlayer = Main.player[ApplicantID];
         }
 
-        //TODO - Implement Jorm's damage absorption.
         public void TakePvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {
-            /*
-             * reduce phys dmg by *% and that *% jorm takes (premitigated)
-             * reduce mag dmg by *% and that *% jorm takes
-             * reduce true dmg by *% and you know the drill
-             * dmgAbsorbMag determines actual percentage
-             * TakeDamage(id, phys, mag, true)
-             */
+            float dist = (jormPlayer.Center - User.Center).Length() / 16f;
+            if (jormPlayer.active && dist <= rangeToAbsorb) {
+                int jormPhysTaken = physicalDamage - (int)(physicalDamage * absorbMagnitude);
+                int jormMagTaken = magicalDamage - (int)(magicalDamage * absorbMagnitude);
+                int jormTrueTaken = trueDamage - (int)(trueDamage * absorbMagnitude);
+                jormPlayer.GetModPlayer<MobaPlayer>().TakePvpDamage(jormPhysTaken, jormMagTaken, jormTrueTaken, killer, true);
+
+                physicalDamage = (int)(physicalDamage * absorbMagnitude);
+                magicalDamage = (int)(magicalDamage * absorbMagnitude);
+                trueDamage = (int)(trueDamage * absorbMagnitude);
+            }
         }
     }
 }
