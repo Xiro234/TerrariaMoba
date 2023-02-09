@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.NPCs;
@@ -18,10 +19,10 @@ namespace TerrariaMoba.Abilities.Jorm {
             if (pr != null) {
                 pr.AddStack();
             }
-            /*int npc = NPC.NewNPC((int) User.Center.X, (int) User.Center.Y, TerrariaMoba.Instance.NPCType("JormBanner"), 0, BANNER_BUFF_RANGE);
-            
-            Main.npc[npc].GetGlobalNPC<MobaGlobalNPC>().owner = User.whoAmI;
-            Main.npc[npc].direction = User.direction;*/
+
+            //int npc = NPC.NewNPC(new EntitySource_BossSpawn(User), (int) User.Center.X, (int) User.Center.Y, ModContent.NPCType<JormBanner>(), 0, BANNER_BUFF_RANGE);
+            //Main.npc[npc].GetGlobalNPC<MobaGlobalNPC>().owner = User.whoAmI;
+            //Main.npc[npc].direction = User.direction;
         }
     }
 }

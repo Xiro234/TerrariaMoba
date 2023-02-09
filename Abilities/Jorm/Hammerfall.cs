@@ -24,7 +24,6 @@ namespace TerrariaMoba.Abilities.Jorm {
         public const int STUN_DURATION = 150;
 
         public override void OnCast() {
-            //TODO - spawn in a row vertically (new sprite), after delay they drop down
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
                 PaladinsResolve pr = User.GetModPlayer<MobaPlayer>().Hero.Trait as PaladinsResolve;
                 if (pr != null) {

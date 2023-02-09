@@ -12,17 +12,16 @@ namespace TerrariaMoba.StatusEffects.Jorm {
 
         private float rangeToAbsorb;
         private float absorbMagnitude;
-        private Player jormPlayer;
 
         public HolyBarrier() { }
 
         public HolyBarrier(float range, float magnitude, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
             rangeToAbsorb = range;
             absorbMagnitude = magnitude;
-            jormPlayer = Main.player[ApplicantID];
         }
 
         public void TakePvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {
+            Player jormPlayer = Main.player[ApplicantID];
             float dist = (jormPlayer.Center - User.Center).Length() / 16f;
             if (jormPlayer.active && dist <= rangeToAbsorb) {
                 int jormPhysTaken = physicalDamage - (int)(physicalDamage * absorbMagnitude);

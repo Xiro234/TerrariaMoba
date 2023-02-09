@@ -52,10 +52,8 @@ namespace TerrariaMoba.Players {
             float value = Hero.BaseAttributes.ContainsKey(attribute) ? Hero.BaseAttributes[attribute]() : 0f;
             float mult = 1f;
 
-            value += Hero.Skills.Sum(e =>
-                e.PassiveFlatAttributes.ContainsKey(attribute) ? e.PassiveFlatAttributes[attribute]() : 0);
-            mult += Hero.Skills.Sum(e =>
-                e.PassiveMultAttributes.ContainsKey(attribute) ? e.PassiveMultAttributes[attribute]() : 0);
+            value += Hero.Skills.Sum(e => e.PassiveFlatAttributes.ContainsKey(attribute) ? e.PassiveFlatAttributes[attribute]() : 0);
+            mult += Hero.Skills.Sum(e => e.PassiveMultAttributes.ContainsKey(attribute) ? e.PassiveMultAttributes[attribute]() : 0);
 
             value += EffectList.Sum(e => e.FlatAttributes.ContainsKey(attribute) ? e.FlatAttributes[attribute]() : 0);
             mult += EffectList.Sum(e => e.MultAttributes.ContainsKey(attribute) ? e.MultAttributes[attribute]() : 0);
