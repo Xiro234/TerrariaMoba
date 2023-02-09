@@ -27,7 +27,7 @@ namespace TerrariaMoba.Abilities.Marie {
                 Vector2 velocity = new Vector2(dir * 5.3f, 5.3f);
                 Vector2 spawnLoc = new Vector2(User.Top.X, User.Top.Y + -333f);
 
-                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), spawnLoc, velocity, 
+                Projectile proj = Projectile.NewProjectileDirect(new EntitySource_Ability(User, this), spawnLoc, velocity, 
                     ModContent.ProjectileType<TidecallerProj>(), 1, 0, User.whoAmI);
                 TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: 0);
                 SoundEngine.PlaySound(SoundID.Item1, User.Center);

@@ -37,7 +37,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 Vector2 velocity = new Vector2(direction * 0.5f, -0.866f); //Unit vector in specific direction
                 velocity *= 12;
 
-                teleport = Main.projectile[Projectile.NewProjectile(new ProjectileSource_Ability(User, this), position, velocity,
+                teleport = Main.projectile[Projectile.NewProjectile(new EntitySource_Ability(User, this), position, velocity,
                     ModContent.ProjectileType<SylviaUlt1Teleport>(),
                     0, 0, User.whoAmI)];
             }

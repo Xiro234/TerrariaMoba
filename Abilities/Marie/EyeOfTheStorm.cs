@@ -42,7 +42,7 @@ namespace TerrariaMoba.Abilities.Marie {
                 }
                 Vector2 velocity = new Vector2(dirX, dirY);
 
-                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),
+                Projectile proj = Projectile.NewProjectileDirect(new EntitySource_Ability(User, this),
                     User.Center, velocity, ModContent.ProjectileType<ESSpawner>(), 1, 0, User.whoAmI);
                 SoundEngine.PlaySound(SoundID.Item66, User.Center);
 

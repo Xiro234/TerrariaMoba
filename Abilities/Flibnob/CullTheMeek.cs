@@ -17,7 +17,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
 
         public override void OnCast() {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
-                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), User.Center, Vector2.Zero,
+                Projectile proj = Projectile.NewProjectileDirect(new EntitySource_Ability(User, this), User.Center, Vector2.Zero,
                     ModContent.ProjectileType<CullPillar>(), 1, 0, User.whoAmI);
 
                 CullPillar pillar = proj.ModProjectile as CullPillar;

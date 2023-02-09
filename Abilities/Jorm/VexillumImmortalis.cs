@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.NPCs;
 using TerrariaMoba.Players;
+using TerrariaMoba.Projectiles;
 
 namespace TerrariaMoba.Abilities.Jorm {
     public class VexillumImmortalis : Ability {
@@ -20,9 +21,9 @@ namespace TerrariaMoba.Abilities.Jorm {
                 pr.AddStack();
             }
 
-            //int npc = NPC.NewNPC(new EntitySource_BossSpawn(User), (int) User.Center.X, (int) User.Center.Y, ModContent.NPCType<JormBanner>(), 0, BANNER_BUFF_RANGE);
-            //Main.npc[npc].GetGlobalNPC<MobaGlobalNPC>().owner = User.whoAmI;
-            //Main.npc[npc].direction = User.direction;
+            int npc = NPC.NewNPC(new EntitySource_Ability(User, this), (int) User.Center.X, (int) User.Center.Y, ModContent.NPCType<JormBanner>(), 0, BANNER_BUFF_RANGE);
+            Main.npc[npc].GetGlobalNPC<MobaGlobalNPC>().owner = User.whoAmI;
+            Main.npc[npc].direction = User.direction;
         }
     }
 }

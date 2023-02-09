@@ -29,9 +29,8 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         }
 
         public override void AI() {
-            Projectile.ai[0] += 1f;
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
-            
+
             if (Projectile.ai[0] < 15) {
                 Projectile.alpha = (int) ((255 / 15) * (15 - Projectile.ai[0]));
             }
@@ -49,6 +48,8 @@ namespace TerrariaMoba.Projectiles.Sylvia {
                 Dust.NewDustPerfect(position1 - (direction * 100), 131, Vector2.Zero, Projectile.alpha, Color.ForestGreen, 1f);
                 Dust.NewDustPerfect(position2 - (direction * 100), 131, Vector2.Zero, Projectile.alpha, Color.ForestGreen, 1f);
             }
+            
+            Projectile.ai[0] += 1f;
         }
 
         public override void Kill(int timeLeft) {

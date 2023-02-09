@@ -23,7 +23,7 @@ namespace TerrariaMoba.Abilities.Osteo {
         public override void OnCast() {
             if (soulList.Count == 0) {
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
-                    var proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),User.Center, Vector2.Zero,
+                    var proj = Projectile.NewProjectileDirect(new EntitySource_Ability(User, this),User.Center, Vector2.Zero,
                         ModContent.ProjectileType<OsteoSoul>(), 0, 0, User.whoAmI);
                     soulList.Add(proj);
                 }

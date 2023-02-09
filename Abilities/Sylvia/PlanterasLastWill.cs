@@ -35,7 +35,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 Vector2 position = User.Center + playerToMouse * 20;
                 Vector2 velocity = playerToMouse * 7;
 
-                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this),position, velocity, ModContent.ProjectileType<SylviaUlt2>(), 
+                Projectile proj = Projectile.NewProjectileDirect(new EntitySource_Ability(User, this),position, velocity, ModContent.ProjectileType<SylviaUlt2>(), 
                     1, 0f, User.whoAmI);
                 TerrariaMobaUtils.SetProjectileDamage(proj, PhysicalDamage: BULB_DAMAGE);
                 
@@ -55,6 +55,8 @@ namespace TerrariaMoba.Abilities.Sylvia {
             var ModProjectile = proj.ModProjectile;
             SylviaUlt2 head = ModProjectile as SylviaUlt2;
             if (head != null) {
+                float distanceTraveled = head.Projectile.velocity.Length() * head.Projectile.ai[0] / 16f;
+                //damage = distanceTraveled * (damage / blocks)
                 StatusEffectManager.AddEffect(target, new PlanteraStunEffect(BULB_STUN_DURATION, true, User.whoAmI));
             }
             

@@ -27,7 +27,7 @@ namespace TerrariaMoba.NPCs {
                 float distToBanner = (Main.player[i].Center - NPC.Center).Length() / 16.0f;
                 if (plr.active && plr.team == Main.player[NPC.GetGlobalNPC<MobaGlobalNPC>().owner].team) {
                     if (distToBanner < NPC.ai[0]) {
-                        StatusEffectManager.AddEffect(plr, new VexillumImmortalisEffect());
+                        StatusEffectManager.AddEffect(plr, new VexillumImmortalisEffect(), true);
                     } else {
                         // needs to be tested
                     }
