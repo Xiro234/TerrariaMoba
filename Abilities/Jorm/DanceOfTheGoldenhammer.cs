@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Interfaces;
 using TerrariaMoba.Players;
 using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Jorm;
@@ -12,7 +13,7 @@ using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Jorm;
 
 namespace TerrariaMoba.Abilities.Jorm {
-    public class DanceOfTheGoldenhammer : Ability {
+    public class DanceOfTheGoldenhammer : Ability, IModifyHitPvpWithProj {
         public DanceOfTheGoldenhammer(Player player) : base(player, "Dance of the Goldenhammer", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Jorm/JormAbilityOne").Value; }
@@ -24,12 +25,12 @@ namespace TerrariaMoba.Abilities.Jorm {
         public const int DAZE_BASE_DURATION = 90;
         
         public override void OnCast() {
-            if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
-                PaladinsResolve pr = User.GetModPlayer<MobaPlayer>().Hero.Trait as PaladinsResolve;
-                if (pr != null) {
-                    pr.AddStack();
-                }
+            PaladinsResolve pr = User.GetModPlayer<MobaPlayer>().Hero.Trait as PaladinsResolve;
+            if (pr != null) {
+                pr.AddStack();
+            }
 
+            if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
                 for (int i = 0; i < 4; i++) {
                     Vector2 direction = Vector2.UnitX;
                     Vector2 velocity = direction.RotatedBy(MathHelper.ToRadians(i * 90 + 45));

@@ -9,7 +9,7 @@ using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.Abilities.Jorm {
     public class PaladinsResolve : Ability {
-        public PaladinsResolve(Player player) : base(player, "Paladin's Resolve", 60, 0, AbilityType.Active) { }
+        public PaladinsResolve(Player player) : base(player, "Paladin's Resolve", 90, 0, AbilityType.Active) { }
 
         public override Texture2D Icon {
             get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Jorm/JormTrait").Value;
@@ -24,7 +24,6 @@ namespace TerrariaMoba.Abilities.Jorm {
 
         private int currentStacks;
         private int stackTimer;
-        private bool abilityCasted;
         private bool onCourage;
         private bool onWisdom;
 
@@ -33,8 +32,6 @@ namespace TerrariaMoba.Abilities.Jorm {
                 if (currentStacks != RESOLVE_STACK_CAP) {
                     currentStacks++;
                 }
-
-                abilityCasted = true;
                 stackTimer = STACK_DECAY_TIMER;
             }
         }
@@ -46,14 +43,12 @@ namespace TerrariaMoba.Abilities.Jorm {
 
             if (!onCourage && !onWisdom) {
                 onCourage = true;
-            }
-            else if (onCourage) {
+            } else if (onCourage) {
                 onCourage = false;
                 stackTimer = 0;
                 currentStacks = 0;
                 onWisdom = true;
-            }
-            else if (onWisdom) {
+            } else if (onWisdom) {
                 onWisdom = false;
                 stackTimer = 0;
                 currentStacks = 0;
@@ -73,8 +68,6 @@ namespace TerrariaMoba.Abilities.Jorm {
                     stackTimer = STACK_DECAY_TIMER;
                 }
             }
-
-            abilityCasted = false;
         }
 
         public override void ConstructFlatAttributes() {

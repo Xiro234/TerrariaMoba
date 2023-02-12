@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -17,6 +18,16 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
 
         public Daze(float magnitude, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
             modifier = magnitude;
+        }
+
+        public override void SendEffectElements(ModPacket packet) {
+            packet.Write(modifier);
+            base.SendEffectElements(packet);
+        }
+
+        public override void ReceiveEffectElements(BinaryReader reader) {
+            modifier = reader.ReadSingle();
+            base.ReceiveEffectElements(reader);
         }
 
         public override void ConstructMultAttributes() {

@@ -16,10 +16,13 @@ namespace TerrariaMoba.Abilities.Sylvia {
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaUltimateTwo").Value; }
 
-        public const int BULB_DAMAGE = 350;
-        public const int BULB_DAMAGE_DISTANCE_SCALING = 50;
-        public const int BULB_STUN_DURATION = 60;
-        public const int BULB_STUN_DURATION_DISTANCE_SCALING = 15;
+        public const int BULB_DAMAGE = 300;
+        public const int BULB_DAMAGE_SCALING = 25;
+        public const int BULB_STUN_DURATION = 50;
+        public const int BULB_STUN_DURATION_SCALING = 10;
+
+        public const int DISTANCE_SCALING_BLOCK_CAP = 200;
+        public const int DISTANCE_SCALING_BLOCK_INTERVAL = 10;
 
         public const int SPORE_DAMAGE = 100;
         public const int SPORE_COUNT = 6;
@@ -55,9 +58,19 @@ namespace TerrariaMoba.Abilities.Sylvia {
             var ModProjectile = proj.ModProjectile;
             SylviaUlt2 head = ModProjectile as SylviaUlt2;
             if (head != null) {
-                float distanceTraveled = head.Projectile.velocity.Length() * head.Projectile.ai[0] / 16f;
-                //damage = distanceTraveled * (damage / blocks)
-                StatusEffectManager.AddEffect(target, new PlanteraStunEffect(BULB_STUN_DURATION, true, User.whoAmI));
+                var dmgType = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
+                int damageModifier;
+                int durationModifier;
+                int distanceInBlocks = (int)(head.Projectile.velocity.Length() * head.Projectile.ai[0] / 16f);
+                if (distanceInBlocks < DISTANCE_SCALING_BLOCK_CAP && distanceInBlocks % DISTANCE_SCALING_BLOCK_INTERVAL == 0) {
+                    damageModifier = BULB_DAMAGE_SCALING * (distanceInBlocks / DISTANCE_SCALING_BLOCK_INTERVAL);
+                    durationModifier = BULB_STUN_DURATION_SCALING * (distanceInBlocks / DISTANCE_SCALING_BLOCK_INTERVAL);
+                } else {
+                    damageModifier = BULB_DAMAGE_SCALING * (DISTANCE_SCALING_BLOCK_CAP / DISTANCE_SCALING_BLOCK_INTERVAL);
+                    durationModifier = BULB_STUN_DURATION_SCALING * (DISTANCE_SCALING_BLOCK_CAP / DISTANCE_SCALING_BLOCK_INTERVAL);
+                }
+                TerrariaMobaUtils.SetProjectileDamage(proj, dmgType.PhysicalDamage + damageModifier, dmgType.MagicalDamage, dmgType.TrueDamage);
+                StatusEffectManager.AddEffect(target, new PlanteraStunEffect(BULB_STUN_DURATION + durationModifier, true, User.whoAmI));
             }
             
             SylviaSpores spore = ModProjectile as SylviaSpores;

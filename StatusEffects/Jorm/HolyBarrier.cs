@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Players;
+using System.IO;
 
 namespace TerrariaMoba.StatusEffects.Jorm {
     public class HolyBarrier : StatusEffect, ITakePvpDamage {
@@ -24,15 +25,27 @@ namespace TerrariaMoba.StatusEffects.Jorm {
             Player jormPlayer = Main.player[ApplicantID];
             float dist = (jormPlayer.Center - User.Center).Length() / 16f;
             if (jormPlayer.active && dist <= rangeToAbsorb) {
-                int jormPhysTaken = physicalDamage - (int)(physicalDamage * absorbMagnitude);
-                int jormMagTaken = magicalDamage - (int)(magicalDamage * absorbMagnitude);
-                int jormTrueTaken = trueDamage - (int)(trueDamage * absorbMagnitude);
+                int jormPhysTaken = (int)(physicalDamage * absorbMagnitude);
+                int jormMagTaken = (int)(magicalDamage * absorbMagnitude);
+                int jormTrueTaken = (int)(trueDamage * absorbMagnitude);
                 jormPlayer.GetModPlayer<MobaPlayer>().TakePvpDamage(jormPhysTaken, jormMagTaken, jormTrueTaken, killer, true);
 
-                physicalDamage = (int)(physicalDamage * absorbMagnitude);
-                magicalDamage = (int)(magicalDamage * absorbMagnitude);
-                trueDamage = (int)(trueDamage * absorbMagnitude);
+                physicalDamage -= (int)(physicalDamage * absorbMagnitude);
+                magicalDamage -= (int)(magicalDamage * absorbMagnitude);
+                trueDamage -= (int)(trueDamage * absorbMagnitude);
             }
+        }
+
+        public override void SendEffectElements(ModPacket packet) {
+            packet.Write(rangeToAbsorb);
+            packet.Write(absorbMagnitude);
+            base.SendEffectElements(packet);
+        }
+
+        public override void ReceiveEffectElements(BinaryReader reader) {
+            rangeToAbsorb = reader.ReadSingle();
+            absorbMagnitude = reader.ReadSingle();
+            base.ReceiveEffectElements(reader);
         }
     }
 }

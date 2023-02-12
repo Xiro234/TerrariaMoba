@@ -6,11 +6,9 @@ namespace TerrariaMoba.StatusEffects.Jorm {
     
     public class GoldenhammerDanceEffect : Daze {
         public override string DisplayName { get => "Dance of the Goldenhammer"; }
-
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
 
         public GoldenhammerDanceEffect() { }
-
         public GoldenhammerDanceEffect(float magnitude, int duration, bool canBeCleansed, int applierId) : base(magnitude, duration, canBeCleansed, applierId) { }
     }
 }

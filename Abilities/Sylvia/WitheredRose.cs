@@ -10,7 +10,7 @@ using TerrariaMoba.Projectiles.Sylvia;
 
 namespace TerrariaMoba.Abilities.Sylvia {
     public class WitheredRose : Ability, ITakePvpDamage {
-        public WitheredRose(Player player) : base(player, "Withered Rose", 60, 20, AbilityType.Active) { }
+        public WitheredRose(Player player) : base(player, "Withered Rose", 60, 1, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaAbilityTwo").Value;  }
 
@@ -30,13 +30,8 @@ namespace TerrariaMoba.Abilities.Sylvia {
             CooldownTimer = BaseCooldown;
         }
 
-        public override void WhileActive() {
-
-        }
-
         public void TakePvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {
             if (IsActive) {
-                
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
                     Vector2 direction = Vector2.UnitX;
                     Vector2 velocity = direction.RotatedBy(MathHelper.ToRadians(1 * 90 + 45));
@@ -45,8 +40,6 @@ namespace TerrariaMoba.Abilities.Sylvia {
                         ModContent.ProjectileType<RoseThorn>(), 1, 0, User.whoAmI, killer);
                     TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: THORN_DAMAGE);
                 }
-                
-                //drain mana code here
             }
         }
     }

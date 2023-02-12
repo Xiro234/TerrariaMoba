@@ -118,10 +118,8 @@ namespace TerrariaMoba.Players {
             }
 
             if(TerrariaMoba.SecondUltHotkey.JustPressed) {
-                if (Hero?.SecondUlt.CastIfAble() == true)
-                {
-                    if (Main.netMode != NetmodeID.SinglePlayer)
-                    {
+                if (Hero?.SecondUlt.CastIfAble() == true) {
+                    if (Main.netMode != NetmodeID.SinglePlayer) {
                         NetworkHandler.SendAbilityCast(5, Player.whoAmI);
                     }
                 }
@@ -130,8 +128,7 @@ namespace TerrariaMoba.Players {
             if (TerrariaMoba.OpenCharacterSelect.JustPressed) {
                 if (MobaSystem.SelectInterface.CurrentState == null && Hero == null) {
                     MobaSystem.ShowSelect();
-                }
-                else {
+                } else {
                     MobaSystem.HideSelect();
                 }
             }

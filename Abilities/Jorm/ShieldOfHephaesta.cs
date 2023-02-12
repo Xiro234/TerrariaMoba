@@ -42,7 +42,6 @@ namespace TerrariaMoba.Abilities.Jorm {
             }
         }
 
-        //TODO - Possibly convert to nearest ally to mouse.
         public override void TimeOut() {
             IsActive = false;
             float closestDist  = float.MaxValue;

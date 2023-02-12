@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
-using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.StatusEffects.Jorm {
     public class VexillumImmortalisEffect : StatusEffect, ITakePvpDamage {

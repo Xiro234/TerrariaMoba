@@ -1,11 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
-using TerrariaMoba.Players;
+using TerrariaMoba.Projectiles;
 
-namespace TerrariaMoba.StatusEffects.Marie
-{
+namespace TerrariaMoba.StatusEffects.Marie {
     public class MarieTraitEffect : StatusEffect, IModifyHitPvpWithProj {
 
         public override string DisplayName { get => "Goddess's Blessing"; }
@@ -19,7 +19,20 @@ namespace TerrariaMoba.StatusEffects.Marie
         }
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            target.GetModPlayer<MobaPlayer>().TakePvpDamage(0, damageIncrease, 0, User.whoAmI, false);
+            var dmgType = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
+            if (proj != null) {
+                TerrariaMobaUtils.SetProjectileDamage(proj, dmgType.PhysicalDamage, dmgType.MagicalDamage + damageIncrease, dmgType.TrueDamage);
+            }
+        }
+
+        public override void SendEffectElements(ModPacket packet) {
+            packet.Write(damageIncrease);
+            base.SendEffectElements(packet);
+        }
+
+        public override void ReceiveEffectElements(BinaryReader reader) {
+            damageIncrease = reader.ReadInt32();
+            base.ReceiveEffectElements(reader);
         }
     }
 }
