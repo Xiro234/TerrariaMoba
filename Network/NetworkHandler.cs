@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,6 +15,7 @@ namespace TerrariaMoba.Network {
             SYNC_STATUS_EFFECT,
             SYNC_EFFECT_LIST,
             SYNC_REMOVE_EFFECT,
+            SYNC_PLAYER_VELOCITY,
             START_GAME,
             ASSIGN_CHARACTER,
             ABILITY_CAST
@@ -36,6 +38,9 @@ namespace TerrariaMoba.Network {
                     break;
                 case NetTag.SYNC_REMOVE_EFFECT:
                     ReceiveSyncRemoveEffect(reader, sender);
+                    break;
+                case NetTag.SYNC_PLAYER_VELOCITY:
+                    ReceiveSyncPlayerVelocity(reader, sender);
                     break;
                 case NetTag.START_GAME:
                     ReceiveStartGame(reader, sender);
@@ -171,6 +176,29 @@ namespace TerrariaMoba.Network {
 
             if (StatusEffectManager.RemoveEffect(target, index, true) && Main.netMode == NetmodeID.Server) {
                 SendSyncRemoveEffect(index, whoAmI, sender);
+            }
+        }
+
+        #endregion
+        
+        #region SYNC_PLAYER_VELOCITY
+
+        public static void SendSyncPlayerVelocity(int player, Vector2 velocity) {
+            ModPacket modPacket = TerrariaMoba.Instance.GetPacket();
+            modPacket.Write((byte)NetTag.SYNC_PLAYER_VELOCITY);
+            modPacket.Write(player);
+            modPacket.WriteVector2(velocity);
+            modPacket.Send();
+        }
+
+        public static void ReceiveSyncPlayerVelocity(BinaryReader reader, int sender) {
+            int whoAmI = reader.ReadInt32();
+            var player = Main.player[whoAmI];
+            Vector2 newVelocity = reader.ReadVector2();
+
+            player.velocity = newVelocity;
+            if (Main.netMode == NetmodeID.Server) {
+                SendSyncPlayerVelocity(whoAmI, newVelocity);
             }
         }
 

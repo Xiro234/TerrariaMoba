@@ -8,6 +8,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Network;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Projectiles.OldMan {
@@ -129,7 +130,7 @@ namespace TerrariaMoba.Projectiles.OldMan {
 
 		        case AIState.Attached: {
 			        Player attachedPlayer = Main.player[attachedPlayerID];
-			        Projectile.position = attachedPlayer.position;
+			        Projectile.Center = attachedPlayer.Center;
 			        Projectile.velocity = Vector2.Zero;
 
 			        if (BobberTimer >= BobberDuration) { //Over Duration
@@ -139,11 +140,19 @@ namespace TerrariaMoba.Projectiles.OldMan {
 
 			        if (Main.LocalPlayer == player && Main.mouseLeft) {
 				        if (BobberTimer >= BobberCatchTime) { //Multiplier Window
-							attachedPlayer.GetModPlayer<MobaPlayer>().TakePvpDamage((int)Math.Floor(10 * BobberMultiplier), 0, 0, player.whoAmI, false);
+							//attachedPlayer.GetModPlayer<MobaPlayer>().TakePvpDamage((int)Math.Floor(10 * BobberMultiplier), 0, 0, player.whoAmI, false);
+
+							Vector2 direction = (player.Center - attachedPlayer.Center);
+							direction.Normalize();
+
+							int magnitude = 8;
+
+							attachedPlayer.velocity += direction * magnitude;
+							NetworkHandler.SendSyncPlayerVelocity(attachedPlayerID, attachedPlayer.velocity);
 							Detach();
 				        }
 				        else { //Before Multiplier
-					        attachedPlayer.GetModPlayer<MobaPlayer>().TakePvpDamage(10, 0, 0, player.whoAmI, false);
+					        //attachedPlayer.GetModPlayer<MobaPlayer>().TakePvpDamage(10, 0, 0, player.whoAmI, false);
 					        Detach();
 				        }
 			        }
@@ -233,15 +242,12 @@ namespace TerrariaMoba.Projectiles.OldMan {
         public override void PostDraw(Color lightColor) {
 	        if (CurrentAIState == AIState.Attached) {
 		        if (BobberTimer > BobberCatchTime) {
-			        Texture2D texture = ModContent.Request<Texture2D>("TerrariaMoba/Textures/OldMan/OldManIcon").Value;
+			        Texture2D texture = ModContent.Request<Texture2D>("TerrariaMoba/Textures/OldMan/Catch").Value;
 			        Rectangle frame = texture.Frame();
 			        Vector2 origin = new Vector2(frame.Width / 2, frame.Height / 2);
-			        Vector2 pos = Projectile.position - Main.screenPosition;
+			        Vector2 pos = Main.player[attachedPlayerID].Center - Main.screenPosition + new Vector2(0, -60f);
 			        
 			        Main.EntitySpriteDraw(texture, pos, frame, lightColor, 0f, origin, Vector2.One, SpriteEffects.None, 0);
-		        }
-		        else {
-			        
 		        }
 	        }
         }
