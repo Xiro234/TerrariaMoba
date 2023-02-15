@@ -8,6 +8,7 @@ using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Projectiles.OldMan {
     public class Bobber : ModProjectile {
@@ -20,10 +21,19 @@ namespace TerrariaMoba.Projectiles.OldMan {
 	        Retract,
 	        Attached
         }
-        
+	    
+        public float BobberMultiplier { get; set; }
+        public int BobberCatchTime { get; set; }
+        public int BobberDuration { get; set; }
+
         private AIState CurrentAIState {
 	        get => (AIState)Projectile.ai[0];
 	        set => Projectile.ai[0] = (float)value;
+        }
+
+        private float BobberTimer {
+	        get => Projectile.ai[1];
+	        set => Projectile.ai[1] = (float)value;
         }
 
         private int attachedPlayerID { get; set; }
@@ -36,6 +46,10 @@ namespace TerrariaMoba.Projectiles.OldMan {
             Projectile.penetrate = -1;
             Projectile.netImportant = true;
             attachedPlayerID = -1;
+
+            BobberMultiplier = 1.5f;
+            BobberCatchTime = 60 * 3;
+            BobberDuration = 60 * 6;
         }
 
         public override void ModifyFishingLine(ref Vector2 lineOriginOffset, ref Color lineColor) {
@@ -116,8 +130,23 @@ namespace TerrariaMoba.Projectiles.OldMan {
 		        case AIState.Attached: {
 			        Player attachedPlayer = Main.player[attachedPlayerID];
 			        Projectile.position = attachedPlayer.position;
-
 			        Projectile.velocity = Vector2.Zero;
+
+			        if (BobberTimer >= BobberDuration) { //Over Duration
+				        Detach();
+				        break;
+			        }
+
+			        if (Main.LocalPlayer == player && Main.mouseLeft) {
+				        if (BobberTimer >= BobberCatchTime) { //Multiplier Window
+							attachedPlayer.GetModPlayer<MobaPlayer>().TakePvpDamage((int)Math.Floor(10 * BobberMultiplier), 0, 0, player.whoAmI, false);
+							Detach();
+				        }
+				        else { //Before Multiplier
+					        attachedPlayer.GetModPlayer<MobaPlayer>().TakePvpDamage(10, 0, 0, player.whoAmI, false);
+					        Detach();
+				        }
+			        }
 
 			        HoldProj();
 			        
@@ -125,70 +154,13 @@ namespace TerrariaMoba.Projectiles.OldMan {
 				        CurrentAIState = AIState.Retract;
 				        Projectile.netUpdate = true;
 				        attachedPlayerID = -1;
+				        BobberTimer = 0;
 			        }
+			        
+			        BobberTimer += 1;
 			        break;
 		        }
 	        }
-	        
-	        
-	        /*if (Projectile.ai[0] >= 1f) {
-		        if (Projectile.localAI[0] < 100f) {
-			        Projectile.localAI[0] += 1f;
-		        }
-		        
-		        Projectile.tileCollide = false;
-		        int num = 10;
-		        Vector2 vector = new Vector2(Projectile.position.X + (float)Projectile.width * 0.5f,
-			        Projectile.position.Y + (float)Projectile.height * 0.5f);
-		        float num2 = player.position.X + (float)(player.width / 2) - vector.X;
-		        float num3 = player.position.Y + (float)(player.height / 2) - vector.Y;
-		        float num4 = (float)Math.Sqrt(num2 * num2 + num3 * num3);
-		        if (num4 > 3000f) {
-			        Projectile.Kill();
-		        }
-
-		        num4 = 15.9f / num4;
-		        num2 *= num4;
-		        num3 *= num4;
-		        Projectile.velocity.X = (Projectile.velocity.X * (float)(num - 1) + num2) / (float)num;
-		        Projectile.velocity.Y = (Projectile.velocity.Y * (float)(num - 1) + num3) / (float)num;
-		        Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + 1.57f;
-		        if (Main.myPlayer == Projectile.owner && Projectile.Hitbox.Intersects(player.Hitbox)) {
-			        Projectile.Kill();
-		        }
-
-		        return;
-	        }
-
-	        bool flag2 = false;
-	        Vector2 vector2 = new Vector2(Projectile.position.X + (float)Projectile.width * 0.5f,
-		        Projectile.position.Y + (float)Projectile.height * 0.5f);
-	        float num5 = player.position.X + (float)(player.width / 2) - vector2.X;
-	        float num6 = player.position.Y + (float)(player.height / 2) - vector2.Y;
-	        Projectile.rotation = (float)Math.Atan2(num6, num5) + 1.57f;
-	        if ((float)Math.Sqrt(num5 * num5 + num6 * num6) > 900f) { //pythagoran theorem, num5, num6 are 2 sides of a triangle
-		        Projectile.ai[0] = 1f;
-	        }
-
-	        if (Projectile.velocity.Y == 0f) {
-		        Projectile.velocity.X *= 0.95f;
-	        }
-
-	        Projectile.velocity.X *= 0.98f;
-	        Projectile.velocity.Y += 0.2f;
-	        if (Projectile.velocity.Y > 15.9f) {
-		        Projectile.velocity.Y = 15.9f;
-	        }
-
-	        if (Projectile.ai[1] != 0f) {
-		        flag2 = true;
-	        }
-
-	        player.heldProj = Projectile.whoAmI;
-
-	        if (player.itemTime <= 2) {
-		        player.SetDummyItemTime(2);
-	        }*/
         }
 
         private void HoldProj() {
@@ -206,7 +178,6 @@ namespace TerrariaMoba.Projectiles.OldMan {
 		        if(Player != null && Player.active){
 			        if (Projectile.Hitbox.Intersects(Player.Hitbox) && Player.team != Main.player[Projectile.owner].team) {
 				        Attach(Player);
-				        //TODO - Add a status effect that has a timer and automatically reels in after a certain amount of time, allows the player to click to do a special thing?
 				        return true;
 			        }
 
@@ -218,14 +189,28 @@ namespace TerrariaMoba.Projectiles.OldMan {
 
         private void Attach(Player player) {
 	        attachedPlayerID = player.whoAmI;
+	        BobberTimer = 0;
+        }
+
+        private void Detach() {
+	        attachedPlayerID = -1;
+	        BobberTimer = 0;
+	        CurrentAIState = AIState.Retract;
+	        Projectile.netUpdate = true;
         }
 
         public override void SendExtraAI(BinaryWriter writer) {
 	        writer.Write(attachedPlayerID);
+	        writer.Write(BobberMultiplier);
+	        writer.Write(BobberCatchTime);
+	        writer.Write(BobberDuration);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader) {
 	        attachedPlayerID = reader.ReadInt32();
+	        BobberMultiplier = reader.ReadSingle();
+	        BobberCatchTime = reader.ReadInt32();
+	        BobberDuration = reader.ReadInt32();
         }
 
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers,
@@ -243,6 +228,22 @@ namespace TerrariaMoba.Projectiles.OldMan {
 	        }
 	        
 	        return false;
+        }
+
+        public override void PostDraw(Color lightColor) {
+	        if (CurrentAIState == AIState.Attached) {
+		        if (BobberTimer > BobberCatchTime) {
+			        Texture2D texture = ModContent.Request<Texture2D>("TerrariaMoba/Textures/OldMan/OldManIcon").Value;
+			        Rectangle frame = texture.Frame();
+			        Vector2 origin = new Vector2(frame.Width / 2, frame.Height / 2);
+			        Vector2 pos = Projectile.position - Main.screenPosition;
+			        
+			        Main.EntitySpriteDraw(texture, pos, frame, lightColor, 0f, origin, Vector2.One, SpriteEffects.None, 0);
+		        }
+		        else {
+			        
+		        }
+	        }
         }
 
         public override bool PreDrawExtras() {
