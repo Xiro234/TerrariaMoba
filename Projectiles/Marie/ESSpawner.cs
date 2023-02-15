@@ -22,20 +22,26 @@ namespace TerrariaMoba.Projectiles.Marie {
 
         public override void SetDefaults() {
             Projectile.Name = "Storm Eye";
-            Projectile.netImportant = true;
             Projectile.width = 28; 
             Projectile.height = 28; 
             Projectile.timeLeft = 100;
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
+            Projectile.netImportant = true;
+            Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
-            
+            Projectile.friendly = true;
+
             LightningDamage = EyeOfTheStorm.LIGHTNING_DAMAGE;
             LightningSpeed = EyeOfTheStorm.LIGHTNING_SPEED;
             RainDamage = EyeOfTheStorm.RAIN_DAMAGE;
             RainSpeed = EyeOfTheStorm.RAIN_SPEED;
             CloudDamage = EyeOfTheStorm.CLOUD_DAMAGE;
             CloudDuration = EyeOfTheStorm.CLOUD_DURATION;
+        }
+
+        public override bool? CanDamage() {
+            return false;
         }
 
         public override void AI() {
@@ -54,11 +60,9 @@ namespace TerrariaMoba.Projectiles.Marie {
                 Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, 
                     ModContent.ProjectileType<ESStormCloud>(), 1, 0f, Main.myPlayer);
                 TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: CloudDamage);
-                
                 SoundEngine.PlaySound(SoundID.Item74, Projectile.Center);
 
                 ESStormCloud cloud = proj.ModProjectile as ESStormCloud;
-
                 if (cloud != null) {
                     cloud.LightningDamage = LightningDamage;
                     cloud.LightningSpeed = LightningSpeed;

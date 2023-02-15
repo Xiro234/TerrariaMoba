@@ -21,7 +21,7 @@ namespace TerrariaMoba.Items {
             Item.UseSound = SoundID.Item3;
             Item.maxStack = 30;
             Item.consumable = false;
-            Item.rare = 3;
+            Item.rare = ItemRarityID.Orange;
             Item.color = Color.MediumVioletRed;
         }
 

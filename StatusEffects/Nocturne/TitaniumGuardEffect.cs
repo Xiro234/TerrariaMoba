@@ -13,7 +13,7 @@ namespace TerrariaMoba.StatusEffects.Nocturne {
         
         public TitaniumGuardEffect() { }
         
-        public TitaniumGuardEffect(int duration, bool canBeCleansed) : base(duration, canBeCleansed) { }
+        public TitaniumGuardEffect(int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) { }
         
         public void TakePvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {
             physicalDamage = 0;

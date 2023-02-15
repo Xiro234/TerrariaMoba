@@ -17,7 +17,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
 
         public const float LEAP_BASE_HEIGHT = -14.6f;
 
-        public const int EARTH_BASE_DAMAGE = 1000;
+        public const int EARTH_BASE_DAMAGE = 400;
         public const int EARTH_BASE_NUMBER = 5;
         public const int EARTH_BASE_DURATION = 45;
         public const int EARTH_BASE_DELAY = 15;
@@ -39,7 +39,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
                     }
                     Vector2 velocity = new Vector2(User.direction * 10f, 0);
 
-                    Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), 
+                    Projectile proj = Projectile.NewProjectileDirect(new EntitySource_Ability(User, this), 
                         position, velocity, ModContent.ProjectileType<EarthsplitterSpawner>(), 1, 0,
                         User.whoAmI);
                     
@@ -59,7 +59,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
             var modProjectile = proj.ModProjectile;
             SplitEarth earth = modProjectile as SplitEarth;
             if (earth != null) {
-                StatusEffectManager.AddEffect(target, new FunStun(120, true));
+                StatusEffectManager.AddEffect(target, new FunStun(120, true, User.whoAmI));
             }
         }
     }

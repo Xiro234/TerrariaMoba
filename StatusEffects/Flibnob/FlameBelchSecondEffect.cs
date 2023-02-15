@@ -13,26 +13,22 @@ public class FlameBelchSecondEffect : StatusEffect {
         
     public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 
-    private int applierId;
     private int damageDealt;
     private int dotTimer;
 
     public FlameBelchSecondEffect() { }
 
-    public FlameBelchSecondEffect(int id, int dmg, int duration, bool canBeCleansed) : base(duration, canBeCleansed) {
-        applierId = id;
+    public FlameBelchSecondEffect(int dmg, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
         damageDealt = dmg;
         dotTimer = 0;
     }
 
     public override void SendEffectElements(ModPacket packet) {
-        packet.Write(applierId);
         packet.Write(damageDealt);
         base.SendEffectElements(packet);
     }
 
     public override void ReceiveEffectElements(BinaryReader reader) {
-        applierId = reader.ReadInt32();
         damageDealt = reader.ReadInt32();
         base.ReceiveEffectElements(reader);
     }
@@ -41,7 +37,7 @@ public class FlameBelchSecondEffect : StatusEffect {
         //cuts armor
         if (dotTimer == 0) {
             dotTimer = 60;
-            User.GetModPlayer<MobaPlayer>().TakePvpDamage(0, 0, damageDealt, applierId, false);
+            User.GetModPlayer<MobaPlayer>().TakePvpDamage(0, 0, damageDealt, ApplicantID, true);
         } else {
             dotTimer--;
         }

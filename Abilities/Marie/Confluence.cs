@@ -17,7 +17,7 @@ namespace TerrariaMoba.Abilities.Marie {
         private int timer;
         
         public override void OnCast() {
-            IsActive= true;
+            IsActive = true;
             timer = CONF_DURATION;
         }
 
@@ -31,9 +31,9 @@ namespace TerrariaMoba.Abilities.Marie {
                 if (plr.active) {
                     float dist = (plr.Center - User.Center).Length();
                     if (plr.team == User.team && dist <= CONF_RANGE) {
-                        //plr.addeffect confluence +movespeed
+                        StatusEffectManager.AddEffect(plr, new ConfluenceEffect(CONF_MAGNITUDE, 30, true, User.whoAmI));
                     } else if (plr.team != User.team && dist <= CONF_RANGE) {
-                        //plr.addeffect confluence -movespeed
+                        StatusEffectManager.AddEffect(plr, new ConfluenceEffect(-CONF_MAGNITUDE, 30, true, User.whoAmI));
                     }
                 }
             }

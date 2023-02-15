@@ -45,7 +45,7 @@ namespace TerrariaMoba.Abilities.Nocturne {
 
                 Vector2 velocity = new Vector2(direction * DASH_X_VELOCITY, 0f);
 
-                dash = Main.projectile[Projectile.NewProjectile(new ProjectileSource_Ability(User, this), position, velocity,
+                dash = Main.projectile[Projectile.NewProjectile(new EntitySource_Ability(User, this), position, velocity,
                     ModContent.ProjectileType<NocturneDash>(),
                     0, 0, User.whoAmI)];
             }

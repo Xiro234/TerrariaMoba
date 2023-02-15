@@ -5,13 +5,14 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Interfaces;
 using TerrariaMoba.Players;
 using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Jorm;
 using TerrariaMoba.StatusEffects;
 
 namespace TerrariaMoba.Abilities.Jorm {
-    public class Hammerfall : Ability {
+    public class Hammerfall : Ability, IModifyHitPvpWithProj {
         public Hammerfall(Player player) : base(player, "Hammerfall", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Jorm/JormUltimateOne").Value; }
@@ -24,18 +25,17 @@ namespace TerrariaMoba.Abilities.Jorm {
         public const int STUN_DURATION = 150;
 
         public override void OnCast() {
-            //TODO - spawn in a row vertically (new sprite), after delay they drop down
+            PaladinsResolve pr = User.GetModPlayer<MobaPlayer>().Hero.Trait as PaladinsResolve;
+            if (pr != null) {
+                pr.AddStack();
+            }
+
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
-                PaladinsResolve pr = User.GetModPlayer<MobaPlayer>().Hero.Trait as PaladinsResolve;
-                if (pr != null) {
-                    pr.AddStack();
-                }
-                
                 int dir = User.direction;
                 Vector2 velocity = new Vector2(dir * 15, 0);
                 Vector2 spawnLoc = new Vector2(User.Top.X, User.Top.Y + BIGHAMMER_HEIGHT);
                 
-                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), spawnLoc, velocity, 
+                Projectile proj = Projectile.NewProjectileDirect(new EntitySource_Ability(User, this), spawnLoc, velocity, 
                     ModContent.ProjectileType<HammerfallProjSpawner>(), 1, 0, User.whoAmI, 1);
 
                 HammerfallProjSpawner spawner = proj.ModProjectile as HammerfallProjSpawner;
@@ -55,7 +55,7 @@ namespace TerrariaMoba.Abilities.Jorm {
             var modProjectile = proj.ModProjectile;
             HammerfallProj hammer = modProjectile as HammerfallProj;
             if (hammer != null) {
-                StatusEffectManager.AddEffect(target, new FunStun(STUN_DURATION, true));
+                StatusEffectManager.AddEffect(target, new FunStun(STUN_DURATION, true, User.whoAmI));
             }
         }
     }

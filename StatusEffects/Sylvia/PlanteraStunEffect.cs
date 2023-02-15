@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
-using TerrariaMoba.Statistic;
 using TerrariaMoba.StatusEffects.GenericEffects;
 
 namespace TerrariaMoba.StatusEffects.Sylvia {
@@ -13,6 +10,6 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         
         public PlanteraStunEffect() { }
 
-        public PlanteraStunEffect(int duration, bool canBeCleansed) : base(duration, canBeCleansed) { }
+        public PlanteraStunEffect(int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) { }
     }
 }

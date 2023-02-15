@@ -3,31 +3,27 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
+using TerrariaMoba.Statistic;
+using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.StatusEffects.Jorm {
-    public class ConsecrationEffect : StatusEffect, IResetEffects {
+    public class ConsecrationEffect : StatusEffect {
         public override string DisplayName { get => "Consecration"; }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
 
-        private float modifier;
-        private bool IsEnemy;
+        private float healingModifier;
         
         public ConsecrationEffect() { }
 
-        public ConsecrationEffect(bool enemy, float magnitude, int duration, bool canBeCleansed) : base(duration, canBeCleansed) {
-            modifier = magnitude;
-            IsEnemy = enemy;
+        public ConsecrationEffect(float healMod, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
+            healingModifier = healMod;
         }
 
-        public void ResetEffects() { 
-            /* 
-             * if enemy {
-             *  reduce users healing effectiveness by magnitude
-             * } else {
-             *  increase users healing effectiveness by magnitude
-             * }
-             */
+        public override void ConstructMultAttributes() {
+            MultAttributes = new Dictionary<AttributeType, Func<float>>() {
+                { HEALING_EFFECTIVENESS, () => 1 - healingModifier }
+            };
         }
     }
 }

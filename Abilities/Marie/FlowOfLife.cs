@@ -5,6 +5,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Interfaces;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Marie {
@@ -27,14 +28,13 @@ namespace TerrariaMoba.Abilities.Marie {
         public override void WhileActive() {
             Timer--;
             for (int d = 0; d < 6; d++) {
-                Dust.NewDust(User.position, User.width, User.height, DustID.Water_GlowingMushroom, 0f, 0f, 150, default(Color), 1.5f);
+                Dust.NewDust(User.position, User.width, User.height, DustID.Water_GlowingMushroom, 0f, 0f, 150, default, 1.5f);
             }
             if (Timer == 0) {
                 TimeOut();
             }
         }
 
-        //TODO - Might need syncing to ensure HP bars are updated but might be tripping
         public override void TimeOut() {
             IsActive = false;
             float closestDist  = float.MaxValue;
@@ -50,22 +50,18 @@ namespace TerrariaMoba.Abilities.Marie {
             
             if (closestPlayerID != -1) {
                 Player plr = Main.player[closestPlayerID];
-
-                plr.statLife += FLOW_HEAL;
-                CombatText.NewText(plr.Hitbox, Color.CornflowerBlue, FLOW_HEAL, true);
-                BlessingOfTheGoddess botg = User.GetModPlayer<MobaPlayer>().Hero.Trait as BlessingOfTheGoddess;
-                if (botg != null) {
-                    botg.PlayerHealed(plr);
-                }
+                User.GetModPlayer<MobaPlayer>().HealOtherPlayer(plr, FLOW_HEAL, true);
 
                 SoundEngine.PlaySound(SoundID.Item4, plr.Center);
                 for (int d = 0; d < 30; d++) {
-                    Dust.NewDust(plr.position, plr.width, plr.height, DustID.Water_GlowingMushroom, 0f, 0f, 150, default(Color), 1.5f);
+                    Dust.NewDust(plr.position, plr.width, plr.height, DustID.Water_GlowingMushroom, 0f, 0f, 150, default, 1.5f);
                 }
 
                 CooldownTimer = BaseCooldown;
             } else {
-                Main.NewText("Could not find a player in range to heal!");
+                if (Main.netMode != NetmodeID.Server) {
+                    Main.NewText("Could not find a player in range to heal!");
+                }
                 User.GetModPlayer<MobaPlayer>().CurrentResource += BaseResourceCost / 2;
                 CooldownTimer = BaseCooldown / 2;
             }

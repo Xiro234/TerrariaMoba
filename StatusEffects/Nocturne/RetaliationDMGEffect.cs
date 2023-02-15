@@ -15,8 +15,7 @@ namespace TerrariaMoba.StatusEffects.Nocturne {
 
         public RetaliationDMGEffect() { }
 
-        public RetaliationDMGEffect(float magnitude, int hits, int duration, bool canBeCleansed) : base(duration,
-            canBeCleansed) {
+        public RetaliationDMGEffect(float magnitude, int hits, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
             dmgBoost = magnitude;
             hitsTaken = hits;
         }

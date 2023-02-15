@@ -30,7 +30,9 @@ namespace TerrariaMoba.Characters {
                 { ATTACK_SPEED, () => -0.08f },
                 { ATTACK_VELOCITY, () => 6f },
                 { MOVEMENT_SPEED, () => 1f },
-                { JUMP_SPEED, () => 1f }
+                { JUMP_SPEED, () => 1f },
+                { HEALING_EFFECTIVENESS, () => 1f },
+                { STATUS_RESISTANCE, () => 0f }
             };
         }
 
@@ -38,7 +40,7 @@ namespace TerrariaMoba.Characters {
             return new Ability[] {
                 new DanceOfTheGoldenhammer(User),
                 new Consecration(User),
-                new SealOfHephaesta(User),
+                new ShieldOfHephaesta(User),
                 new Hammerfall(User),
                 new PaladinsResolve(User),
                 new VexillumImmortalis(User)

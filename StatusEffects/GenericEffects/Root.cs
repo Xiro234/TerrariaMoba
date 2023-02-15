@@ -10,7 +10,7 @@ using TerrariaMoba.Players;
 namespace TerrariaMoba.StatusEffects.GenericEffects {
     public abstract class Root : StatusEffect, ISetControls {
         public Root() { }
-        public Root(int duration, bool canBeCleansed) : base(duration, canBeCleansed) { }
+        public Root(int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) { }
         
         public void SetControls() {
             User.controlRight = false;

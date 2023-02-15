@@ -20,11 +20,9 @@ namespace TerrariaMoba.Projectiles.Sylvia {
 
         public override void AI() {
             if (Projectile.ai[0] == 0) {
-                Player Player = Main.player[Projectile.owner];
                 SoundEngine.PlaySound(SoundID.Grass, Projectile.position);
                 for (int i = 0; i < 20; i++) {
-                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 57, 0,
-                        0, 150, Color.LightGreen, 0.7f);
+                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Enchanted_Gold, 0, 0, 150, Color.LightGreen, 0.7f);
                 }
             }
 
@@ -38,8 +36,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         public override void Kill(int timeLeft) {
             SoundEngine.PlaySound(SoundID.Grass, Projectile.position);
             for (int i = 0; i < 20; i++) {
-                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 57, 0,
-                    0, 150, Color.LightGreen, 0.7f);
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Enchanted_Gold, 0, 0, 150, Color.LightGreen, 0.7f);
             }
         }
 

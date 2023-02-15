@@ -20,7 +20,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
 
         public override void OnCast() {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
-                StatusEffectManager.AddEffect(User, new TitaniumShellEffect(SHELL_ARMOR, SHELL_MR, SHELL_MS_REDUCTION, SHELL_HEALING, SHELL_DURATION));
+                StatusEffectManager.AddEffect(User, new TitaniumShellEffect(SHELL_ARMOR, SHELL_MR, SHELL_MS_REDUCTION, SHELL_HEALING, SHELL_DURATION, false, User.whoAmI));
             }
         }
     }

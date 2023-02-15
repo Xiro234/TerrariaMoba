@@ -10,6 +10,6 @@ namespace TerrariaMoba.StatusEffects {
         public override string DisplayName { get => "Slow"; }
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
         public FunSlow() { }
-        public FunSlow(float magnitude, int duration, bool canBeCleansed) : base(magnitude, duration, canBeCleansed) { }
+        public FunSlow(float magnitude, int duration, bool canBeCleansed, int applierId) : base(magnitude, duration, canBeCleansed, applierId) { }
     }
 }

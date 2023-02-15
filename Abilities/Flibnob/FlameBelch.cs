@@ -21,7 +21,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobAbilityOne").Value; }
 
         public const int FLAME_BASE_DAMAGE = 100;
-        public const int FLAME_BASE_DELAY = 75;
+        public const int FLAME_BASE_DELAY = 60;
         public const int BURN_BASE_DAMAGE = 5;
         public const int MELT_BASE_DAMAGE = 25;
         public const int BURN_BASE_DURATION = 180;
@@ -56,7 +56,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
                         Vector2 vel = new Vector2(dirX, dirY);
 
                         SoundEngine.PlaySound(SoundID.DD2_OgreAttack, User.Center);
-                        Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), User.Center,
+                        Projectile proj = Projectile.NewProjectileDirect(new EntitySource_Ability(User, this), User.Center,
                             vel, ModContent.ProjectileType<FlameBelchSpawner>(), 1, 0, User.whoAmI);
                         TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: FLAME_BASE_DAMAGE);
 
@@ -75,35 +75,20 @@ namespace TerrariaMoba.Abilities.Flibnob {
                 var mobaPlayer = target.GetModPlayer<MobaPlayer>();
 
                 foreach (var effect in new List<StatusEffect>(mobaPlayer.EffectList)) {
-                    var burning = effect as FlameBelchEffect;
-                    var melting = effect as FlameBelchSecondEffect;
-                    
-                    //
-                    
                     if (effect is FlameBelchEffect) {
-                        
-                    }
-                    else if (effect is FlameBelchSecondEffect) {
-                        
-                    }
-                    else {
-                        
-                    }
-                    
-                    /*
-                    if (burning is null && melting is null) {
-                        StatusEffectManager.AddEffect(target, new FlameBelchEffect(User.whoAmI, BURN_BASE_DAMAGE, BURN_BASE_DURATION, true));
-                    } else if (burning is not null && melting is null) {
-                        StatusEffectManager.RemoveEffect(target, burning);
-                        StatusEffectManager.AddEffect(target, new FlameBelchSecondEffect(User.whoAmI, MELT_BASE_DAMAGE, BURN_BASE_DURATION, true));
-                    } else if (melting is not null && burning is null) {
-                        StatusEffectManager.AddEffect(target, new FlameBelchSecondEffect(User.whoAmI, MELT_BASE_DAMAGE, BURN_BASE_DURATION, true));
+                        StatusEffectManager.RemoveEffect(target, effect);
+                        StatusEffectManager.AddEffect(target, new FlameBelchSecondEffect(MELT_BASE_DAMAGE, BURN_BASE_DURATION, true, User.whoAmI));
+                        return;
+                    } else if (effect is FlameBelchSecondEffect) {
+                        effect.ReApply();
+                        return;
                     } else {
-                        Logging.PublicLogger.Debug("This should never happen.");
-                    }*/
+                        Logging.PublicLogger.Debug("FlameBelch.cs: This shouldn't happen.");
+                        break;
+                    }
                 }
 
-                //StatusEffectManager.AddEffect(target, new FlameBelchEffect(User.whoAmI, BURN_BASE_DAMAGE, BURN_BASE_DURATION, true));
+                StatusEffectManager.AddEffect(target, new FlameBelchEffect(BURN_BASE_DAMAGE, BURN_BASE_DURATION, true, User.whoAmI));
             }
         }
     }

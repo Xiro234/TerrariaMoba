@@ -15,7 +15,7 @@ namespace TerrariaMoba.Abilities {
         
         public override void OnCast() {
             Main.NewText(User.whoAmI + " " + Main.LocalPlayer.whoAmI);
-            StatusEffectManager.AddEffect(User, new FunStun(STUN_DURATION, true));
+            StatusEffectManager.AddEffect(User, new FunStun(STUN_DURATION, true, User.whoAmI));
         }
     }
 }

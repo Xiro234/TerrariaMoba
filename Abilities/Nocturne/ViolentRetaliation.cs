@@ -39,7 +39,7 @@ namespace TerrariaMoba.Abilities.Nocturne {
         }
 
         public override void TimeOut() {
-            StatusEffectManager.AddEffect(User, new RetaliationDMGEffect(BUFF_MAGNITUDE, hitCount, BUFF_DURATION, true));
+            StatusEffectManager.AddEffect(User, new RetaliationDMGEffect(BUFF_MAGNITUDE, hitCount, BUFF_DURATION, true, User.whoAmI));
         }
     }
 }

@@ -21,16 +21,14 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         public override void AI() {
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
             for (int i = 0; i < 5; i++) {
-                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 57, 0,
-                    0, 150, Color.LightGreen, 0.7f);
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Enchanted_Gold, 0, 0, 150, Color.LightGreen, 0.7f);
             }
         }
         
         public override void Kill(int timeLeft) {
             SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
             for (int i = 0; i < 20; i++) {
-                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 3, 0,
-                    0, 0, default(Color), 1f);
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.GrassBlades, 0, 0, 0, default, 1f);
             }
         }
     }

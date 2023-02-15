@@ -19,13 +19,14 @@ namespace TerrariaMoba.Projectiles.Marie {
         }
 
         public override void SetDefaults() {
-            Projectile.Name = "ES Storm Cloud";
+            Projectile.Name = "Storm Cloud";
             Projectile.width = 366; 
             Projectile.height = 104; 
             Projectile.timeLeft = 1000;
+            Projectile.penetrate = -1;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
-            Projectile.penetrate = -1;
+            Projectile.friendly = true;
             
             LightningDamage = EyeOfTheStorm.LIGHTNING_DAMAGE;
             LightningSpeed = EyeOfTheStorm.LIGHTNING_SPEED;

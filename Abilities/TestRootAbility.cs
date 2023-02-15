@@ -14,7 +14,7 @@ namespace TerrariaMoba.Abilities {
         }
 
         public override void OnCast() {
-            StatusEffectManager.AddEffect(User, new FunRoot(ROOT_DURATION, true));
+            StatusEffectManager.AddEffect(User, new FunRoot(ROOT_DURATION, true, User.whoAmI));
         }
     }
 }

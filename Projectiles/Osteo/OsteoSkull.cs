@@ -30,7 +30,7 @@ namespace TerrariaMoba.Projectiles.Osteo {
             }
 
             for (int i = 0; i < 5; i++) {
-                var dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 15, 0f, 0f, 0,
+                var dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.MagicMirror, 0f, 0f, 0,
                     Color.SteelBlue, 1f);
 
                 dust.noGravity = true;
@@ -40,13 +40,13 @@ namespace TerrariaMoba.Projectiles.Osteo {
 
         public override void Kill(int timeLeft) {
             for (int i = 0; i < 5; i++) {
-                var dust1 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 15, 0f, 0f, 0,
+                var dust1 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.MagicMirror, 0f, 0f, 0,
                     Color.SteelBlue, 1f);
 
                 dust1.noGravity = true;
                 dust1.noLight = true;
                 
-                var dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, 84, 0f, 0f, 0,
+                var dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Platinum, 0f, 0f, 0,
                     Color.Gray, 1.2f);
                 
                 dust2.noGravity = true;

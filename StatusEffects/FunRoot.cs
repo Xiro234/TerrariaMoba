@@ -7,6 +7,6 @@ namespace TerrariaMoba.StatusEffects {
         public override string DisplayName { get => "Root"; }
         public override Texture2D Icon { get { return ModContent.Request<Texture2D>("Textures/Blank").Value;} }
         public FunRoot() { }
-        public FunRoot(int duration, bool canBeCleansed) : base(duration, canBeCleansed) { }
+        public FunRoot(int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) { }
     }
 }

@@ -30,7 +30,9 @@ namespace TerrariaMoba.Characters {
                 { ATTACK_SPEED, () => -0.15f },
                 { ATTACK_VELOCITY, () => 6f },
                 { MOVEMENT_SPEED, () => 1f },
-                { JUMP_SPEED, () => 1f }
+                { JUMP_SPEED, () => 1f },
+                { HEALING_EFFECTIVENESS, () => 1f },
+                { STATUS_RESISTANCE, () => 0f }
             };
         }
 

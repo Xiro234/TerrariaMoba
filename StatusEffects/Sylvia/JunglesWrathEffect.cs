@@ -1,14 +1,16 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
+using TerrariaMoba.Interfaces;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.StatusEffects.Sylvia {
-    public class JunglesWrathEffect : StatusEffect {
+    public class JunglesWrathEffect : StatusEffect, ITakePvpDamage {
 
         public override string DisplayName { get => "Jungle's Wrath"; }
         
@@ -16,15 +18,32 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         
         public JunglesWrathEffect() { }
         
-        public JunglesWrathEffect(int duration, int stacks) : base(duration, true) {
+        public JunglesWrathEffect(int duration, int applicantId, float damagePercent, int stacks) : base(duration, true, applicantId) {
             Stacks = stacks;
+            DamagePercent = damagePercent;
         }
 
         protected override bool ShowBar {
             get => false;
         }
-
+        
         public int Stacks { get; set; }
+        public float DamagePercent { get; set; }
+
+        public override void ReApply() {
+            base.ReApply();
+
+            if (Stacks < 5) {
+                Stacks += 1;
+            }
+        }
+
+        public void TakePvpDamage(ref int phsyicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {
+            if (Stacks >= 5) {
+                trueDamage += (int)Math.Ceiling(User.statLifeMax2 * DamagePercent);
+                DurationTimer = 0;
+            }
+        }
 
         public override void SendEffectElements(ModPacket packet) {
             base.SendEffectElements(packet);

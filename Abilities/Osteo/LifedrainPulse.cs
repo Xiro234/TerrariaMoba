@@ -32,7 +32,7 @@ namespace TerrariaMoba.Abilities.Osteo {
                         Vector2 direction = new Vector2((float) x, (float) y);
                         Vector2 position = User.Center + direction * 16;
                         Vector2 velocity = direction * 6.25f;
-                        var proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), 
+                        var proj = Projectile.NewProjectileDirect(new EntitySource_Ability(User, this), 
                             position, velocity, ModContent.ProjectileType<Projectiles.Osteo.LifedrainPulse>(), 0, 
                             0, User.whoAmI);
                         TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: PULSE_DAMAGE);
@@ -47,7 +47,7 @@ namespace TerrariaMoba.Abilities.Osteo {
                         Vector2 direction = new Vector2((float) x, (float) y);
                         Vector2 position = User.Center + direction * 16;
                         Vector2 velocity = direction * 6.25f;
-                        var proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), 
+                        var proj = Projectile.NewProjectileDirect(new EntitySource_Ability(User, this), 
                             position, velocity, ModContent.ProjectileType<Projectiles.Osteo.LifedrainPulse>(), 0, 
                             0, User.whoAmI);
                         TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: (int)(PULSE_DAMAGE * 1.5f));

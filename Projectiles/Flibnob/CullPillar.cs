@@ -10,18 +10,29 @@ namespace TerrariaMoba.Projectiles.Flibnob {
     public class CullPillar : ModProjectile {
 
         public float HookRange { get; set; }
+        public int PillarDuration { get; set; }
 
         public override void SetDefaults() {
             Projectile.width = 30;
             Projectile.height = 48;
+            Projectile.timeLeft = 1000;
+            Projectile.penetrate = -1;
             Projectile.friendly = true;
-            Projectile.hostile = false;
-            Projectile.timeLeft = 480;
+            Projectile.ignoreWater = true;
 
             HookRange = CullTheMeek.HOOK_BASE_RANGE;
+            PillarDuration = CullTheMeek.PILLAR_DURATION;
+        }
+
+        public override bool? CanDamage() {
+            return false;
         }
 
         public override void AI() {
+            if (Projectile.timeLeft == 1000) {
+                Projectile.timeLeft = PillarDuration;
+            }
+
             Player Player = Main.player[Projectile.owner];
             int playerID = -1;
             float closestDist = 30f;
@@ -40,6 +51,7 @@ namespace TerrariaMoba.Projectiles.Flibnob {
             if (Projectile.ai[0] >= 0) {
                 Player hookedPlr = Main.player[(int)Projectile.ai[0]];
                 if (hookedPlr.active) {
+                    //TODO - apply silence here
                     float hookedPosX = Math.Abs((hookedPlr.Center.X - Projectile.Center.X) / 16.0f);
                     float hookedPosY = Math.Abs((hookedPlr.Center.Y - Projectile.Center.Y) / 16.0f);
                     if (hookedPosX > HookRange) {

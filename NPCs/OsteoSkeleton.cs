@@ -62,7 +62,7 @@ namespace TerrariaMoba.NPCs {
         public override void DrawEffects(ref Color drawColor) {
             if (groundTimer <= groundTime && doEffect) {
                 for (int i = 0; i < 5; i++) {
-                    Dust.NewDust(NPC.BottomLeft, NPC.width, 0, 1);
+                    Dust.NewDust(NPC.BottomLeft, NPC.width, 0, DustID.Stone);
                     SoundEngine.PlaySound(SoundID.Dig, NPC.position);
                 }
             }

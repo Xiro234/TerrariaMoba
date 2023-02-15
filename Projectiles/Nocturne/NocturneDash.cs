@@ -29,8 +29,7 @@ namespace TerrariaMoba.Projectiles.Nocturne {
             }
 
             for (int i = 0; i < 5; i++) {
-                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 8, 0,
-                    0, 100);
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Iron, 0, 0, 100);
             }
         }
         
@@ -53,7 +52,7 @@ namespace TerrariaMoba.Projectiles.Nocturne {
         public override void Kill(int timeLeft) {
             SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
             for (int i = 0; i < 20; i++) {
-                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 8);
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Iron);
             }
         }
     }

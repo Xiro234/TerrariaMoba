@@ -21,15 +21,14 @@ namespace TerrariaMoba.Projectiles.Nocturne {
 
         public override void AI() {
             for (int i = 0; i < 5; i++) {
-                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 36, 0,
-                    0, 100);
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Ash, 0, 0, 100);
             }
         }
         
         public override void Kill(int timeLeft) {
             SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
             for (int i = 0; i < 40; i++) {
-                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 36);
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Ash);
             }
         }
     }

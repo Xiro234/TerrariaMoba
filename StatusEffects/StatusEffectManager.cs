@@ -15,11 +15,24 @@ namespace TerrariaMoba.StatusEffects {
         
         #region NETWORK
         public static bool AddEffect(Player Player, StatusEffect statusEffect, bool quiet = false) {
-            statusEffect.SetPlayer(Player);
-            statusEffect.Apply();
-            statusEffect.ConstructFlatAttributes();
-            statusEffect.ConstructMultAttributes();
-            Player.GetModPlayer<MobaPlayer>().EffectList.Add(statusEffect);
+            if (HasEffect(Player, statusEffect)) {
+                var mobaPlayer = Player.GetModPlayer<MobaPlayer>();
+
+                int index = mobaPlayer.EffectList.FindIndex(match => match.ID == statusEffect.ID);
+
+                if (index != -1) {
+                    mobaPlayer.EffectList[index].ReApply();
+                    Logging.PublicLogger.Debug("StatusEffectManager: Found existing effect, reapplied: " + statusEffect.DisplayName);
+                }
+            }
+            else {
+                statusEffect.SetPlayer(Player);
+                statusEffect.Apply();
+                statusEffect.ConstructFlatAttributes();
+                statusEffect.ConstructMultAttributes();
+                Player.GetModPlayer<MobaPlayer>().EffectList.Add(statusEffect);
+                Logging.PublicLogger.Debug("StatusEffectManager: " + statusEffect.DisplayName + " added.");
+            }
 
             if (!quiet && Main.netMode != NetmodeID.SinglePlayer) {
                 NetworkHandler.SendAddEffect(statusEffect, Player.whoAmI);
@@ -82,12 +95,12 @@ namespace TerrariaMoba.StatusEffects {
                 TerrariaMoba.Instance.Logger.Debug("Null!");
             }
             else {
-                TerrariaMoba.Instance.Logger.Debug(effect.DisplayName);
+                //TerrariaMoba.Instance.Logger.Debug(effect.DisplayName);
             }
 
             return effect;
         }
-
+        
         public static int GetIDOfEffect(StatusEffect effect) {
             return StatusEffectDict[effect.GetType()];
         }

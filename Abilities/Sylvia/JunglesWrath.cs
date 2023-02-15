@@ -1,10 +1,8 @@
-﻿using System;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Interfaces;
-using TerrariaMoba.Players;
 using TerrariaMoba.Projectiles.Sylvia;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Sylvia;
@@ -15,7 +13,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaTrait").Value; }
 
-        public const int EFFECT_DURATION = 2000;
+        public const int EFFECT_DURATION = 300;
         public const float DAMAGE_PERCENT = 0.04f;
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
@@ -23,23 +21,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
             SylviaArrow arrow = ModProjectile as SylviaArrow;
             
             if (arrow != null) {
-                var mobaPlayer = target.GetModPlayer<MobaPlayer>();
-                foreach (var effect in mobaPlayer.EffectList) {
-                    var JWrath = effect as JunglesWrathEffect;
-
-                    if (JWrath != null) {
-                        if (JWrath.Stacks < 4) {
-                            JWrath.Stacks += 1;
-                            StatusEffectManager.SyncSingleEffect(target, JWrath);
-                        } else {
-                            StatusEffectManager.RemoveEffect(target, JWrath);
-                            mobaPlayer.TakePvpDamage(0, 0, (int)Math.Ceiling(target.statLifeMax2 * DAMAGE_PERCENT), User.whoAmI, false);
-                        }
-                        return;
-                    }
-                }
-                
-                StatusEffectManager.AddEffect(target, new JunglesWrathEffect(EFFECT_DURATION, 1));
+                StatusEffectManager.AddEffect(target, new JunglesWrathEffect(EFFECT_DURATION, User.whoAmI, DAMAGE_PERCENT, 1));
             }
         }
     }

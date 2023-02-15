@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Linq;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Characters;
+using TerrariaMoba.Interfaces;
 using TerrariaMoba.Statistic;
-using TerrariaMoba.StatusEffects;
 
 namespace TerrariaMoba.Players {
     public partial class MobaPlayer : ModPlayer {
         public int CurrentResource { get; set; }
         public Character Hero { get; set; }
         public Type selectedCharacter;
-        //TODO - STATISTACTS
         public int lifeRegenTimer = 0;
         public int resourceRegenTimer = 0;
 
         public void RegenLife() {
             lifeRegenTimer++;
-            
+
             if (lifeRegenTimer == 60) {
                 float healthRegenFromMax = (Player.statLifeMax2 * 0.125f / 60f);
 
@@ -54,6 +52,9 @@ namespace TerrariaMoba.Players {
             float value = Hero.BaseAttributes.ContainsKey(attribute) ? Hero.BaseAttributes[attribute]() : 0f;
             float mult = 1f;
 
+            value += Hero.Skills.Sum(e => e.PassiveFlatAttributes.ContainsKey(attribute) ? e.PassiveFlatAttributes[attribute]() : 0);
+            mult += Hero.Skills.Sum(e => e.PassiveMultAttributes.ContainsKey(attribute) ? e.PassiveMultAttributes[attribute]() : 0);
+
             value += EffectList.Sum(e => e.FlatAttributes.ContainsKey(attribute) ? e.FlatAttributes[attribute]() : 0);
             mult += EffectList.Sum(e => e.MultAttributes.ContainsKey(attribute) ? e.MultAttributes[attribute]() : 0);
 
@@ -62,6 +63,23 @@ namespace TerrariaMoba.Players {
                     return value + mult;
                 default:
                     return value * mult;
+            }
+        }
+
+        public void HealOtherPlayer(Player target, int amount, bool doText) {
+            AbilityEffectManager.OnHealOtherPlayer(Player, target, ref amount, ref doText);
+            target.GetModPlayer<MobaPlayer>().HealMe(amount, doText);
+        }
+        
+        public void HealMe(int amount, bool doText) {
+            AbilityEffectManager.OnHeal(Player, ref amount, ref doText);
+            
+            if(doText) {
+                CombatText.NewText(Player.Hitbox, CombatText.HealLife, amount, false);
+            }
+            Player.statLife += amount * (int)GetCurrentAttributeValue(AttributeType.HEALING_EFFECTIVENESS);
+            if (Player.statLife > Player.statLifeMax2) {
+                Player.statLife = Player.statLifeMax2;
             }
         }
     }

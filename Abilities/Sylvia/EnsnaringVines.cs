@@ -34,7 +34,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 Vector2 directionVector = Vector2.UnitX * direction;
                 Vector2 position = User.Center + directionVector * TRAP_DISTANCE * 16;
 
-                Projectile proj = Projectile.NewProjectileDirect(new ProjectileSource_Ability(User, this), 
+                Projectile proj = Projectile.NewProjectileDirect(new EntitySource_Ability(User, this), 
                     position, velocity, ModContent.ProjectileType<EnsnaringVinesSpawner>(), 1, 0, User.whoAmI);
                 
                 EnsnaringVinesSpawner spawner = proj.ModProjectile as EnsnaringVinesSpawner;
@@ -53,7 +53,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
             var modProjectile = proj.ModProjectile;
             EnsnaringVinesTrap trap = modProjectile as EnsnaringVinesTrap;
             if (trap != null) {
-                StatusEffectManager.AddEffect(target, new EnsnaringVinesEffect(ROOT_DURATION, true));
+                StatusEffectManager.AddEffect(target, new EnsnaringVinesEffect(ROOT_DURATION, true, User.whoAmI));
             }
         }
     }
