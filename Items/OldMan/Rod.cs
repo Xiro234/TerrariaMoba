@@ -33,6 +33,8 @@ namespace TerrariaMoba.Items.OldMan {
             return false;
         }
 
+        
+
         public override void UseStyle(Player player, Rectangle heldItemFrame) {
             if (player.itemTime <= 2) {
                 player.itemRotation = 0;
