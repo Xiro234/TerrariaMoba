@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -15,13 +17,16 @@ namespace TerrariaMoba.Projectiles.OldMan {
         
         private enum AIState {
 	        Casting,
-	        Retract
+	        Retract,
+	        Attached
         }
         
         private AIState CurrentAIState {
 	        get => (AIState)Projectile.ai[0];
 	        set => Projectile.ai[0] = (float)value;
         }
+
+        private int attachedPlayerID { get; set; }
 
         public override void SetDefaults() {
             Projectile.friendly = true;
@@ -30,16 +35,9 @@ namespace TerrariaMoba.Projectiles.OldMan {
             Projectile.height = 14;
             Projectile.penetrate = -1;
             Projectile.netImportant = true;
+            attachedPlayerID = -1;
         }
 
-        public override void Kill(int timeLeft) {
-            SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
-            for (int i = 0; i < 10; i++) {
-                Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width,
-                    Projectile.height, 7, 0f, 0f, 0, Color.Red, 1f);
-            }
-        }
-        
         public override void ModifyFishingLine(ref Vector2 lineOriginOffset, ref Color lineColor) {
             lineOriginOffset = new Vector2(47, -31);
         }
@@ -69,6 +67,9 @@ namespace TerrariaMoba.Projectiles.OldMan {
 			        Projectile.velocity.X = (Projectile.velocity.X * (float)(num - 1) + num2) / (float)num;
 			        Projectile.velocity.Y = (Projectile.velocity.Y * (float)(num - 1) + num3) / (float)num;
 			        Projectile.rotation = (float)Math.Atan2(Projectile.velocity.Y, Projectile.velocity.X) + 1.57f;
+			        
+			        HoldProj();
+			        
 			        if (Main.myPlayer == Projectile.owner && Projectile.Hitbox.Intersects(player.Hitbox)) {
 				        Projectile.Kill();
 			        }
@@ -96,12 +97,35 @@ namespace TerrariaMoba.Projectiles.OldMan {
 				        Projectile.velocity.Y = 15.9f;
 			        }
 
-			        player.heldProj = Projectile.whoAmI;
-
-			        if (player.itemTime <= 2) {
-				        player.SetDummyItemTime(2);
+			        HoldProj();
+			        
+			        if (Main.LocalPlayer == player && Main.mouseRight) {
+				        CurrentAIState = AIState.Retract;
+				        Projectile.netUpdate = true;
+				        break;
 			        }
 
+			        if (CheckToAttach()) {
+				        CurrentAIState = AIState.Attached;
+				        Projectile.netUpdate = true;
+			        }
+			        
+			        break;
+		        }
+
+		        case AIState.Attached: {
+			        Player attachedPlayer = Main.player[attachedPlayerID];
+			        Projectile.position = attachedPlayer.position;
+
+			        Projectile.velocity = Vector2.Zero;
+
+			        HoldProj();
+			        
+			        if (Main.LocalPlayer == player && Main.mouseRight) {
+				        CurrentAIState = AIState.Retract;
+				        Projectile.netUpdate = true;
+				        attachedPlayerID = -1;
+			        }
 			        break;
 		        }
 	        }
@@ -166,7 +190,49 @@ namespace TerrariaMoba.Projectiles.OldMan {
 		        player.SetDummyItemTime(2);
 	        }*/
         }
-        
+
+        private void HoldProj() {
+	        Player player = Main.player[Projectile.owner];
+
+	        player.heldProj = Projectile.whoAmI;
+
+	        if (player.itemTime <= 2) {
+		        player.SetDummyItemTime(2);
+	        }
+        }
+
+        private bool CheckToAttach() {
+	        foreach (var Player in Main.player) {
+		        if(Player != null && Player.active){
+			        if (Projectile.Hitbox.Intersects(Player.Hitbox) && Player.team != Main.player[Projectile.owner].team) {
+				        Attach(Player);
+				        //TODO - Add a status effect that has a timer and automatically reels in after a certain amount of time, allows the player to click to do a special thing?
+				        return true;
+			        }
+
+		        }
+	        }
+
+	        return false;
+        }
+
+        private void Attach(Player player) {
+	        attachedPlayerID = player.whoAmI;
+        }
+
+        public override void SendExtraAI(BinaryWriter writer) {
+	        writer.Write(attachedPlayerID);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader) {
+	        attachedPlayerID = reader.ReadInt32();
+        }
+
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers,
+	        List<int> overWiresUI) {
+	        overPlayers.Add(index);
+        }
+
         public override bool OnTileCollide(Vector2 oldVelocity) {
 	        if (Math.Abs(Projectile.velocity.X - oldVelocity.X) > float.Epsilon) {
 		        Projectile.velocity.X = -oldVelocity.X * 0.5f;
