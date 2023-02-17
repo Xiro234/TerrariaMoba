@@ -110,16 +110,16 @@ namespace TerrariaMoba.Interfaces {
             }
         }
 
-        public static void ModifyHitPvpWithProj(Player Player, Projectile proj, Player target, ref int damage, ref bool crit) {
+        public static void ModifyHitPvpWithProj(Player Player, Projectile proj, Player target, ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
             List<Ability> abilities = GetValidAbilities<IModifyHitPvpWithProj>(Player);
             List<StatusEffect> effects = GetValidEffects<IModifyHitPvpWithProj>(Player);
 
             foreach (Ability ability in abilities) {
-                ((IModifyHitPvpWithProj)ability).ModifyHitPvpWithProj(proj, target, ref damage, ref crit);
+                ((IModifyHitPvpWithProj)ability).ModifyHitPvpWithProj(proj, target, ref physicalDamage, ref magicalDamage, ref trueDamage, ref crit);
             }
 
             foreach (StatusEffect effect in effects) {
-                ((IModifyHitPvpWithProj)effect).ModifyHitPvpWithProj(proj, target, ref damage, ref crit);
+                ((IModifyHitPvpWithProj)effect).ModifyHitPvpWithProj(proj, target, ref physicalDamage, ref magicalDamage, ref trueDamage, ref crit);
             }
         }
 

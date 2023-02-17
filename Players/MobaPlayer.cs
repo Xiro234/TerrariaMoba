@@ -175,7 +175,7 @@ namespace TerrariaMoba.Players {
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
             var damageTypeProj = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
             int physicalDamage = damageTypeProj.PhysicalDamage;
-            int magicalDamage = damageTypeProj.MagicalDamage;
+            int magicalDamage = damageTypeProj.MagicalDamage;s
             int trueDamage = damageTypeProj.TrueDamage;
             
             if (physicalDamage == 0 && magicalDamage == 0 && trueDamage == 0) {

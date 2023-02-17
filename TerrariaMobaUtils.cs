@@ -125,11 +125,11 @@ namespace  TerrariaMoba {
         }
 
         public static void SetProjectileDamage(Projectile proj, int PhysicalDamage = 0, int MagicalDamage = 0,
-            int TrueDamage = 0) {
-            var gProj = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
-           gProj.PhysicalDamage = PhysicalDamage;
-           gProj.MagicalDamage = MagicalDamage;
-           gProj.TrueDamage = TrueDamage;
+            int TrueDamage = 0) { 
+            var gProj = proj.GetGlobalProjectile<DamageTypeGlobalProj>(); 
+            gProj.PhysicalDamage = PhysicalDamage; 
+            gProj.MagicalDamage = MagicalDamage; 
+            gProj.TrueDamage = TrueDamage;
         }
     }
 }
