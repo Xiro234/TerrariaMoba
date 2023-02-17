@@ -16,11 +16,6 @@ namespace TerrariaMoba.Abilities.Jorm {
         public const float BANNER_BUFF_DURATION = 30f;
         
         public override void OnCast() {
-            PaladinsResolve pr = User.GetModPlayer<MobaPlayer>().Hero.Trait as PaladinsResolve;
-            if (pr != null) {
-                pr.AddStack();
-            }
-
             int npc = NPC.NewNPC(new EntitySource_Ability(User, this), (int)User.Center.X, (int)User.Center.Y, 
                     ModContent.NPCType<JormBanner>(), 0, BANNER_BUFF_RANGE, BANNER_BUFF_DURATION);
             Main.npc[npc].GetGlobalNPC<MobaGlobalNPC>().owner = User.whoAmI;

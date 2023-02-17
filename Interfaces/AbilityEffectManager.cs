@@ -151,7 +151,7 @@ namespace TerrariaMoba.Interfaces {
 
         public static void OnHeal(Player Player, ref int amount, ref bool doText) {
             List<Ability> abilities = GetValidAbilities<IOnHeal>(Player);
-            List<StatusEffect> effects = GetValidEffects<ITakePvpDamage>(Player);
+            List<StatusEffect> effects = GetValidEffects<IOnHeal>(Player);
 
             bool curDoText = true;
             
@@ -167,8 +167,8 @@ namespace TerrariaMoba.Interfaces {
         }
 
         public static void OnHealOtherPlayer(Player Player, Player target, ref int amount, ref bool doText) {
-            List<Ability> abilities = GetValidAbilities<IOnHeal>(Player);
-            List<StatusEffect> effects = GetValidEffects<ITakePvpDamage>(Player);
+            List<Ability> abilities = GetValidAbilities<IOnHealOtherPlayer>(Player);
+            List<StatusEffect> effects = GetValidEffects<IOnHealOtherPlayer>(Player);
 
             bool curDoText = true;
             
@@ -180,6 +180,19 @@ namespace TerrariaMoba.Interfaces {
             foreach (StatusEffect effect in effects) {
                 ((IOnHealOtherPlayer)effect).OnHealOtherPlayer(target, ref amount, ref curDoText);
                 doText = doText && curDoText;
+            }
+        }
+
+        public static void OnCast(Player Player, Ability castAbility) {
+            List<Ability> abilities = GetValidAbilities<IOnCast>(Player);
+            List<StatusEffect> effects = GetValidEffects<IOnCast>(Player);
+            
+            foreach (Ability ability in abilities) {
+                ((IOnCast)ability).OnCast(castAbility);
+            }
+            
+            foreach (StatusEffect effect in effects) {
+                ((IOnCast)effect).OnCast(castAbility);
             }
         }
         #endregion

@@ -257,8 +257,8 @@ namespace TerrariaMoba.Network {
             int whoAmI = reader.ReadInt32();
             int index = reader.ReadInt32();
             var mobaPlayer = Main.player[whoAmI].GetModPlayer<MobaPlayer>();
-            
-            mobaPlayer.Hero?.Skills[index].OnCast();
+
+            mobaPlayer.Hero?.Skills[index].CastIfAble();
             
             if (Main.netMode == NetmodeID.Server) {
                 SendAbilityCast(index, whoAmI, whoAmI);

@@ -25,11 +25,6 @@ namespace TerrariaMoba.Abilities.Jorm {
         public const float CONSEC_HEALEFF_MODIFIER = 0.25f;
         
         public override void OnCast() {
-            PaladinsResolve pr = User.GetModPlayer<MobaPlayer>().Hero.Trait as PaladinsResolve;
-            if (pr != null) {
-                pr.AddStack();
-            }
-
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
                 Projectile proj = Projectile.NewProjectileDirect(new EntitySource_Ability(User, this), 
                     User.Center, Vector2.Zero, ModContent.ProjectileType<ConsecrationProj>(), 

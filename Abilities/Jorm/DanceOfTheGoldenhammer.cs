@@ -25,11 +25,6 @@ namespace TerrariaMoba.Abilities.Jorm {
         public const int DAZE_BASE_DURATION = 90;
         
         public override void OnCast() {
-            PaladinsResolve pr = User.GetModPlayer<MobaPlayer>().Hero.Trait as PaladinsResolve;
-            if (pr != null) {
-                pr.AddStack();
-            }
-
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
                 for (int i = 0; i < 4; i++) {
                     Vector2 direction = Vector2.UnitX;

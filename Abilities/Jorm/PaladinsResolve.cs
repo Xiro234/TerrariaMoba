@@ -4,11 +4,12 @@ using System;
 using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Interfaces;
 using TerrariaMoba.Statistic;
 using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.Abilities.Jorm {
-    public class PaladinsResolve : Ability {
+    public class PaladinsResolve : Ability, IOnCast {
         public PaladinsResolve(Player player) : base(player, "Paladin's Resolve", 90, 0, AbilityType.Active) { }
 
         public override Texture2D Icon {
@@ -27,7 +28,7 @@ namespace TerrariaMoba.Abilities.Jorm {
         private bool onCourage;
         private bool onWisdom;
 
-        public void AddStack() {
+        private void AddStack() {
             if (IsActive) {
                 if (currentStacks != RESOLVE_STACK_CAP) {
                     currentStacks++;
@@ -67,6 +68,12 @@ namespace TerrariaMoba.Abilities.Jorm {
                     currentStacks--;
                     stackTimer = STACK_DECAY_TIMER;
                 }
+            }
+        }
+
+        public void OnCast(Ability ability) {
+            if (ability != this) {
+                AddStack();
             }
         }
 

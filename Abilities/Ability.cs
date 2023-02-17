@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Interfaces;
 using TerrariaMoba.Players;
 using TerrariaMoba.Statistic;
 
@@ -45,9 +47,12 @@ namespace TerrariaMoba.Abilities {
         /// </summary>
         public virtual bool CastIfAble() {
             var mobaPlayer = User.GetModPlayer<MobaPlayer>();
+
             if (mobaPlayer.CurrentResource >= BaseResourceCost && CanCastAbility() && CooldownTimer == 0) {
                 OnCast();
+                AbilityEffectManager.OnCast(User, this);
                 ReduceResource();
+                Logging.PublicLogger.Debug(Name + " casted by " + User.name);
                 return true;
             }
 

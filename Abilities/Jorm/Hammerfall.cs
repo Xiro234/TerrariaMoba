@@ -25,11 +25,6 @@ namespace TerrariaMoba.Abilities.Jorm {
         public const int STUN_DURATION = 150;
 
         public override void OnCast() {
-            PaladinsResolve pr = User.GetModPlayer<MobaPlayer>().Hero.Trait as PaladinsResolve;
-            if (pr != null) {
-                pr.AddStack();
-            }
-
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
                 int dir = User.direction;
                 Vector2 velocity = new Vector2(dir * 15, 0);
