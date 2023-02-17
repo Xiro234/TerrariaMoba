@@ -251,11 +251,11 @@ namespace TerrariaMoba.Players {
         public override void SetControls() {
            AbilityEffectManager.SetControls(Player);
         }
-        
 
         public void TakePvpDamage(int physicalDamage, int magicalDamage, int trueDamage, int killer, bool noBroadcast) {
-            Logging.PublicLogger.Debug(physicalDamage + " " + magicalDamage + " " + trueDamage);
-            
+            Logging.PublicLogger.Debug(Main.player[killer].GetModPlayer<MobaPlayer>().Hero.Name +
+                " did P: " + physicalDamage + " + M: " + magicalDamage + " + T: " + trueDamage + " damage to " + Hero.Name + "!");
+
             if (!Player.immune) {
                 AbilityEffectManager.TakePvpDamage(Player, ref physicalDamage, ref magicalDamage, ref trueDamage, ref killer);
                 int mitigatedPhysical = (int)Math.Ceiling(physicalDamage - physicalDamage * GetCurrentAttributeValue(AttributeType.PHYSICAL_ARMOR) * 0.01f);

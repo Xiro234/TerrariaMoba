@@ -22,7 +22,7 @@ namespace TerrariaMoba.StatusEffects {
 
                 if (index != -1) {
                     mobaPlayer.EffectList[index].ReApply();
-                    Logging.PublicLogger.Debug("StatusEffectManager: Found existing effect, reapplied: " + statusEffect.DisplayName);
+                    //Logging.PublicLogger.Debug("StatusEffectManager: Found existing effect, reapplied: " + statusEffect.DisplayName);
                 }
             }
             else {
