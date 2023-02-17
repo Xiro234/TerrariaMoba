@@ -257,6 +257,10 @@ namespace TerrariaMoba.Players {
                 " did P: " + physicalDamage + " + M: " + magicalDamage + " + T: " + trueDamage + " damage to " + Hero.Name + "!");
 
             if (!Player.immune) {
+                if (!noBroadcast) {
+                    NetworkHandler.SendPvpHit(physicalDamage, magicalDamage, trueDamage, Player.whoAmI, killer);
+                }
+                
                 AbilityEffectManager.TakePvpDamage(Player, ref physicalDamage, ref magicalDamage, ref trueDamage, ref killer);
                 int mitigatedPhysical = (int)Math.Ceiling(physicalDamage - physicalDamage * GetCurrentAttributeValue(AttributeType.PHYSICAL_ARMOR) * 0.01f);
                 int mitigatedMagical = (int)Math.Ceiling(magicalDamage - magicalDamage * GetCurrentAttributeValue(AttributeType.MAGICAL_ARMOR) * 0.01f);
@@ -281,10 +285,6 @@ namespace TerrariaMoba.Players {
                 }
                 
                 SoundEngine.PlaySound(SoundID.PlayerHit, Player.position);
-
-                if (!noBroadcast) {
-                    NetworkHandler.SendPvpHit(physicalDamage, magicalDamage, trueDamage, Player.whoAmI, killer);
-                }
             }
         }
     }
