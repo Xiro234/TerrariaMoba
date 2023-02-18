@@ -39,7 +39,7 @@ namespace TerrariaMoba.Abilities.Jorm {
             }
         }
 
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
+        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
             var modProjectile = proj.ModProjectile;
             ConsecrationProj consec = modProjectile as ConsecrationProj;
             if (consec != null) {

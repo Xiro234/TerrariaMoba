@@ -3,7 +3,6 @@ using System.IO;
 using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
-using TerrariaMoba.Projectiles;
 
 namespace TerrariaMoba.StatusEffects.Marie {
     public class MarieTraitEffect : StatusEffect, IModifyHitPvpWithProj {
@@ -18,11 +17,8 @@ namespace TerrariaMoba.StatusEffects.Marie {
             damageIncrease = magicDamage;
         }
 
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
-            var dmgType = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
-            if (proj != null) {
-                TerrariaMobaUtils.SetProjectileDamage(proj, dmgType.PhysicalDamage, dmgType.MagicalDamage + damageIncrease, dmgType.TrueDamage);
-            }
+        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
+            magicalDamage += damageIncrease;
         }
 
         public override void SendEffectElements(ModPacket packet) {

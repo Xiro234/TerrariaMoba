@@ -175,14 +175,14 @@ namespace TerrariaMoba.Players {
         public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
             var damageTypeProj = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
             int physicalDamage = damageTypeProj.PhysicalDamage;
-            int magicalDamage = damageTypeProj.MagicalDamage;s
+            int magicalDamage = damageTypeProj.MagicalDamage;
             int trueDamage = damageTypeProj.TrueDamage;
             
             if (physicalDamage == 0 && magicalDamage == 0 && trueDamage == 0) {
                 Main.NewText(proj.Name + " has not set any damage types! Please contact developers immediately.", Color.Red);
             }
             
-            AbilityEffectManager.ModifyHitPvpWithProj(Player, proj, target, ref damage, ref crit);
+            AbilityEffectManager.ModifyHitPvpWithProj(Player, proj, target, ref physicalDamage, ref magicalDamage, ref trueDamage, ref crit);
 
             target.GetModPlayer<MobaPlayer>().TakePvpDamage(physicalDamage, magicalDamage, trueDamage, Player.whoAmI, false);
         }

@@ -49,7 +49,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 CooldownTimer = BaseCooldown;
             }
         }
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
+        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
             var modProjectile = proj.ModProjectile;
             EnsnaringVinesTrap trap = modProjectile as EnsnaringVinesTrap;
             if (trap != null) {

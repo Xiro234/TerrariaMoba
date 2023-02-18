@@ -19,11 +19,11 @@ namespace TerrariaMoba.Abilities.Chastradamus {
             //TODO - Chastradamus gathers blood from dealing damage to enemies, at different stages, gives him buffs, but is consumed by A3 to heal him. Lose on death.
         }
 
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
+        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
             var gProj = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
             //Possibly re-evaluate to non-premitigated damage?
 
-            AddBlood(gProj.TotalPremitigated);
+            AddBlood(gProj.TotalPremitigated); //modhitpvpwithproj is always called before mitigation so this would be full damage
         }
 
         private void AddBlood(int damage) {

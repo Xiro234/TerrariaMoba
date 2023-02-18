@@ -55,7 +55,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
             }
         }
 
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
+        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
             var modProjectile = proj.ModProjectile;
             SplitEarth earth = modProjectile as SplitEarth;
             if (earth != null) {

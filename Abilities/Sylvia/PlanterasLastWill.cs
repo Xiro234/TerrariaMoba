@@ -54,7 +54,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
             }
         }
 
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
+        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
             var ModProjectile = proj.ModProjectile;
             SylviaUlt2 head = ModProjectile as SylviaUlt2;
             if (head != null) {

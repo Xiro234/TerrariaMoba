@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.StatusEffects;
@@ -15,7 +16,7 @@ namespace TerrariaMoba.NPCs {
             NPC.damage = 0;
             NPC.defense = 9999;
             NPC.dontTakeDamage = false;
-            NPC.knockBackResist = 0f;
+            NPC.knockBackResist = 100f;
             NPC.HitSound = SoundID.NPCHit56;
             NPC.DeathSound = SoundID.NPCDeath56;
         }
@@ -30,6 +31,11 @@ namespace TerrariaMoba.NPCs {
                     }
                 }
             }
+        }
+
+        public override void DrawEffects(ref Color drawColor) {
+            base.DrawEffects(ref drawColor);
+            // make dust around border of maximum range
         }
     }
 }

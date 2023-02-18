@@ -44,7 +44,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
             ConstructFlatAttributes();
         }
 
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
+        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
             if (proj.owner == User.whoAmI) { 
                 var dmgType = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
                 if (proj != null && dmgType.PhysicalDamage > 0) {

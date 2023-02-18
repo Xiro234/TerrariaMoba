@@ -16,7 +16,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
         public const int EFFECT_DURATION = 300;
         public const float DAMAGE_PERCENT = 0.04f;
 
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
+        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
             var ModProjectile = proj.ModProjectile;
             SylviaArrow arrow = ModProjectile as SylviaArrow;
             
