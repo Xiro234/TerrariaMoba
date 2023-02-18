@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -24,6 +25,14 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
                 { ATTACK_SPEED, () => -modifier },
                 { JUMP_SPEED, () => -modifier },
             };
+        }
+
+        public override void SendEffectElements(ModPacket packet) {
+            packet.Write(modifier);
+        }
+
+        public override void ReceiveEffectElements(BinaryReader reader) {
+            modifier = reader.ReadSingle();
         }
 
         public class DazeDrawLayer : PlayerDrawLayer {

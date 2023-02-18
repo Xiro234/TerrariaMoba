@@ -3,27 +3,16 @@ using System.Collections.Generic;
 using System;
 using Terraria.ModLoader;
 using TerrariaMoba.Statistic;
+using TerrariaMoba.StatusEffects.GenericEffects;
 using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.StatusEffects.Jorm {
     
-    public class GoldenhammerDanceEffect : StatusEffect {
+    public class GoldenhammerDanceEffect : Daze {
         public override string DisplayName { get => "Dance of the Goldenhammer"; }
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
-
-        private float modifier;
-
+        
         public GoldenhammerDanceEffect() { }
-        public GoldenhammerDanceEffect(float magnitude, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
-            modifier = magnitude;
-        }
-
-        public override void ConstructMultAttributes() {
-            MultAttributes = new Dictionary<AttributeType, Func<float>>() {
-                { ATTACK_SPEED, () => -modifier },
-                { MOVEMENT_SPEED, () => -modifier },
-                { JUMP_SPEED, () => -modifier }
-            };
-        }
+        public GoldenhammerDanceEffect(float magnitude, int duration, bool canBeCleansed, int applierId) : base(magnitude, duration, canBeCleansed, applierId) { }
     }
 }

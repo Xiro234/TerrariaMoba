@@ -48,11 +48,13 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         public override void SendEffectElements(ModPacket packet) {
             base.SendEffectElements(packet);
             packet.Write(Stacks);
+            packet.Write(DamagePercent);
         }
 
         public override void ReceiveEffectElements(BinaryReader reader) {
             base.ReceiveEffectElements(reader);
             Stacks = reader.ReadInt32();
+            DamagePercent = reader.ReadSingle();
         }
     }
     
