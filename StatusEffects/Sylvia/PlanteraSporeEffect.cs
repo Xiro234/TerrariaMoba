@@ -13,7 +13,6 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         private float healingReduction;
 
         public PlanteraSporeEffect() { }
-
         public PlanteraSporeEffect(float healMod, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) { 
             healingReduction = healMod;
         }

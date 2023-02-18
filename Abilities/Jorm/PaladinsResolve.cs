@@ -10,11 +10,8 @@ using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.Abilities.Jorm {
     public class PaladinsResolve : Ability, IOnCast {
-        public PaladinsResolve(Player player) : base(player, "Paladin's Resolve", 90, 0, AbilityType.Active) { }
-
-        public override Texture2D Icon {
-            get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Jorm/JormTrait").Value;
-        }
+        public PaladinsResolve(Player player) : base(player, "Paladin's Resolve", 90, 0, AbilityType.Passive) { }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Jorm/JormTrait").Value; }
 
         public const int RESOLVE_STACK_CAP = 5;
         public const int COURAGE_ARMOR_BONUS = 5;
@@ -25,23 +22,23 @@ namespace TerrariaMoba.Abilities.Jorm {
 
         private int currentStacks;
         private int stackTimer;
-        private bool onCourage;
-        private bool onWisdom;
+        private bool onCourage = true;
+        private bool onWisdom = false;
 
-        private void AddStack() {
-            if (IsActive) {
-                if (currentStacks != RESOLVE_STACK_CAP) {
-                    currentStacks++;
-                }
-                stackTimer = STACK_DECAY_TIMER;
+        public void OnCast(Ability ability) {
+            if(ability != this) {
+                AddStack();
             }
         }
 
-        public override void OnCast() {
-            if (!IsActive) {
-                IsActive = true;
+        private void AddStack() {
+            if (currentStacks != RESOLVE_STACK_CAP) {
+                currentStacks++; 
             }
+            stackTimer = STACK_DECAY_TIMER;
+        }
 
+        public override void OnCast() {
             if (!onCourage && !onWisdom) {
                 onCourage = true;
             } else if (onCourage) {
@@ -62,18 +59,11 @@ namespace TerrariaMoba.Abilities.Jorm {
         public override void WhileActive() {
             if (stackTimer > 0) {
                 stackTimer--;
-            }
-            else {
+            } else {
                 if (currentStacks > 0) {
                     currentStacks--;
                     stackTimer = STACK_DECAY_TIMER;
                 }
-            }
-        }
-
-        public void OnCast(Ability ability) {
-            if (ability != this) {
-                AddStack();
             }
         }
 

@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Players;
 using Terraria.ID;
-using System.IO;
 
 namespace TerrariaMoba.StatusEffects.Flibnob; 
 
@@ -16,20 +15,9 @@ public class FlameBelchEffect : StatusEffect {
     private int dotTimer;
 
     public FlameBelchEffect() { }
-
     public FlameBelchEffect(int dmg, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
         damageDealt = dmg;
         dotTimer = 0;
-    }
-
-    public override void SendEffectElements(ModPacket packet) {
-        packet.Write(damageDealt);
-        base.SendEffectElements(packet);
-    }
-
-    public override void ReceiveEffectElements(BinaryReader reader) {
-        damageDealt = reader.ReadInt32();
-        base.ReceiveEffectElements(reader);
     }
 
     public override void WhileActive() {
@@ -50,6 +38,6 @@ public class FlameBelchEffect : StatusEffect {
             dust1.velocity.Y *= 2f;
         }
 
-        DurationTimer--;
+        base.WhileActive();
     }
 }

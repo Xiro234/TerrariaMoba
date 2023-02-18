@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,28 +8,16 @@ namespace TerrariaMoba.StatusEffects.Flibnob;
 
 public class FlameBelchSecondEffect : StatusEffect {
     
-    public override string DisplayName { get => "Melting"; }
-        
+    public override string DisplayName { get => "Melting"; } 
     public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 
     private int damageDealt;
     private int dotTimer;
 
     public FlameBelchSecondEffect() { }
-
     public FlameBelchSecondEffect(int dmg, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
         damageDealt = dmg;
         dotTimer = 0;
-    }
-
-    public override void SendEffectElements(ModPacket packet) {
-        packet.Write(damageDealt);
-        base.SendEffectElements(packet);
-    }
-
-    public override void ReceiveEffectElements(BinaryReader reader) {
-        damageDealt = reader.ReadInt32();
-        base.ReceiveEffectElements(reader);
     }
 
     public override void WhileActive() {
@@ -52,6 +39,6 @@ public class FlameBelchSecondEffect : StatusEffect {
             dust1.velocity.Y *= 3f;
         }
 
-        DurationTimer--;
+        base.WhileActive();
     }
 }

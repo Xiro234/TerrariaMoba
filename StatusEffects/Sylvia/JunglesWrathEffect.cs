@@ -38,7 +38,7 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
             }
         }
 
-        public void TakePvpDamage(ref int phsyicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {
+        public void TakePvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {
             if (Stacks >= 5) {
                 trueDamage += (int)Math.Ceiling(User.statLifeMax2 * DamagePercent);
                 DurationTimer = 0;

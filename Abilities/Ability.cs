@@ -101,6 +101,15 @@ namespace TerrariaMoba.Abilities {
                 CooldownTimer--;
             }
         }
+
+        public virtual void ActivatePassives() {
+            switch (AbilityType) {
+                case AbilityType.Passive: {    
+                    IsActive = true;
+                    return;
+                }
+            }
+        }
         
         public virtual void ConstructFlatAttributes() {
             PassiveFlatAttributes = new Dictionary<AttributeType, Func<float>>();

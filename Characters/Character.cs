@@ -82,6 +82,7 @@ namespace TerrariaMoba.Characters {
             BaseAttributes = BaseAttributesFactory();
             Skills = BaseSkillsFactory();
             foreach (Ability skill in  Skills) {
+                skill.ActivatePassives();
                 skill.ConstructFlatAttributes();
                 skill.ConstructMultAttributes();
             }

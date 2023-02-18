@@ -9,6 +9,7 @@ using TerrariaMoba.Enums;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Sylvia;
+using TerrariaMoba.Network;
 
 namespace TerrariaMoba.Abilities.Sylvia {
     public class Flourish : Ability, IShoot {
@@ -89,10 +90,6 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 TerrariaMobaUtils.SetProjectileDamage(proj, PhysicalDamage: JAVELIN_DAMAGE);
                 
                 remainingJavelins--;
-
-                if (remainingJavelins == 0) {
-                    //do syncing
-                }
                 
                 return false;
             }
