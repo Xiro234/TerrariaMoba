@@ -1,7 +1,10 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using System;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
+using TerrariaMoba.Players;
+using TerrariaMoba.Projectiles.OldMan;
 
 namespace TerrariaMoba.Abilities.OldMan {
     public class HookPotato : Ability {
@@ -10,7 +13,22 @@ namespace TerrariaMoba.Abilities.OldMan {
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 
         public override void OnCast() {
-            //TODO - Old Man reaches to his back pocket and flings 3 Frost Daggerfish in front of him, dealing damage and freezing.
+            foreach (Projectile projectile in Main.projectile) {
+                Bobber bobber = projectile.ModProjectile as Bobber;
+
+                if (bobber != null) {
+                    if (bobber.Projectile.owner == User.whoAmI) {
+                        foreach (Player player in Main.player) {
+                            if (player.team != User.team) {
+                                if (Math.Abs((player.position - bobber.Projectile.position).Length()) <= (16f * 5f)) {
+                                    player.GetModPlayer<MobaPlayer>().TakePvpDamage(100, 0, 0, User.whoAmI, true);
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            }
         }
     }
 }
