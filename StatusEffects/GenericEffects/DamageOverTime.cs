@@ -19,7 +19,7 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
 
         public override void WhileActive() {
             if(timer == 0) {
-                timer = 60;
+                timer = 30;
                 User.GetModPlayer<MobaPlayer>().TakePvpDamage(physicalDamage, magicalDamage, trueDamage, ApplicantID, true);
             } else {
                 timer--;
