@@ -11,7 +11,6 @@ using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.StatusEffects.GenericEffects {
     public abstract class Daze : StatusEffect {
-        
         private float modifier;
         
         public Daze() { }
@@ -21,18 +20,20 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
 
         public override void ConstructMultAttributes() {
             MultAttributes = new Dictionary<AttributeType, Func<float>>() {
-                { MOVEMENT_SPEED, () => -modifier },
-                { ATTACK_SPEED, () => -modifier },
-                { JUMP_SPEED, () => -modifier },
+                { ATTACK_SPEED, () => modifier },
+                { MOVEMENT_SPEED, () => modifier },
+                { JUMP_SPEED, () => modifier }
             };
         }
 
         public override void SendEffectElements(ModPacket packet) {
             packet.Write(modifier);
+            base.SendEffectElements(packet);
         }
 
         public override void ReceiveEffectElements(BinaryReader reader) {
             modifier = reader.ReadSingle();
+            base.ReceiveEffectElements(reader);
         }
 
         public class DazeDrawLayer : PlayerDrawLayer {

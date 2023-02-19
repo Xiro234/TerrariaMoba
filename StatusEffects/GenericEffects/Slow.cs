@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -13,14 +14,25 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
         private float modifier;
         
         public Slow() { }
-
         public Slow(float magnitude, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
             modifier = magnitude;
-            
+        }
+
+        public override void ConstructMultAttributes() {
             MultAttributes = new Dictionary<AttributeType, Func<float>>() {
-                { MOVEMENT_SPEED, () => 1 - modifier },
-                { JUMP_SPEED, () => 1 - modifier },
+                { MOVEMENT_SPEED, () => modifier },
+                { JUMP_SPEED, () => modifier }
             };
+        }
+
+        public override void SendEffectElements(ModPacket packet) {
+            packet.Write(modifier);
+            base.SendEffectElements(packet);
+        }
+
+        public override void ReceiveEffectElements(BinaryReader reader) {
+            modifier = reader.ReadSingle();
+            base.ReceiveEffectElements(reader);
         }
 
         public class SlowDrawLayer : PlayerDrawLayer {

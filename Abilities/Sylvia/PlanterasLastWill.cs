@@ -9,6 +9,7 @@ using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Sylvia;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Sylvia;
+using System;
 
 namespace TerrariaMoba.Abilities.Sylvia {
     public class PlanterasLastWill : Ability, IModifyHitPvpWithProj {
@@ -28,7 +29,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
         public const int SPORE_COUNT = 6;
         public const int SPORE_DURATION = 120;
         public const int SPORE_DEBUFF_DURATION = 180;
-        public const float SPORE_HEALEFF_REDUCTION = 0.33f;
+        public const float SPORE_HEALEFF_MODIFIER = -0.33f;
 
         public override void OnCast() {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
@@ -54,28 +55,27 @@ namespace TerrariaMoba.Abilities.Sylvia {
             }
         }
 
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
+        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
             var ModProjectile = proj.ModProjectile;
             SylviaUlt2 head = ModProjectile as SylviaUlt2;
             if (head != null) {
-                var dmgType = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
                 int damageModifier;
                 int durationModifier;
                 int distanceInBlocks = (int)(head.Projectile.velocity.Length() * head.Projectile.ai[0] / 16f);
-                if (distanceInBlocks < DISTANCE_SCALING_BLOCK_CAP && distanceInBlocks % DISTANCE_SCALING_BLOCK_INTERVAL == 0) {
-                    damageModifier = BULB_DAMAGE_SCALING * (distanceInBlocks / DISTANCE_SCALING_BLOCK_INTERVAL);
-                    durationModifier = BULB_STUN_DURATION_SCALING * (distanceInBlocks / DISTANCE_SCALING_BLOCK_INTERVAL);
+                if (distanceInBlocks < DISTANCE_SCALING_BLOCK_CAP) {
+                    damageModifier = (int)Math.Floor((double)(BULB_DAMAGE_SCALING * (distanceInBlocks / DISTANCE_SCALING_BLOCK_INTERVAL)));
+                    durationModifier = (int)Math.Floor((double)(BULB_STUN_DURATION_SCALING * (distanceInBlocks / DISTANCE_SCALING_BLOCK_INTERVAL)));
                 } else {
                     damageModifier = BULB_DAMAGE_SCALING * (DISTANCE_SCALING_BLOCK_CAP / DISTANCE_SCALING_BLOCK_INTERVAL);
                     durationModifier = BULB_STUN_DURATION_SCALING * (DISTANCE_SCALING_BLOCK_CAP / DISTANCE_SCALING_BLOCK_INTERVAL);
                 }
-                TerrariaMobaUtils.SetProjectileDamage(proj, dmgType.PhysicalDamage + damageModifier, dmgType.MagicalDamage, dmgType.TrueDamage);
+                physicalDamage += damageModifier;
                 StatusEffectManager.AddEffect(target, new PlanteraStunEffect(BULB_STUN_DURATION + durationModifier, true, User.whoAmI));
             }
             
             SylviaSpores spore = ModProjectile as SylviaSpores;
             if (spore != null) {
-                StatusEffectManager.AddEffect(target, new PlanteraSporeEffect(SPORE_HEALEFF_REDUCTION, SPORE_DEBUFF_DURATION, true, User.whoAmI));
+                StatusEffectManager.AddEffect(target, new PlanteraSporeEffect(SPORE_HEALEFF_MODIFIER, SPORE_DEBUFF_DURATION, true, User.whoAmI));
             }
         }
     }

@@ -13,6 +13,8 @@ using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Flibnob;
 using TerrariaMoba.Players;
 using System.Collections.Generic;
+using TerrariaMoba.Statistic;
+using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.Abilities.Flibnob {
     public class FlameBelch : Ability, IModifyHitPvpWithProj {
@@ -25,6 +27,8 @@ namespace TerrariaMoba.Abilities.Flibnob {
         public const int BURN_BASE_DAMAGE = 5;
         public const int MELT_BASE_DAMAGE = 25;
         public const int BURN_BASE_DURATION = 180;
+        public const int MELT_ARMOR_MODIFIER = -10;
+        public const float SPEED_MODIFIER = -0.25f;
         public const int MANA_DRAIN = 50;
         public int timer;
 
@@ -63,8 +67,15 @@ namespace TerrariaMoba.Abilities.Flibnob {
                         mobaPlayer.CurrentResource -= MANA_DRAIN;
                     }
                 }
+
                 timer = FLAME_BASE_DELAY;
             }
+        }
+
+        public override void ConstructMultAttributes() {
+            PassiveMultAttributes = new Dictionary<AttributeType, Func<float>> {
+                { MOVEMENT_SPEED, () => IsActive ? SPEED_MODIFIER : 0 }
+            };
         }
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
@@ -77,7 +88,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
                 foreach (var effect in new List<StatusEffect>(mobaPlayer.EffectList)) {
                     if (effect is FlameBelchEffect) {
                         StatusEffectManager.RemoveEffect(target, effect);
-                        StatusEffectManager.AddEffect(target, new FlameBelchSecondEffect(MELT_BASE_DAMAGE, BURN_BASE_DURATION, true, User.whoAmI));
+                        StatusEffectManager.AddEffect(target, new FlameBelchSecondEffect(MELT_ARMOR_MODIFIER, MELT_BASE_DAMAGE, BURN_BASE_DURATION, true, User.whoAmI));
                         return;
                     } else if (effect is FlameBelchSecondEffect) {
                         effect.ReApply();

@@ -24,8 +24,8 @@ namespace TerrariaMoba.Abilities.Marie {
         public const int CLOUD_DAMAGE = 333;
         public const int CLOUD_DURATION = 380;
         
-        public const float SHOCK_SLOW_MAG = 0.25f;
-        public const int SHOCK_MR_LOSS = 10;
+        public const float SHOCK_SLOW_MAG = -0.25f;
+        public const int SHOCK_MR_MODIFIER = -10;
         public const int SHOCK_DURATION = 120;
         
         public override void OnCast() {
@@ -64,7 +64,7 @@ namespace TerrariaMoba.Abilities.Marie {
             
             ESLightning lightning = modProj as ESLightning;
             if (lightning != null) {
-                StatusEffectManager.AddEffect(target, new StormShockEffect(SHOCK_SLOW_MAG, SHOCK_MR_LOSS, SHOCK_DURATION, true, User.whoAmI));
+                StatusEffectManager.AddEffect(target, new StormShockEffect(SHOCK_SLOW_MAG, SHOCK_MR_MODIFIER, SHOCK_DURATION, true, User.whoAmI));
             }
         }
     }

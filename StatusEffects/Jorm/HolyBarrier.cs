@@ -8,14 +8,12 @@ using System.IO;
 namespace TerrariaMoba.StatusEffects.Jorm {
     public class HolyBarrier : StatusEffect, ITakePvpDamage {
         public override string DisplayName { get => "Holy Barrier"; }
-
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Blank").Value; }
 
         private float rangeToAbsorb;
         private float absorbMagnitude;
 
         public HolyBarrier() { }
-
         public HolyBarrier(float range, float magnitude, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
             rangeToAbsorb = range;
             absorbMagnitude = magnitude;

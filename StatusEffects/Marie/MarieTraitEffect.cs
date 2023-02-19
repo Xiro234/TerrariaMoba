@@ -6,7 +6,6 @@ using TerrariaMoba.Interfaces;
 
 namespace TerrariaMoba.StatusEffects.Marie {
     public class MarieTraitEffect : StatusEffect, IModifyHitPvpWithProj {
-
         public override string DisplayName { get => "Goddess's Blessing"; }
         public override Texture2D Icon { get { return ModContent.Request<Texture2D>("Textures/Blank").Value; } }
 

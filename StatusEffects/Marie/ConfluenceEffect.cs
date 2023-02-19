@@ -19,6 +19,12 @@ namespace TerrariaMoba.StatusEffects.Marie {
             moveSpeed = ms;
         }
 
+        public override void ConstructMultAttributes() {
+            MultAttributes = new Dictionary<AttributeType, Func<float>>() {
+                { MOVEMENT_SPEED, () => moveSpeed }
+            };
+        }
+
         public override void SendEffectElements(ModPacket packet) {
             packet.Write(moveSpeed);
             base.SendEffectElements(packet);
@@ -27,12 +33,6 @@ namespace TerrariaMoba.StatusEffects.Marie {
         public override void ReceiveEffectElements(BinaryReader reader) {
             moveSpeed = reader.ReadSingle();
             base.ReceiveEffectElements(reader);
-        }
-
-        public override void ConstructMultAttributes() {
-            MultAttributes = new Dictionary<AttributeType, Func<float>>() {
-                { MOVEMENT_SPEED, () => moveSpeed }
-            };
         }
     }
 }

@@ -20,7 +20,7 @@ namespace TerrariaMoba.Abilities.Jorm {
         public const int HAMMER_DAMAGE = 275;
         public const float HAMMER_SPIN_RADIUS = 135f;
         public const float HAMMER_SPAWN_SPEED = 5f;
-        public const float DAZE_MAGNITUDE = 0.50f;
+        public const float DAZE_MAGNITUDE = -0.50f;
         public const int DAZE_BASE_DURATION = 90;
         
         public override void OnCast() {
