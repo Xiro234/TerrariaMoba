@@ -11,13 +11,13 @@ using TerrariaMoba.Players;
 
 namespace TerrariaMoba.StatusEffects.Sylvia {
     public class JunglesWrathEffect : StatusEffect, ITakePvpDamage {
-
         public override string DisplayName { get => "Jungle's Wrath"; }
-        
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
-        
+
+        public int Stacks { get; set; }
+        public float DamagePercent { get; set; }
+
         public JunglesWrathEffect() { }
-        
         public JunglesWrathEffect(int duration, int applicantId, float damagePercent, int stacks) : base(duration, true, applicantId) {
             Stacks = stacks;
             DamagePercent = damagePercent;
@@ -26,9 +26,6 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         protected override bool ShowBar {
             get => false;
         }
-        
-        public int Stacks { get; set; }
-        public float DamagePercent { get; set; }
 
         public override void ReApply() {
             base.ReApply();
@@ -46,15 +43,15 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         }
 
         public override void SendEffectElements(ModPacket packet) {
-            base.SendEffectElements(packet);
             packet.Write(Stacks);
             packet.Write(DamagePercent);
+            base.SendEffectElements(packet);
         }
 
         public override void ReceiveEffectElements(BinaryReader reader) {
-            base.ReceiveEffectElements(reader);
             Stacks = reader.ReadInt32();
             DamagePercent = reader.ReadSingle();
+            base.ReceiveEffectElements(reader);
         }
     }
     

@@ -14,7 +14,6 @@ using static TerrariaMoba.Statistic.AttributeType;
 namespace TerrariaMoba.StatusEffects.Flibnob {
     public sealed class TitaniumShellEffect : StatusEffect, ITakePvpDamage {
         public override string DisplayName { get => "Titanium Shell"; }
-        
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 
         private int shellArmor;
@@ -24,7 +23,6 @@ namespace TerrariaMoba.StatusEffects.Flibnob {
         private int mitigatedDamageTaken;
         
         public TitaniumShellEffect() { }
-
         public TitaniumShellEffect(int armor, int mr, float ms, float heal, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
             shellArmor = armor;
             shellMagRes = mr;
@@ -48,6 +46,19 @@ namespace TerrariaMoba.StatusEffects.Flibnob {
             CombatText.NewText(User.Hitbox, Color.Aqua, finalDmg);
         }
 
+        public override void ConstructFlatAttributes() {
+            FlatAttributes = new Dictionary<AttributeType, Func<float>> {
+                { PHYSICAL_ARMOR, () => shellArmor },
+                { MAGICAL_ARMOR, () => shellMagRes }
+            };
+        }
+        
+        public override void ConstructMultAttributes() {
+            MultAttributes = new Dictionary<AttributeType, Func<float>>() {
+                { MOVEMENT_SPEED, () => moveSpeed }
+            };
+        }
+
         public override void SendEffectElements(ModPacket packet) {
             packet.Write(shellArmor);
             packet.Write(shellMagRes);
@@ -64,19 +75,6 @@ namespace TerrariaMoba.StatusEffects.Flibnob {
             healDamage = reader.ReadSingle();
             mitigatedDamageTaken = reader.ReadInt32();
             base.ReceiveEffectElements(reader);
-        }
-
-        public override void ConstructFlatAttributes() {
-            FlatAttributes = new Dictionary<AttributeType, Func<float>> {
-                { PHYSICAL_ARMOR, () => shellArmor },
-                { MAGICAL_ARMOR, () => shellMagRes }
-            };
-        }
-        
-        public override void ConstructMultAttributes() {
-            MultAttributes = new Dictionary<AttributeType, Func<float>>() {
-                { MOVEMENT_SPEED, () => -moveSpeed }
-            };
         }
     }
 }

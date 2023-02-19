@@ -1,4 +1,6 @@
-﻿using TerrariaMoba.Players;
+﻿using System.IO;
+using Terraria.ModLoader;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.StatusEffects.GenericEffects {
     public abstract class DamageOverTime : StatusEffect {
@@ -8,10 +10,10 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
         private int timer;
 
         public DamageOverTime() { }
-        public DamageOverTime(int phys, int mag, int tru, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
-            physicalDamage = phys;
-            magicalDamage = mag;
-            trueDamage = tru;
+        public DamageOverTime(int p, int m, int t, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
+            physicalDamage = p;
+            magicalDamage = m;
+            trueDamage = t;
             timer = 0;
         }
 
@@ -24,6 +26,22 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
             }
 
             base.WhileActive();
+        }
+
+        public override void SendEffectElements(ModPacket packet) {
+            packet.Write(physicalDamage);
+            packet.Write(magicalDamage);
+            packet.Write(trueDamage);
+            packet.Write(timer);
+            base.SendEffectElements(packet);
+        }
+
+        public override void ReceiveEffectElements(BinaryReader reader) {
+            physicalDamage = reader.ReadInt32();
+            magicalDamage = reader.ReadInt32();
+            trueDamage = reader.ReadInt32();
+            timer = reader.ReadInt32();
+            base.ReceiveEffectElements(reader);
         }
     }
 }

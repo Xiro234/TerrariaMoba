@@ -28,7 +28,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
         public const int SPORE_COUNT = 6;
         public const int SPORE_DURATION = 120;
         public const int SPORE_DEBUFF_DURATION = 180;
-        public const float SPORE_HEALEFF_REDUCTION = 0.33f;
+        public const float SPORE_HEALEFF_MODIFIER = -0.33f;
 
         public override void OnCast() {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
@@ -75,7 +75,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
             
             SylviaSpores spore = ModProjectile as SylviaSpores;
             if (spore != null) {
-                StatusEffectManager.AddEffect(target, new PlanteraSporeEffect(SPORE_HEALEFF_REDUCTION, SPORE_DEBUFF_DURATION, true, User.whoAmI));
+                StatusEffectManager.AddEffect(target, new PlanteraSporeEffect(SPORE_HEALEFF_MODIFIER, SPORE_DEBUFF_DURATION, true, User.whoAmI));
             }
         }
     }

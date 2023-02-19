@@ -1,33 +1,20 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using TerrariaMoba.Players;
 using Terraria.ID;
+using System.IO;
+using TerrariaMoba.StatusEffects.GenericEffects;
 
 namespace TerrariaMoba.StatusEffects.Flibnob; 
 
-public class FlameBelchEffect : StatusEffect {
+public class FlameBelchEffect : DamageOverTime {
     public override string DisplayName { get => "Burning"; }
-        
     public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 
-    private int damageDealt;
-    private int dotTimer;
-
     public FlameBelchEffect() { }
-    public FlameBelchEffect(int dmg, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
-        damageDealt = dmg;
-        dotTimer = 0;
-    }
+    public FlameBelchEffect(int dmg, int duration, bool canBeCleansed, int applierId) : base(0, dmg, 0, duration, canBeCleansed, applierId) { }
 
     public override void WhileActive() {
-        if (dotTimer == 0) {
-            dotTimer = 60;
-            User.GetModPlayer<MobaPlayer>().TakePvpDamage(0, damageDealt, 0, ApplicantID, true);
-        } else {
-            dotTimer--;
-        }
-
         var num1 = Dust.NewDust(User.position, User.width, User.height, DustID.Torch, User.velocity.X * 0.2f, User.velocity.Y * 0.2f, 100);
         Dust dust1;
         if (Main.rand.Next(3) < 1) {
@@ -39,5 +26,13 @@ public class FlameBelchEffect : StatusEffect {
         }
 
         base.WhileActive();
+    }
+
+    public override void SendEffectElements(ModPacket packet) {
+        base.SendEffectElements(packet);
+    }
+
+    public override void ReceiveEffectElements(BinaryReader reader) {
+        base.ReceiveEffectElements(reader);
     }
 }

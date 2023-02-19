@@ -22,7 +22,7 @@ namespace TerrariaMoba.Abilities.Jorm {
         public const int CONSEC_DAMAGE = 100;
 
         public const int CONSEC_BUFF_DURATION = 180;
-        public const float CONSEC_HEALEFF_MODIFIER = 0.25f;
+        public const float CONSEC_HEALEFF_MODIFIER = -0.25f;
         
         public override void OnCast() {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {

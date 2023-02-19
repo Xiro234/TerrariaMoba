@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria.ModLoader;
 using TerrariaMoba.Statistic;
 using static TerrariaMoba.Statistic.AttributeType;
@@ -19,8 +20,18 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
 
         public override void ConstructMultAttributes() {
             MultAttributes = new Dictionary<AttributeType, Func<float>>() {
-                { HEALING_EFFECTIVENESS, () => 1 - healingReduction }
+                { HEALING_EFFECTIVENESS, () => healingReduction }
             };
+        }
+
+        public override void SendEffectElements(ModPacket packet) {
+            packet.Write(healingReduction);
+            base.SendEffectElements(packet);
+        }
+
+        public override void ReceiveEffectElements(BinaryReader reader) {
+            healingReduction = reader.ReadSingle();
+            base.ReceiveEffectElements(reader);
         }
     }
 }
