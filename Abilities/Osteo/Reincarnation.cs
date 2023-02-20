@@ -11,8 +11,8 @@ using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Osteo;
 
 namespace TerrariaMoba.Abilities.Osteo {
-    public class SoulSiphon : Ability {
-        public SoulSiphon(Player player) : base(player, "Soul Siphon", 60, 0, AbilityType.Active) { }
+    public class Reincarnation : Ability {
+        public Reincarnation(Player player) : base(player, "Reincarnation", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Osteo/OsteoUltimateTwo").Value; }
         

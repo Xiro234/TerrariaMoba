@@ -8,8 +8,8 @@ using TerrariaMoba.Enums;
 using TerrariaMoba.Players;
 
 namespace TerrariaMoba.Abilities.Osteo {
-    public class SongOfTheDamned : Ability {
-        public SongOfTheDamned(Player player) : base(player, "Song of the Damned", 60, 0, AbilityType.Active) { }
+    public class RiteOfCursedBlades : Ability {
+        public RiteOfCursedBlades(Player player) : base(player, "Rite of Cursed Blades", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Osteo/OsteoUltimateOne").Value; }
 
@@ -35,9 +35,7 @@ namespace TerrariaMoba.Abilities.Osteo {
                             displace -= 34;
 
                             if (displace < 100) {
-                                Dust dust = Dust.NewDustPerfect(
-                                    new Vector2(xPosition, (float) (displace - 80 + Main.player[i].Center.Y)),
-                                    59, Vector2.Zero, 1, default(Color), 1.6f); //Bobbing
+                                Dust dust = Dust.NewDustPerfect(new Vector2(xPosition, (float) (displace - 80 + Main.player[i].Center.Y)), 59, Vector2.Zero, 1, default(Color), 1.6f); //Bobbing
                                 dust.noGravity = true;
                             }
                         }

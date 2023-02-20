@@ -28,10 +28,6 @@ namespace TerrariaMoba.Projectiles.Osteo {
             Main.dust[dust].noGravity = true;
         }
 
-        public override void OnHitPvp(Player target, int damage, bool crit) {
-            
-        }
-
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
             float num9 = 0f;
             Vector2 value = Projectile.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(-1.5707963705062866, default(Vector2)) * Projectile.scale;
