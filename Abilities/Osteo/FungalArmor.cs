@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.StatusEffects;
+using TerrariaMoba.StatusEffects.Osteo;
 
 namespace TerrariaMoba.Abilities.Osteo {
     public class FungalArmor : Ability {
@@ -30,10 +31,10 @@ namespace TerrariaMoba.Abilities.Osteo {
 
             if (closestPlayerID != -1) {
                 Player plr = Main.player[closestPlayerID];
-                //StatusEffectManager.AddEffect(plr, new FungalArmorEffect(ATTACK_DAMAGE_REDUCTION, SPORE_DAMAGE, SPORE_DELAY, ARMOR_DURATION, false, User.whoAmI));
+                StatusEffectManager.AddEffect(plr, new FungalArmorEffect(ATTACK_DAMAGE_REDUCTION, SPORE_DAMAGE, SPORE_DELAY, ARMOR_DURATION, false, User.whoAmI));
                 SoundEngine.PlaySound(SoundID.Item4, plr.Center);
             } else {
-                //StatusEffectManager.AddEffect(User, new FungalArmorEffect(ATTACK_DAMAGE_REDUCTION, SPORE_DAMAGE, SPORE_DELAY, ARMOR_DURATION, false, User.whoAmI));
+                StatusEffectManager.AddEffect(User, new FungalArmorEffect(ATTACK_DAMAGE_REDUCTION, SPORE_DAMAGE, SPORE_DELAY, ARMOR_DURATION, false, User.whoAmI));
                 SoundEngine.PlaySound(SoundID.Item4, User.Center);
                 //This should never happen, but just in case.
             }

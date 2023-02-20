@@ -14,10 +14,7 @@ using static TerrariaMoba.Statistic.AttributeType;
 namespace TerrariaMoba.Abilities.Flibnob {
     public class SearingBond : Ability, IModifyHitPvpWithProj {
         public SearingBond(Player player) : base(player, "Searing Bond", 0, 0, AbilityType.Active) { }
-
-        public override Texture2D Icon {
-            get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobTrait").Value;
-        }
+        public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobTrait").Value; }
 
         public const int BASE_ARMOR_GAIN = 5;
         public const int BURN_BASE_DURATION = 120;

@@ -3,7 +3,7 @@ using Terraria.DataStructures;
 using TerrariaMoba.StatusEffects;
 
 namespace TerrariaMoba.Projectiles {
-    public class EnititySource_StatusEffect : IEntitySource {
+    public class EntitySource_StatusEffect : IEntitySource {
         public readonly Player Player;
         public readonly StatusEffect Effect;
 
@@ -11,7 +11,7 @@ namespace TerrariaMoba.Projectiles {
             get => Effect.DisplayName;
         }
 
-        public EnititySource_StatusEffect(Player player, StatusEffect effect) {
+        public EntitySource_StatusEffect(Player player, StatusEffect effect) {
             Player = player;
             Effect = effect;
         }

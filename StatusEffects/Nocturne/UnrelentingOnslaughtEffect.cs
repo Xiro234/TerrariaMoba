@@ -27,7 +27,7 @@ namespace TerrariaMoba.StatusEffects.Nocturne {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
                 SoundEngine.PlaySound(SoundID.Item114, User.Center);
                 float mult = 2f;
-                Projectile.NewProjectile(new EnititySource_StatusEffect(User, this),User.Center + velocity, velocity, ProjectileID.LightBeam, (int) (damage * mult),
+                Projectile.NewProjectile(new EntitySource_StatusEffect(User, this),User.Center + velocity, velocity, ProjectileID.LightBeam, (int) (damage * mult),
                     0, User.whoAmI);
             }
 

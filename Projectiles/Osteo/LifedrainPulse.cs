@@ -7,19 +7,20 @@ using Terraria.ModLoader;
 namespace TerrariaMoba.Projectiles.Osteo {
     public class LifedrainPulse : ModProjectile {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("LifedrainPulse");
+            DisplayName.SetDefault("Lifedrain Pulse");
         }
 
         public override void SetDefaults() {
-            Projectile.friendly = true;
             Projectile.width = 16;
             Projectile.height = 16;
+            Projectile.penetrate = -1;
+            Projectile.alpha = 255;
             Projectile.aiStyle = 0;
             DrawOffsetX = -24;
-            Projectile.hide = true;
+            Projectile.friendly = true;
             Projectile.tileCollide = true;
-            Projectile.alpha = 255;
-            Projectile.penetrate = -1;
+            Projectile.ignoreWater = true;
+            Projectile.hide = true;
         }
 
         public override void AI() {

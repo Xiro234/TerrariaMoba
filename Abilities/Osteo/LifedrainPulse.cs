@@ -17,9 +17,9 @@ namespace TerrariaMoba.Abilities.Osteo {
 
         public const int PULSE_DAMAGE = 300;
         public const int PULSE_DELAY = 90;
-        public const int PULSE_LIFETIME = 90;
+        public const int PULSE_LIFETIME = 150;
         public const int PULSE_WAVE_COUNT = 8;
-        public const float PULSE_WAVE_SPEED = 6.25f;
+        public const float PULSE_WAVE_SPEED = 6.5f;
         public const float PULSE_THREE_DAMAGE_MODIFIER = 0.50f;
         public const float PULSE_THREE_HEALING_MODIFIER = 0.50f;
 
@@ -33,6 +33,10 @@ namespace TerrariaMoba.Abilities.Osteo {
         }
 
         public override void WhileActive() {
+            if (Timer > 0) {
+                Timer--;
+            }
+            
             if (Timer == 0) {
                 if (PulseCount == 2) {
                     if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
@@ -67,11 +71,10 @@ namespace TerrariaMoba.Abilities.Osteo {
                         }
                     }
 
+                    Timer = PULSE_DELAY;
                     PulseCount++;
                 }
             }
-
-            Timer++;
         }
 
         public override void TimeOut()  {
