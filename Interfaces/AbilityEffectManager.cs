@@ -195,6 +195,22 @@ namespace TerrariaMoba.Interfaces {
                 ((IOnCast)effect).OnCast(castAbility);
             }
         }
+
+        public static bool OnRespawn(Player Player) {
+            List<Ability> abilities = GetValidAbilities<IOnRespawn>(Player);
+            List<StatusEffect> effects = GetValidEffects<IOnRespawn>(Player);
+
+            bool result = true;
+            foreach (Ability ability in abilities) {
+                result &= ((IOnRespawn)ability).OnRespawn();
+            }
+
+            foreach (StatusEffect effect in effects) {
+                result &= ((IOnRespawn)effect).OnRespawn();
+            }
+
+            return result;
+        }
         #endregion
         
         

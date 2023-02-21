@@ -32,11 +32,12 @@ namespace TerrariaMoba.Players {
 
         public override void OnRespawn(Player Player) {
             if (MobaSystem.MatchInProgress) {
-                SetPlayerHealth();
-                Player.statLife = Player.statLifeMax2;
+                if (AbilityEffectManager.OnRespawn(Player)) {
+                    SetPlayerHealth();
+                    Player.statLife = Player.statLifeMax2;
+                    SetPlayerResource();
+                }
             }
-
-            SetPlayerResource();
         }
 
         public override void ModifyShootStats(Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage,
