@@ -17,7 +17,8 @@ namespace TerrariaMoba.Players {
         public void RegenLife() {
             lifeRegenTimer++;
 
-            if (lifeRegenTimer == 60) {
+            bool isOsteo = Hero is Osteo;
+            if (lifeRegenTimer == 60 && !isOsteo) {
                 float healthRegenFromMax = (Player.statLifeMax2 * 0.125f / 60f);
 
                 float healthRegen = (healthRegenFromMax + GetCurrentAttributeValue(AttributeType.HEALTH_REGEN));
@@ -73,11 +74,13 @@ namespace TerrariaMoba.Players {
         
         public void HealMe(int amount, bool doText) {
             AbilityEffectManager.OnHeal(Player, ref amount, ref doText);
-            
-            if(doText) {
-                CombatText.NewText(Player.Hitbox, CombatText.HealLife, amount, false);
+
+            int modifiedAmount = (int)Math.Ceiling(amount * GetCurrentAttributeValue(AttributeType.HEALING_EFFECTIVENESS));
+
+            if (doText) {
+                CombatText.NewText(Player.Hitbox, CombatText.HealLife, modifiedAmount, false);
             }
-            Player.statLife += amount * (int)GetCurrentAttributeValue(AttributeType.HEALING_EFFECTIVENESS);
+            Player.statLife += modifiedAmount;
             if (Player.statLife > Player.statLifeMax2) {
                 Player.statLife = Player.statLifeMax2;
             }

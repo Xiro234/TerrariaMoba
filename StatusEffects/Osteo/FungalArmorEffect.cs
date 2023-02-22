@@ -41,7 +41,7 @@ namespace TerrariaMoba.StatusEffects.Osteo {
                         Vector2 velocity = direction * 6f;
                         Projectile proj = Projectile.NewProjectileDirect(new EntitySource_StatusEffect(User, this),
                             position, velocity, ModContent.ProjectileType<FungalSpore>(), 0,
-                            0, ApplicantID);
+                            0, User.whoAmI);
                         TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: SporeDamage);
                         proj.timeLeft = 90;
                     }

@@ -15,10 +15,9 @@ namespace TerrariaMoba.Projectiles.Osteo {
             Projectile.height = 16;
             Projectile.penetrate = -1;
             Projectile.alpha = 255;
-            Projectile.aiStyle = 0;
             DrawOffsetX = -24;
             Projectile.friendly = true;
-            Projectile.tileCollide = true;
+            Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.hide = true;
         }
@@ -29,12 +28,14 @@ namespace TerrariaMoba.Projectiles.Osteo {
             Main.dust[dust].noGravity = true;
         }
 
+        /*
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
             float num9 = 0f;
             Vector2 value = Projectile.velocity.SafeNormalize(Vector2.UnitY).RotatedBy(-1.5707963705062866, default(Vector2)) * Projectile.scale;
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(),
                 Projectile.Center - value * 36f, Projectile.Center + value * 36f, 16f * Projectile.scale, ref num9);
         }
+        */
 
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs,
             List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverPlayers, List<int> drawCacheProjsOverWiresUI) {

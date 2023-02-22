@@ -25,6 +25,24 @@ namespace TerrariaMoba.Interfaces {
             }
         }
 
+        public static bool PreKill(Player Player, double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
+            List<Ability> abilities = GetValidAbilities<IPreKill>(Player);
+            List<StatusEffect> effects = GetValidEffects<IPreKill>(Player);
+
+            bool result = true;
+            foreach (Ability ability in abilities) {
+                if (ability.CanCastAbility()) {
+                    result &= ((IPreKill)ability).PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
+                }
+            }
+
+            foreach (StatusEffect effect in effects) {
+                result &= ((IPreKill)effect).PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
+            }
+
+            return result;
+        }
+
         public static bool Shoot(Player Player, Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, 
             Vector2 velocity, int type, int damage, float knockback) {
             List<Ability> abilities = GetValidAbilities<IShoot>(Player);

@@ -24,9 +24,16 @@ namespace TerrariaMoba.Abilities.Osteo {
                 Player plr = Main.player[i];
                 float dist = (Main.MouseWorld - plr.Center).Length();
                 if (plr.active && plr.team == User.team && dist < closestDist) {
+                    if (Main.netMode != NetmodeID.Server) {
+                        Main.NewText(Main.player[i].name + " has the distance: " + dist);
+                    }
                     closestDist = dist;
                     closestPlayerID = i;
                 }
+            }
+
+            if (Main.netMode != NetmodeID.Server) {
+                Main.NewText("closestPlayerID: " + Main.player[closestPlayerID].name);
             }
 
             if (closestPlayerID != -1) {
@@ -34,9 +41,9 @@ namespace TerrariaMoba.Abilities.Osteo {
                 StatusEffectManager.AddEffect(plr, new FungalArmorEffect(ATTACK_DAMAGE_REDUCTION, SPORE_DAMAGE, SPORE_DELAY, ARMOR_DURATION, false, User.whoAmI));
                 SoundEngine.PlaySound(SoundID.Item4, plr.Center);
             } else {
-                StatusEffectManager.AddEffect(User, new FungalArmorEffect(ATTACK_DAMAGE_REDUCTION, SPORE_DAMAGE, SPORE_DELAY, ARMOR_DURATION, false, User.whoAmI));
-                SoundEngine.PlaySound(SoundID.Item4, User.Center);
-                //This should never happen, but just in case.
+                if (Main.netMode != NetmodeID.Server) {
+                    Main.NewText("FungalArmor.cs: This should never happen.");
+                }
             }
         }
     }

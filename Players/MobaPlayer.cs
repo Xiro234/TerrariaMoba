@@ -166,6 +166,11 @@ namespace TerrariaMoba.Players {
             regen *= 0;
         }
 
+        public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
+            bool kill = base.PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);  
+            return kill &= AbilityEffectManager.PreKill(Player, damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
+        }
+
         public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
             if (Main.netMode == NetmodeID.MultiplayerClient && MobaSystem.MatchInProgress) {
                 AbilityEffectManager.Kill(Player, damage, hitDirection, pvp, damageSource);

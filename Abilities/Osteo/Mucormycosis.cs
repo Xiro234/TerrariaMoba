@@ -31,7 +31,6 @@ namespace TerrariaMoba.Abilities.Osteo {
 
         public override void ConstructMultAttributes() {
             PassiveMultAttributes = new Dictionary<AttributeType, Func<float>> {
-                { HEALTH_REGEN, () => 0 },
                 { HEALING_EFFECTIVENESS, () => HEALING_MODIFIER }
             };
         }

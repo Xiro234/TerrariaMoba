@@ -17,7 +17,7 @@ namespace TerrariaMoba.Abilities.Osteo {
 
         public const int PULSE_DAMAGE = 300;
         public const int PULSE_DELAY = 90;
-        public const int PULSE_LIFETIME = 150;
+        public const int PULSE_LIFETIME = 90;
         public const int PULSE_WAVE_COUNT = 8;
         public const float PULSE_WAVE_SPEED = 6.5f;
         public const float PULSE_THREE_DAMAGE_MODIFIER = 0.50f;
@@ -46,8 +46,8 @@ namespace TerrariaMoba.Abilities.Osteo {
                             Vector2 direction = new Vector2((float)x, (float)y);
                             Vector2 position = User.Center + direction * 16;
                             Vector2 velocity = direction * PULSE_WAVE_SPEED;
-                            var proj = Projectile.NewProjectileDirect(new EntitySource_Ability(User, this),
-                                position, velocity, ModContent.ProjectileType<LifedrainPulseThird>(), 0,
+                            Projectile proj = Projectile.NewProjectileDirect(new EntitySource_Ability(User, this),
+                                position, velocity, ModContent.ProjectileType<LifedrainPulseThird>(), 1,
                                 0, User.whoAmI);
                             TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: (int)(PULSE_DAMAGE * (1 + PULSE_THREE_DAMAGE_MODIFIER)));
                             proj.timeLeft = PULSE_LIFETIME;
@@ -63,8 +63,8 @@ namespace TerrariaMoba.Abilities.Osteo {
                             Vector2 direction = new Vector2((float)x, (float)y);
                             Vector2 position = User.Center + direction * 16;
                             Vector2 velocity = direction * PULSE_WAVE_SPEED;
-                            var proj = Projectile.NewProjectileDirect(new EntitySource_Ability(User, this),
-                                position, velocity, ModContent.ProjectileType<Projectiles.Osteo.LifedrainPulse>(), 0,
+                            Projectile proj = Projectile.NewProjectileDirect(new EntitySource_Ability(User, this),
+                                position, velocity, ModContent.ProjectileType<Projectiles.Osteo.LifedrainPulse>(), 1,
                                 0, User.whoAmI);
                             TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: PULSE_DAMAGE);
                             proj.timeLeft = PULSE_LIFETIME;
@@ -86,8 +86,8 @@ namespace TerrariaMoba.Abilities.Osteo {
             var modProj = proj.ModProjectile;
             LifedrainPulseThird bigPulse = modProj as LifedrainPulseThird;
             if (bigPulse != null) {
-                int finalDamage = (int)(magicalDamage - (magicalDamage * target.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(Statistic.AttributeType.MAGICAL_ARMOR)));
-                User.GetModPlayer<MobaPlayer>().HealMe((int)Math.Floor(finalDamage * PULSE_THREE_HEALING_MODIFIER), true);
+                int finalDamage = (int)Math.Ceiling(magicalDamage - (magicalDamage * target.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(Statistic.AttributeType.MAGICAL_ARMOR) * 0.01f));
+                User.GetModPlayer<MobaPlayer>().HealMe((int)Math.Ceiling(finalDamage * PULSE_THREE_HEALING_MODIFIER), true);
             }
         }
     }

@@ -21,7 +21,7 @@ namespace TerrariaMoba.Characters {
         protected override Dictionary<AttributeType, Func<float>> BaseAttributesFactory() {
             return new Dictionary<AttributeType, Func<float>>() {
                 { MAX_HEALTH, () => 1440f },
-                { HEALTH_REGEN, () => 3.0f },
+                { HEALTH_REGEN, () => 0f },
                 { MAX_MANA, () => 500f },
                 { MANA_REGEN, () => 2.1f },
                 { PHYSICAL_ARMOR, () => 0f },
@@ -31,7 +31,7 @@ namespace TerrariaMoba.Characters {
                 { ATTACK_VELOCITY, () => 7.66f },
                 { MOVEMENT_SPEED, () => 1f },
                 { JUMP_SPEED, () => 1f },
-                { HEALING_EFFECTIVENESS, () => 0.5f },
+                { HEALING_EFFECTIVENESS, () => 1f },
                 { STATUS_RESISTANCE, () => 0f }
             };
         }
