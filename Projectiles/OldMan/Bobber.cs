@@ -201,7 +201,7 @@ namespace TerrariaMoba.Projectiles.OldMan {
 	        BobberTimer = 0;
         }
 
-        private void Detach() {
+        public void Detach() {
 	        attachedPlayerID = -1;
 	        BobberTimer = 0;
 	        CurrentAIState = AIState.Retract;

@@ -27,11 +27,13 @@ namespace TerrariaMoba.Abilities.Osteo {
                 CooldownTimer = BaseCooldown;
             } else {
                 Timer--;
+                User.immune = true;
             }
         }
 
         public bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
             if (CooldownTimer == 0) {
+                User.statLife = 1;
                 SoundEngine.PlaySound(SoundID.Zombie105, User.Center);
                 User.immune = true;
                 Timer = RESPAWN_DELAY;

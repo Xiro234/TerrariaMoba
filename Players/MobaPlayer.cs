@@ -68,11 +68,11 @@ namespace TerrariaMoba.Players {
 
         public override void ResetEffects() {
             if (MobaSystem.MatchInProgress) {
+                SetPlayerHealth();
+                AbilityEffectManager.ResetEffects(Player);
+
                 TickStatusEffects();
                 TickAbilities();
-
-                AbilityEffectManager.ResetEffects(Player);
-                SetPlayerHealth();
             }
         }
 

@@ -33,10 +33,17 @@ namespace TerrariaMoba.Items.OldMan {
             return false;
         }
 
+        public override void UseItemFrame(Player player) {
+            player.bodyFrame.Y = 3 * 56;
+        }
+
         public override void UseStyle(Player player, Rectangle heldItemFrame) {
             if (player.itemTime <= 2) {
-                player.itemRotation = 0;
-                player.bodyFrame.Y = 5 * 56;
+                Item.useStyle = ItemUseStyleID.HoldUp;
+                //offs
+            }
+            else {
+                Item.useStyle = ItemUseStyleID.Swing;
             }
         }
     }

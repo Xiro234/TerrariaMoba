@@ -40,6 +40,7 @@ namespace TerrariaMoba.Characters {
                 new HookPotato(User),
                 new LobsterCage(User),
                 new ReelEmIn(User),
+                new TruffleWormSurprise(User),
                 new WaitForIt(User)
             };
         }
