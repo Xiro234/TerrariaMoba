@@ -27,12 +27,4 @@ public class FlameBelchEffect : DamageOverTime {
 
         base.WhileActive();
     }
-
-    public override void SendEffectElements(ModPacket packet) {
-        base.SendEffectElements(packet);
-    }
-
-    public override void ReceiveEffectElements(BinaryReader reader) {
-        base.ReceiveEffectElements(reader);
-    }
 }

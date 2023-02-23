@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
@@ -13,6 +14,7 @@ namespace TerrariaMoba.Abilities {
         public string Name { get; protected set; }
         public int BaseCooldown { get; }
         public int BaseResourceCost { get; }
+        public bool NetUpdate { get; set; }
         public Dictionary<AttributeType, Func<float>> PassiveFlatAttributes { get; protected set; }
         public Dictionary<AttributeType, Func<float>> PassiveMultAttributes { get; protected set; }
 
@@ -35,13 +37,10 @@ namespace TerrariaMoba.Abilities {
             AbilityType = abilityType;
             BaseResourceCost = baseResourceCost;
             User = player;
+            NetUpdate = false;
         }
 
-        /*public static Ability CreateAbility(Player Player) { //, Type type) {
-            
-        }*/
 
-        
         /// <summary>
         /// Will cast if able to, override if resources are not a factor.
         /// </summary>
@@ -117,6 +116,16 @@ namespace TerrariaMoba.Abilities {
         
         public virtual void ConstructMultAttributes() {
             PassiveMultAttributes = new Dictionary<AttributeType, Func<float>>();
+        }
+
+        public virtual void SendAbilityElements(ModPacket packet) {
+            packet.Write(CooldownTimer);
+            packet.Write(IsActive);
+        }
+
+        public virtual void ReceiveAbilityElements(BinaryReader reader) {
+            CooldownTimer = reader.ReadInt32();
+            IsActive = reader.ReadBoolean();
         }
     }
 }

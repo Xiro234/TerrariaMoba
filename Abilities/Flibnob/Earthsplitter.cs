@@ -8,6 +8,8 @@ using TerrariaMoba.Interfaces;
 using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Flibnob;
 using TerrariaMoba.StatusEffects;
+using TerrariaMoba.StatusEffects.Flibnob;
+using TerrariaMoba.StatusEffects.GenericEffects;
 
 namespace TerrariaMoba.Abilities.Flibnob {
     public class Earthsplitter : Ability, IModifyHitPvpWithProj {
@@ -59,7 +61,7 @@ namespace TerrariaMoba.Abilities.Flibnob {
             var modProjectile = proj.ModProjectile;
             SplitEarth earth = modProjectile as SplitEarth;
             if (earth != null) {
-                StatusEffectManager.AddEffect(target, new FunStun(120, true, User.whoAmI));
+                StatusEffectManager.AddEffect(target, new EarthsplitterStun(120, true, User.whoAmI));
             }
         }
     }

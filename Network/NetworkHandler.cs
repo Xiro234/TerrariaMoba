@@ -1,8 +1,10 @@
 ﻿using System.IO;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Abilities;
 using TerrariaMoba.Characters;
 using TerrariaMoba.Players;
 using TerrariaMoba.StatusEffects;
@@ -16,6 +18,7 @@ namespace TerrariaMoba.Network {
             SYNC_EFFECT_LIST,
             SYNC_REMOVE_EFFECT,
             SYNC_PLAYER_VELOCITY,
+            SYNC_ABILITY,
             START_GAME,
             ASSIGN_CHARACTER,
             ABILITY_CAST
@@ -41,6 +44,9 @@ namespace TerrariaMoba.Network {
                     break;
                 case NetTag.SYNC_PLAYER_VELOCITY:
                     ReceiveSyncPlayerVelocity(reader, sender);
+                    break;
+                case NetTag.SYNC_ABILITY:
+                    ReceiveSyncAbility(reader, sender);
                     break;
                 case NetTag.START_GAME:
                     ReceiveStartGame(reader, sender);
@@ -203,6 +209,27 @@ namespace TerrariaMoba.Network {
         }
 
         #endregion
+        
+        #region SYNC_ABILITY
+        public static void SendSyncAbility(int index, int target, int ignore = -1) {
+            ModPacket modPacket = TerrariaMoba.Instance.GetPacket();
+            modPacket.Write((byte)NetTag.SYNC_ABILITY);
+            modPacket.Write(index);
+            modPacket.Write(target);
+            Main.player[target].GetModPlayer<MobaPlayer>().Hero.Skills[index].SendAbilityElements(modPacket);
+            modPacket.Send(ignoreClient: ignore);
+        }
+
+        public static void ReceiveSyncAbility(BinaryReader reader, int sender) {
+            int index = reader.ReadInt32();
+            int target = reader.ReadInt32();
+            Main.player[target].GetModPlayer<MobaPlayer>().Hero.Skills[index].ReceiveAbilityElements(reader);
+
+            if (Main.netMode == NetmodeID.Server) {
+                SendSyncAbility(index, target, sender);
+            }
+        }
+        #endregion
 
         #region START_GAME
         public static void SendStartGame(int ignore = -1) {
@@ -244,7 +271,6 @@ namespace TerrariaMoba.Network {
         #endregion
         
         #region ABILITY_CAST
-
         public static void SendAbilityCast(int index, int target, int ignore = -1) {
             ModPacket modPacket = TerrariaMoba.Instance.GetPacket();
             modPacket.Write((byte) NetTag.ABILITY_CAST);
@@ -264,7 +290,6 @@ namespace TerrariaMoba.Network {
                 SendAbilityCast(index, whoAmI, whoAmI);
             }
         }
-        
         #endregion
     }
 }

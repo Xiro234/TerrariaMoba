@@ -1,5 +1,6 @@
 ﻿using Terraria;
 using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
@@ -91,6 +92,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 
                 remainingJavelins--;
                 
+                NetUpdate = true;
                 return false;
             }
             return true;
@@ -98,6 +100,19 @@ namespace TerrariaMoba.Abilities.Sylvia {
 
         public override bool CanCastAbility() {
             return true;
+        }
+
+        public override void SendAbilityElements(ModPacket packet) {
+            packet.Write(timer);
+            packet.Write(remainingJavelins);
+            base.SendAbilityElements(packet);
+        }
+
+        public override void ReceiveAbilityElements(BinaryReader reader) {
+            timer = reader.ReadInt32();
+            remainingJavelins = reader.ReadInt32();
+            
+            base.ReceiveAbilityElements(reader);
         }
     }
 }

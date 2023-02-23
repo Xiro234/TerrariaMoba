@@ -10,6 +10,8 @@ using TerrariaMoba.Players;
 using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Jorm;
 using TerrariaMoba.StatusEffects;
+using TerrariaMoba.StatusEffects.GenericEffects;
+using TerrariaMoba.StatusEffects.Jorm;
 
 namespace TerrariaMoba.Abilities.Jorm {
     public class Hammerfall : Ability, IModifyHitPvpWithProj {
@@ -50,7 +52,7 @@ namespace TerrariaMoba.Abilities.Jorm {
             var modProjectile = proj.ModProjectile;
             HammerfallProj hammer = modProjectile as HammerfallProj;
             if (hammer != null) {
-                StatusEffectManager.AddEffect(target, new FunStun(STUN_DURATION, true, User.whoAmI));
+                StatusEffectManager.AddEffect(target, new HammerfallStun(STUN_DURATION, true, User.whoAmI));
             }
         }
     }
