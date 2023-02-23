@@ -88,6 +88,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
 
                 Projectile proj = Projectile.NewProjectileDirect(source, position, vel, 
                     ModContent.ProjectileType<SylviaUlt1Projectile>(),1, 0f, User.whoAmI);
+                proj.GetGlobalProjectile<DamageTypeGlobalProj>().AutoAttack = true;
                 TerrariaMobaUtils.SetProjectileDamage(proj, PhysicalDamage: JAVELIN_DAMAGE);
                 
                 remainingJavelins--;

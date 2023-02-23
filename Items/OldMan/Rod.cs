@@ -3,6 +3,7 @@ using Terraria.ID;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
+using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.OldMan;
 
 namespace TerrariaMoba.Items.OldMan {
@@ -30,6 +31,8 @@ namespace TerrariaMoba.Items.OldMan {
             int damage, float knockback) {
             Projectile proj = Projectile.NewProjectileDirect(source, position + new Vector2(47, -31), velocity, 
                 ModContent.ProjectileType<Bobber>(), 1, 0f, player.whoAmI);
+            proj.GetGlobalProjectile<DamageTypeGlobalProj>().AutoAttack = true;
+
             return false;
         }
 

@@ -6,6 +6,7 @@ using TerrariaMoba.Players;
 using TerrariaMoba.Statistic;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
+using TerrariaMoba.Projectiles;
 
 namespace TerrariaMoba.Items.Marie {
     public class MarieStaff : ModItem {
@@ -35,6 +36,7 @@ namespace TerrariaMoba.Items.Marie {
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
             Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, ModContent.ProjectileType<SoTBolt>(), 1, 0f, player.whoAmI);
+            proj.GetGlobalProjectile<DamageTypeGlobalProj>().AutoAttack = true;
 
             if (MobaSystem.MatchInProgress) {
                 TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: (int)player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.ATTACK_DAMAGE));

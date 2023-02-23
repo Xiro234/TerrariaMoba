@@ -4,6 +4,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Players;
+using TerrariaMoba.Projectiles;
 using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Items.Jorm {
@@ -33,6 +34,7 @@ namespace TerrariaMoba.Items.Jorm {
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
             Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, ProjectileID.PaladinsHammerFriendly, 1, 0f, player.whoAmI);
+            proj.GetGlobalProjectile<DamageTypeGlobalProj>().AutoAttack = true;
 
             if (MobaSystem.MatchInProgress) {
                 TerrariaMobaUtils.SetProjectileDamage(proj, PhysicalDamage: (int)player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.ATTACK_DAMAGE));
