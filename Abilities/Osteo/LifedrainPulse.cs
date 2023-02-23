@@ -15,11 +15,11 @@ namespace TerrariaMoba.Abilities.Osteo {
         public LifedrainPulse(Player player) : base(player, "Lifedrain Pulse", 180, 25, AbilityType.Active) { }
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Osteo/OsteoAbilityTwo").Value; }
 
-        public const int PULSE_DAMAGE = 300;
+        public const int PULSE_DAMAGE = 200;
         public const int PULSE_DELAY = 90;
-        public const int PULSE_LIFETIME = 90;
+        public const int PULSE_LIFETIME = 60;
         public const int PULSE_WAVE_COUNT = 8;
-        public const float PULSE_WAVE_SPEED = 6.5f;
+        public const float PULSE_WAVE_SPEED = 4.2f;
         public const float PULSE_THREE_DAMAGE_MODIFIER = 0.50f;
         public const float PULSE_THREE_HEALING_MODIFIER = 0.50f;
 
@@ -47,10 +47,14 @@ namespace TerrariaMoba.Abilities.Osteo {
                             Vector2 position = User.Center + direction * 16;
                             Vector2 velocity = direction * PULSE_WAVE_SPEED;
                             Projectile proj = Projectile.NewProjectileDirect(new EntitySource_Ability(User, this),
-                                position, velocity, ModContent.ProjectileType<LifedrainPulseThird>(), 1,
+                                position, velocity, ModContent.ProjectileType<LifedrainPulseProjThird>(), 1,
                                 0, User.whoAmI);
                             TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: (int)(PULSE_DAMAGE * (1 + PULSE_THREE_DAMAGE_MODIFIER)));
-                            proj.timeLeft = PULSE_LIFETIME;
+                            
+                            LifedrainPulseProjThird pulse3 = proj.ModProjectile as LifedrainPulseProjThird;
+                            if (pulse3 != null) {
+                                pulse3.PulseLifetime = PULSE_LIFETIME;
+                            }
                         }
                     }
 
@@ -64,10 +68,14 @@ namespace TerrariaMoba.Abilities.Osteo {
                             Vector2 position = User.Center + direction * 16;
                             Vector2 velocity = direction * PULSE_WAVE_SPEED;
                             Projectile proj = Projectile.NewProjectileDirect(new EntitySource_Ability(User, this),
-                                position, velocity, ModContent.ProjectileType<Projectiles.Osteo.LifedrainPulse>(), 1,
+                                position, velocity, ModContent.ProjectileType<LifedrainPulseProj>(), 1,
                                 0, User.whoAmI);
                             TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: PULSE_DAMAGE);
-                            proj.timeLeft = PULSE_LIFETIME;
+
+                            LifedrainPulseProj pulse = proj.ModProjectile as LifedrainPulseProj;
+                            if (pulse != null) {
+                                pulse.PulseLifetime = PULSE_LIFETIME;
+                            }
                         }
                     }
 
@@ -84,7 +92,7 @@ namespace TerrariaMoba.Abilities.Osteo {
 
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
             var modProj = proj.ModProjectile;
-            LifedrainPulseThird bigPulse = modProj as LifedrainPulseThird;
+            LifedrainPulseProjThird bigPulse = modProj as LifedrainPulseProjThird;
             if (bigPulse != null) {
                 int finalDamage = (int)Math.Ceiling(magicalDamage - (magicalDamage * target.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(Statistic.AttributeType.MAGICAL_ARMOR) * 0.01f));
                 User.GetModPlayer<MobaPlayer>().HealMe((int)Math.Ceiling(finalDamage * PULSE_THREE_HEALING_MODIFIER), true);

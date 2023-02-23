@@ -16,13 +16,15 @@ namespace TerrariaMoba.StatusEffects.Osteo {
         private float AttackDamageModifier;
         private int SporeDamage;
         private int SporeDelay;
+        private int SporeLifetime;
         private int Timer;
 
         public FungalArmorEffect() { }
-        public FungalArmorEffect(float dmgMod, int sporeDmg, int sporeDel, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) { 
+        public FungalArmorEffect(float dmgMod, int sporeDmg, int sporeDel, int sporeLife, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) { 
             AttackDamageModifier = dmgMod;
             SporeDamage = sporeDmg;
             SporeDelay = sporeDel;
+            SporeLifetime = sporeLife;
             Timer = 0;
         }
 
@@ -38,18 +40,19 @@ namespace TerrariaMoba.StatusEffects.Osteo {
                         double y = Math.Sin(((Math.PI / 180) * ((360f / 8) * i)));
                         Vector2 direction = new Vector2((float)x, (float)y);
                         Vector2 position = User.Center + direction * 16;
-                        Vector2 velocity = direction * 6f;
+                        Vector2 velocity = direction * 1.5f;
                         Projectile proj = Projectile.NewProjectileDirect(new EntitySource_StatusEffect(User, this),
-                            position, velocity, ModContent.ProjectileType<FungalSpore>(), 0,
-                            0, User.whoAmI);
+                            position, velocity, ModContent.ProjectileType<FungalSpore>(), 1, 0, User.whoAmI);
                         TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: SporeDamage);
-                        proj.timeLeft = 90;
+
+                        FungalSpore spore = proj.ModProjectile as FungalSpore;
+                        if (spore != null) {
+                            spore.SporeLifetime = SporeLifetime;
+                        }
                     }
                 }
-
                 Timer = SporeDelay;
             }
-
             base.WhileActive();
         }
 
