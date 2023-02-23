@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
+using TerrariaMoba.Players;
 
 namespace TerrariaMoba.StatusEffects.GenericEffects {
     public abstract class Stun : StatusEffect, ISetControls, IShoot {
@@ -16,6 +17,10 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
             User.controlJump = false;
             User.controlUp = false;
             User.controlDown = false;
+        }
+
+        public override void WhileActive() {
+            User.GetModPlayer<MobaPlayer>().disableAbilities = true;
         }
 
         public bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, 

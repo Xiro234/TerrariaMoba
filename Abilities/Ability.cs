@@ -47,7 +47,7 @@ namespace TerrariaMoba.Abilities {
         public virtual bool CastIfAble() {
             var mobaPlayer = User.GetModPlayer<MobaPlayer>();
 
-            if (mobaPlayer.CurrentResource >= BaseResourceCost && CanCastAbility() && CooldownTimer == 0) {
+            if (mobaPlayer.CurrentResource >= BaseResourceCost && CanCastAbility() && CooldownTimer == 0 && !mobaPlayer.disableAbilities) {
                 OnCast();
                 AbilityEffectManager.OnCast(User, this);
                 ReduceResource();

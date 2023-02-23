@@ -68,6 +68,7 @@ namespace TerrariaMoba.Players {
 
         public override void ResetEffects() {
             if (MobaSystem.MatchInProgress) {
+                disableAbilities = true;
                 SetPlayerHealth();
                 AbilityEffectManager.ResetEffects(Player);
 
