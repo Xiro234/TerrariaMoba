@@ -9,6 +9,7 @@ using TerrariaMoba.Statistic;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Osteo;
 using static TerrariaMoba.Statistic.AttributeType;
+using TerrariaMoba.Projectiles.Osteo;
 
 namespace TerrariaMoba.Abilities.Osteo {
     public class Mucormycosis : Ability, IModifyHitPvpWithProj {
@@ -25,7 +26,13 @@ namespace TerrariaMoba.Abilities.Osteo {
         public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
             if (proj != null && proj.owner == User.whoAmI) {
                 StatusEffectManager.AddEffect(target, 
-                    new MucormycosisEffect(MUCOR_SPORE_DAMAGE, MUCOR_SPORE_DURATION, MUCOR_POISON_DAMAGE, MUCOR_POISON_DURATION, DEBUFF_DURATION, true, User.whoAmI));
+                    new MucormycosisEffect(MUCOR_SPORE_DAMAGE, MUCOR_SPORE_DURATION, DEBUFF_DURATION, true, User.whoAmI));
+            }
+
+            var modProj = proj.ModProjectile;
+            MucormycosisSpore spore = modProj as MucormycosisSpore;
+            if (spore != null) {
+                StatusEffectManager.AddEffect(target, new MucorPoisonEffect(MUCOR_POISON_DAMAGE, MUCOR_POISON_DURATION, true, User.whoAmI));
             }
         }
 

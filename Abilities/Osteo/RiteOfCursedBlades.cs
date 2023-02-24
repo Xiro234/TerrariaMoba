@@ -6,6 +6,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Players;
+using TerrariaMoba.StatusEffects;
+using TerrariaMoba.StatusEffects.Osteo;
+using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace TerrariaMoba.Abilities.Osteo {
     public class RiteOfCursedBlades : Ability {
@@ -21,6 +24,28 @@ namespace TerrariaMoba.Abilities.Osteo {
         }
 
         public override void WhileActive() {
+            Timer++;
+            for (int i = 0; i < Main.maxPlayers; i++) {
+                Player plr = Main.player[i];
+                if (plr.active && plr.team != User.team) {
+                    if (!plr.dead) {
+                        double displace = Timer;
+                        displace -= 34;
+
+                        if (displace < 100) {
+                            Dust dust = Dust.NewDustPerfect(new Vector2(plr.Center.X - 1, (float)(displace - 80 + Main.player[i].Center.Y)),
+                                59, Vector2.Zero, 1, default, 1.6f);
+                            dust.noGravity = true;
+                        }
+                    }
+                }
+            }
+
+            if (Timer > 180) {
+                TimeOut();
+            }
+
+            /*
             Timer++;
             for (int i = 0; i < Main.maxPlayers; i++) {
                 if (Main.player[i] != null && Main.player[i].active) {
@@ -49,10 +74,21 @@ namespace TerrariaMoba.Abilities.Osteo {
             if (Timer > 180) {
                 TimeOut();
             }
+            */
         }
 
         public override void TimeOut() {
             IsActive = false;
+            foreach (Player plr in Main.player) {
+                if (plr.team != User.team && !plr.dead) {
+                    plr.GetModPlayer<MobaPlayer>().TakePvpDamage(300, 300, 0, User.whoAmI, true);
+                    StatusEffectManager.AddEffect(plr, new MucormycosisEffect(Mucormycosis.MUCOR_SPORE_DAMAGE, Mucormycosis.MUCOR_SPORE_DURATION, 
+                        Mucormycosis.DEBUFF_DURATION, true, User.whoAmI));
+                    SoundEngine.PlaySound(SoundID.Item105, plr.position);
+                }
+            }
+            
+            /*
             for (int i = 0; i < Main.maxPlayers; i++) {
                 if (Main.player[i] != null && Main.player[i].active) {
                     if (Main.player[i].team != User.team) {
@@ -65,6 +101,7 @@ namespace TerrariaMoba.Abilities.Osteo {
                     }
                 }
             }
+            */
         }
     }
 }

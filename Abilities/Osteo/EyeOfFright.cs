@@ -31,15 +31,17 @@ namespace TerrariaMoba.Abilities.Osteo {
                     if (plr.active && plr.team != User.team) {
                         Vector2 dir = User.Center - plr.Center;
                         dir.Normalize();
-                        if (0 <= dir.X && dir.X <= -1) {
-                            dir.X = -1;
-                        }
-                        if (0 <= dir.X && dir.X <= 1) {
-                            dir.X = 1;
-                        }
-                        bool isFacingEnemy = dir.X + User.direction == 0 ? true : false;
-
+                        bool isFacingEnemy = (int)Math.Ceiling(dir.X) + User.direction == 0;
                         float dist = (User.Center - plr.Center).Length() / 16.0f;
+
+                        if (Main.netMode != NetmodeID.Server) {
+                            Main.NewText("dir.X: " + dir.X);
+                            Main.NewText("(int)Math.Ceiling(dir.X): " + (int)Math.Ceiling(dir.X));
+                            Main.NewText("User.direction: " + User.direction);
+                            Main.NewText("isFacingEnemy: " + isFacingEnemy);
+                            Main.NewText("dist: " + dist);
+                        }
+
                         if (dist < closestDist && dist < MAX_BLOCK_RANGE && isFacingEnemy) {
                             closestDist = dist;
                             closestPlayerID = i;
