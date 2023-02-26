@@ -10,8 +10,9 @@ namespace TerrariaMoba.Players {
     public partial class MobaPlayer : ModPlayer {
         public int CurrentResource { get; set; }
         public Character Hero { get; set; }
+        public bool DisableAbilities { get; set; } = false;
+        
         public Type selectedCharacter;
-        public bool disableAbilities = false;
         public int lifeRegenTimer = 0;
         public int resourceRegenTimer = 0;
 
@@ -85,6 +86,10 @@ namespace TerrariaMoba.Players {
             if (Player.statLife > Player.statLifeMax2) {
                 Player.statLife = Player.statLifeMax2;
             }
+        }
+
+        public bool AbilityActiveCheck() {
+            return Hero?.Skills.Where(e => e.IsActive).Count() >= 0;
         }
     }
 }

@@ -30,7 +30,6 @@ namespace TerrariaMoba.Abilities.Osteo {
                     Player plr = Main.player[i];
                     if (plr.active && plr.team != User.team) {
                         Vector2 dir = plr.Center - User.Center;
-                        dir.Normalize();
 
                         bool isFacingEnemy = Math.Sign(dir.X) == User.direction;
 

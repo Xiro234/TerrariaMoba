@@ -20,7 +20,7 @@ namespace TerrariaMoba.StatusEffects.GenericEffects {
         }
 
         public override void WhileActive() {
-            User.GetModPlayer<MobaPlayer>().disableAbilities = true;
+            User.GetModPlayer<MobaPlayer>().DisableAbilities = true;
         }
 
         public bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, 

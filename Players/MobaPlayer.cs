@@ -21,7 +21,6 @@ namespace TerrariaMoba.Players {
         //General
         public int PlayerLastHurt = -1;
         public int GameTime = 0;
-
         public int ultTimer = -1;
         public List<Ability> TestAbilities;
         
@@ -68,10 +67,10 @@ namespace TerrariaMoba.Players {
 
         public override void ResetEffects() {
             if (MobaSystem.MatchInProgress) {
-                disableAbilities = true;
+                DisableAbilities = false;
+                
                 SetPlayerHealth();
                 AbilityEffectManager.ResetEffects(Player);
-
                 TickStatusEffects();
                 TickAbilities();
             }
@@ -293,6 +292,10 @@ namespace TerrariaMoba.Players {
                 
                 SoundEngine.PlaySound(SoundID.PlayerHit, Player.position);
             }
+        }
+
+        public void DealDirectDamageToTarget(int physicalDamage, int magicalDamage, int trueDamage, int target) {
+            //TODO - Change how players deal damage
         }
     }
 }

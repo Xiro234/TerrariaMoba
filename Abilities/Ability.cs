@@ -42,12 +42,10 @@ namespace TerrariaMoba.Abilities {
 
 
         /// <summary>
-        /// Will cast if able to, override if resources are not a factor.
+        /// Casts the ability, calling CanCastAbility to check.
         /// </summary>
         public virtual bool CastIfAble() {
-            var mobaPlayer = User.GetModPlayer<MobaPlayer>();
-
-            if (mobaPlayer.CurrentResource >= BaseResourceCost && CanCastAbility() && CooldownTimer == 0 && !mobaPlayer.disableAbilities) {
+            if (CanCastAbility()) {
                 OnCast();
                 AbilityEffectManager.OnCast(User, this);
                 ReduceResource();
@@ -88,7 +86,9 @@ namespace TerrariaMoba.Abilities {
         /// </summary>
         /// <returns></returns>
         public virtual bool CanCastAbility() {
-            return true;
+            var mobaPlayer = User.GetModPlayer<MobaPlayer>();
+
+            return mobaPlayer.CurrentResource >= BaseResourceCost && CooldownTimer == 0 && !mobaPlayer.AbilityActiveCheck() && !mobaPlayer.DisableAbilities;
         }
 
         /// <summary>
