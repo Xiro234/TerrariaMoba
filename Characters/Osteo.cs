@@ -134,7 +134,7 @@ namespace TerrariaMoba.Characters {
             }
         }
 
-        public override void ModifyHitPvpWithProj(Projectile proj, Player target, ref int damage, ref bool crit) {
+        public override void DealPvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, Player target, Projectile proj = null) {
             if (proj.type == ModContent.ProjectileType<LifedrainPulseThird")) {
                 Player.GetModPlayer<MobaPlayer>().HealMe(20, true);
             }

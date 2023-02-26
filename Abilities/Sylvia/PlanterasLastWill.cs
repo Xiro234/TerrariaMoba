@@ -10,9 +10,10 @@ using TerrariaMoba.Projectiles.Sylvia;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Sylvia;
 using System;
+using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Abilities.Sylvia {
-    public class PlanterasLastWill : Ability, IModifyHitPvpWithProj {
+    public class PlanterasLastWill : Ability, IDealPvpDamage {
         public PlanterasLastWill(Player player) : base(player, "Plantera's Last Will", 180, 20, AbilityType.Active) { }
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaUltimateTwo").Value; }
@@ -55,27 +56,41 @@ namespace TerrariaMoba.Abilities.Sylvia {
             }
         }
 
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
-            var ModProjectile = proj.ModProjectile;
-            SylviaUlt2 head = ModProjectile as SylviaUlt2;
-            if (head != null) {
-                int damageModifier;
-                int durationModifier;
-                int distanceInBlocks = (int)(head.Projectile.velocity.Length() * head.Projectile.ai[0] / 16f);
-                if (distanceInBlocks < DISTANCE_SCALING_BLOCK_CAP) {
-                    damageModifier = (int)Math.Floor((double)(BULB_DAMAGE_SCALING * (distanceInBlocks / DISTANCE_SCALING_BLOCK_INTERVAL)));
-                    durationModifier = (int)Math.Floor((double)(BULB_STUN_DURATION_SCALING * (distanceInBlocks / DISTANCE_SCALING_BLOCK_INTERVAL)));
-                } else {
-                    damageModifier = BULB_DAMAGE_SCALING * (DISTANCE_SCALING_BLOCK_CAP / DISTANCE_SCALING_BLOCK_INTERVAL);
-                    durationModifier = BULB_STUN_DURATION_SCALING * (DISTANCE_SCALING_BLOCK_CAP / DISTANCE_SCALING_BLOCK_INTERVAL);
+        public void DealPvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, Player target, DamageSource damageSource) {
+            if (damageSource.source is Projectile) {
+                Projectile proj = damageSource.source as Projectile;
+
+                var ModProjectile = proj.ModProjectile;
+                SylviaUlt2 head = ModProjectile as SylviaUlt2;
+                if (head != null) {
+                    int damageModifier;
+                    int durationModifier;
+                    int distanceInBlocks = (int)(head.Projectile.velocity.Length() * head.Projectile.ai[0] / 16f);
+                    if (distanceInBlocks < DISTANCE_SCALING_BLOCK_CAP) {
+                        damageModifier = (int)Math.Floor((double)(BULB_DAMAGE_SCALING *
+                                                                  (distanceInBlocks /
+                                                                   DISTANCE_SCALING_BLOCK_INTERVAL)));
+                        durationModifier = (int)Math.Floor((double)(BULB_STUN_DURATION_SCALING *
+                                                                    (distanceInBlocks /
+                                                                     DISTANCE_SCALING_BLOCK_INTERVAL)));
+                    }
+                    else {
+                        damageModifier = BULB_DAMAGE_SCALING *
+                                         (DISTANCE_SCALING_BLOCK_CAP / DISTANCE_SCALING_BLOCK_INTERVAL);
+                        durationModifier = BULB_STUN_DURATION_SCALING *
+                                           (DISTANCE_SCALING_BLOCK_CAP / DISTANCE_SCALING_BLOCK_INTERVAL);
+                    }
+
+                    physicalDamage += damageModifier;
+                    StatusEffectManager.AddEffect(target,
+                        new PlanteraStunEffect(BULB_STUN_DURATION + durationModifier, true, User.whoAmI));
                 }
-                physicalDamage += damageModifier;
-                StatusEffectManager.AddEffect(target, new PlanteraStunEffect(BULB_STUN_DURATION + durationModifier, true, User.whoAmI));
-            }
-            
-            SylviaSpores spore = ModProjectile as SylviaSpores;
-            if (spore != null) {
-                StatusEffectManager.AddEffect(target, new PlanteraSporeEffect(SPORE_HEALEFF_MODIFIER, SPORE_DEBUFF_DURATION, true, User.whoAmI));
+
+                SylviaSpores spore = ModProjectile as SylviaSpores;
+                if (spore != null) {
+                    StatusEffectManager.AddEffect(target,
+                        new PlanteraSporeEffect(SPORE_HEALEFF_MODIFIER, SPORE_DEBUFF_DURATION, true, User.whoAmI));
+                }
             }
         }
     }

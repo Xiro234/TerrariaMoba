@@ -183,12 +183,12 @@ namespace TerrariaMoba.Players {
             int physicalDamage = damageTypeProj.PhysicalDamage;
             int magicalDamage = damageTypeProj.MagicalDamage;
             int trueDamage = damageTypeProj.TrueDamage;
-            
+
             if (physicalDamage == 0 && magicalDamage == 0 && trueDamage == 0) {
                 Main.NewText(proj.Name + " has not set any damage types! Please contact developers immediately.", Color.Red);
             }
             
-            AbilityEffectManager.ModifyHitPvpWithProj(Player, proj, target, ref physicalDamage, ref magicalDamage, ref trueDamage, ref crit);
+            AbilityEffectManager.DealPvpDamage(Player, ref physicalDamage, ref magicalDamage, ref trueDamage, target, new DamageSource(proj));
 
             target.GetModPlayer<MobaPlayer>().TakePvpDamage(physicalDamage, magicalDamage, trueDamage, Player.whoAmI, false);
         }
@@ -294,8 +294,9 @@ namespace TerrariaMoba.Players {
             }
         }
 
-        public void DealDirectDamageToTarget(int physicalDamage, int magicalDamage, int trueDamage, int target) {
-            //TODO - Change how players deal damage
+        public void DealDirectDamageToTarget(int physicalDamage, int magicalDamage, int trueDamage, Player target, bool noBroadcast) {
+            AbilityEffectManager.DealPvpDamage(Player, ref physicalDamage, ref magicalDamage, ref trueDamage, target, new DamageSource(Player));
+            target.GetModPlayer<MobaPlayer>().TakePvpDamage(physicalDamage, magicalDamage, trueDamage, Player.whoAmI, noBroadcast);
         }
     }
 }

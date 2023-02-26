@@ -9,9 +9,10 @@ using TerrariaMoba.Interfaces;
 using TerrariaMoba.Players;
 using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Osteo;
+using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Abilities.Osteo {
-    public class LifedrainPulse : Ability, IModifyHitPvpWithProj {
+    public class LifedrainPulse : Ability, IDealPvpDamage {
         public LifedrainPulse(Player player) : base(player, "Lifedrain Pulse", 180, 25, AbilityType.Active) { }
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Osteo/OsteoAbilityTwo").Value; }
 
@@ -90,12 +91,17 @@ namespace TerrariaMoba.Abilities.Osteo {
             CooldownTimer = BaseCooldown;
         }
 
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
-            var modProj = proj.ModProjectile;
-            LifedrainPulseProjThird bigPulse = modProj as LifedrainPulseProjThird;
-            if (bigPulse != null) {
-                int finalDamage = (int)Math.Ceiling(magicalDamage - (magicalDamage * target.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(Statistic.AttributeType.MAGICAL_ARMOR) * 0.01f));
-                User.GetModPlayer<MobaPlayer>().HealMe((int)Math.Ceiling(finalDamage * PULSE_THREE_HEALING_MODIFIER), true);
+        public void DealPvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, Player target, DamageSource damageSource) {
+            if (damageSource.source is Projectile) {
+                Projectile proj = damageSource.source as Projectile;
+            
+                var modProj = proj.ModProjectile;
+                var globalProjectile = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
+                LifedrainPulseProjThird bigPulse = modProj as LifedrainPulseProjThird;
+                if (bigPulse != null) {
+                    int finalDamage = (int)Math.Ceiling(magicalDamage - (magicalDamage * target.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(Statistic.AttributeType.MAGICAL_ARMOR) * 0.01f));
+                    User.GetModPlayer<MobaPlayer>().HealMe((int)Math.Ceiling(finalDamage * PULSE_THREE_HEALING_MODIFIER), true);
+                }
             }
         }
     }

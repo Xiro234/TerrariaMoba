@@ -12,7 +12,7 @@ using TerrariaMoba.StatusEffects.Flibnob;
 using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.Abilities.Flibnob {
-    public class SearingBond : Ability, IModifyHitPvpWithProj {
+    public class SearingBond : Ability, IDealPvpDamage {
         public SearingBond(Player player) : base(player, "Searing Bond", 0, 0, AbilityType.Active) { }
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobTrait").Value; }
 
@@ -41,11 +41,16 @@ namespace TerrariaMoba.Abilities.Flibnob {
             ConstructFlatAttributes();
         }
 
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
-            if (proj.owner == User.whoAmI) { 
-                var dmgType = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
-                if (proj != null && dmgType.PhysicalDamage > 0) {
-                    StatusEffectManager.AddEffect(target, new FlameBelchEffect(10, BURN_BASE_DURATION, true, User.whoAmI));
+        public void DealPvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, Player target, DamageSource damageSource) {
+            if (damageSource.source is Projectile) {
+                Projectile proj = damageSource.source as Projectile;
+
+                if (proj.owner == User.whoAmI) {
+                    var dmgType = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
+                    if (proj != null && dmgType.PhysicalDamage > 0) {
+                        StatusEffectManager.AddEffect(target,
+                            new FlameBelchEffect(10, BURN_BASE_DURATION, true, User.whoAmI));
+                    }
                 }
             }
         }

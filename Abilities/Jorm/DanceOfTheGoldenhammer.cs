@@ -8,11 +8,12 @@ using TerrariaMoba.Enums;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Jorm;
+using TerrariaMoba.Statistic;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Jorm;
 
 namespace TerrariaMoba.Abilities.Jorm {
-    public class DanceOfTheGoldenhammer : Ability, IModifyHitPvpWithProj {
+    public class DanceOfTheGoldenhammer : Ability, IDealPvpDamage {
         public DanceOfTheGoldenhammer(Player player) : base(player, "Dance of the Goldenhammer", 60, 0, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Jorm/JormAbilityOne").Value; }
@@ -44,11 +45,16 @@ namespace TerrariaMoba.Abilities.Jorm {
             }
         }
         
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
-            var modProjectile = proj.ModProjectile;
-            SpinningHammer hammer = modProjectile as SpinningHammer;
-            if (hammer != null) {
-                StatusEffectManager.AddEffect(target, new GoldenhammerDanceEffect(DAZE_MAGNITUDE, DAZE_BASE_DURATION, true, User.whoAmI));
+        public void DealPvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, Player target, DamageSource damageSource) {
+            if (damageSource.source is Projectile) {
+                Projectile proj = damageSource.source as Projectile;
+
+                var modProjectile = proj.ModProjectile;
+                SpinningHammer hammer = modProjectile as SpinningHammer;
+                if (hammer != null) {
+                    StatusEffectManager.AddEffect(target,
+                        new GoldenhammerDanceEffect(DAZE_MAGNITUDE, DAZE_BASE_DURATION, true, User.whoAmI));
+                }
             }
         }
     }

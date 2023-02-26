@@ -7,12 +7,13 @@ using TerrariaMoba.Enums;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Flibnob;
+using TerrariaMoba.Statistic;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Flibnob;
 using TerrariaMoba.StatusEffects.GenericEffects;
 
 namespace TerrariaMoba.Abilities.Flibnob {
-    public class Earthsplitter : Ability, IModifyHitPvpWithProj {
+    public class Earthsplitter : Ability, IDealPvpDamage {
         public Earthsplitter(Player player) : base(player, "Earthsplitter", 60, 0, AbilityType.Active) { }
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobUltimateOne").Value; }
@@ -57,11 +58,15 @@ namespace TerrariaMoba.Abilities.Flibnob {
             }
         }
 
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
-            var modProjectile = proj.ModProjectile;
-            SplitEarth earth = modProjectile as SplitEarth;
-            if (earth != null) {
-                StatusEffectManager.AddEffect(target, new EarthsplitterStun(120, true, User.whoAmI));
+        public void DealPvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, Player target, DamageSource damageSource) {
+            if (damageSource.source is Projectile) {
+                Projectile proj = damageSource.source as Projectile;
+
+                var modProjectile = proj.ModProjectile;
+                SplitEarth earth = modProjectile as SplitEarth;
+                if (earth != null) {
+                    StatusEffectManager.AddEffect(target, new EarthsplitterStun(120, true, User.whoAmI));
+                }
             }
         }
     }

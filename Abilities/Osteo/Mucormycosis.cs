@@ -12,7 +12,7 @@ using static TerrariaMoba.Statistic.AttributeType;
 using TerrariaMoba.Projectiles.Osteo;
 
 namespace TerrariaMoba.Abilities.Osteo {
-    public class Mucormycosis : Ability, IModifyHitPvpWithProj {
+    public class Mucormycosis : Ability, IDealPvpDamage {
         public Mucormycosis(Player player) : base(player, "Mucormycosis", 60, 0, AbilityType.Passive) { }
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Osteo/OsteoTrait").Value; }
 
@@ -23,8 +23,11 @@ namespace TerrariaMoba.Abilities.Osteo {
         public const int MUCOR_POISON_DURATION = 120;
         public const float HEALING_MODIFIER = -0.5f;
 
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
-            if (proj != null && proj.owner == User.whoAmI) {
+        public void DealPvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, Player target, DamageSource damageSource) {
+            if (damageSource.source is Projectile) {
+                Projectile proj = damageSource.source as Projectile;
+            
+            if (proj.owner == User.whoAmI) {
                 StatusEffectManager.AddEffect(target, 
                     new MucormycosisEffect(MUCOR_SPORE_DAMAGE, MUCOR_SPORE_DURATION, DEBUFF_DURATION, true, User.whoAmI));
             }
@@ -33,6 +36,7 @@ namespace TerrariaMoba.Abilities.Osteo {
             MucormycosisSpore spore = modProj as MucormycosisSpore;
             if (spore != null) {
                 StatusEffectManager.AddEffect(target, new MucorPoisonEffect(MUCOR_POISON_DAMAGE, MUCOR_POISON_DURATION, true, User.whoAmI));
+            }
             }
         }
 

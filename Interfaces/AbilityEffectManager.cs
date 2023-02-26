@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using TerrariaMoba.Abilities;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.Players;
+using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Interfaces {
     public class AbilityEffectManager {
@@ -128,16 +129,19 @@ namespace TerrariaMoba.Interfaces {
             }
         }
 
-        public static void ModifyHitPvpWithProj(Player Player, Projectile proj, Player target, ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
-            List<Ability> abilities = GetValidAbilities<IModifyHitPvpWithProj>(Player);
-            List<StatusEffect> effects = GetValidEffects<IModifyHitPvpWithProj>(Player);
+        public static void DealPvpDamage(Player Player, ref int physicalDamage, ref int magicalDamage, ref int trueDamage,
+            Player target, DamageSource damageSource) {
+            List<Ability> abilities = GetValidAbilities<IDealPvpDamage>(Player);
+            List<StatusEffect> effects = GetValidEffects<IDealPvpDamage>(Player);
 
             foreach (Ability ability in abilities) {
-                ((IModifyHitPvpWithProj)ability).ModifyHitPvpWithProj(proj, target, ref physicalDamage, ref magicalDamage, ref trueDamage, ref crit);
+                if (ability.CanCastAbility()) {
+                    ((IDealPvpDamage)ability).DealPvpDamage(ref physicalDamage, ref magicalDamage, ref trueDamage, target, damageSource);
+                }
             }
 
             foreach (StatusEffect effect in effects) {
-                ((IModifyHitPvpWithProj)effect).ModifyHitPvpWithProj(proj, target, ref physicalDamage, ref magicalDamage, ref trueDamage, ref crit);
+                ((IDealPvpDamage)effect).DealPvpDamage(ref physicalDamage, ref magicalDamage, ref trueDamage, target, damageSource);
             }
         }
 

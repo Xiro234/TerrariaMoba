@@ -17,7 +17,7 @@ using TerrariaMoba.Statistic;
 using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.Abilities.Flibnob {
-    public class FlameBelch : Ability, IModifyHitPvpWithProj {
+    public class FlameBelch : Ability, IDealPvpDamage {
         public FlameBelch(Player player) : base(player, "Flame Belch", 30, 0, AbilityType.Active) { }
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Flibnob/FlibnobAbilityOne").Value; }
@@ -78,28 +78,37 @@ namespace TerrariaMoba.Abilities.Flibnob {
             };
         }
 
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
-            var modProjectile = proj.ModProjectile;
-            FlameBelchSpawner flame = modProjectile as FlameBelchSpawner;
+        public void DealPvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, Player target, DamageSource damageSource) {
+            if (damageSource.source is Projectile) {
+                Projectile proj = damageSource.source as Projectile;
 
-            if (flame != null) {
-                var mobaPlayer = target.GetModPlayer<MobaPlayer>();
+                var modProjectile = proj.ModProjectile;
+                FlameBelchSpawner flame = modProjectile as FlameBelchSpawner;
 
-                foreach (var effect in new List<StatusEffect>(mobaPlayer.EffectList)) {
-                    if (effect is FlameBelchEffect) {
-                        StatusEffectManager.RemoveEffect(target, effect);
-                        StatusEffectManager.AddEffect(target, new FlameBelchSecondEffect(MELT_ARMOR_MODIFIER, MELT_BASE_DAMAGE, BURN_BASE_DURATION, true, User.whoAmI));
-                        return;
-                    } else if (effect is FlameBelchSecondEffect) {
-                        effect.ReApply();
-                        return;
-                    } else {
-                        Logging.PublicLogger.Debug("FlameBelch.cs: This shouldn't happen.");
-                        break;
+                if (flame != null) {
+                    var mobaPlayer = target.GetModPlayer<MobaPlayer>();
+
+                    foreach (var effect in new List<StatusEffect>(mobaPlayer.EffectList)) {
+                        if (effect is FlameBelchEffect) {
+                            StatusEffectManager.RemoveEffect(target, effect);
+                            StatusEffectManager.AddEffect(target,
+                                new FlameBelchSecondEffect(MELT_ARMOR_MODIFIER, MELT_BASE_DAMAGE, BURN_BASE_DURATION,
+                                    true, User.whoAmI));
+                            return;
+                        }
+                        else if (effect is FlameBelchSecondEffect) {
+                            effect.ReApply();
+                            return;
+                        }
+                        else {
+                            Logging.PublicLogger.Debug("FlameBelch.cs: This shouldn't happen.");
+                            break;
+                        }
                     }
-                }
 
-                StatusEffectManager.AddEffect(target, new FlameBelchEffect(BURN_BASE_DAMAGE, BURN_BASE_DURATION, true, User.whoAmI));
+                    StatusEffectManager.AddEffect(target,
+                        new FlameBelchEffect(BURN_BASE_DAMAGE, BURN_BASE_DURATION, true, User.whoAmI));
+                }
             }
         }
     }

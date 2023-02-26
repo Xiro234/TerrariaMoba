@@ -8,10 +8,10 @@ using TerrariaMoba.Enums;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Marie;
-using TerrariaMoba.StatusEffects;
+using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Abilities.Marie {
-    public class Tidecaller : Ability, IModifyHitPvpWithProj {
+    public class Tidecaller : Ability, IDealPvpDamage {
         public Tidecaller(Player player) : base(player, "Tidecaller", 60, 1, AbilityType.Active) { }
         
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieAbilityOne").Value; }
@@ -40,7 +40,7 @@ namespace TerrariaMoba.Abilities.Marie {
             }
         }
 
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
+        public void DealPvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, Player target, DamageSource damageSource) {
             // knock enemies up for 1.5s, heal marie for HEAL_VALUE
         }
     }

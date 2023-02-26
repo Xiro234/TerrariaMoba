@@ -3,9 +3,10 @@ using System.IO;
 using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
+using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.StatusEffects.Marie {
-    public class MarieTraitEffect : StatusEffect, IModifyHitPvpWithProj {
+    public class MarieTraitEffect : StatusEffect, IDealPvpDamage {
         public override string DisplayName { get => "Goddess's Blessing"; }
         public override Texture2D Icon { get { return ModContent.Request<Texture2D>("Textures/Blank").Value; } }
 
@@ -16,7 +17,7 @@ namespace TerrariaMoba.StatusEffects.Marie {
             damageIncrease = magicDamage;
         }
 
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
+        public void DealPvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, Player target, DamageSource damageSource) {
             magicalDamage += damageIncrease;
         }
 

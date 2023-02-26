@@ -9,11 +9,12 @@ using TerrariaMoba.Enums;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Marie;
+using TerrariaMoba.Statistic;
 using TerrariaMoba.StatusEffects;
 using TerrariaMoba.StatusEffects.Marie;
 
 namespace TerrariaMoba.Abilities.Marie {
-    public class EyeOfTheStorm : Ability, IModifyHitPvpWithProj {
+    public class EyeOfTheStorm : Ability, IDealPvpDamage {
         public EyeOfTheStorm(Player player) : base(player, "Eye of the Storm", 180, 50, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Marie/MarieUltimateTwo").Value; }
@@ -60,12 +61,16 @@ namespace TerrariaMoba.Abilities.Marie {
             }
         }
         
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
-            var modProj = proj.ModProjectile;
-            
-            ESLightning lightning = modProj as ESLightning;
-            if (lightning != null) {
-                StatusEffectManager.AddEffect(target, new StormShockEffect(SHOCK_SLOW_MAG, SHOCK_MR_MODIFIER, SHOCK_DURATION, true, User.whoAmI));
+        public void DealPvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, Player target, DamageSource damageSource) {
+            if (damageSource.source is Projectile) {
+                Projectile proj = damageSource.source as Projectile;
+                var modProj = proj.ModProjectile;
+
+                ESLightning lightning = modProj as ESLightning;
+                if (lightning != null) {
+                    StatusEffectManager.AddEffect(target,
+                        new StormShockEffect(SHOCK_SLOW_MAG, SHOCK_MR_MODIFIER, SHOCK_DURATION, true, User.whoAmI));
+                }
             }
         }
     }

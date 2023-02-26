@@ -5,9 +5,10 @@ using Terraria.ModLoader;
 using TerrariaMoba.Enums;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Projectiles;
+using TerrariaMoba.Statistic;
 
 namespace TerrariaMoba.Abilities.Chastradamus {
-    public class Bloodletting : Ability, IModifyHitPvpWithProj {
+    public class Bloodletting : Ability, IDealPvpDamage {
         public Bloodletting(Player player) : base(player, "Bloodletting", 0, 0, AbilityType.Passive) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
@@ -19,11 +20,11 @@ namespace TerrariaMoba.Abilities.Chastradamus {
             //TODO - Chastradamus gathers blood from dealing damage to enemies, at different stages, gives him buffs, but is consumed by A3 to heal him. Lose on death.
         }
 
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
-            var gProj = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
+        public void DealPvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, Player target, DamageSource damageSource) {
+            //var gProj = proj.GetGlobalProjectile<DamageTypeGlobalProj>();
             //Possibly re-evaluate to non-premitigated damage?
 
-            AddBlood(gProj.TotalPremitigated); //modhitpvpwithproj is always called before mitigation so this would be full damage
+            //AddBlood(gProj.TotalPremitigated); //modhitpvpwithproj is always called before mitigation so this would be full damage
         }
 
         private void AddBlood(int damage) {

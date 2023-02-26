@@ -7,10 +7,11 @@ using TerrariaMoba.Enums;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Sylvia;
+using TerrariaMoba.Statistic;
 using TerrariaMoba.StatusEffects;
 
 namespace TerrariaMoba.Abilities.Sylvia {
-    public class WitheredRose : Ability, ITakePvpDamage, IModifyHitPvpWithProj {
+    public class WitheredRose : Ability, ITakePvpDamage, IDealPvpDamage {
         public WitheredRose(Player player) : base(player, "Withered Rose", 60, 1, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaAbilityTwo").Value; }
@@ -60,11 +61,15 @@ namespace TerrariaMoba.Abilities.Sylvia {
             }
         }
 
-        public void ModifyHitPvpWithProj(Projectile proj, Player target, ref int phyiscalDamage, ref int magicalDamage, ref int trueDamage, ref bool crit) {
-            var modProj = proj.ModProjectile;
-            RoseThorn thorn = modProj as RoseThorn;
-            if (thorn != null) {
-                //StatusEffectManager.AddEffect(target, new ThornPoison(THORN_POISON_DAMAGE, THORN_POISON_HEALMOD, THORN_POISON_DURATION, true, User.whoAmI));
+        public void DealPvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, Player target, DamageSource damageSource) {
+            if (damageSource.source is Projectile) {
+                Projectile proj = damageSource.source as Projectile;
+                
+                var modProj = proj.ModProjectile;
+                RoseThorn thorn = modProj as RoseThorn;
+                if (thorn != null) {
+                    //StatusEffectManager.AddEffect(target, new ThornPoison(THORN_POISON_DAMAGE, THORN_POISON_HEALMOD, THORN_POISON_DURATION, true, User.whoAmI));
+                }
             }
         }
     }
