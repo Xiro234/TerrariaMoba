@@ -27,7 +27,7 @@ namespace TerrariaMoba.Projectiles.Osteo {
 
         public override void AI() {
             if (Projectile.timeLeft == 1000) {
-                Projectile.timeLeft = SporeLifetime - 1;
+                Projectile.timeLeft = SporeLifetime;
             }
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
             int dust = Dust.NewDust(Projectile.Center, 0, 0, DustID.RedTorch, 0f, 0f, 100, Color.LightSeaGreen, 1.3f);

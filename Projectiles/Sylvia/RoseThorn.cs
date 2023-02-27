@@ -1,10 +1,11 @@
 ﻿using System;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.ModLoader.PlayerDrawLayer;
+using TerrariaMoba.Abilities.Sylvia;
 
 namespace TerrariaMoba.Projectiles.Sylvia {
     public class RoseThorn : ModProjectile {
@@ -12,35 +13,41 @@ namespace TerrariaMoba.Projectiles.Sylvia {
             DisplayName.SetDefault("Rose Thorn");
         }
         
+        public int ThornLifetime { get; set; }
+
         public override void SetDefaults() {
+            Projectile.width = 16;
+            Projectile.height = 16;
+            Projectile.timeLeft = 1000;
+            Projectile.penetrate = 0;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = false;
-            Projectile.width = 16;
-            Projectile.height = 16;
-            Projectile.aiStyle = 0;
+
+            ThornLifetime = WitheredRose.THORN_MAX_LIFETIME;
         }
 
         public override void AI() {
             int targetId = (int)Projectile.ai[0];
-            
+
+            if (Projectile.timeLeft == 1000) {
+                Projectile.timeLeft = ThornLifetime;
+            }
+
             if (Projectile.localAI[0] == 0f) {
                 AdjustMagnitude(ref Projectile.velocity);
                 Projectile.localAI[0] = 1f;
             }
-            
+
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
             Vector2 targetLoc = Vector2.Zero;
-            float currentDist = 400f;
             bool targetFound = false;
 
             if (Main.player[targetId].active) {
-                Vector2 newTargetLoc = Main.player[targetId].Center - Projectile.Center;
-                float distToTarget = (float)Math.Sqrt(newTargetLoc.X * newTargetLoc.X + newTargetLoc.Y * newTargetLoc.Y);
-                if (distToTarget < currentDist) {
-                    targetLoc = newTargetLoc;
-                    currentDist = distToTarget;
-                    targetFound = true;
-                }
+                targetLoc = Main.player[targetId].Center - Projectile.Center;
+                targetFound = true;
+            } else {
+                Kill(Projectile.timeLeft);
             }
 
             if (targetFound) {
@@ -60,8 +67,16 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         public override void Kill(int timeLeft) {
             SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
             for (int i = 0; i < 10; i++) {
-                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.WoodFurniture, 0f, 0f, 255, Color.Red, 1f);
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.WoodFurniture, 0f, 0f, 255, default, 1f);
             }
+        }
+
+        public override void SendExtraAI(BinaryWriter writer) {
+            writer.Write(ThornLifetime);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader) {
+            ThornLifetime = reader.ReadInt32();
         }
     }
 }

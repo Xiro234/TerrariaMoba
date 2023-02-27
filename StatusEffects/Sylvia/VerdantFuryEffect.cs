@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 using TerrariaMoba.Statistic;
 using static TerrariaMoba.Statistic.AttributeType;
@@ -15,7 +18,7 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         private float attackVelocity;
         
         public VerdantFuryEffect() { }
-        public VerdantFuryEffect(int duration, float atkspd, float atkvel, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
+        public VerdantFuryEffect(float atkspd, float atkvel, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
             attackSpeed = atkspd;
             attackVelocity = atkvel;
         }
@@ -37,6 +40,25 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
             attackSpeed = reader.ReadInt32();
             attackVelocity = reader.ReadInt32();
             base.ReceiveEffectElements(reader);
+        }
+
+        public class VerdantFuryLayer : PlayerDrawLayer {
+            public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) {
+                return StatusEffectManager.PlayerHasEffectType<VerdantFuryEffect>(drawInfo.drawPlayer);
+            }
+
+            public override Position GetDefaultPosition() => new Between(PlayerDrawLayers.ProjectileOverArm,
+                PlayerDrawLayers.FrozenOrWebbedDebuff);
+
+            protected override void Draw(ref PlayerDrawSet drawInfo) {
+                Player drawPlayer = drawInfo.drawPlayer;
+
+                Texture2D texture = Mod.Assets.Request<Texture2D>("Textures/Sylvia/VerdantFuryBuff").Value;
+                Vector2 texturePos = new Vector2(drawPlayer.Top.X - Main.screenPosition.X - (texture.Width / 2) - 0,
+                    drawPlayer.Top.Y - Main.screenPosition.Y - 55);
+                DrawData data = new DrawData(texture, texturePos, Color.White);
+                drawInfo.DrawDataCache.Add(data);
+            }
         }
     }
 }

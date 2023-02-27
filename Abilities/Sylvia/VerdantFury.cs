@@ -18,10 +18,10 @@ namespace TerrariaMoba.Abilities.Sylvia {
 
         public override void OnCast() {
             if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
-                StatusEffectManager.AddEffect(User, new VerdantFuryEffect(BUFF_DURATION, ATKSPD_MODIFIER, ATKVEL_MODIFIER, false, User.whoAmI));
-
-                CooldownTimer = BaseCooldown;
+                StatusEffectManager.AddEffect(User, new VerdantFuryEffect(ATKSPD_MODIFIER, ATKVEL_MODIFIER, BUFF_DURATION, false, User.whoAmI));
             }
+
+            CooldownTimer = BaseCooldown;
         }
     }
 }

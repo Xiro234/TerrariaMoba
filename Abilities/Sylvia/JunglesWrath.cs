@@ -25,8 +25,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 SylviaArrow arrow = ModProjectile as SylviaArrow;
 
                 if (arrow != null) {
-                    StatusEffectManager.AddEffect(target,
-                        new JunglesWrathEffect(EFFECT_DURATION, User.whoAmI, DAMAGE_PERCENT, 1));
+                    StatusEffectManager.AddEffect(target, new JunglesWrathEffect(EFFECT_DURATION, User.whoAmI, DAMAGE_PERCENT, 1));
                 }
             }
         }
