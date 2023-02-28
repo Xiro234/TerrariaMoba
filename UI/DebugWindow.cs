@@ -19,58 +19,63 @@ namespace TerrariaMoba.UI {
         private static UIText AVt;
         private static UIText MSt;
         private static UIText JSt;
+        private static UIText HEt;
 
         public override void OnInitialize() {
             debugPanel = new UIPanel();
             debugPanel.Width.Set(200, 0);
-            debugPanel.Height.Set(460, 0);
-            debugPanel.VAlign = 0.50f;
+            debugPanel.Height.Set(375, 0);
+            debugPanel.VAlign = 0.45f;
             debugPanel.HAlign = 0.05f;
             Append(debugPanel);
 
             HPt = new UIText("Max Health: ");
-            HPt.Top.Set(10, 0);
+            HPt.Top.Set(5, 0);
             debugPanel.Append(HPt);
             
             HPRt = new UIText("HP Regen: ");
-            HPRt.Top.Set(50, 0);
+            HPRt.Top.Set(35, 0);
             debugPanel.Append(HPRt);
             
             MPt = new UIText("Max Mana: ");
-            MPt.Top.Set(90, 0);
+            MPt.Top.Set(65, 0);
             debugPanel.Append(MPt);
             
             MPRt = new UIText("Mana Regen: ");
-            MPRt.Top.Set(130, 0);
+            MPRt.Top.Set(95, 0);
             debugPanel.Append(MPRt);
             
             ARMt = new UIText("Phys. Resist: ");
-            ARMt.Top.Set(170, 0);
+            ARMt.Top.Set(125, 0);
             debugPanel.Append(ARMt);
             
             MRt = new UIText("Mag. Resist: ");
-            MRt.Top.Set(210, 0);
+            MRt.Top.Set(155, 0);
             debugPanel.Append(MRt);
             
             ADt = new UIText("Attack Damage: ");
-            ADt.Top.Set(250, 0);
+            ADt.Top.Set(185, 0);
             debugPanel.Append(ADt);
             
             ASt = new UIText("Attack Speed: ");
-            ASt.Top.Set(290, 0);
+            ASt.Top.Set(215, 0);
             debugPanel.Append(ASt);
             
             AVt = new UIText("Attack Velocity: ");
-            AVt.Top.Set(330, 0);
+            AVt.Top.Set(245, 0);
             debugPanel.Append(AVt);
             
             MSt = new UIText("Move Speed: ");
-            MSt.Top.Set(370, 0);
+            MSt.Top.Set(275, 0);
             debugPanel.Append(MSt);
             
             JSt = new UIText("Jump Speed: ");
-            JSt.Top.Set(410, 0);
+            JSt.Top.Set(305, 0);
             debugPanel.Append(JSt);
+
+            HEt = new UIText("Healing Eff.: ");
+            HEt.Top.Set(335, 0);
+            debugPanel.Append(HEt);
         }
         
         public override void Update(GameTime gameTime) {
@@ -92,6 +97,7 @@ namespace TerrariaMoba.UI {
             AVt.SetText("Attack Velocity: " + plr.GetCurrentAttributeValue(AttributeType.ATTACK_VELOCITY)); 
             MSt.SetText("Movement Speed: " + plr.GetCurrentAttributeValue(AttributeType.MOVEMENT_SPEED));
             JSt.SetText("Jump Speed: " + plr.GetCurrentAttributeValue(AttributeType.JUMP_SPEED));
+            HEt.SetText("Healing Eff.: " + plr.GetCurrentAttributeValue(AttributeType.HEALING_EFFECTIVENESS));
         }
         
         public void UnLoad() {
@@ -107,6 +113,7 @@ namespace TerrariaMoba.UI {
             AVt = null; 
             MSt = null;
             JSt = null;
+            HEt = null;
         }
     }
 }

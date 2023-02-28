@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using TerrariaMoba.Abilities.Sylvia;
+using System.IO;
 
 namespace TerrariaMoba.Projectiles.Sylvia {
     public class SylviaUlt2 : ModProjectile {
@@ -58,12 +59,28 @@ namespace TerrariaMoba.Projectiles.Sylvia {
                     Vector2 velocity = Main.rand.NextVector2Unit();
                     velocity *= 4;
 
-                    //TODO - Create new spore Projectile and pass on SporeDuration.
                     Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, velocity, 
                         ModContent.ProjectileType<SylviaSpores>(), 1, 0, Projectile.owner);
                     TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: SporeDamage);
+
+                    SylviaSpores spore = proj.ModProjectile as SylviaSpores;
+                    if (spore != null) {
+                        spore.SporeDuration = SporeDuration;
+                    }
                 }
             }
+        }
+
+        public override void SendExtraAI(BinaryWriter writer) {
+            writer.Write(SporeDamage);
+            writer.Write(NumberOfSpores);
+            writer.Write(SporeDuration);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader) {
+            SporeDamage = reader.ReadInt32();
+            NumberOfSpores = reader.ReadInt32();
+            SporeDuration = reader.ReadInt32();
         }
     }
 }

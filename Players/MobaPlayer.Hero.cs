@@ -3,6 +3,7 @@ using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 using TerrariaMoba.Characters;
+using TerrariaMoba.Enums;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Statistic;
 
@@ -89,7 +90,7 @@ namespace TerrariaMoba.Players {
         }
 
         public bool AbilityActiveCheck() {
-            return Hero?.Skills.Where(e => e.IsActive).Count() >= 0;
+            return Hero?.Skills.Where(e => e.IsActive && e.AbilityType != AbilityType.Passive).Count() > 0;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,7 +14,7 @@ using TerrariaMoba.StatusEffects.Sylvia;
 
 namespace TerrariaMoba.Abilities.Sylvia {
     public class WitheredRose : Ability, ITakePvpDamage, IDealPvpDamage {
-        public WitheredRose(Player player) : base(player, "Withered Rose", 60, 1, AbilityType.Active) { }
+        public WitheredRose(Player player) : base(player, "Withered Rose", 180, 20, AbilityType.Active) { }
 
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("TerrariaMoba/Textures/Sylvia/SylviaAbilityTwo").Value; }
 
@@ -37,14 +38,31 @@ namespace TerrariaMoba.Abilities.Sylvia {
             if (Timer == 0) {
                 TimeOut();
             }
+
             if (ThornDelayTimer > 0) {
                 ThornDelayTimer--;
             }
+
+            const float distance = 40f;
+            for (int i = 0; i < 16; i++) {
+                Vector2 offset = new Vector2();
+                double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                offset.X += (float)(Math.Sin(angle) * distance);
+                offset.Y += (float)(Math.Cos(angle) * distance);
+                Dust dust = Main.dust[Dust.NewDust(User.Center + offset - new Vector2(4, 4), 0, 0, DustID.RichMahogany, 0, 0, 100, default, 1f)];
+                dust.velocity = User.velocity;
+                if (Main.rand.NextBool(3)) {
+                    dust.velocity += Vector2.Normalize(offset) * -5f;
+                }
+                dust.noGravity = true;
+            }
+
             Timer--;
         }
 
         public override void TimeOut() {
             IsActive = false;
+            CooldownTimer = BaseCooldown;
         }
 
         public void TakePvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {

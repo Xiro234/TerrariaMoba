@@ -81,9 +81,7 @@ namespace TerrariaMoba.Abilities.Osteo {
             IsActive = false;
             foreach (Player plr in Main.player) {
                 if (plr.team != User.team && !plr.dead) {
-                    plr.GetModPlayer<MobaPlayer>().TakePvpDamage(300, 300, 0, User.whoAmI, true);
-                    StatusEffectManager.AddEffect(plr, new MucormycosisEffect(Mucormycosis.MUCOR_SPORE_DAMAGE, Mucormycosis.MUCOR_SPORE_DURATION, 
-                        Mucormycosis.DEBUFF_DURATION, true, User.whoAmI));
+                    User.GetModPlayer<MobaPlayer>().DealDirectDamageToTarget(300, 300, 0, plr, true);
                     SoundEngine.PlaySound(SoundID.Item105, plr.position);
                 }
             }

@@ -27,16 +27,22 @@ namespace TerrariaMoba.Abilities.Osteo {
             if (damageSource.source is Projectile) {
                 Projectile proj = damageSource.source as Projectile;
             
-            if (proj.owner == User.whoAmI) {
-                StatusEffectManager.AddEffect(target, 
-                    new MucormycosisEffect(MUCOR_SPORE_DAMAGE, MUCOR_SPORE_DURATION, DEBUFF_DURATION, true, User.whoAmI));
+                if (proj.owner == User.whoAmI) {
+                    StatusEffectManager.AddEffect(target, new MucormycosisEffect(MUCOR_SPORE_DAMAGE, MUCOR_SPORE_DURATION, DEBUFF_DURATION, true, User.whoAmI));
+                }
+
+                var modProj = proj.ModProjectile;
+                MucormycosisSpore spore = modProj as MucormycosisSpore;
+                if (spore != null) {
+                    StatusEffectManager.AddEffect(target, new MucorPoisonEffect(MUCOR_POISON_DAMAGE, MUCOR_POISON_DURATION, true, User.whoAmI));
+                }
             }
 
-            var modProj = proj.ModProjectile;
-            MucormycosisSpore spore = modProj as MucormycosisSpore;
-            if (spore != null) {
-                StatusEffectManager.AddEffect(target, new MucorPoisonEffect(MUCOR_POISON_DAMAGE, MUCOR_POISON_DURATION, true, User.whoAmI));
-            }
+            if (damageSource.source is Player) { 
+                Player plr = damageSource.source as Player;
+                if (plr.whoAmI == User.whoAmI) {
+                    StatusEffectManager.AddEffect(target, new MucormycosisEffect(MUCOR_SPORE_DAMAGE, MUCOR_SPORE_DURATION, DEBUFF_DURATION, true, User.whoAmI));
+                }
             }
         }
 

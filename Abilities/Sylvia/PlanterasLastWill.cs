@@ -63,21 +63,38 @@ namespace TerrariaMoba.Abilities.Sylvia {
                 var ModProjectile = proj.ModProjectile;
                 SylviaUlt2 head = ModProjectile as SylviaUlt2;
                 if (head != null) {
-                    int damageModifier;
-                    int durationModifier;
+                    int duration = 0;
                     int distanceInBlocks = (int)(head.Projectile.velocity.Length() * head.Projectile.ai[0] / 16f);
 
-                    if (distanceInBlocks < DISTANCE_SCALING_BLOCK_CAP) {
-                        damageModifier = (int)Math.Floor((double)(BULB_DAMAGE_SCALING * (distanceInBlocks / DISTANCE_SCALING_BLOCK_INTERVAL)));
-                        durationModifier = (int)Math.Floor((double)(BULB_STUN_DURATION_SCALING * (distanceInBlocks / DISTANCE_SCALING_BLOCK_INTERVAL)));
-                    }
-                    else {
-                        damageModifier = BULB_DAMAGE_SCALING * (DISTANCE_SCALING_BLOCK_CAP / DISTANCE_SCALING_BLOCK_INTERVAL);
-                        durationModifier = BULB_STUN_DURATION_SCALING * (DISTANCE_SCALING_BLOCK_CAP / DISTANCE_SCALING_BLOCK_INTERVAL);
+                    if (Main.netMode != NetmodeID.Server) {
+                        Main.NewText("velocity.Length(): " + head.Projectile.velocity.Length());
+                        Main.NewText("ai[0]: " + head.Projectile.ai[0]);
+                        Main.NewText("distanceInBlocks: " + distanceInBlocks);
                     }
 
-                    physicalDamage += damageModifier;
-                    StatusEffectManager.AddEffect(target, new PlanteraStunEffect(BULB_STUN_DURATION + durationModifier, true, User.whoAmI));
+                    if (distanceInBlocks < DISTANCE_SCALING_BLOCK_CAP) {
+                        physicalDamage += (int)(BULB_DAMAGE_SCALING * Math.Floor((double)(distanceInBlocks / DISTANCE_SCALING_BLOCK_INTERVAL)));
+                        duration += (int)(BULB_STUN_DURATION_SCALING * Math.Floor((double)(distanceInBlocks / DISTANCE_SCALING_BLOCK_INTERVAL)));
+
+                        if (Main.netMode != NetmodeID.Server)
+                        {
+                            Main.NewText("DISTANCE IS LOWER THAN CAP!");
+                            Main.NewText("durationModifier: " + duration);
+                        }
+
+                    } else {
+                        physicalDamage += BULB_DAMAGE_SCALING * (DISTANCE_SCALING_BLOCK_CAP / DISTANCE_SCALING_BLOCK_INTERVAL);
+                        duration += BULB_STUN_DURATION_SCALING * (DISTANCE_SCALING_BLOCK_CAP / DISTANCE_SCALING_BLOCK_INTERVAL);
+
+                        if (Main.netMode != NetmodeID.Server)
+                        {
+                            Main.NewText("DISTANCE IS HIGHER THAN CAP!");
+                            Main.NewText("durationModifier: " + duration);
+                        }
+                    }
+
+                    duration += BULB_STUN_DURATION;
+                    StatusEffectManager.AddEffect(target, new PlanteraStunEffect(duration, true, User.whoAmI));
                 }
 
                 SylviaSpores spore = ModProjectile as SylviaSpores;
