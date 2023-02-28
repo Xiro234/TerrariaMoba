@@ -135,9 +135,7 @@ namespace TerrariaMoba.Interfaces {
             List<StatusEffect> effects = GetValidEffects<IDealPvpDamage>(Player);
 
             foreach (Ability ability in abilities) {
-                if (ability.CanCastAbility()) {
-                    ((IDealPvpDamage)ability).DealPvpDamage(ref physicalDamage, ref magicalDamage, ref trueDamage, target, damageSource);
-                }
+                ((IDealPvpDamage)ability).DealPvpDamage(ref physicalDamage, ref magicalDamage, ref trueDamage, target, damageSource);
             }
 
             foreach (StatusEffect effect in effects) {
