@@ -34,17 +34,19 @@ namespace TerrariaMoba.StatusEffects.Osteo {
             }
 
             if(Timer == 0) {
-                if (Main.netMode != NetmodeID.Server && Main.myPlayer == User.whoAmI) {
+                if (Main.netMode != NetmodeID.Server && Main.myPlayer == ApplicantID) {
                     for (int i = 0; i < 8; i++) {
                         double x = Math.Cos(((Math.PI / 180) * ((360f / 8) * i)));
                         double y = Math.Sin(((Math.PI / 180) * ((360f / 8) * i)));
                         Vector2 direction = new Vector2((float)x, (float)y);
                         Vector2 position = User.Center + direction * 16;
                         Vector2 velocity = direction * 1.5f;
-                        Projectile proj = Projectile.NewProjectileDirect(new EntitySource_StatusEffect(User, this),
-                            position, velocity, ModContent.ProjectileType<FungalSpore>(), 1, 0, User.whoAmI);
+                        int index = Projectile.NewProjectile(new EntitySource_StatusEffect(User, this),
+                            position, velocity, ModContent.ProjectileType<FungalSpore>(), 1, 0, ApplicantID);
+                        Projectile proj = Main.projectile[index];
                         TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: SporeDamage);
 
+                        
                         FungalSpore spore = proj.ModProjectile as FungalSpore;
                         if (spore != null) {
                             spore.SporeLifetime = SporeLifetime;
