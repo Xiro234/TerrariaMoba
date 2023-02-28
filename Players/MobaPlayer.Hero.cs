@@ -90,7 +90,7 @@ namespace TerrariaMoba.Players {
         }
 
         public bool AbilityActiveCheck() {
-            return Hero?.Skills.Where(e => e.IsActive && e.AbilityType != AbilityType.Passive).Count() > 0;
+            return Hero?.Skills.Where(e => e.IsActive && e.IsChanneled).Count() > 0;
         }
     }
 }

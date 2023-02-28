@@ -30,6 +30,7 @@ namespace TerrariaMoba.Abilities {
 
         public int CooldownTimer { get; set; }
         public bool IsActive { get; set; }
+        public bool IsChanneled { get; set; } = false;
 
         public Ability(Player player, String name, int baseCooldown, int baseResourceCost, AbilityType abilityType) {
             Name = name;

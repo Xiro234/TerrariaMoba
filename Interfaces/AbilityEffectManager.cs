@@ -16,9 +16,7 @@ namespace TerrariaMoba.Interfaces {
             List<StatusEffect> effects = GetValidEffects<IKill>(Player);
             
             foreach (Ability ability in abilities) {
-                if (ability.CanCastAbility()) {
-                    ((IKill)ability).Kill(damage, hitDirection, pvp, damageSource);
-                }
+                ((IKill)ability).Kill(damage, hitDirection, pvp, damageSource);
             }
             
             foreach (StatusEffect effect in effects) {
@@ -32,9 +30,7 @@ namespace TerrariaMoba.Interfaces {
 
             bool result = true;
             foreach (Ability ability in abilities) {
-                if (ability.CanCastAbility()) {
-                    result &= ((IPreKill)ability).PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
-                }
+                result &= ((IPreKill)ability).PreKill(damage, hitDirection, pvp, ref playSound, ref genGore, ref damageSource);
             }
 
             foreach (StatusEffect effect in effects) {
@@ -51,9 +47,7 @@ namespace TerrariaMoba.Interfaces {
 
             bool result = true;
             foreach (Ability ability in abilities) {
-                if (ability.CanCastAbility()) {
-                    result &= ((IShoot)ability).Shoot(item, source, position, velocity, type, damage, knockback);
-                }
+                result &= ((IShoot)ability).Shoot(item, source, position, velocity, type, damage, knockback);
             }
             
             foreach (StatusEffect effect in effects) {
@@ -69,9 +63,7 @@ namespace TerrariaMoba.Interfaces {
 
             float result = 1f;
             foreach (Ability ability in abilities) {
-                if (ability.CanCastAbility()) {
-                    result *= ((IUseSpeedMultiplier)ability).UseSpeedMultiplier(ref item);
-                }
+                result *= ((IUseSpeedMultiplier)ability).UseSpeedMultiplier(ref item);
             }
             
             foreach (StatusEffect effect in effects) {
@@ -87,9 +79,7 @@ namespace TerrariaMoba.Interfaces {
             List<StatusEffect> effects = GetValidEffects<IModifyShootStats>(player);
 
             foreach (Ability ability in abilities) {
-                if (ability.CanCastAbility()) {
-                    ((IModifyShootStats)ability).ModifyShootStats(ref item, ref position, ref velocity, ref type, ref damage, ref knockback);
-                }
+                ((IModifyShootStats)ability).ModifyShootStats(ref item, ref position, ref velocity, ref type, ref damage, ref knockback);
             }
             
             foreach (StatusEffect effect in effects) {
@@ -101,11 +91,8 @@ namespace TerrariaMoba.Interfaces {
             List<Ability> abilities = GetValidAbilities<ISetControls>(Player);
             List<StatusEffect> effects = GetValidEffects<ISetControls>(Player);
 
-            bool result = true;
             foreach (Ability ability in abilities) {
-                if (ability.CanCastAbility()) {
-                    ((ISetControls)ability).SetControls();
-                }
+                ((ISetControls)ability).SetControls();
             }
 
             foreach (StatusEffect effect in effects) {
@@ -119,9 +106,7 @@ namespace TerrariaMoba.Interfaces {
             List<StatusEffect> effects = GetValidEffects<IDrawEffects>(Player);
 
             foreach (Ability ability in abilities) {
-                if (ability.CanCastAbility()) {
-                    ((IDrawEffects)ability).DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
-                }
+                ((IDrawEffects)ability).DrawEffects(drawInfo, ref r, ref g, ref b, ref a, ref fullBright);
             }
 
             foreach (StatusEffect effect in effects) {
