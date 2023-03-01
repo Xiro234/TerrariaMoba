@@ -13,7 +13,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         public int SporeDuration { get; set; }
         
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("SylviaUlt2");
+            DisplayName.SetDefault("Plantera's Head");
         }
         
         public override void SetDefaults() {

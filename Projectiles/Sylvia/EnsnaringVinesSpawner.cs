@@ -14,7 +14,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         public int TileDistance { get; set; }
         
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("EnsnaringVines");
+            DisplayName.SetDefault("Ensnaring Vines Spawner");
         }
 
         public override void SetDefaults() {
@@ -38,7 +38,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
             int timeBetween = (int) ((TileDistance * 16) / Projectile.velocity.Length());
             if (((int)Projectile.ai[0] % timeBetween) == 0){
                 if (Main.netMode != NetmodeID.Server && Main.myPlayer == Projectile.owner) {
-                    Vector2 newPos = new Vector2(Projectile.position.X, GetYPos());
+                    Vector2 newPos = new Vector2(Projectile.position.X, GetYPos() - 16);
                     Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), newPos, Vector2.Zero, 
                         ModContent.ProjectileType<EnsnaringVinesTrap>(), 1, 0f, Main.myPlayer);
                     TerrariaMobaUtils.SetProjectileDamage(proj, MagicalDamage: TrapDamage);

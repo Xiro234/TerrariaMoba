@@ -6,7 +6,7 @@ using TerrariaMoba.Abilities.Sylvia;
 namespace TerrariaMoba.Projectiles.Sylvia {
     public class SylviaSpores : ModProjectile {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("SylviaSpores");
+            DisplayName.SetDefault("Plantera's Spore");
             Main.projFrames[Projectile.type] = 5;
         }
 
@@ -34,10 +34,6 @@ namespace TerrariaMoba.Projectiles.Sylvia {
                 Projectile.timeLeft = SporeDuration;
             }
 
-            if (Projectile.timeLeft < SporeDuration - 5) {
-                Projectile.ai[0]++;
-            }
-
             if (Projectile.timeLeft < 60) {
                 Projectile.alpha += (255 / 60);
             }
@@ -55,7 +51,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         }
 
         public override bool CanHitPvp(Player target) {
-            if (Projectile.ai[0] > 0) {
+            if (Projectile.timeLeft < SporeDuration - 8) {
                 return true;
             } else {
                 return false;

@@ -19,7 +19,7 @@ namespace TerrariaMoba.Projectiles.Sylvia {
             Projectile.width = 16;
             Projectile.height = 16;
             Projectile.timeLeft = 1000;
-            Projectile.penetrate = 0;
+            Projectile.aiStyle = 0;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = false;
@@ -41,11 +41,17 @@ namespace TerrariaMoba.Projectiles.Sylvia {
 
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
             Vector2 targetLoc = Vector2.Zero;
+            float currentDist = float.MaxValue;
             bool targetFound = false;
 
             if (Main.player[targetId].active) {
-                targetLoc = Main.player[targetId].Center - Projectile.Center;
-                targetFound = true;
+                Vector2 newTargetLoc = Main.player[targetId].Center - Projectile.Center;
+                float distToTarget = (float)Math.Sqrt(newTargetLoc.X * newTargetLoc.X + newTargetLoc.Y * newTargetLoc.Y);
+                if (distToTarget < currentDist) {
+                    targetLoc = newTargetLoc;
+                    currentDist = distToTarget;
+                    targetFound = true;
+                }
             } else {
                 Kill(Projectile.timeLeft);
             }
@@ -55,6 +61,10 @@ namespace TerrariaMoba.Projectiles.Sylvia {
                 Projectile.velocity = (10 * Projectile.velocity + targetLoc) / 11f;
                 AdjustMagnitude(ref Projectile.velocity);
             }
+
+            Dust dust = Main.dust[Dust.NewDust(Projectile.Center - new Vector2(0, 2), Projectile.width / 2, Projectile.height / 2, 
+                DustID.RichMahogany, 0, 0, 180, default, 0.9f)];
+            dust.noGravity = true;
         }
 
         private void AdjustMagnitude(ref Vector2 vel) {

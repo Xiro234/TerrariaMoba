@@ -28,7 +28,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
 
         public const int SPORE_DAMAGE = 100;
         public const int SPORE_COUNT = 6;
-        public const int SPORE_DURATION = 120;
+        public const int SPORE_DURATION = 180;
         public const int SPORE_DEBUFF_DURATION = 180;
         public const float SPORE_HEALEFF_MODIFIER = -0.33f;
 

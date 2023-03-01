@@ -21,7 +21,7 @@ namespace TerrariaMoba.Abilities.Sylvia {
         public const int TRAP_DAMAGE = 225;
         public const int TRAP_DURATION = 240;
         public const int TRAP_AMOUNT = 5;
-        public const int TRAP_DISTANCE = 6;
+        public const int TRAP_DISTANCE = 10;
 
         public const int ROOT_DURATION = 120;
 

@@ -7,18 +7,18 @@ using Terraria.ModLoader;
 namespace TerrariaMoba.Projectiles.Sylvia {
     public class SylviaArrow  : ModProjectile {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("SylviaArrow");
+            DisplayName.SetDefault("Adamantite Arrow");
         }
 
         public override void SetDefaults() {
-            Projectile.friendly = true;
-            Projectile.arrow = true;
             Projectile.width = 8;
             Projectile.height = 8;
-            Projectile.tileCollide = true;
             Projectile.aiStyle = 1;
             DrawOffsetX = -6;
             AIType = ProjectileID.WoodenArrowFriendly;
+            Projectile.arrow = true;
+            Projectile.friendly = true;
+            Projectile.tileCollide = true;
         }
 
         public override void Kill(int timeLeft) {
