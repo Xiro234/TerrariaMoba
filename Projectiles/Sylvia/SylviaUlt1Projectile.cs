@@ -12,25 +12,18 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         }
         
         public override void SetDefaults() {
-            Projectile.height = 100;
-            Projectile.width = 30;
+            Projectile.height = 20;
+            Projectile.width = 20;
             Projectile.aiStyle = 0;
             Projectile.friendly = true;
-            Projectile.tileCollide = true;
+            Projectile.tileCollide = true;  
         }
 
         public override void AI() {
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90f);
-            Vector2 direction = Vector2.Normalize(Projectile.velocity);
-            for (int i = 0; i < 3; i++) {
-                float val = (float)Math.Sin(6 * MathHelper.ToRadians(Projectile.ai[0]) + (i / 2));
-                Vector2 position1 = Projectile.Center + (new Vector2(-direction.Y, direction.X) * (val * 14));
-                Vector2 position2 = Projectile.Center + (new Vector2(direction.Y, -direction.X) * (val * 14));
-
-                Dust.NewDustPerfect(position1, DustID.Enchanted_Gold, Vector2.Zero, Projectile.alpha, Color.LightGreen, 1.2f);
-                Dust.NewDustPerfect(position2, DustID.Enchanted_Gold, Vector2.Zero, Projectile.alpha, Color.LightGreen, 1.2f);
+            for (int i = 0; i < 12; i++) {
+                Dust.NewDust(Projectile.position + new Vector2(1, 0), Projectile.width, Projectile.height, DustID.Enchanted_Gold, 0, 0, 120, Color.LightGreen, 0.8f);
             }
-            Projectile.ai[0]++;
         }
         
         public override void Kill(int timeLeft) {

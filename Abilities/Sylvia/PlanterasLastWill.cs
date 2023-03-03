@@ -66,31 +66,12 @@ namespace TerrariaMoba.Abilities.Sylvia {
                     int duration = 0;
                     int distanceInBlocks = (int)(head.Projectile.velocity.Length() * head.Projectile.ai[0] / 16f);
 
-                    if (Main.netMode != NetmodeID.Server) {
-                        Main.NewText("velocity.Length(): " + head.Projectile.velocity.Length());
-                        Main.NewText("ai[0]: " + head.Projectile.ai[0]);
-                        Main.NewText("distanceInBlocks: " + distanceInBlocks);
-                    }
-
                     if (distanceInBlocks < DISTANCE_SCALING_BLOCK_CAP) {
                         physicalDamage += (int)(BULB_DAMAGE_SCALING * Math.Floor((double)(distanceInBlocks / DISTANCE_SCALING_BLOCK_INTERVAL)));
                         duration += (int)(BULB_STUN_DURATION_SCALING * Math.Floor((double)(distanceInBlocks / DISTANCE_SCALING_BLOCK_INTERVAL)));
-
-                        if (Main.netMode != NetmodeID.Server)
-                        {
-                            Main.NewText("DISTANCE IS LOWER THAN CAP!");
-                            Main.NewText("durationModifier: " + duration);
-                        }
-
                     } else {
                         physicalDamage += BULB_DAMAGE_SCALING * (DISTANCE_SCALING_BLOCK_CAP / DISTANCE_SCALING_BLOCK_INTERVAL);
                         duration += BULB_STUN_DURATION_SCALING * (DISTANCE_SCALING_BLOCK_CAP / DISTANCE_SCALING_BLOCK_INTERVAL);
-
-                        if (Main.netMode != NetmodeID.Server)
-                        {
-                            Main.NewText("DISTANCE IS HIGHER THAN CAP!");
-                            Main.NewText("durationModifier: " + duration);
-                        }
                     }
 
                     duration += BULB_STUN_DURATION;

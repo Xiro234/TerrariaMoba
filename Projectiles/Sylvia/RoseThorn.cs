@@ -16,8 +16,8 @@ namespace TerrariaMoba.Projectiles.Sylvia {
         public int ThornLifetime { get; set; }
 
         public override void SetDefaults() {
-            Projectile.width = 16;
-            Projectile.height = 16;
+            Projectile.width = 10;
+            Projectile.height = 10;
             Projectile.timeLeft = 1000;
             Projectile.aiStyle = 0;
             Projectile.friendly = true;
@@ -62,9 +62,9 @@ namespace TerrariaMoba.Projectiles.Sylvia {
                 AdjustMagnitude(ref Projectile.velocity);
             }
 
-            Dust dust = Main.dust[Dust.NewDust(Projectile.Center - new Vector2(0, 2), Projectile.width / 2, Projectile.height / 2, 
-                DustID.RichMahogany, 0, 0, 180, default, 0.9f)];
-            dust.noGravity = true;
+            for (int i = 0; i < 4; i++) {
+                Dust.NewDust(Projectile.Center - new Vector2(1, 3), Projectile.width, Projectile.height, DustID.RichMahogany, 0, 0, 130, default, 0.8f);
+            }
         }
 
         private void AdjustMagnitude(ref Vector2 vel) {

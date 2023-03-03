@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using TerrariaMoba.Abilities.Sylvia;
 using System.IO;
+using Terraria.ID;
 
 namespace TerrariaMoba.Projectiles.Sylvia {
     public class SylviaUlt2 : ModProjectile {
@@ -68,6 +69,18 @@ namespace TerrariaMoba.Projectiles.Sylvia {
                         spore.SporeDuration = SporeDuration;
                     }
                 }
+            }
+
+            const float magnitude = 15f;
+            for (int i = 0; i < 32; i++) {
+                Vector2 offset = new Vector2();
+                double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                offset.X += (float)(Math.Sin(angle) * magnitude);
+                offset.Y += (float)(Math.Cos(angle) * magnitude);
+                Dust dust = Main.dust[Dust.NewDust(Projectile.position, Projectile.width / 2, Projectile.height / 2,
+                    DustID.Enchanted_Gold, offset.X, offset.Y, 255, Color.Crimson, 1.3f)];
+                dust.scale *= (float)(1 + Main.rand.NextDouble());
+                dust.noGravity = true;
             }
         }
 

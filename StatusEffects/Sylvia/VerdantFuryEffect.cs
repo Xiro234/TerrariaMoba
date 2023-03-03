@@ -5,12 +5,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
+using TerrariaMoba.Interfaces;
 using TerrariaMoba.Statistic;
 using static TerrariaMoba.Statistic.AttributeType;
 
 namespace TerrariaMoba.StatusEffects.Sylvia {
-    public sealed class VerdantFuryEffect : StatusEffect {
+    public sealed class VerdantFuryEffect : StatusEffect, IShoot {
         public override string DisplayName { get => "Verdant Fury"; }
         public override Texture2D Icon { get => ModContent.Request<Texture2D>("Textures/Blank").Value; }
 
@@ -21,6 +23,21 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         public VerdantFuryEffect(float atkspd, float atkvel, int duration, bool canBeCleansed, int applierId) : base(duration, canBeCleansed, applierId) {
             attackSpeed = atkspd;
             attackVelocity = atkvel;
+        }
+
+        public bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+            const float distance = 40f;
+            for (int i = 0; i < 12; i++) {
+                Vector2 offset = new Vector2();
+                double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                offset.X += (float)(Math.Sin(angle) * distance);
+                offset.Y += (float)(Math.Cos(angle) * distance);
+                Dust dust = Main.dust[Dust.NewDust(User.Center + offset , 0, 0, DustID.Enchanted_Gold, User.velocity.X, User.velocity.Y, 130, Color.LightGreen, 1f)];
+                dust.velocity += Vector2.Normalize(offset) * -5f;
+                dust.noGravity = true;
+            }
+
+            return true;
         }
         
         public override void ConstructMultAttributes() {

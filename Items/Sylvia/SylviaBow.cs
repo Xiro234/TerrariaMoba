@@ -7,10 +7,6 @@ using TerrariaMoba.Players;
 using TerrariaMoba.Projectiles;
 using TerrariaMoba.Projectiles.Sylvia;
 using TerrariaMoba.Statistic;
-using System.Collections.Generic;
-using TerrariaMoba.StatusEffects;
-using TerrariaMoba.StatusEffects.Sylvia;
-using System;
 
 namespace TerrariaMoba.Items.Sylvia {
     public class SylviaBow : ModItem {
@@ -47,22 +43,6 @@ namespace TerrariaMoba.Items.Sylvia {
             
             if (MobaSystem.MatchInProgress) {
                 TerrariaMobaUtils.SetProjectileDamage(proj, PhysicalDamage: (int)player.GetModPlayer<MobaPlayer>().GetCurrentAttributeValue(AttributeType.ATTACK_DAMAGE));
-
-                var mobaPlr = player.GetModPlayer<MobaPlayer>();
-                foreach (var effect in new List<StatusEffect>(mobaPlr.EffectList)) {
-                    if (effect is VerdantFuryEffect) {
-                        const float distance = 40f;
-                        for (int i = 0; i < 12; i++) {
-                            Vector2 offset = new Vector2();
-                            double angle = Main.rand.NextDouble() * 2d * Math.PI;
-                            offset.X += (float)(Math.Sin(angle) * distance);
-                            offset.Y += (float)(Math.Cos(angle) * distance);
-                            Dust dust = Main.dust[Dust.NewDust(Item.Center + offset, 0, 0, DustID.Enchanted_Gold, 0, 0, 130, Color.LightGreen, 1f)];
-                            dust.velocity += Vector2.Normalize(offset) * -6.66f;
-                            dust.noGravity = true;
-                        }
-                    }
-                }
             }
 
             return false;

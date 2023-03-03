@@ -4,7 +4,9 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 using TerrariaMoba.Interfaces;
 using TerrariaMoba.Players;
@@ -38,6 +40,17 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
         public void TakePvpDamage(ref int physicalDamage, ref int magicalDamage, ref int trueDamage, ref int killer) {
             if (Stacks >= 5) {
                 trueDamage += (int)Math.Ceiling(User.statLifeMax2 * DamagePercent);
+                SoundEngine.PlaySound(SoundID.Item100, User.position);
+                const float distance = 50f;
+                for (int i = 0; i < 20; i++) {
+                    Vector2 offset = new Vector2();
+                    double angle = Main.rand.NextDouble() * 2d * Math.PI;
+                    offset.X += (float)(Math.Sin(angle) * distance);
+                    offset.Y += (float)(Math.Cos(angle) * distance);
+                    Dust dust = Main.dust[Dust.NewDust(User.Center + offset, 0, 0, DustID.Venom, 0, 0, 150, Color.Crimson, 0.9f)];
+                    dust.velocity += Vector2.Normalize(offset) * -5f;
+                    dust.noGravity = true;
+                }
                 DurationTimer = 0;
             }
         }
@@ -86,7 +99,7 @@ namespace TerrariaMoba.StatusEffects.Sylvia {
             }
 
             Vector2 texturePos = new Vector2(drawPlayer.Top.X - Main.screenPosition.X - (texture.Width / 2),
-                drawPlayer.Top.Y - Main.screenPosition.Y - 40);
+                drawPlayer.Top.Y - Main.screenPosition.Y - 60);
             DrawData data = new DrawData(texture, texturePos, Color.White);
             drawInfo.DrawDataCache.Add(data);
         }
